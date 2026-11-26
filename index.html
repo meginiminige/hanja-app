@@ -1591,6 +1591,196 @@
       color: var(--주요_강조색);
       box-shadow: none;
     }
+
+    /* =====================================================================
+       Apple iOS / iPadOS HIG Native Polish & Visual Hierarchy Refinement
+       ===================================================================== */
+    body {
+      letter-spacing: -0.012em;
+      text-rendering: optimizeLegibility;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    /* Tabular numerals across all counters, badges, and indices */
+    .review-meta,
+    .brand-badge,
+    .count-badge,
+    .all-group-idx,
+    #allSummaryStat,
+    .ctrl-val,
+    .qcp-item-top span {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Topbar & Floating Series Bar: eliminate overlapping collisions */
+    .topbar.scrolled {
+      box-shadow: 0 0.5px 0 var(--헤어라인_색);
+    }
+    .floating-series-bar {
+      top: calc(var(--상단바_높이) + 8px);
+      height: 34px;
+      padding: 0 6px 0 13px;
+      background-color: var(--글라스_배경);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06), 0 0 0 0.5px var(--글라스_테두리);
+      transition: opacity 0.2s var(--애플_이징), transform 0.24s var(--스프링_이징);
+    }
+    body.dark .floating-series-bar {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 0 0.5px var(--글라스_테두리);
+    }
+    #toast {
+      top: calc(var(--상단바_높이) + 48px);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    /* Settings sheet: prevent nested double-scroll feel */
+    .settings-box {
+      max-height: calc(100dvh - var(--상단바_높이) - 24px);
+      padding: 14px;
+      gap: 16px;
+    }
+
+    /* Large Title & 3-tier Apple HIG visual rhythm */
+    .ios-large-title-bar {
+      padding: 4px 4px 14px;
+    }
+    .ios-large-title {
+      font-size: 33px;
+      font-weight: 700;
+      letter-spacing: -0.036em;
+      line-height: 1.12;
+    }
+
+    /* Review Card & Interactive Hanzi Chips */
+    #tab-review .card {
+      padding: 18px 18px 20px;
+      border: 0.5px solid var(--헤어라인_색);
+    }
+    .example-box {
+      letter-spacing: 0.03em;
+      line-height: 1.85;
+    }
+    .ex-hl {
+      padding: 0 6px;
+      border-radius: 7px;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+      transition: background-color 0.16s var(--애플_이징), transform 0.16s var(--스프링_이징);
+    }
+    .ex-hl:active {
+      transform: scale(0.96);
+    }
+    .char-chips {
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .char-chip {
+      border: 0.5px solid var(--헤어라인_색);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+    .char-chip.active {
+      border-color: transparent;
+      box-shadow: 0 4px 12px rgba(0, 122, 255, 0.28);
+    }
+
+    /* Phonetic Series List Row (.compact-row-main): balanced visual weight & breathing room */
+    .group-block,
+    .bm-card {
+      border: 0.5px solid var(--헤어라인_색);
+    }
+    .compact-row-main {
+      padding: 11px 14px;
+      gap: 10px;
+      min-height: 62px;
+    }
+    .compact-row-main:active {
+      background-color: var(--구분_회색);
+    }
+    .hw-box {
+      border: 0.5px solid var(--헤어라인_색);
+    }
+    .compact-mid {
+      line-height: 1.38;
+      letter-spacing: -0.01em;
+    }
+    .compact-right-memo {
+      max-width: 39%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 1px;
+    }
+    .compact-right-memo .memo-pinyin {
+      letter-spacing: -0.02em;
+    }
+    .compact-right-memo .memo-line:nth-child(2) {
+      font-size: calc(var(--병음훈음_글자크기) * 0.94);
+      color: var(--흐린_글자색);
+    }
+
+    /* Expanded Detail Drawer inside Row */
+    .compact-detail {
+      margin: 0 12px 12px 12px;
+      padding: 13px 15px;
+      border-radius: 13px;
+    }
+
+    /* Mobile Bottom Navigation & Review Action Accessory: slimmer, unified iOS floating pills */
+    .mobile-review-bar {
+      bottom: calc(56px + env(safe-area-inset-bottom, 0px));
+      left: 16px;
+      right: 16px;
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 4px;
+      border-radius: 14px;
+      background-color: var(--글라스_배경);
+      grid-template-columns: 42px 1fr 42px;
+      gap: 5px;
+    }
+    .mobile-tabbar {
+      bottom: max(10px, env(safe-area-inset-bottom, 0px));
+      max-width: 300px;
+      padding: 3px;
+    }
+    .tab-slider {
+      top: 3px;
+      left: 3px;
+      height: 34px;
+      width: calc((100% - 14px) / 3);
+    }
+    .tab-btn {
+      height: 34px;
+    }
+    .main-wrap {
+      padding-bottom: calc(122px + env(safe-area-inset-bottom, 0px));
+    }
+    #allGroupsList {
+      padding-top: calc(var(--상단그룹바_높이) + 12px);
+      padding-bottom: 114px;
+    }
+    .all-search-sticky {
+      bottom: calc(56px + env(safe-area-inset-bottom, 0px));
+      border-radius: 16px;
+      padding: 8px 10px;
+    }
+
+    /* Modal Sheet: crisp native hairline & smoother depth */
+    .modal-backdrop {
+      transition: background-color 0.24s var(--애플_이징);
+    }
+    .modal-sheet {
+      border: 0.5px solid var(--글라스_테두리);
+      border-bottom: none;
+    }
+    @media (min-width: 960px) {
+      .modal-sheet {
+        border-bottom: 0.5px solid var(--글라스_테두리);
+      }
+      .all-search-sticky {
+        bottom: 20px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -4544,33 +4734,56 @@
       const configs = [
         { id: "seriesModal", close: closeModal },
         { id: "groupChoiceModal", close: () => closeGroupChoiceModal(false) },
-        { id: "bookmarkModal", close: closeBookmarkModal }
+        { id: "bookmarkModal", close: closeBookmarkModal },
+        { id: "shortcutModal", close: closeShortcutModal }
       ];
       configs.forEach(cfg => {
         const backdrop = document.getElementById(cfg.id);
         if (!backdrop) return;
         const sheet = backdrop.querySelector(".modal-sheet");
         const head = backdrop.querySelector(".modal-head");
+        const body = backdrop.querySelector(".modal-body");
         if (!sheet || !head) return;
 
         let startY = 0;
         let curY = 0;
         let dragging = false;
+        let fromBody = false;
+
+        const beginDrag = (y, isBody) => {
+          startY = y;
+          curY = 0;
+          dragging = true;
+          fromBody = isBody;
+          sheet.classList.add("dragging");
+        };
 
         head.addEventListener("touchstart", e => {
           if (e.target.closest("button")) return;
-          startY = e.touches[0].clientY;
-          curY = 0;
-          dragging = true;
-          sheet.classList.add("dragging");
+          beginDrag(e.touches[0].clientY, false);
         }, { passive: true });
 
-        head.addEventListener("touchmove", e => {
+        if (body) {
+          body.addEventListener("touchstart", e => {
+            if (body.scrollTop <= 0 && !e.target.closest("button, input, textarea, select")) {
+              beginDrag(e.touches[0].clientY, true);
+            }
+          }, { passive: true });
+        }
+
+        sheet.addEventListener("touchmove", e => {
           if (!dragging) return;
           const dy = e.touches[0].clientY - startY;
+          if (fromBody && body && body.scrollTop > 0) {
+            dragging = false;
+            sheet.classList.remove("dragging");
+            sheet.style.transform = "";
+            return;
+          }
           if (dy > 0) {
             curY = dy;
-            sheet.style.transform = `translateY(${dy}px)`;
+            const damped = dy < 120 ? dy : 120 + (dy - 120) * 0.45;
+            sheet.style.transform = `translateY(${damped}px)`;
           }
         }, { passive: true });
 
@@ -4585,8 +4798,8 @@
             sheet.style.transform = "";
           }
         };
-        head.addEventListener("touchend", endDrag, { passive: true });
-        head.addEventListener("touchcancel", endDrag, { passive: true });
+        sheet.addEventListener("touchend", endDrag, { passive: true });
+        sheet.addEventListener("touchcancel", endDrag, { passive: true });
       });
     }
 
