@@ -1553,7 +1553,9 @@
     @keyframes bmPopAnim { 0% { transform: scale(1); } 45% { transform: scale(1.18); } 100% { transform: scale(1); } }
     .bm-pop { animation: bmPopAnim 0.24s var(--스프링_이징); }
 
-    #tab-all .group-block, #tab-all .accordion-body, #tab-all .chev { transition: none; }
+    #tab-all .group-block { transition: transform 0.24s var(--스프링_이징), background-color 0.18s var(--애플_이징); }
+    #tab-all .accordion-body { transition: grid-template-rows 0.28s var(--스프링_이징); }
+    #tab-all .chev { transition: transform 0.28s var(--애플_바운스_이징); }
     #tab-all { contain: layout style; }
 
     .main-wrap::-webkit-scrollbar, .modal-body::-webkit-scrollbar, .qcp-list::-webkit-scrollbar, .pc-queue-list::-webkit-scrollbar, .settings-box::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -1593,7 +1595,7 @@
     }
 
     /* =====================================================================
-       Apple iOS / iPadOS HIG Layout & Spring Physics Animations
+       Apple iOS / iPadOS HIG Layout & Complete Micro-Interaction Motion
        ===================================================================== */
     :root {
       --애플_바운스_이징: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -1617,38 +1619,79 @@
       font-variant-numeric: tabular-nums;
     }
 
+    /* Universal Tactile Button & Control Feedback */
+    .btn,
+    .pill-btn,
+    .grp-toggle-btn,
+    .word-toggle-btn,
+    .bm-btn,
+    .tts-btn,
+    .recent-q-chip,
+    .choice-opt,
+    .qcp-item {
+      transition:
+        transform 0.22s var(--애플_바운스_이징),
+        background-color 0.18s var(--애플_이징),
+        color 0.18s var(--애플_이징),
+        box-shadow 0.22s var(--애플_이징),
+        opacity 0.16s var(--애플_이징);
+    }
+    .btn:active,
+    .pill-btn:active,
+    .grp-toggle-btn:active,
+    .word-toggle-btn:active,
+    .bm-btn:active,
+    .tts-btn:active,
+    .recent-q-chip:active,
+    .choice-opt:active,
+    .qcp-item:active {
+      transform: scale(0.93);
+      opacity: 0.86;
+    }
+
+    /* Badge & Counter Spring Pop */
+    .badge-pop {
+      animation: iosBadgePop 0.34s var(--애플_바운스_이징);
+    }
+    @keyframes iosBadgePop {
+      0%   { transform: scale(1); }
+      40%  { transform: scale(1.26); }
+      75%  { transform: scale(0.94); }
+      100% { transform: scale(1); }
+    }
+
     /* 1. Directional Tab View Slide + Fade Transition */
     .tab-view.tab-enter-right {
-      animation: iosTabSlideRight 0.28s var(--스프링_이징) both;
+      animation: iosTabSlideRight 0.3s var(--스프링_이징) both;
     }
     .tab-view.tab-enter-left {
-      animation: iosTabSlideLeft 0.28s var(--스프링_이징) both;
+      animation: iosTabSlideLeft 0.3s var(--스프링_이징) both;
     }
     @keyframes iosTabSlideRight {
-      from { opacity: 0.35; transform: translateX(18px); }
+      from { opacity: 0.25; transform: translateX(22px); }
       to   { opacity: 1;    transform: translateX(0); }
     }
     @keyframes iosTabSlideLeft {
-      from { opacity: 0.35; transform: translateX(-18px); }
+      from { opacity: 0.25; transform: translateX(-22px); }
       to   { opacity: 1;    transform: translateX(0); }
     }
 
     /* 2. Tab Bar Icon Bounce & Overshoot Spring Sliders */
     .tab-slider {
-      transition: transform 0.34s var(--애플_바운스_이징);
+      transition: transform 0.36s var(--애플_바운스_이징);
     }
     .pc-nav-slider,
     .bm-seg-slider {
-      transition: transform 0.32s var(--애플_바운스_이징), width 0.28s var(--스프링_이징);
+      transition: transform 0.34s var(--애플_바운스_이징), width 0.28s var(--스프링_이징);
     }
     .tab-btn.tab-bounce .ico,
     .pc-nav-btn.tab-bounce {
-      animation: iosTabIconBounce 0.36s var(--애플_바운스_이징);
+      animation: iosTabIconBounce 0.38s var(--애플_바운스_이징);
     }
     @keyframes iosTabIconBounce {
       0%   { transform: scale(1); }
-      35%  { transform: scale(0.84); }
-      72%  { transform: scale(1.12); }
+      32%  { transform: scale(0.82); }
+      70%  { transform: scale(1.14); }
       100% { transform: scale(1); }
     }
 
@@ -1665,8 +1708,8 @@
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06), 0 0 0 0.5px var(--글라스_테두리);
       opacity: 0;
       pointer-events: none;
-      transform: translateY(-10px) scale(0.95);
-      transition: opacity 0.22s var(--애플_이징), transform 0.32s var(--애플_바운스_이징);
+      transform: translateY(-12px) scale(0.94);
+      transition: opacity 0.22s var(--애플_이징), transform 0.34s var(--애플_바운스_이징);
     }
     .floating-series-bar.show {
       opacity: 1;
@@ -1676,13 +1719,16 @@
     body.dark .floating-series-bar {
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 0 0.5px var(--글라스_테두리);
     }
+    .floating-expand-btn .sf-ico {
+      transition: transform 0.28s var(--애플_바운스_이징);
+    }
 
     #toast {
       top: calc(var(--상단바_높이) + 48px);
       font-weight: 600;
       letter-spacing: -0.01em;
-      transform: translateX(-50%) translateY(-12px) scale(0.88);
-      transition: opacity 0.22s var(--애플_이징), transform 0.34s var(--애플_바운스_이징);
+      transform: translateX(-50%) translateY(-14px) scale(0.86);
+      transition: opacity 0.22s var(--애플_이징), transform 0.36s var(--애플_바운스_이징);
     }
     #toast.show {
       opacity: 1;
@@ -1695,8 +1741,8 @@
       opacity: 0;
       pointer-events: none;
       transform-origin: top right;
-      transform: translateY(-8px) scale(0.92);
-      transition: opacity 0.18s var(--애플_이징), transform 0.28s var(--애플_바운스_이징);
+      transform: translateY(-8px) scale(0.9);
+      transition: opacity 0.18s var(--애플_이징), transform 0.3s var(--애플_바운스_이징);
     }
     .queue-corner-popover.open {
       opacity: 1;
@@ -1704,11 +1750,27 @@
       transform: translateY(0) scale(1);
     }
 
-    /* Settings Sheet: prevent nested double-scroll feel */
+    /* Settings Sheet & Switch Spring */
     .settings-box {
       max-height: calc(100dvh - var(--상단바_높이) - 24px);
       padding: 14px;
       gap: 16px;
+      opacity: 0;
+      transform: translateY(-8px) scale(0.98);
+      transition: opacity 0.22s var(--애플_이징), transform 0.3s var(--스프링_이징);
+    }
+    .settings-drawer.open .settings-box {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .ios-switch-track::after {
+      transition: transform 0.28s var(--애플_바운스_이징), width 0.18s var(--애플_이징);
+    }
+    .ios-switch:active .ios-switch-track::after {
+      width: 31px;
+    }
+    .ios-switch input:checked:active + .ios-switch-track::after {
+      transform: translateX(16px);
     }
 
     /* Large Title & 3-tier Apple HIG visual rhythm */
@@ -1722,10 +1784,18 @@
       line-height: 1.12;
     }
 
-    /* 4. Review Card, Tactile Hanzi Chips & Staggered Group Cards */
+    /* 4. Review Card, Card Completion Slide, Tactile Hanzi Chips & Staggered Cards */
     #tab-review .card {
       padding: 18px 18px 20px;
       border: 0.5px solid var(--헤어라인_색);
+      overflow: hidden;
+    }
+    .review-complete-out {
+      animation: iosReviewCompleteOut 0.19s var(--애플_이징) forwards;
+    }
+    @keyframes iosReviewCompleteOut {
+      0%   { opacity: 1; transform: translateX(0) scale(1); }
+      100% { opacity: 0; transform: translateX(-28px) scale(0.96); }
     }
     .example-box {
       letter-spacing: 0.03em;
@@ -1736,10 +1806,10 @@
       border-radius: 7px;
       box-decoration-break: clone;
       -webkit-box-decoration-break: clone;
-      transition: background-color 0.16s var(--애플_이징), transform 0.2s var(--애플_바운스_이징);
+      transition: background-color 0.16s var(--애플_이징), transform 0.22s var(--애플_바운스_이징);
     }
     .ex-hl:active {
-      transform: scale(0.93);
+      transform: scale(0.91);
     }
     .char-chips {
       gap: 8px;
@@ -1748,36 +1818,49 @@
     .char-chip {
       border: 0.5px solid var(--헤어라인_색);
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-      transition: transform 0.26s var(--애플_바운스_이징), background-color 0.18s var(--애플_이징), color 0.18s var(--애플_이징), box-shadow 0.22s var(--애플_이징);
+      transition: transform 0.28s var(--애플_바운스_이징), background-color 0.18s var(--애플_이징), color 0.18s var(--애플_이징), box-shadow 0.22s var(--애플_이징);
     }
     .char-chip:active {
-      transform: scale(0.91);
+      transform: scale(0.9);
     }
     .char-chip.active {
       border-color: transparent;
       box-shadow: 0 4px 12px rgba(0, 122, 255, 0.28);
-      animation: iosChipSelectPop 0.3s var(--애플_바운스_이징);
+      animation: iosChipSelectPop 0.32s var(--애플_바운스_이징);
     }
     @keyframes iosChipSelectPop {
-      0%   { transform: scale(0.92); }
-      55%  { transform: scale(1.06); }
+      0%   { transform: scale(0.9); }
+      55%  { transform: scale(1.07); }
       100% { transform: scale(1); }
     }
 
     .hanzi-tile {
-      transition: transform 0.24s var(--애플_바운스_이징), background-color 0.16s var(--애플_이징), color 0.16s var(--애플_이징);
+      transition: transform 0.26s var(--애플_바운스_이징), background-color 0.16s var(--애플_이징), color 0.16s var(--애플_이징);
     }
     .hanzi-tile:active {
-      transform: scale(0.9);
+      transform: scale(0.89);
     }
     .hanzi-tile.selected {
-      animation: iosChipSelectPop 0.28s var(--애플_바운스_이징);
+      animation: iosChipSelectPop 0.3s var(--애플_바운스_이징);
     }
 
-    /* Staggered Group Block Entrance */
-    .group-block.ios-stagger-in {
+    /* Translation Panel & Input Result Smooth Reveal */
+    .trans-panel {
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: opacity 0.24s var(--애플_이징), transform 0.28s var(--스프링_이징);
+    }
+    .accordion-body.open .trans-panel,
+    #inputTransResult[style*="block"] {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Staggered Card Entrance (Groups & Recent Items) */
+    .group-block.ios-stagger-in,
+    .recent-item.ios-stagger-in {
       animation: iosCardRiseIn 0.34s var(--스프링_이징) both;
-      animation-delay: calc(var(--stagger-i, 0) * 42ms);
+      animation-delay: calc(var(--stagger-i, 0) * 36ms);
     }
     @keyframes iosCardRiseIn {
       from { opacity: 0; transform: translateY(14px) scale(0.985); }
@@ -1788,6 +1871,14 @@
     .group-block,
     .bm-card {
       border: 0.5px solid var(--헤어라인_색);
+    }
+    .all-group-btn {
+      transition: background-color 0.15s var(--애플_이징);
+    }
+    .all-group-btn:active {
+      background-color: var(--구분_회색) !important;
+      transform: none;
+      opacity: 1;
     }
     .compact-row-main {
       padding: 11px 14px;
@@ -1800,9 +1891,15 @@
     }
     .hw-box {
       border: 0.5px solid var(--헤어라인_색);
-      transition: transform 0.22s var(--애플_바운스_이징);
+      transition: transform 0.24s var(--애플_바운스_이징);
     }
     .hw-box:active {
+      transform: scale(0.9);
+    }
+    .rad-chip {
+      transition: transform 0.2s var(--애플_바운스_이징), background-color 0.15s var(--애플_이징);
+    }
+    .rad-chip:active {
       transform: scale(0.92);
     }
     .compact-mid {
@@ -1831,11 +1928,28 @@
       border-radius: 13px;
       opacity: 0;
       transform: translateY(-6px);
-      transition: opacity 0.22s var(--애플_이징), transform 0.26s var(--스프링_이징);
+      transition: opacity 0.22s var(--애플_이징), transform 0.28s var(--스프링_이징);
     }
     .accordion-body.open .compact-detail {
       opacity: 1;
       transform: translateY(0);
+    }
+    .detail-words-py.py-reveal {
+      animation: iosPyReveal 0.24s var(--스프링_이징) both;
+    }
+    @keyframes iosPyReveal {
+      from { opacity: 0; transform: translateY(-5px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* TTS Speaking Pulse Ring */
+    .tts-btn.speaking {
+      animation: iosTtsPulse 1.5s var(--애플_이징) infinite;
+    }
+    @keyframes iosTtsPulse {
+      0%   { box-shadow: 0 0 0 0 rgba(0, 122, 255, 0.36); }
+      70%  { box-shadow: 0 0 0 7px rgba(0, 122, 255, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 122, 255, 0); }
     }
 
     /* 6. Mobile Bottom Navigation & Review Action Accessory */
@@ -1850,12 +1964,12 @@
       background-color: var(--글라스_배경);
       grid-template-columns: 42px 1fr 42px;
       gap: 5px;
-      transition: opacity 0.2s var(--애플_이징), transform 0.28s var(--스프링_이징);
+      transition: opacity 0.2s var(--애플_이징), transform 0.3s var(--스프링_이징);
     }
     .mobile-review-bar.is-hidden {
       opacity: 0;
       pointer-events: none;
-      transform: translateY(14px) scale(0.96);
+      transform: translateY(16px) scale(0.95);
     }
     .mobile-tabbar {
       bottom: max(10px, env(safe-area-inset-bottom, 0px));
@@ -1882,6 +1996,7 @@
       bottom: calc(56px + env(safe-area-inset-bottom, 0px));
       border-radius: 16px;
       padding: 8px 10px;
+      transition: bottom 0.24s var(--스프링_이징), box-shadow 0.2s var(--애플_이징);
     }
 
     /* 7. Modal Sheet Open/Close Spring Motion */
@@ -1895,7 +2010,7 @@
     .modal-sheet {
       border: 0.5px solid var(--글라스_테두리);
       border-bottom: none;
-      animation: iosSheetSpringUp 0.34s var(--시트_이징) both;
+      animation: iosSheetSpringUp 0.35s var(--시트_이징) both;
     }
     .modal-backdrop.closing .modal-sheet {
       animation: iosSheetSlideDown 0.21s var(--애플_이징) both;
@@ -3824,7 +3939,7 @@
       area.innerHTML = buildPhoneticGroupsHtml(targetChars, item.chars);
       area.querySelectorAll(".group-block").forEach((blk, idx) => {
         blk.classList.add("ios-stagger-in");
-        blk.style.setProperty("--stagger-i", String(Math.min(idx, 8)));
+        blk.style.setProperty("--stagger-i", String(Math.min(idx, 10)));
       });
       observeStrokeBoxes(area);
       area.querySelectorAll(".group-block").forEach(blk => syncGroupToggleBtnLabel(blk));
@@ -3837,17 +3952,39 @@
       const item = list[state.reviewIndex];
       const qRow = item.qRow;
 
-      state.queueItems = state.queueItems.filter(it => it.qRow !== qRow);
-      state.recentItems.forEach(it => { if (it.qRow === qRow) it.isReviewed = true; });
-      state.dirtyTabs.input = true;
-      state.reviewSelectedChar = "";
-      document.getElementById("remainBadge").textContent = `${state.queueItems.length}`;
-      renderReviewTab();
-      showToast("완료됨");
+      const rb = document.getElementById("reviewBody");
+      const commitComplete = () => {
+        state.queueItems = state.queueItems.filter(it => it.qRow !== qRow);
+        state.recentItems.forEach(it => { if (it.qRow === qRow) it.isReviewed = true; });
+        state.dirtyTabs.input = true;
+        state.reviewSelectedChar = "";
+        const badge = document.getElementById("remainBadge");
+        if (badge) {
+          badge.textContent = `${state.queueItems.length}`;
+          badge.classList.remove("badge-pop");
+          void badge.offsetWidth;
+          badge.classList.add("badge-pop");
+        }
+        renderReviewTab();
+        if (rb && state.queueItems.length > 0) {
+          rb.classList.remove("review-complete-out", "review-slide-in-next", "review-slide-in-prev");
+          void rb.offsetWidth;
+          rb.classList.add("review-slide-in-next");
+        }
+        showToast("완료됨");
 
-      google.script.run
-        .withFailureHandler(err => showToast("저장 실패(새로고침 필요): " + err.message))
-        .webAppMarkReviewed(state.key, qRow, true);
+        google.script.run
+          .withFailureHandler(err => showToast("저장 실패(새로고침 필요): " + err.message))
+          .webAppMarkReviewed(state.key, qRow, true);
+      };
+
+      if (rb && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        rb.classList.remove("review-slide-in-next", "review-slide-in-prev");
+        rb.classList.add("review-complete-out");
+        setTimeout(commitComplete, 185);
+      } else {
+        commitComplete();
+      }
     }
 
     function retranslateRow(qRow) {
@@ -4047,11 +4184,19 @@
       const pyDiv = btnEl ? btnEl.parentElement.nextElementSibling : null;
       if (state.expandedWordPyIds.has(rowId)) {
         state.expandedWordPyIds.delete(rowId);
-        if (pyDiv) pyDiv.style.display = "none";
+        if (pyDiv) {
+          pyDiv.classList.remove("py-reveal");
+          pyDiv.style.display = "none";
+        }
         if (btnEl) btnEl.textContent = "병음 보기";
       } else {
         state.expandedWordPyIds.add(rowId);
-        if (pyDiv) pyDiv.style.display = "block";
+        if (pyDiv) {
+          pyDiv.style.display = "block";
+          pyDiv.classList.remove("py-reveal");
+          void pyDiv.offsetWidth;
+          pyDiv.classList.add("py-reveal");
+        }
         if (btnEl) btnEl.textContent = "병음 숨기기";
       }
     }
@@ -4422,6 +4567,10 @@
           </div>
         `;
       }).join("");
+      area.querySelectorAll(".recent-item").forEach((el, idx) => {
+        el.classList.add("ios-stagger-in");
+        el.style.setProperty("--stagger-i", String(Math.min(idx, 10)));
+      });
     }
 
     function toggleRecentExpand(qRow) {
@@ -4756,6 +4905,12 @@
       listEl.innerHTML = "";
       listEl.appendChild(frag);
 
+      listEl.querySelectorAll(".group-block").forEach((blk, idx) => {
+        if (idx < 14) {
+          blk.classList.add("ios-stagger-in");
+          blk.style.setProperty("--stagger-i", String(idx));
+        }
+      });
       renderRecentSearchChips();
       observeStrokeBoxes(listEl);
       listEl.querySelectorAll(".group-block").forEach(blk => syncGroupToggleBtnLabel(blk));
@@ -5003,20 +5158,53 @@
     function initReviewSwipeGesture() {
       const rb = document.getElementById("reviewBody");
       if (!rb) return;
-      let sx = 0, sy = 0;
+      let sx = 0, sy = 0, tracking = false;
       rb.addEventListener("touchstart", e => {
-        if (e.target.closest("button, input, textarea")) { sx = 0; return; }
+        if (e.target.closest("button, input, textarea, select")) { sx = 0; tracking = false; return; }
         sx = e.touches[0].clientX;
         sy = e.touches[0].clientY;
+        tracking = true;
+        rb.style.transition = "none";
       }, { passive: true });
-      rb.addEventListener("touchend", e => {
+
+      rb.addEventListener("touchmove", e => {
+        if (!tracking || !sx) return;
+        const dx = e.touches[0].clientX - sx;
+        const dy = e.touches[0].clientY - sy;
+        if (Math.abs(dx) > Math.abs(dy) * 1.2 && Math.abs(dx) > 8) {
+          const list = getOrderedReviewItems();
+          const atEdge = (dx > 0 && state.reviewIndex <= 0) || (dx < 0 && state.reviewIndex >= list.length - 1);
+          const factor = atEdge ? 0.22 : 0.45;
+          const clamped = Math.max(-72, Math.min(72, dx * factor));
+          rb.style.transform = `translateX(${clamped}px)`;
+          rb.style.opacity = String(Math.max(0.65, 1 - Math.abs(clamped) / 220));
+        }
+      }, { passive: true });
+
+      const finishTouch = (clientX, clientY) => {
         if (!sx) return;
-        const dx = e.changedTouches[0].clientX - sx;
-        const dy = e.changedTouches[0].clientY - sy;
+        const dx = clientX - sx;
+        const dy = clientY - sy;
         sx = 0;
-        if (Math.abs(dx) > 58 && Math.abs(dx) > Math.abs(dy) * 1.6) {
+        tracking = false;
+        rb.style.transition = "transform 0.28s var(--스프링_이징), opacity 0.22s var(--애플_이징)";
+        rb.style.transform = "";
+        rb.style.opacity = "";
+        if (Math.abs(dx) > 56 && Math.abs(dx) > Math.abs(dy) * 1.5) {
           stepReview(dx < 0 ? 1 : -1);
         }
+      };
+
+      rb.addEventListener("touchend", e => {
+        const t = e.changedTouches[0];
+        finishTouch(t.clientX, t.clientY);
+      }, { passive: true });
+      rb.addEventListener("touchcancel", () => {
+        sx = 0;
+        tracking = false;
+        rb.style.transition = "transform 0.28s var(--스프링_이징), opacity 0.22s var(--애플_이징)";
+        rb.style.transform = "";
+        rb.style.opacity = "";
       }, { passive: true });
     }
 
