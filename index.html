@@ -1649,15 +1649,9 @@
       opacity: 0.86;
     }
 
-    /* Badge & Counter Spring Pop */
+    /* Subtle iOS Counter Transition */
     .badge-pop {
-      animation: iosBadgePop 0.34s var(--애플_바운스_이징);
-    }
-    @keyframes iosBadgePop {
-      0%   { transform: scale(1); }
-      40%  { transform: scale(1.26); }
-      75%  { transform: scale(0.94); }
-      100% { transform: scale(1); }
+      transition: transform 0.22s var(--스프링_이징);
     }
 
     /* 1. Directional Tab View Slide + Fade Transition */
@@ -1856,16 +1850,7 @@
       transform: translateY(0);
     }
 
-    /* Staggered Card Entrance (Groups & Recent Items) */
-    .group-block.ios-stagger-in,
-    .recent-item.ios-stagger-in {
-      animation: iosCardRiseIn 0.34s var(--스프링_이징) both;
-      animation-delay: calc(var(--stagger-i, 0) * 36ms);
-    }
-    @keyframes iosCardRiseIn {
-      from { opacity: 0; transform: translateY(14px) scale(0.985); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
-    }
+    /* Calm iOS Native Surface (no staggered bounce) */
 
     /* 5. Phonetic Series List Row & Detail Reveal */
     .group-block,
@@ -2087,41 +2072,13 @@
       transform: rotate(90deg);
     }
 
-    /* Cascading Row Entrance when Expanding a Group */
-    .compact-item.ios-row-cascade {
-      animation: iosRowCascadeIn 0.32s var(--스프링_이징) both;
-      animation-delay: calc(var(--row-i, 0) * 26ms);
-    }
-    @keyframes iosRowCascadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Input Tile Pop-In & Fade Pop */
-    .hanzi-tile.tile-pop-in {
-      animation: iosTilePopIn 0.3s var(--애플_바운스_이징) both;
-    }
-    @keyframes iosTilePopIn {
-      0%   { opacity: 0; transform: scale(0.68); }
-      65%  { opacity: 1; transform: scale(1.06); }
-      100% { opacity: 1; transform: scale(1); }
-    }
-    .ios-fade-pop {
-      animation: iosFadePop 0.24s var(--스프링_이징) both;
-    }
-    @keyframes iosFadePop {
-      from { opacity: 0; transform: scale(0.95); }
-      to   { opacity: 1; transform: scale(1); }
-    }
-
-    /* Dynamic Panel Reveal (#inputTransResult, #justRegisteredBar, #recentRegBtnWrap_*) */
+    /* Calm iOS Panel Reveal */
     .ios-panel-expand {
-      animation: iosPanelExpand 0.32s var(--스프링_이징) both;
-      transform-origin: top center;
+      animation: iosPanelFadeIn 0.22s var(--애플_이징) both;
     }
-    @keyframes iosPanelExpand {
-      from { opacity: 0; transform: translateY(-8px) scale(0.97); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
+    @keyframes iosPanelFadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     /* TTS Scrub Bar Smooth Slide-Down Reveal */
@@ -2172,6 +2129,163 @@
     }
     .compact-item.is-expanded {
       background-color: var(--카드_배경색);
+    }
+
+    /* =====================================================================
+       Apple iOS Native Refinement (Unified Bottom Chrome, HIG Tab Bar, Calm Rows)
+       ===================================================================== */
+    /* 1. Native iOS Tab Bar with Icon + Label & Uncluttered Single Bottom Chrome */
+    .mobile-tabbar {
+      left: 0;
+      right: 0;
+      bottom: 0;
+      max-width: none;
+      border-radius: 0;
+      border: none;
+      border-top: 0.5px solid var(--헤어라인_색);
+      box-shadow: none;
+      background-color: var(--글라스_배경);
+      padding: 6px 12px calc(6px + env(safe-area-inset-bottom, 0px));
+      gap: 4px;
+    }
+    .tab-slider {
+      display: none;
+    }
+    .tab-btn {
+      height: 44px;
+      border-radius: 10px;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+    .tab-btn .sf-ico {
+      width: 22px;
+      height: 22px;
+    }
+    .tab-btn.active {
+      color: var(--주요_강조색);
+      font-weight: 600;
+    }
+
+    /* Single floating pill accessory docked cleanly above iOS Tab Bar */
+    .mobile-review-bar {
+      left: 16px;
+      right: 16px;
+      bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 5px;
+      border-radius: 999px;
+      background-color: var(--글라스_카드_배경);
+      border: 0.5px solid var(--글라스_테두리);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.07);
+      grid-template-columns: 40px 1fr 40px;
+      gap: 6px;
+    }
+    .mobile-review-bar .btn {
+      min-height: 38px;
+      border-radius: 999px;
+    }
+
+    .all-search-sticky {
+      left: 14px;
+      right: 14px;
+      bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+      border-radius: 16px;
+      padding: 8px 10px;
+      background-color: var(--글라스_카드_배경);
+      border: 0.5px solid var(--글라스_테두리);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+    }
+
+    .main-wrap {
+      padding-bottom: calc(130px + env(safe-area-inset-bottom, 0px));
+    }
+    #allGroupsList {
+      padding-top: calc(var(--상단그룹바_높이) + 12px);
+      padding-bottom: 124px;
+    }
+
+    /* 2. Calmer iOS UITableView Inset Grouped Rows & Detail Panel */
+    .group-block {
+      border: none;
+      border-radius: 14px;
+    }
+    .group-head {
+      padding: 13px 16px;
+    }
+    .compact-row-main {
+      padding: 13px 16px;
+      gap: 12px;
+      min-height: 66px;
+    }
+    .compact-item:not(:last-child)::after {
+      left: calc(var(--빈도_칸_너비) + var(--한자_박스_크기) + 34px);
+    }
+    .hw-box {
+      border: none;
+      border-radius: 11px;
+    }
+    .freq-tulpen {
+      border-radius: 6px;
+      font-weight: 600;
+    }
+    .compact-detail {
+      margin: 0 14px 14px 14px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: none;
+      background: var(--안쪽_상자_배경);
+      gap: 12px;
+    }
+    .detail-words-row {
+      padding-top: 10px;
+      gap: 8px;
+    }
+    .word-toggle-btn {
+      background: var(--구분_회색);
+      color: var(--주요_강조색);
+      padding: 4px 11px;
+    }
+    .bm-btn {
+      background: var(--구분_회색);
+    }
+    .detail-sent {
+      background: var(--카드_배경색);
+      border-radius: 11px;
+      padding: 12px 14px;
+    }
+    .detail-words-py {
+      background: var(--카드_배경색);
+      border-radius: 11px;
+    }
+
+    /* 3. Clean iOS Card & Sheet Elevation */
+    #tab-review .card {
+      border: none;
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .card {
+      border-radius: 16px;
+    }
+    .char-chip {
+      border: none;
+      box-shadow: none;
+    }
+    .char-chip.active {
+      box-shadow: 0 2px 8px rgba(0, 122, 255, 0.25);
+    }
+
+    @media (min-width: 960px) {
+      .all-search-sticky {
+        bottom: 20px;
+      }
+      .main-wrap {
+        padding-bottom: 48px;
+      }
     }
   </style>
 </head>
@@ -2511,12 +2625,15 @@
     <div id="mobileTabSlider" class="tab-slider" aria-hidden="true"></div>
     <button class="tab-btn active" data-tab="review" onclick="switchTab('review')" aria-label="복습">
       <span class="ico"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6s3-2 10 0v14c-7-2-10 0-10 0V6z"/><path d="M22 6s-3-2-10 0v14c7-2 10 0 10 0V6z"/></svg></span>
+      <span>복습</span>
     </button>
     <button class="tab-btn" data-tab="input" onclick="switchTab('input')" aria-label="입력">
       <span class="ico"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span>
+      <span>입력</span>
     </button>
     <button class="tab-btn" data-tab="all" onclick="switchTab('all')" aria-label="전체표">
       <span class="ico"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.8"/><rect x="14" y="14" width="7" height="7" rx="1.8"/></svg></span>
+      <span>전체표</span>
     </button>
   </nav>
 
@@ -3079,7 +3196,6 @@
       syncTopbarHeight();
       initModalSwipeDismiss();
       initReviewSwipeGesture();
-      initUniversalIosMotion();
 
       try { localStorage.removeItem(CACHE_KEY); } catch (e) {}
 
@@ -3090,7 +3206,7 @@
           if (!sb || state.activeTab !== "all") return;
           const kbHeight = Math.max(0, window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop);
           if (kbHeight > 100) {
-            sb.style.bottom = (kbHeight + 8) + "px";
+            sb.style.bottom = (kbHeight + 10) + "px";
           } else {
             sb.style.bottom = "";
           }
@@ -4063,10 +4179,6 @@
 
       const targetChars = (state.reviewSelectedChar === "ALL") ? item.chars : [state.reviewSelectedChar];
       area.innerHTML = buildPhoneticGroupsHtml(targetChars, item.chars);
-      area.querySelectorAll(".group-block").forEach((blk, idx) => {
-        blk.classList.add("ios-stagger-in");
-        blk.style.setProperty("--stagger-i", String(Math.min(idx, 10)));
-      });
       observeStrokeBoxes(area);
       area.querySelectorAll(".group-block").forEach(blk => syncGroupToggleBtnLabel(blk));
       updateFloatingExpandBtn();
@@ -4717,10 +4829,6 @@
           </div>
         `;
       }).join("");
-      area.querySelectorAll(".recent-item").forEach((el, idx) => {
-        el.classList.add("ios-stagger-in");
-        el.style.setProperty("--stagger-i", String(Math.min(idx, 10)));
-      });
     }
 
     function toggleRecentExpand(qRow) {
@@ -4973,12 +5081,6 @@
         const g = state.groupByRoot[root];
         if (g) {
           slot.innerHTML = buildAllGroupInnerHtml(g);
-          slot.querySelectorAll(".compact-item").forEach((rowEl, idx) => {
-            if (idx < 14) {
-              rowEl.classList.add("ios-row-cascade");
-              rowEl.style.setProperty("--row-i", String(idx));
-            }
-          });
           observeStrokeBoxes(slot);
           syncGroupToggleBtnLabel(blk);
         }
@@ -5070,12 +5172,6 @@
       listEl.innerHTML = "";
       listEl.appendChild(frag);
 
-      listEl.querySelectorAll(".group-block").forEach((blk, idx) => {
-        if (idx < 14) {
-          blk.classList.add("ios-stagger-in");
-          blk.style.setProperty("--stagger-i", String(idx));
-        }
-      });
       renderRecentSearchChips();
       observeStrokeBoxes(listEl);
       listEl.querySelectorAll(".group-block").forEach(blk => syncGroupToggleBtnLabel(blk));
@@ -5239,10 +5335,6 @@
         </div>
       `;
       }).join("");
-      body.querySelectorAll(".bm-card").forEach((el, idx) => {
-        el.classList.add("ios-stagger-in");
-        el.style.setProperty("--stagger-i", String(Math.min(idx, 12)));
-      });
     }
 
     function scrollActiveTabToTop() {
@@ -5435,103 +5527,6 @@
         const list = getOrderedReviewItems();
         const item = list[state.reviewIndex];
         if (item && item.chars.length >= 2) selectReviewChar("ALL");
-      }
-    }
-
-    /* ===== Universal iOS Layout FLIP & State Change Animator ===== */
-    function initUniversalIosMotion() {
-      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-      const CAPTURE_SEL = ".group-block, .compact-item, .recent-item, .bm-card, #reviewPhoneticArea > .card";
-      let snapMap = new Map();
-      let pendingRaf = 0;
-
-      const captureRects = () => {
-        snapMap.clear();
-        document.querySelectorAll(CAPTURE_SEL).forEach(el => {
-          if (el.offsetParent !== null) {
-            snapMap.set(el, el.getBoundingClientRect());
-          }
-        });
-      };
-
-      const playFlip = () => {
-        if (snapMap.size === 0) return;
-        const moving = [];
-        snapMap.forEach((first, el) => {
-          if (!el.isConnected || el.offsetParent === null) return;
-          const last = el.getBoundingClientRect();
-          const dy = first.top - last.top;
-          const dx = first.left - last.left;
-          if ((Math.abs(dy) > 1.5 || Math.abs(dx) > 1.5) && Math.abs(dy) < 900) {
-            el.style.transition = "none";
-            el.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
-            moving.push(el);
-          }
-        });
-        snapMap.clear();
-        if (moving.length === 0) return;
-        void document.body.offsetHeight;
-        requestAnimationFrame(() => {
-          moving.forEach(el => {
-            el.style.transition = "transform 0.34s var(--스프링_이징)";
-            el.style.transform = "";
-            const cleanup = () => {
-              el.style.transition = "";
-              el.removeEventListener("transitionend", cleanup);
-            };
-            el.addEventListener("transitionend", cleanup);
-            setTimeout(cleanup, 380);
-          });
-        });
-      };
-
-      // Capture positions right before any click/input/change mutates the DOM
-      ["pointerdown", "keydown"].forEach(evt => {
-        document.addEventListener(evt, e => {
-          if (e.target && e.target.closest("input[type='range']")) return;
-          captureRects();
-        }, { capture: true, passive: true });
-      });
-
-      const observer = new MutationObserver(mutations => {
-        let shouldAnimate = false;
-        for (const m of mutations) {
-          if (m.target && m.target.closest && m.target.closest(".hw-box, .ios-spinner, #toast, #loadingBar")) continue;
-          if (m.type === "attributes" && (m.attributeName === "class" || m.attributeName === "style")) {
-            shouldAnimate = true;
-            break;
-          }
-          if (m.type === "childList" && (m.addedNodes.length > 0 || m.removedNodes.length > 0)) {
-            shouldAnimate = true;
-            break;
-          }
-        }
-        if (!shouldAnimate) return;
-        if (pendingRaf) cancelAnimationFrame(pendingRaf);
-        pendingRaf = requestAnimationFrame(() => {
-          pendingRaf = 0;
-          playFlip();
-        });
-      });
-
-      const mw = document.getElementById("mainWrap");
-      if (mw) {
-        observer.observe(mw, {
-          subtree: true,
-          childList: true,
-          attributes: true,
-          attributeFilter: ["class", "style"]
-        });
-      }
-      const mb = document.getElementById("modalBody");
-      if (mb) {
-        observer.observe(mb, {
-          subtree: true,
-          childList: true,
-          attributes: true,
-          attributeFilter: ["class", "style"]
-        });
       }
     }
 
