@@ -2,10 +2,10 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <meta name="theme-color" id="metaThemeColor" content="#F2F2F7" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="谐声系" />
   <title>谐声系</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -268,12 +268,16 @@
       width: 100%;
       max-width: 100%;
       background-color: var(--화면_바탕_회색);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
       border-bottom: 0.5px solid transparent;
-      padding: calc(env(safe-area-inset-top, 0px) + 6px) 16px 8px;
+      padding: 8px 16px 8px;
       transition: border-color 0.22s var(--애플_이징), transform 0.28s var(--스프링_이징);
     }
     .topbar.scrolled {
       background-color: var(--화면_바탕_회색);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
       border-bottom-color: var(--헤어라인_색);
     }
     .topbar-inner {
@@ -1587,8 +1591,11 @@
       #toast { top: calc(var(--상단바_높이) + 14px); }
     }
 
+    body.dark .topbar,
     body.dark .topbar.scrolled {
       background-color: var(--화면_바탕_회색);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
     }
     #tab-all .group-block {
       background-color: var(--카드_배경색);
@@ -1698,7 +1705,7 @@
 
     /* 3. Dynamic Island Style Topbar, Floating Series Bar & Toast */
     .topbar.scrolled {
-      box-shadow: 0 0.5px 0 var(--헤어라인_색);
+      box-shadow: none;
     }
     .floating-series-bar {
       display: flex;
