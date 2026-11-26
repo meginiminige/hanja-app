@@ -34,7 +34,6 @@
       --병음_글자크기: 14px;
       --상단바_높이: 48px;
 
-      /* Apple Design System — Light Mode */
       --화면_바탕_회색: #F2F2F7;
       --카드_배경색: #FFFFFF;
       --안쪽_상자_배경: #F5F5F8;
@@ -171,15 +170,13 @@
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
     html, body {
-      position: fixed;
-      inset: 0;
       margin: 0;
       padding: 0;
       width: 100%;
       max-width: 100%;
-      height: 100%;
-      height: 100dvh;
-      overflow: hidden;
+      min-height: 100%;
+      min-height: 100dvh;
+      overflow-x: hidden;
       overscroll-behavior: none;
       background-color: var(--화면_바탕_회색);
       color: var(--기본_글자색);
@@ -247,7 +244,7 @@
     }
     .auth-input:focus { outline: none; border-color: var(--주요_강조색); }
 
-    /* 상단바 — 블러 없는 완전 단색 고정 헤더 */
+    /* 상단바 */
     .topbar {
       position: fixed;
       top: 0;
@@ -575,7 +572,7 @@
     .qcp-item-top { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--보조_글자색); }
     .qcp-item-ex { font-family: var(--한자_폰트); font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    /* 북마크 & 메인 스크롤 컨테이너 (최하단 여백 없이 모서리까지 꽉 채움) */
+    /* 북마크 & 메인 스크롤 컨테이너 */
     .bm-btn {
       height: 28px;
       padding: 0 9px;
@@ -608,14 +605,11 @@
       position: relative;
       width: 100%;
       max-width: 1240px;
-      height: 100%;
-      height: 100dvh;
+      min-height: 100%;
       margin: 0 auto;
       padding: calc(var(--상단바_높이) + 4px) 4px calc(76px + env(safe-area-inset-bottom, 0px));
-      overflow-y: auto;
       overflow-x: hidden;
       overscroll-behavior: none;
-      -webkit-overflow-scrolling: touch;
       background-color: var(--화면_바탕_회색);
       transition: transform 0.28s var(--애플_이징), border-radius 0.28s var(--애플_이징);
     }
@@ -1104,7 +1098,7 @@
     .status-pill.done { background: var(--완료_뱃지배경); color: var(--완료_뱃지글자); }
     .status-pill.trans-only { background: var(--구분_회색); color: var(--보조_글자색); }
 
-    /* 전체표 검색바 — 최하단 탭바 바로 위에 밀착 */
+    /* 전체표 검색바 */
     .all-search-sticky {
       position: fixed;
       bottom: calc(44px + env(safe-area-inset-bottom, 0px));
@@ -1205,7 +1199,7 @@
     .choice-opt:last-child { margin-bottom: 0; }
     .choice-opt.selected { background: var(--강조_연한배경); box-shadow: inset 0 0 0 1.5px var(--주요_강조색); }
 
-    /* 모바일 리뷰 바 & 하단 탭바 — 화면 최하단(bottom: 0) 및 좌우 모서리 밀착 */
+    /* 모바일 리뷰 바 & 하단 탭바 */
     .mobile-review-bar {
       position: fixed;
       left: 0;
@@ -1941,7 +1935,6 @@
     const ICO_SEND = '<svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';
     const ICO_BOLT = '<svg class="sf-ico" style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>';
     const ICO_SEARCH = '<svg class="sf-ico" style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>';
-    const ICO_CHECK = '<svg class="sf-ico" style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
     const ICO_SPEAKER = '<svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
     const ICO_LIST = '<svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="4" cy="6" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="18" r="1" fill="currentColor"/></svg>';
 
@@ -2407,7 +2400,7 @@
         const tb = document.getElementById("topbar");
         const mw = document.getElementById("mainWrap");
         if (!tb) return;
-        const y = mw ? mw.scrollTop : 0;
+        const y = mw ? mw.scrollTop : window.scrollY;
         const drawerOpen = document.getElementById("settingsDrawer")?.classList.contains("open");
         tb.classList.toggle("scrolled", y > 4 || Boolean(drawerOpen));
       };
@@ -2420,6 +2413,7 @@
           updateFloatingExpandBtn();
         });
       };
+      window.addEventListener("scroll", onScrollSyncFloat, { passive: true });
       const mwEl = document.getElementById("mainWrap");
       if (mwEl) mwEl.addEventListener("scroll", onScrollSyncFloat, { passive: true });
       const mbEl = document.getElementById("modalBody");
