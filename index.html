@@ -21,14 +21,14 @@
       --글라스_블러: 20px;
       --글라스_채도: 180%;
 
-      --상단그룹바_배율: 1;
-      --상단그룹바_높이: calc(36px * var(--상단그룹바_배율));
+      --상단그룹바_높이: 36px;
       --상단그룹바_성부크기: 16px;
       --상단그룹바_글자크기: 14.5px;
       --상단그룹바_여백: 0 14px;
 
       --단어_글자크기: 16px;
-      --단어_병음뜻_크기: 14px;
+      --단어병음_글자크기: 15px;
+      --상단배너_배율: 1;
       --한자_박스_크기: 46px;
       --한자_글자_크기: 31px;
       --빈도_칸_너비: 34px;
@@ -270,12 +270,10 @@
       background-color: var(--화면_바탕_회색);
       border-bottom: 0.5px solid transparent;
       padding: calc(env(safe-area-inset-top, 0px) + 6px) 16px 8px;
-      transition: background-color 0.22s var(--애플_이징), border-color 0.22s var(--애플_이징), transform 0.28s var(--스프링_이징);
+      transition: border-color 0.22s var(--애플_이징), transform 0.28s var(--스프링_이징);
     }
     .topbar.scrolled {
-      background-color: var(--글라스_배경);
-      -webkit-backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
-      backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
+      background-color: var(--화면_바탕_회색);
       border-bottom-color: var(--헤어라인_색);
     }
     .topbar-inner {
@@ -406,34 +404,31 @@
 
     /* 설정 시트 — Apple Settings Grouped List Style */
     .settings-drawer {
+      position: absolute;
+      top: 100%;
+      left: 14px;
+      right: 14px;
       max-width: 680px;
       margin: 0 auto;
-      max-height: 0;
-      opacity: 0;
-      overflow: hidden;
+      z-index: 260;
+      display: grid;
+      grid-template-rows: 0fr;
       pointer-events: none;
-      transform: translateY(-6px);
-      transition:
-        max-height 0.34s var(--스프링_이징),
-        opacity 0.2s var(--애플_이징),
-        transform 0.3s var(--스프링_이징);
-      will-change: max-height, opacity, transform;
+      transition: grid-template-rows 0.24s var(--애플_이징);
     }
     .settings-drawer.open {
-      max-height: 78dvh;
-      opacity: 1;
+      grid-template-rows: 1fr;
       pointer-events: auto;
-      transform: translateY(0);
     }
-    .settings-inner { overflow: visible; }
+    .settings-inner { overflow: hidden; }
     .settings-box {
-      margin-top: 10px;
+      margin-top: 6px;
       margin-bottom: 6px;
       padding: 16px;
       border-radius: 20px;
       background: var(--화면_바탕_회색);
       border: 0.5px solid var(--글라스_테두리);
-      box-shadow: var(--글라스_그림자);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14), 0 0 0 0.5px var(--글라스_테두리);
       display: flex;
       flex-direction: column;
       gap: 18px;
@@ -537,8 +532,8 @@
       right: 14px;
       max-width: 1012px;
       margin: 0 auto;
-      height: var(--상단그룹바_높이);
-      padding: 0 6px 0 14px;
+      height: calc(var(--상단그룹바_높이) * var(--상단배너_배율));
+      padding: 0 calc(6px * var(--상단배너_배율)) 0 calc(14px * var(--상단배너_배율));
       border-radius: 999px;
       z-index: 240;
       background-color: var(--글라스_카드_배경);
@@ -554,15 +549,15 @@
     .floating-series-bar.show { display: flex; }
     .fsb-root {
       font-family: var(--한자_폰트);
-      font-size: calc(var(--상단그룹바_성부크기) * var(--상단그룹바_배율));
+      font-size: calc(var(--상단그룹바_성부크기) * var(--상단배너_배율));
       font-weight: 700;
       color: var(--주요_강조색);
       flex-shrink: 0;
     }
-    .fsb-colon { font-size: calc(var(--상단그룹바_글자크기) * var(--상단그룹바_배율)); color: var(--흐린_글자색); flex-shrink: 0; }
+    .fsb-colon { font-size: calc(var(--상단그룹바_글자크기) * var(--상단배너_배율)); color: var(--흐린_글자색); flex-shrink: 0; }
     .fsb-chars {
       font-family: var(--한자_폰트);
-      font-size: calc(var(--상단그룹바_글자크기) * var(--상단그룹바_배율));
+      font-size: calc(var(--상단그룹바_글자크기) * var(--상단배너_배율));
       font-weight: var(--한자_굵기);
       color: var(--기본_글자색);
       white-space: nowrap;
@@ -578,8 +573,8 @@
     /* Embedded right-side action inside floating bar (eliminates duplicate floating circle) */
     .floating-expand-btn {
       flex-shrink: 0;
-      width: calc(26px * var(--상단그룹바_배율));
-      height: calc(26px * var(--상단그룹바_배율));
+      width: 26px;
+      height: 26px;
       padding: 0;
       border-radius: 999px;
       background: var(--구분_회색);
@@ -1083,7 +1078,7 @@
       color: var(--주요_강조색);
     }
     .detail-words-py {
-      font-size: calc(var(--단어_병음뜻_크기) * var(--전체_글자배율));
+      font-size: calc(var(--단어병음_글자크기) * var(--전체_글자배율));
       color: var(--보조_글자색);
       padding: 10px 14px;
       border-radius: 12px;
@@ -1570,7 +1565,7 @@
     #tab-all .group-block { transition: transform 0.24s var(--스프링_이징), background-color 0.18s var(--애플_이징); }
     #tab-all .accordion-body { transition: grid-template-rows 0.28s var(--스프링_이징); }
     #tab-all .chev { transition: transform 0.28s var(--애플_바운스_이징); }
-    #tab-all { overflow-anchor: none; }
+    #tab-all { contain: layout style; }
 
     .main-wrap::-webkit-scrollbar, .modal-body::-webkit-scrollbar, .qcp-list::-webkit-scrollbar, .pc-queue-list::-webkit-scrollbar, .settings-box::-webkit-scrollbar { width: 6px; height: 6px; }
     .main-wrap::-webkit-scrollbar-thumb, .modal-body::-webkit-scrollbar-thumb, .qcp-list::-webkit-scrollbar-thumb, .pc-queue-list::-webkit-scrollbar-thumb, .settings-box::-webkit-scrollbar-thumb {
@@ -1593,9 +1588,7 @@
     }
 
     body.dark .topbar.scrolled {
-      background-color: var(--글라스_배경);
-      -webkit-backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
-      backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
+      background-color: var(--화면_바탕_회색);
     }
     #tab-all .group-block {
       background-color: var(--카드_배경색);
@@ -1710,8 +1703,8 @@
     .floating-series-bar {
       display: flex;
       top: calc(var(--상단바_높이) + 8px);
-      height: calc(34px * var(--상단그룹바_배율));
-      padding: 0 calc(6px * var(--상단그룹바_배율)) 0 calc(13px * var(--상단그룹바_배율));
+      height: calc(34px * var(--상단배너_배율));
+      padding: 0 calc(6px * var(--상단배너_배율)) 0 calc(13px * var(--상단배너_배율));
       background-color: var(--글라스_배경);
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06), 0 0 0 0.5px var(--글라스_테두리);
       opacity: 0;
@@ -1760,9 +1753,14 @@
 
     /* Settings Sheet & Switch Spring */
     .settings-box {
-      max-height: calc(78dvh - 18px);
+      max-height: calc(100dvh - var(--상단바_높이) - 24px);
       padding: 14px;
       gap: 16px;
+      opacity: 0;
+      transition: opacity 0.18s var(--애플_이징);
+    }
+    .settings-drawer.open .settings-box {
+      opacity: 1;
     }
     .ios-switch-track::after {
       transition: transform 0.28s var(--애플_바운스_이징), width 0.18s var(--애플_이징);
@@ -2375,17 +2373,15 @@
                 </select>
               </div>
               <div class="ios-switch-row">
-                <span>중국어 발음 음성</span>
-                <select id="settingsVoiceSelect" class="font-select" style="max-width:170px;" onchange="changeChineseVoice(this.value)" title="중국어 음성 선택">
-                  <option value="">기본 음성</option>
-                </select>
-              </div>
-              <div class="ios-switch-row">
                 <span>PASS 한자 표시</span>
                 <label class="ios-switch">
                   <input id="swShowPass" type="checkbox" onchange="togglePassGlobal()" />
                   <span class="ios-switch-track"></span>
                 </label>
+              </div>
+              <div class="ios-switch-row">
+                <span>중국어 음성 모델</span>
+                <select id="settingsVoiceSelect" class="font-select" style="max-width:170px;" onchange="changeChineseVoice(this.value)" title="중국어 음성 모델 선택"></select>
               </div>
               <div class="ios-switch-row">
                 <span>획순 자동 재생</span>
@@ -2440,16 +2436,16 @@
                     <input id="rngWordSize" type="range" min="12" max="28" step="0.5" oninput="updateVisualSettings()" />
                   </div>
                   <div class="ctrl-item">
-                    <div class="ctrl-label"><span>단어 병음·뜻 크기</span><span id="lblWordSubSize" class="ctrl-val">14px</span></div>
-                    <input id="rngWordSubSize" type="range" min="11" max="24" step="0.5" oninput="updateVisualSettings()" />
+                    <div class="ctrl-label"><span>예시 단어 뜻·병음 크기</span><span id="lblWordPySize" class="ctrl-val">15px</span></div>
+                    <input id="rngWordPySize" type="range" min="11" max="26" step="0.5" oninput="updateVisualSettings()" />
                   </div>
                   <div class="ctrl-item">
                     <div class="ctrl-label"><span>그룹 목차 한자 크기</span><span id="lblTocCharSize" class="ctrl-val">16px</span></div>
                     <input id="rngTocCharSize" type="range" min="13" max="24" step="0.5" oninput="updateTocAndTradSettings()" />
                   </div>
                   <div class="ctrl-item">
-                    <div class="ctrl-label"><span>상단 해성계 배너 배율</span><span id="lblSeriesBannerScale" class="ctrl-val">100%</span></div>
-                    <input id="rngSeriesBannerScale" type="range" min="80" max="150" step="5" oninput="updateVisualSettings()" />
+                    <div class="ctrl-label"><span>상단 해성계 배너 배율</span><span id="lblBannerScale" class="ctrl-val">100%</span></div>
+                    <input id="rngBannerScale" type="range" min="80" max="140" step="5" oninput="updateVisualSettings()" />
                   </div>
                 </div>
               </div>
@@ -2822,12 +2818,12 @@
       tradSize: 13.5,
       memoSize: 12.5,
       wordSize: CSS_DEFAULT_WORD_SIZE,
-      wordSubSize: 14,
+      wordPySize: 15,
+      bannerScale: 100,
       hanziWeight: 400,
       tileSize: 56,
       tileGap: 10,
-      autoExpandMin: DEFAULT_AUTO_EXPAND_MIN,
-      seriesBannerScale: 100
+      autoExpandMin: DEFAULT_AUTO_EXPAND_MIN
     };
 
     const state = {
@@ -2885,12 +2881,12 @@
           tradSize: Number(raw.tradSize) || DEFAULT_VISUAL_CFG.tradSize,
           memoSize: Number(raw.memoSize) || DEFAULT_VISUAL_CFG.memoSize,
           wordSize: Number(raw.wordSize) || DEFAULT_VISUAL_CFG.wordSize,
-          wordSubSize: Number(raw.wordSubSize) || DEFAULT_VISUAL_CFG.wordSubSize,
+          wordPySize: Number(raw.wordPySize) || DEFAULT_VISUAL_CFG.wordPySize,
+          bannerScale: Number(raw.bannerScale) || DEFAULT_VISUAL_CFG.bannerScale,
           hanziWeight: Number(raw.hanziWeight) || DEFAULT_VISUAL_CFG.hanziWeight,
           tileSize: Number(raw.tileSize) || DEFAULT_VISUAL_CFG.tileSize,
           tileGap: (raw.tileGap !== undefined) ? Number(raw.tileGap) : DEFAULT_VISUAL_CFG.tileGap,
-          autoExpandMin: (raw.autoExpandMin !== undefined) ? Number(raw.autoExpandMin) : DEFAULT_VISUAL_CFG.autoExpandMin,
-          seriesBannerScale: Number(raw.seriesBannerScale) || DEFAULT_VISUAL_CFG.seriesBannerScale
+          autoExpandMin: (raw.autoExpandMin !== undefined) ? Number(raw.autoExpandMin) : DEFAULT_VISUAL_CFG.autoExpandMin
         };
       } catch (e) {
         return Object.assign({}, DEFAULT_VISUAL_CFG);
@@ -2967,14 +2963,14 @@
       if (sels.length === 0) return;
       const voices = getChineseVoices();
       const savedUri = localStorage.getItem("hanja_tts_voice") || "";
-      const optionsHtml = voices.length === 0
+      const html = voices.length === 0
         ? `<option value="">기본 음성</option>`
         : voices.map(v => {
             const label = `${v.name.replace(/^(Microsoft|Apple|Google)\s+/i, "")} (${v.lang})`;
             return `<option value="${escHtml(v.voiceURI || v.name)}">${escHtml(label)}</option>`;
           }).join("");
       sels.forEach(sel => {
-        sel.innerHTML = optionsHtml;
+        sel.innerHTML = html;
         if (savedUri && Array.from(sel.options).some(o => o.value === savedUri)) {
           sel.value = savedUri;
         }
@@ -2983,10 +2979,10 @@
 
     function changeChineseVoice(val) {
       localStorage.setItem("hanja_tts_voice", val || "");
-      const s1 = document.getElementById("ttsVoiceSelect");
-      const s2 = document.getElementById("settingsVoiceSelect");
-      if (s1 && s1.value !== val) s1.value = val;
-      if (s2 && s2.value !== val) s2.value = val;
+      ["ttsVoiceSelect", "settingsVoiceSelect"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.value !== (val || "")) el.value = val || "";
+      });
       if (ttsState.playing && ttsState.activeText) {
         const curText = ttsState.activeText;
         const curBtn = ttsState.activeBtn;
@@ -3124,14 +3120,14 @@
       const freqWidth = Math.max(32, Math.round(v.freqSize * 1.9 + 4));
       s.setProperty("--예문_글자크기", v.exampleSize + "px");
       s.setProperty("--전체_글자배율", (v.fontScale / 100).toFixed(2));
-      s.setProperty("--상단그룹바_배율", (v.seriesBannerScale / 100).toFixed(2));
       s.setProperty("--사용빈도_글자크기", v.freqSize + "px");
       s.setProperty("--빈도_칸_너비", freqWidth + "px");
       s.setProperty("--병음_글자크기", v.pinyinSize + "px");
       s.setProperty("--병기_번체_크기", v.tradSize + "px");
       s.setProperty("--병음훈음_글자크기", v.memoSize + "px");
       s.setProperty("--단어_글자크기", v.wordSize + "px");
-      s.setProperty("--단어_병음뜻_크기", v.wordSubSize + "px");
+      s.setProperty("--단어병음_글자크기", v.wordPySize + "px");
+      s.setProperty("--상단배너_배율", (v.bannerScale / 100).toFixed(2));
       s.setProperty("--한자_굵기", v.hanziWeight);
       s.setProperty("--타일_크기", v.tileSize + "px");
       s.setProperty("--타일_간격", v.tileGap + "px");
@@ -3143,12 +3139,12 @@
       document.getElementById("rngTradSize").value = v.tradSize;
       document.getElementById("rngMemoSize").value = v.memoSize;
       document.getElementById("rngWordSize").value = v.wordSize;
-      if (document.getElementById("rngWordSubSize")) document.getElementById("rngWordSubSize").value = v.wordSubSize;
+      document.getElementById("rngWordPySize").value = v.wordPySize;
+      document.getElementById("rngBannerScale").value = v.bannerScale;
       document.getElementById("rngHanziWeight").value = v.hanziWeight;
       document.getElementById("rngTileSize").value = v.tileSize;
       document.getElementById("rngTileGap").value = v.tileGap;
       document.getElementById("rngAutoExpand").value = v.autoExpandMin;
-      if (document.getElementById("rngSeriesBannerScale")) document.getElementById("rngSeriesBannerScale").value = v.seriesBannerScale;
 
       document.getElementById("lblExampleSize").textContent = v.exampleSize + "px";
       document.getElementById("lblFontScale").textContent = v.fontScale + "%";
@@ -3157,12 +3153,12 @@
       document.getElementById("lblTradSize").textContent = v.tradSize + "px";
       document.getElementById("lblMemoSize").textContent = v.memoSize + "px";
       document.getElementById("lblWordSize").textContent = v.wordSize + "px";
-      if (document.getElementById("lblWordSubSize")) document.getElementById("lblWordSubSize").textContent = v.wordSubSize + "px";
+      document.getElementById("lblWordPySize").textContent = v.wordPySize + "px";
+      document.getElementById("lblBannerScale").textContent = v.bannerScale + "%";
       document.getElementById("lblHanziWeight").textContent = v.hanziWeight;
       document.getElementById("lblTileSize").textContent = v.tileSize + "px";
       document.getElementById("lblTileGap").textContent = v.tileGap + "px";
       document.getElementById("lblAutoExpand").textContent = v.autoExpandMin + "분";
-      if (document.getElementById("lblSeriesBannerScale")) document.getElementById("lblSeriesBannerScale").textContent = v.seriesBannerScale + "%";
       syncGlassSlidersUI();
       updateTocAndTradSettings();
     }
@@ -3176,12 +3172,12 @@
         tradSize: Number(document.getElementById("rngTradSize").value),
         memoSize: Number(document.getElementById("rngMemoSize").value),
         wordSize: Number(document.getElementById("rngWordSize").value),
-        wordSubSize: Number(document.getElementById("rngWordSubSize")?.value || 14),
+        wordPySize: Number(document.getElementById("rngWordPySize").value),
+        bannerScale: Number(document.getElementById("rngBannerScale").value),
         hanziWeight: Number(document.getElementById("rngHanziWeight").value),
         tileSize: Number(document.getElementById("rngTileSize").value),
         tileGap: Number(document.getElementById("rngTileGap").value),
-        autoExpandMin: Number(document.getElementById("rngAutoExpand").value),
-        seriesBannerScale: Number(document.getElementById("rngSeriesBannerScale")?.value || 100)
+        autoExpandMin: Number(document.getElementById("rngAutoExpand").value)
       };
       localStorage.setItem("hanja_visual_cfg", JSON.stringify(state.visual));
       applyVisualConfigToDom();
@@ -3195,14 +3191,8 @@
     }
 
     function syncTopbarHeight() {
-      const tbi = document.querySelector(".topbar-inner");
       const tb = document.getElementById("topbar");
-      if (tbi && tb) {
-        const cs = getComputedStyle(tb);
-        const padTop = parseFloat(cs.paddingTop) || 0;
-        const padBot = parseFloat(cs.paddingBottom) || 0;
-        document.documentElement.style.setProperty("--상단바_높이", Math.round(tbi.offsetHeight + padTop + padBot) + "px");
-      } else if (tb) {
+      if (tb) {
         document.documentElement.style.setProperty("--상단바_높이", tb.offsetHeight + "px");
       }
       const sb = document.querySelector(".all-search-sticky");
@@ -3216,8 +3206,8 @@
       const btn = document.getElementById("settingsToggleBtn");
       const isOpen = drawer.classList.toggle("open");
       btn.classList.toggle("on", isOpen);
+      if (isOpen) populateChineseVoices();
       if (window.syncTopbarScrolled) window.syncTopbarScrolled();
-      setTimeout(syncTopbarHeight, 320);
     }
 
     function toggleSettingsMore(btnEl) {
@@ -3289,8 +3279,8 @@
       const mbEl = document.getElementById("modalBody");
       if (mbEl) mbEl.addEventListener("scroll", onScrollSyncFloat, { passive: true });
       if ("ResizeObserver" in window) {
-        const tbi = document.querySelector(".topbar-inner");
-        if (tbi) new ResizeObserver(syncTopbarHeight).observe(tbi);
+        const tb = document.getElementById("topbar");
+        if (tb) new ResizeObserver(syncTopbarHeight).observe(tb);
       }
 
       document.getElementById("inputExample").addEventListener("input", () => {
@@ -5114,27 +5104,27 @@
         acc.classList.remove("open");
         if (chev) chev.classList.remove("open");
         cleanupStrokeBoxes(slot);
-        updateFloatingExpandBtn();
         setTimeout(() => {
           if (!acc.classList.contains("open")) {
             slot.innerHTML = "";
+            updateFloatingExpandBtn();
           }
-        }, 320);
+        }, 210);
       } else {
         state.expandedRoots.add(root);
-        if (!slot.firstElementChild) {
-          const g = state.groupByRoot[root];
-          if (g) {
-            slot.innerHTML = buildAllGroupInnerHtml(g);
-          }
+        const g = state.groupByRoot[root];
+        if (g) {
+          slot.innerHTML = buildAllGroupInnerHtml(g);
+          syncGroupToggleBtnLabel(blk);
         }
         acc.classList.add("open");
         if (chev) chev.classList.add("open");
-        requestAnimationFrame(() => {
-          observeStrokeBoxes(slot);
-          syncGroupToggleBtnLabel(blk);
-          updateFloatingExpandBtn();
-        });
+        updateFloatingExpandBtn();
+        if (g) {
+          setTimeout(() => {
+            if (acc.classList.contains("open")) observeStrokeBoxes(slot);
+          }, 260);
+        }
       }
     }
 
