@@ -2144,42 +2144,8 @@
     }
 
     /* =====================================================================
-       Apple iOS Native Refinement (Unified Bottom Chrome, HIG Tab Bar, Calm Rows)
+       Apple iOS Native Refinement (Calm Rows & Card Polish)
        ===================================================================== */
-    /* 1. Native iOS Tab Bar with Icon + Label & Uncluttered Single Bottom Chrome */
-    .mobile-tabbar {
-      left: 0;
-      right: 0;
-      bottom: 0;
-      max-width: none;
-      border-radius: 0;
-      border: none;
-      border-top: 0.5px solid var(--헤어라인_색);
-      box-shadow: none;
-      background-color: var(--글라스_배경);
-      padding: 6px 12px calc(6px + env(safe-area-inset-bottom, 0px));
-      gap: 4px;
-    }
-    .tab-slider {
-      display: none;
-    }
-    .tab-btn {
-      height: 44px;
-      border-radius: 10px;
-      flex-direction: column;
-      gap: 2px;
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: -0.01em;
-    }
-    .tab-btn .sf-ico {
-      width: 22px;
-      height: 22px;
-    }
-    .tab-btn.active {
-      color: var(--주요_강조색);
-      font-weight: 600;
-    }
 
     /* Single floating pill accessory docked cleanly above iOS Tab Bar */
     .mobile-review-bar {
@@ -2649,15 +2615,12 @@
     <div id="mobileTabSlider" class="tab-slider" aria-hidden="true"></div>
     <button class="tab-btn active" data-tab="review" onclick="switchTab('review')" aria-label="복습">
       <span class="ico"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6s3-2 10 0v14c-7-2-10 0-10 0V6z"/><path d="M22 6s-3-2-10 0v14c7-2 10 0 10 0V6z"/></svg></span>
-      <span>복습</span>
     </button>
     <button class="tab-btn" data-tab="input" onclick="switchTab('input')" aria-label="입력">
       <span class="ico"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span>
-      <span>입력</span>
     </button>
     <button class="tab-btn" data-tab="all" onclick="switchTab('all')" aria-label="전체표">
       <span class="ico"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.8"/><rect x="14" y="14" width="7" height="7" rx="1.8"/></svg></span>
-      <span>전체표</span>
     </button>
   </nav>
 
