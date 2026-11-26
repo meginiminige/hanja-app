@@ -1306,24 +1306,28 @@
     }
     .mobile-tabbar {
       position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      left: 24px;
+      right: 24px;
+      bottom: max(12px, env(safe-area-inset-bottom, 0px));
+      max-width: 360px;
+      margin: 0 auto;
       z-index: 50;
-      background-color: var(--글라스_배경);
+      background-color: var(--글라스_카드_배경);
       -webkit-backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
       backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
-      border-top: 0.5px solid var(--헤어라인_색);
-      padding: 5px 16px max(6px, env(safe-area-inset-bottom, 0px));
+      border: 0.5px solid var(--글라스_테두리);
+      border-radius: 999px;
+      box-shadow: var(--글라스_그림자);
+      padding: 4px;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 4px;
     }
     .tab-slider {
       position: absolute;
-      top: 5px;
-      left: 16px;
-      width: calc((100% - 32px - 8px) / 3);
+      top: 4px;
+      left: 4px;
+      width: calc((100% - 8px - 8px) / 3);
       height: 36px;
       border-radius: 999px;
       background: var(--강조_연한배경);
