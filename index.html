@@ -1593,8 +1593,13 @@
     }
 
     /* =====================================================================
-       Apple iOS / iPadOS HIG Native Polish & Visual Hierarchy Refinement
+       Apple iOS / iPadOS HIG Layout & Spring Physics Animations
        ===================================================================== */
+    :root {
+      --애플_바운스_이징: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --시트_이징: cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
     body {
       letter-spacing: -0.012em;
       text-rendering: optimizeLegibility;
@@ -1612,28 +1617,94 @@
       font-variant-numeric: tabular-nums;
     }
 
-    /* Topbar & Floating Series Bar: eliminate overlapping collisions */
+    /* 1. Directional Tab View Slide + Fade Transition */
+    .tab-view.tab-enter-right {
+      animation: iosTabSlideRight 0.28s var(--스프링_이징) both;
+    }
+    .tab-view.tab-enter-left {
+      animation: iosTabSlideLeft 0.28s var(--스프링_이징) both;
+    }
+    @keyframes iosTabSlideRight {
+      from { opacity: 0.35; transform: translateX(18px); }
+      to   { opacity: 1;    transform: translateX(0); }
+    }
+    @keyframes iosTabSlideLeft {
+      from { opacity: 0.35; transform: translateX(-18px); }
+      to   { opacity: 1;    transform: translateX(0); }
+    }
+
+    /* 2. Tab Bar Icon Bounce & Overshoot Spring Sliders */
+    .tab-slider {
+      transition: transform 0.34s var(--애플_바운스_이징);
+    }
+    .pc-nav-slider,
+    .bm-seg-slider {
+      transition: transform 0.32s var(--애플_바운스_이징), width 0.28s var(--스프링_이징);
+    }
+    .tab-btn.tab-bounce .ico,
+    .pc-nav-btn.tab-bounce {
+      animation: iosTabIconBounce 0.36s var(--애플_바운스_이징);
+    }
+    @keyframes iosTabIconBounce {
+      0%   { transform: scale(1); }
+      35%  { transform: scale(0.84); }
+      72%  { transform: scale(1.12); }
+      100% { transform: scale(1); }
+    }
+
+    /* 3. Dynamic Island Style Topbar, Floating Series Bar & Toast */
     .topbar.scrolled {
       box-shadow: 0 0.5px 0 var(--헤어라인_색);
     }
     .floating-series-bar {
+      display: flex;
       top: calc(var(--상단바_높이) + 8px);
       height: 34px;
       padding: 0 6px 0 13px;
       background-color: var(--글라스_배경);
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06), 0 0 0 0.5px var(--글라스_테두리);
-      transition: opacity 0.2s var(--애플_이징), transform 0.24s var(--스프링_이징);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-10px) scale(0.95);
+      transition: opacity 0.22s var(--애플_이징), transform 0.32s var(--애플_바운스_이징);
+    }
+    .floating-series-bar.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
     }
     body.dark .floating-series-bar {
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 0 0.5px var(--글라스_테두리);
     }
+
     #toast {
       top: calc(var(--상단바_높이) + 48px);
       font-weight: 600;
       letter-spacing: -0.01em;
+      transform: translateX(-50%) translateY(-12px) scale(0.88);
+      transition: opacity 0.22s var(--애플_이징), transform 0.34s var(--애플_바운스_이징);
+    }
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0) scale(1);
     }
 
-    /* Settings sheet: prevent nested double-scroll feel */
+    /* Queue Popover Spring Scale */
+    .queue-corner-popover {
+      display: flex;
+      opacity: 0;
+      pointer-events: none;
+      transform-origin: top right;
+      transform: translateY(-8px) scale(0.92);
+      transition: opacity 0.18s var(--애플_이징), transform 0.28s var(--애플_바운스_이징);
+    }
+    .queue-corner-popover.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Settings Sheet: prevent nested double-scroll feel */
     .settings-box {
       max-height: calc(100dvh - var(--상단바_높이) - 24px);
       padding: 14px;
@@ -1651,7 +1722,7 @@
       line-height: 1.12;
     }
 
-    /* Review Card & Interactive Hanzi Chips */
+    /* 4. Review Card, Tactile Hanzi Chips & Staggered Group Cards */
     #tab-review .card {
       padding: 18px 18px 20px;
       border: 0.5px solid var(--헤어라인_색);
@@ -1665,10 +1736,10 @@
       border-radius: 7px;
       box-decoration-break: clone;
       -webkit-box-decoration-break: clone;
-      transition: background-color 0.16s var(--애플_이징), transform 0.16s var(--스프링_이징);
+      transition: background-color 0.16s var(--애플_이징), transform 0.2s var(--애플_바운스_이징);
     }
     .ex-hl:active {
-      transform: scale(0.96);
+      transform: scale(0.93);
     }
     .char-chips {
       gap: 8px;
@@ -1677,13 +1748,43 @@
     .char-chip {
       border: 0.5px solid var(--헤어라인_색);
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+      transition: transform 0.26s var(--애플_바운스_이징), background-color 0.18s var(--애플_이징), color 0.18s var(--애플_이징), box-shadow 0.22s var(--애플_이징);
+    }
+    .char-chip:active {
+      transform: scale(0.91);
     }
     .char-chip.active {
       border-color: transparent;
       box-shadow: 0 4px 12px rgba(0, 122, 255, 0.28);
+      animation: iosChipSelectPop 0.3s var(--애플_바운스_이징);
+    }
+    @keyframes iosChipSelectPop {
+      0%   { transform: scale(0.92); }
+      55%  { transform: scale(1.06); }
+      100% { transform: scale(1); }
     }
 
-    /* Phonetic Series List Row (.compact-row-main): balanced visual weight & breathing room */
+    .hanzi-tile {
+      transition: transform 0.24s var(--애플_바운스_이징), background-color 0.16s var(--애플_이징), color 0.16s var(--애플_이징);
+    }
+    .hanzi-tile:active {
+      transform: scale(0.9);
+    }
+    .hanzi-tile.selected {
+      animation: iosChipSelectPop 0.28s var(--애플_바운스_이징);
+    }
+
+    /* Staggered Group Block Entrance */
+    .group-block.ios-stagger-in {
+      animation: iosCardRiseIn 0.34s var(--스프링_이징) both;
+      animation-delay: calc(var(--stagger-i, 0) * 42ms);
+    }
+    @keyframes iosCardRiseIn {
+      from { opacity: 0; transform: translateY(14px) scale(0.985); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* 5. Phonetic Series List Row & Detail Reveal */
     .group-block,
     .bm-card {
       border: 0.5px solid var(--헤어라인_색);
@@ -1692,12 +1793,17 @@
       padding: 11px 14px;
       gap: 10px;
       min-height: 62px;
+      transition: background-color 0.14s var(--애플_이징);
     }
     .compact-row-main:active {
       background-color: var(--구분_회색);
     }
     .hw-box {
       border: 0.5px solid var(--헤어라인_색);
+      transition: transform 0.22s var(--애플_바운스_이징);
+    }
+    .hw-box:active {
+      transform: scale(0.92);
     }
     .compact-mid {
       line-height: 1.38;
@@ -1718,14 +1824,21 @@
       color: var(--흐린_글자색);
     }
 
-    /* Expanded Detail Drawer inside Row */
+    /* Smooth Inner Content Reveal inside Accordion */
     .compact-detail {
       margin: 0 12px 12px 12px;
       padding: 13px 15px;
       border-radius: 13px;
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: opacity 0.22s var(--애플_이징), transform 0.26s var(--스프링_이징);
+    }
+    .accordion-body.open .compact-detail {
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    /* Mobile Bottom Navigation & Review Action Accessory: slimmer, unified iOS floating pills */
+    /* 6. Mobile Bottom Navigation & Review Action Accessory */
     .mobile-review-bar {
       bottom: calc(56px + env(safe-area-inset-bottom, 0px));
       left: 16px;
@@ -1737,6 +1850,12 @@
       background-color: var(--글라스_배경);
       grid-template-columns: 42px 1fr 42px;
       gap: 5px;
+      transition: opacity 0.2s var(--애플_이징), transform 0.28s var(--스프링_이징);
+    }
+    .mobile-review-bar.is-hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(14px) scale(0.96);
     }
     .mobile-tabbar {
       bottom: max(10px, env(safe-area-inset-bottom, 0px));
@@ -1765,20 +1884,66 @@
       padding: 8px 10px;
     }
 
-    /* Modal Sheet: crisp native hairline & smoother depth */
+    /* 7. Modal Sheet Open/Close Spring Motion */
     .modal-backdrop {
-      transition: background-color 0.24s var(--애플_이징);
+      animation: iosBackdropFadeIn 0.22s var(--애플_이징) both;
+    }
+    .modal-backdrop.closing {
+      animation: iosBackdropFadeOut 0.21s var(--애플_이징) both;
+      pointer-events: none;
     }
     .modal-sheet {
       border: 0.5px solid var(--글라스_테두리);
       border-bottom: none;
+      animation: iosSheetSpringUp 0.34s var(--시트_이징) both;
     }
+    .modal-backdrop.closing .modal-sheet {
+      animation: iosSheetSlideDown 0.21s var(--애플_이징) both;
+    }
+    @keyframes iosBackdropFadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes iosBackdropFadeOut {
+      from { opacity: 1; }
+      to   { opacity: 0; }
+    }
+    @keyframes iosSheetSpringUp {
+      from { transform: translateY(100%); }
+      to   { transform: translateY(0); }
+    }
+    @keyframes iosSheetSlideDown {
+      from { transform: translateY(0); }
+      to   { transform: translateY(100%); }
+    }
+
     @media (min-width: 960px) {
       .modal-sheet {
         border-bottom: 0.5px solid var(--글라스_테두리);
+        animation: iosDesktopModalPop 0.28s var(--애플_바운스_이징) both;
+      }
+      .modal-backdrop.closing .modal-sheet {
+        animation: iosDesktopModalOut 0.18s var(--애플_이징) both;
+      }
+      @keyframes iosDesktopModalPop {
+        from { opacity: 0; transform: translateY(18px) scale(0.96); }
+        to   { opacity: 1; transform: translateY(0) scale(1); }
+      }
+      @keyframes iosDesktopModalOut {
+        from { opacity: 1; transform: translateY(0) scale(1); }
+        to   { opacity: 0; transform: translateY(12px) scale(0.97); }
       }
       .all-search-sticky {
         bottom: 20px;
+      }
+    }
+
+    /* Accessibility: Respect iOS Reduce Motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
       }
     }
   </style>
@@ -3098,24 +3263,40 @@
 
     function switchTab(tab) {
       if (!tab) return;
+      const tabOrder = { review: 0, input: 1, all: 2 };
+      const prevTab = state.activeTab;
+      const dir = (tabOrder[tab] ?? 0) - (tabOrder[prevTab] ?? 0);
+
       try { stopChineseSpeech(); } catch (e) {}
       try { toggleQueueCornerPopover(false); } catch (e) {}
-      const prevTabEl = document.getElementById("tab-" + state.activeTab);
-      if (prevTabEl && state.activeTab !== tab) {
+      const prevTabEl = document.getElementById("tab-" + prevTab);
+      if (prevTabEl && prevTab !== tab) {
         try { pauseStrokeBoxesIn(prevTabEl); } catch (e) {}
       }
 
       state.activeTab = tab;
       try { localStorage.setItem("hanja_active_tab", tab); } catch (e) {}
       document.querySelectorAll(".tab-view").forEach(el => {
-        el.classList.toggle("active", el.id === "tab-" + tab);
+        const isNext = el.id === "tab-" + tab;
+        el.classList.remove("tab-enter-left", "tab-enter-right");
+        el.classList.toggle("active", isNext);
+        if (isNext && prevTab !== tab && dir !== 0) {
+          void el.offsetWidth;
+          el.classList.add(dir > 0 ? "tab-enter-right" : "tab-enter-left");
+        }
       });
       document.querySelectorAll("[data-tab]").forEach(btn => {
-        btn.classList.toggle("active", btn.getAttribute("data-tab") === tab);
+        const isAct = btn.getAttribute("data-tab") === tab;
+        btn.classList.toggle("active", isAct);
+        if (isAct && prevTab !== tab) {
+          btn.classList.remove("tab-bounce");
+          void btn.offsetWidth;
+          btn.classList.add("tab-bounce");
+        }
       });
       try { updateTabSliders(tab); } catch (e) {}
       const revBar = document.getElementById("mobileReviewBar");
-      if (revBar) revBar.style.display = (tab === "review") ? "grid" : "none";
+      if (revBar) revBar.classList.toggle("is-hidden", tab !== "review");
       const mw = document.getElementById("mainWrap");
       if (mw) mw.scrollTop = 0;
       if (window.syncTopbarScrolled) window.syncTopbarScrolled();
@@ -3641,6 +3822,10 @@
 
       const targetChars = (state.reviewSelectedChar === "ALL") ? item.chars : [state.reviewSelectedChar];
       area.innerHTML = buildPhoneticGroupsHtml(targetChars, item.chars);
+      area.querySelectorAll(".group-block").forEach((blk, idx) => {
+        blk.classList.add("ios-stagger-in");
+        blk.style.setProperty("--stagger-i", String(Math.min(idx, 8)));
+      });
       observeStrokeBoxes(area);
       area.querySelectorAll(".group-block").forEach(blk => syncGroupToggleBtnLabel(blk));
       updateFloatingExpandBtn();
@@ -3942,13 +4127,13 @@
     }
 
     function closeGroupChoiceModal(confirm) {
-      document.getElementById("groupChoiceModal").classList.remove("open");
-      syncBodyModalState();
       const cb = state.pendingChoiceCallback;
       const map = Object.assign({}, state.pendingChoiceMap);
       state.pendingChoiceCallback = null;
       state.pendingChoiceMap = {};
-      if (confirm && cb) cb(map);
+      animateCloseBackdrop("groupChoiceModal", () => {
+        if (confirm && cb) cb(map);
+      });
     }
 
     /* ===== 입력 탭 ===== */
@@ -4318,14 +4503,28 @@
       updateFloatingExpandBtn();
     }
 
+    function animateCloseBackdrop(backdropId, afterFn) {
+      const bd = document.getElementById(backdropId);
+      if (!bd || !bd.classList.contains("open")) {
+        if (afterFn) afterFn();
+        return;
+      }
+      bd.classList.add("closing");
+      setTimeout(() => {
+        bd.classList.remove("open", "closing");
+        syncBodyModalState();
+        if (afterFn) afterFn();
+      }, 210);
+    }
+
     function closeModal() {
-      const body = document.getElementById("modalBody");
-      cleanupStrokeBoxes(body);
-      body.innerHTML = "";
-      document.getElementById("seriesModal").classList.remove("open");
-      syncBodyModalState();
-      state.modalTargetChars = null;
-      updateFloatingExpandBtn();
+      animateCloseBackdrop("seriesModal", () => {
+        const body = document.getElementById("modalBody");
+        cleanupStrokeBoxes(body);
+        body.innerHTML = "";
+        state.modalTargetChars = null;
+        updateFloatingExpandBtn();
+      });
     }
 
     /* ===== 전체표 탭 ===== */
@@ -4397,8 +4596,7 @@
     }
 
     function closeShortcutModal() {
-      document.getElementById("shortcutModal").classList.remove("open");
-      syncBodyModalState();
+      animateCloseBackdrop("shortcutModal");
     }
 
     function toggleAllStarFilter() {
@@ -4681,8 +4879,7 @@
     }
 
     function closeBookmarkModal() {
-      document.getElementById("bookmarkModal").classList.remove("open");
-      syncBodyModalState();
+      animateCloseBackdrop("bookmarkModal");
     }
 
     function setBookmarkFilter(f) {
@@ -4782,7 +4979,7 @@
           }
           if (dy > 0) {
             curY = dy;
-            const damped = dy < 120 ? dy : 120 + (dy - 120) * 0.45;
+            const damped = dy < 120 ? dy : 120 + (dy - 120) * 0.42;
             sheet.style.transform = `translateY(${damped}px)`;
           }
         }, { passive: true });
