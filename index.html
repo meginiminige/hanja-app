@@ -2061,6 +2061,118 @@
         transition-duration: 0.01ms !important;
       }
     }
+
+    /* =====================================================================
+       Universal Expand / Collapse & Every-State-Change Animations
+       ===================================================================== */
+    /* Smooth 0fr <-> 1fr Accordion with Opacity & Inner Lift */
+    .accordion-body {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0.4;
+      transition:
+        grid-template-rows 0.34s var(--스프링_이징),
+        opacity 0.24s var(--애플_이징);
+    }
+    .accordion-body.open {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+
+    /* Settings More Button Chevron & Body */
+    .settings-more-summary::after {
+      transition: transform 0.28s var(--애플_바운스_이징);
+    }
+    .settings-more-details.is-open .settings-more-summary::after {
+      transform: rotate(90deg);
+    }
+
+    /* Cascading Row Entrance when Expanding a Group */
+    .compact-item.ios-row-cascade {
+      animation: iosRowCascadeIn 0.32s var(--스프링_이징) both;
+      animation-delay: calc(var(--row-i, 0) * 26ms);
+    }
+    @keyframes iosRowCascadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Input Tile Pop-In & Fade Pop */
+    .hanzi-tile.tile-pop-in {
+      animation: iosTilePopIn 0.3s var(--애플_바운스_이징) both;
+    }
+    @keyframes iosTilePopIn {
+      0%   { opacity: 0; transform: scale(0.68); }
+      65%  { opacity: 1; transform: scale(1.06); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .ios-fade-pop {
+      animation: iosFadePop 0.24s var(--스프링_이징) both;
+    }
+    @keyframes iosFadePop {
+      from { opacity: 0; transform: scale(0.95); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    /* Dynamic Panel Reveal (#inputTransResult, #justRegisteredBar, #recentRegBtnWrap_*) */
+    .ios-panel-expand {
+      animation: iosPanelExpand 0.32s var(--스프링_이징) both;
+      transform-origin: top center;
+    }
+    @keyframes iosPanelExpand {
+      from { opacity: 0; transform: translateY(-8px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* TTS Scrub Bar Smooth Slide-Down Reveal */
+    .tts-scrub-bar {
+      display: flex;
+      max-height: 0;
+      margin-top: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      opacity: 0;
+      overflow: hidden;
+      pointer-events: none;
+      transform: translateY(-6px);
+      transition:
+        max-height 0.3s var(--스프링_이징),
+        margin-top 0.3s var(--스프링_이징),
+        padding 0.3s var(--스프링_이징),
+        opacity 0.22s var(--애플_이징),
+        transform 0.3s var(--스프링_이징);
+    }
+    .tts-scrub-bar.show {
+      max-height: 52px;
+      margin-top: 12px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    /* Loading Bar Smooth Fade */
+    .loading-bar {
+      display: block;
+      opacity: 0;
+      transform: scaleX(0.2);
+      transform-origin: left center;
+      pointer-events: none;
+      transition: opacity 0.2s var(--애플_이징), transform 0.6s var(--스프링_이징);
+    }
+    .loading-bar.active {
+      opacity: 0.92;
+      transform: scaleX(1);
+    }
+
+    /* Row Active Highlight & Expanded Elevation */
+    .compact-item {
+      transition: background-color 0.22s var(--애플_이징), transform 0.34s var(--스프링_이징);
+    }
+    .compact-item.is-expanded {
+      background-color: var(--카드_배경색);
+    }
   </style>
 </head>
 <body>
@@ -2172,9 +2284,11 @@
             </div>
           </div>
 
-          <details class="settings-more-details">
-            <summary class="settings-more-summary">세부 크기 및 화면 효과</summary>
-            <div class="settings-more-body">
+          <div class="settings-more-details" id="settingsMoreDetails">
+            <button type="button" class="settings-more-summary" id="settingsMoreBtn" onclick="toggleSettingsMore(this)">세부 크기 및 화면 효과</button>
+            <div class="accordion-body" id="settingsMoreAcc">
+              <div class="accordion-inner">
+                <div class="settings-more-body">
               <div class="settings-section">
                 <div class="settings-sec-title">세부 글자 및 지표</div>
                 <div class="settings-group cols-2">
@@ -2234,8 +2348,10 @@
                   </div>
                 </div>
               </div>
+                </div>
+              </div>
             </div>
-          </details>
+          </div>
 
           <div class="settings-footer-row">
             <button class="pill-btn" onclick="refreshAllData()"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36L21 8"/><polyline points="21 3 21 8 16 8"/></svg> 시트 동기화</button>
@@ -2940,7 +3056,16 @@
       const isOpen = drawer.classList.toggle("open");
       btn.classList.toggle("on", isOpen);
       if (window.syncTopbarScrolled) window.syncTopbarScrolled();
-      setTimeout(syncTopbarHeight, 290);
+      setTimeout(syncTopbarHeight, 320);
+    }
+
+    function toggleSettingsMore(btnEl) {
+      const wrap = document.getElementById("settingsMoreDetails");
+      const acc = document.getElementById("settingsMoreAcc");
+      if (!wrap || !acc) return;
+      const isOpen = acc.classList.toggle("open");
+      wrap.classList.toggle("is-open", isOpen);
+      if (btnEl) btnEl.classList.toggle("is-open", isOpen);
     }
 
     window.addEventListener("DOMContentLoaded", () => {
@@ -2954,6 +3079,7 @@
       syncTopbarHeight();
       initModalSwipeDismiss();
       initReviewSwipeGesture();
+      initUniversalIosMotion();
 
       try { localStorage.removeItem(CACHE_KEY); } catch (e) {}
 
@@ -4321,31 +4447,43 @@
       document.getElementById("inputTileBox").classList.toggle("compact", state.tileCompact);
     }
 
+    let _prevInputTileSet = new Set();
     function renderInputTiles() {
       const text = document.getElementById("inputExample").value;
       const chars = extractHanzi(text);
       state.inputSelectedChars.forEach(c => { if (!chars.includes(c)) chars.push(c); });
 
       const box = document.getElementById("inputTileBox");
-      document.getElementById("selectedCountBadge").textContent = `${state.inputSelectedChars.size}자`;
+      const badge = document.getElementById("selectedCountBadge");
+      const nextCountText = `${state.inputSelectedChars.size}자`;
+      if (badge && badge.textContent !== nextCountText) {
+        badge.textContent = nextCountText;
+        badge.classList.remove("badge-pop");
+        void badge.offsetWidth;
+        badge.classList.add("badge-pop");
+      }
 
       if (chars.length === 0) {
-        box.innerHTML = `<span style="font-size:13px;color:var(--흐린_글자색);padding:8px;">예문을 입력하면 한자가 표시됩니다.</span>`;
+        _prevInputTileSet.clear();
+        box.innerHTML = `<span class="ios-fade-pop" style="font-size:13px;color:var(--흐린_글자색);padding:8px;">예문을 입력하면 한자가 표시됩니다.</span>`;
         return;
       }
 
+      const nextSet = new Set(chars);
       box.innerHTML = chars.map(ch => {
         const isBasic = BASIC_HANZI.has(ch);
         const isStar = state.starSet.has(ch);
         const isSel = state.inputSelectedChars.has(ch);
+        const isNew = !_prevInputTileSet.has(ch);
         return `
-          <button class="hanzi-tile ${isBasic ? "is-basic" : ""} ${isSel ? "selected" : ""}"
+          <button class="hanzi-tile ${isBasic ? "is-basic" : ""} ${isSel ? "selected" : ""} ${isNew ? "tile-pop-in" : ""}"
                   onclick="toggleInputTile('${ch}', this)">
             ${escHtml(ch)}
             ${isStar ? `<span class="tile-star"></span>` : ""}
           </button>
         `;
       }).join("");
+      _prevInputTileSet = nextSet;
     }
 
     function toggleInputTile(ch, btnEl) {
@@ -4356,7 +4494,13 @@
         state.inputSelectedChars.add(ch);
         if (btnEl) btnEl.classList.add("selected");
       }
-      document.getElementById("selectedCountBadge").textContent = `${state.inputSelectedChars.size}자`;
+      const badge = document.getElementById("selectedCountBadge");
+      if (badge) {
+        badge.textContent = `${state.inputSelectedChars.size}자`;
+        badge.classList.remove("badge-pop");
+        void badge.offsetWidth;
+        badge.classList.add("badge-pop");
+      }
     }
 
     function addManualChars() {
@@ -4394,6 +4538,9 @@
 
           const panel = document.getElementById("inputTransResult");
           panel.style.display = "block";
+          panel.classList.remove("ios-panel-expand");
+          void panel.offsetWidth;
+          panel.classList.add("ios-panel-expand");
           panel.innerHTML = `
             <div style="font-size:12px;color:var(--흐린_글자색);margin-bottom:6px;">저장됨</div>
             <div class="trans-text">${escHtml(res.translation)}</div>
@@ -4441,6 +4588,9 @@
 
             const bar = document.getElementById("justRegisteredBar");
             bar.style.display = "block";
+            bar.classList.remove("ios-panel-expand");
+            void bar.offsetWidth;
+            bar.classList.add("ios-panel-expand");
             bar.innerHTML = `
               <div class="trans-panel" style="margin-top:0;">
                 <div style="font-size:13px;font-weight:700;color:var(--완료_뱃지글자);margin-bottom:8px;">
@@ -4597,7 +4747,13 @@
       const wrap = document.getElementById("recentRegBtnWrap_" + qRow);
       if (wrap) {
         if (s.size > 0) {
+          const wasHidden = wrap.style.display === "none";
           wrap.style.display = "block";
+          if (wasHidden) {
+            wrap.classList.remove("ios-panel-expand");
+            void wrap.offsetWidth;
+            wrap.classList.add("ios-panel-expand");
+          }
           const regBtn = wrap.querySelector("button");
           if (regBtn) regBtn.textContent = `선택한 ${s.size}자 등록 (${Array.from(s).join("")})`;
         } else {
@@ -4817,12 +4973,21 @@
         const g = state.groupByRoot[root];
         if (g) {
           slot.innerHTML = buildAllGroupInnerHtml(g);
+          slot.querySelectorAll(".compact-item").forEach((rowEl, idx) => {
+            if (idx < 14) {
+              rowEl.classList.add("ios-row-cascade");
+              rowEl.style.setProperty("--row-i", String(idx));
+            }
+          });
           observeStrokeBoxes(slot);
           syncGroupToggleBtnLabel(blk);
         }
-        acc.classList.add("open");
-        if (chev) chev.classList.add("open");
-        updateFloatingExpandBtn();
+        void acc.offsetHeight;
+        requestAnimationFrame(() => {
+          acc.classList.add("open");
+          if (chev) chev.classList.add("open");
+          updateFloatingExpandBtn();
+        });
       }
     }
 
@@ -5074,6 +5239,10 @@
         </div>
       `;
       }).join("");
+      body.querySelectorAll(".bm-card").forEach((el, idx) => {
+        el.classList.add("ios-stagger-in");
+        el.style.setProperty("--stagger-i", String(Math.min(idx, 12)));
+      });
     }
 
     function scrollActiveTabToTop() {
@@ -5268,6 +5437,104 @@
         if (item && item.chars.length >= 2) selectReviewChar("ALL");
       }
     }
+
+    /* ===== Universal iOS Layout FLIP & State Change Animator ===== */
+    function initUniversalIosMotion() {
+      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      const CAPTURE_SEL = ".group-block, .compact-item, .recent-item, .bm-card, #reviewPhoneticArea > .card";
+      let snapMap = new Map();
+      let pendingRaf = 0;
+
+      const captureRects = () => {
+        snapMap.clear();
+        document.querySelectorAll(CAPTURE_SEL).forEach(el => {
+          if (el.offsetParent !== null) {
+            snapMap.set(el, el.getBoundingClientRect());
+          }
+        });
+      };
+
+      const playFlip = () => {
+        if (snapMap.size === 0) return;
+        const moving = [];
+        snapMap.forEach((first, el) => {
+          if (!el.isConnected || el.offsetParent === null) return;
+          const last = el.getBoundingClientRect();
+          const dy = first.top - last.top;
+          const dx = first.left - last.left;
+          if ((Math.abs(dy) > 1.5 || Math.abs(dx) > 1.5) && Math.abs(dy) < 900) {
+            el.style.transition = "none";
+            el.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+            moving.push(el);
+          }
+        });
+        snapMap.clear();
+        if (moving.length === 0) return;
+        void document.body.offsetHeight;
+        requestAnimationFrame(() => {
+          moving.forEach(el => {
+            el.style.transition = "transform 0.34s var(--스프링_이징)";
+            el.style.transform = "";
+            const cleanup = () => {
+              el.style.transition = "";
+              el.removeEventListener("transitionend", cleanup);
+            };
+            el.addEventListener("transitionend", cleanup);
+            setTimeout(cleanup, 380);
+          });
+        });
+      };
+
+      // Capture positions right before any click/input/change mutates the DOM
+      ["pointerdown", "keydown"].forEach(evt => {
+        document.addEventListener(evt, e => {
+          if (e.target && e.target.closest("input[type='range']")) return;
+          captureRects();
+        }, { capture: true, passive: true });
+      });
+
+      const observer = new MutationObserver(mutations => {
+        let shouldAnimate = false;
+        for (const m of mutations) {
+          if (m.target && m.target.closest && m.target.closest(".hw-box, .ios-spinner, #toast, #loadingBar")) continue;
+          if (m.type === "attributes" && (m.attributeName === "class" || m.attributeName === "style")) {
+            shouldAnimate = true;
+            break;
+          }
+          if (m.type === "childList" && (m.addedNodes.length > 0 || m.removedNodes.length > 0)) {
+            shouldAnimate = true;
+            break;
+          }
+        }
+        if (!shouldAnimate) return;
+        if (pendingRaf) cancelAnimationFrame(pendingRaf);
+        pendingRaf = requestAnimationFrame(() => {
+          pendingRaf = 0;
+          playFlip();
+        });
+      });
+
+      const mw = document.getElementById("mainWrap");
+      if (mw) {
+        observer.observe(mw, {
+          subtree: true,
+          childList: true,
+          attributes: true,
+          attributeFilter: ["class", "style"]
+        });
+      }
+      const mb = document.getElementById("modalBody");
+      if (mb) {
+        observer.observe(mb, {
+          subtree: true,
+          childList: true,
+          attributes: true,
+          attributeFilter: ["class", "style"]
+        });
+      }
+    }
+
   </script>
 </body>
 </html>
