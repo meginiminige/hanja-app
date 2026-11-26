@@ -35,9 +35,10 @@
   </style>
 </head>
 <body>
-  <iframe
-    src="https://script.google.com/macros/s/AKfycbwAGM27Wz6rdpm4-3e_Mj9QAZctqLpAipqbNB9kVjIJE_COUj824Pqf-GUCzydq7CQA/exec?k=bw0215"
-    allow="clipboard-read; clipboard-write"
-  ></iframe>
+  <iframe id="appFrame" allow="clipboard-read; clipboard-write"></iframe>
+  <script>
+    const base = "https://script.google.com/macros/s/AKfycbwAGM27Wz6rdpm4-3e_Mj9QAZctqLpAipqbNB9kVjIJE_COUj824Pqf-GUCzydq7CQA/exec";
+    document.getElementById("appFrame").src = base + window.location.search;
+  </script>
 </body>
 </html>
