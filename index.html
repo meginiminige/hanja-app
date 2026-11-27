@@ -2656,20 +2656,15 @@
       filter: none !important;
       opacity: 1 !important;
       transition: none !important;
-      /* 불필요한 합성 레이어를 만들지 않아 iOS 상단 상태바의 흐림 현상을 방지 */
-      isolation: isolate;
+      transform: translateZ(0);
     }
-    /* iOS 상태바/Safe Area 뒤쪽도 헤더와 동일한 불투명 배경으로 유지 */
+    /* iOS 러버밴드/상태바 영역까지 같은 색으로 덮어 비침 방지 */
     .nv-header::before {
       content: "";
-      position: fixed;
-      left: 0;
-      right: 0;
-      top: 0;
-      height: max(200px, env(safe-area-inset-top, 0px));
+      position: absolute;
+      left: 0; right: 0; top: -200px; height: 200px;
       background: var(--nv-bg-primary);
       pointer-events: none;
-      z-index: -1;
     }
     @media (min-width: 960px) {
       .nv-header::before { display: none; }
