@@ -3418,7 +3418,7 @@
         withSuccessHandler(fn) { onSuccess = fn; return client; },
         withFailureHandler(fn) { onFailure = fn; return client; }
       };
-      ["webAppGetInitData", "webAppMarkReviewed", "webAppTranslateExample", "webAppRegisterChars", "webAppFillGroup", "webAppToggleBookmark", "webAppReanalyzeCharacter"].forEach(method => {
+      ["webAppGetInitData", "webAppMarkReviewed", "webAppTranslateExample", "webAppRegisterChars", "webAppFillGroup", "webAppToggleBookmark", "webAppReanalyzeCharacter", "webAppMoveCharacterGroup", "webAppExcludeCharacterGroup"].forEach(method => {
         client[method] = function(...args) {
           fetch(GAS_EXEC_URL, {
             method: "POST",
@@ -6087,9 +6087,37 @@
           <div style="font-size:13px;color:var(--nv-label-secondary);margin-bottom:12px;">신뢰도: ${esc(result?.confidence || "판단 보류")}</div>
           <div style="font-size:14px;line-height:1.6;white-space:pre-wrap;">${esc(result?.reason || "분석 근거가 반환되지 않았습니다.")}</div>
           ${result?.idsEvidence ? `<div style="margin-top:12px;padding-top:12px;border-top:0.5px solid var(--nv-separator);font-size:13px;color:var(--nv-label-secondary);"><strong>IDS 구조 근거</strong><div style="margin-top:5px;white-space:pre-wrap;">${esc(result.idsEvidence)}</div></div>` : ""}
-          ${candidates.length ? `<div style="margin-top:14px;padding-top:12px;border-top:0.5px solid var(--nv-separator);"><div style="font-size:13px;font-weight:700;margin-bottom:8px;">가능한 다른 해성계</div>${candidates.map(c => `<div style="padding:8px 0;border-bottom:0.5px solid var(--nv-separator);"><strong class="nv-zh-simp">${esc(c.root || "")}</strong><div style="font-size:13px;color:var(--nv-label-secondary);margin-top:3px;">${esc(c.reason || "")}</div></div>`).join("")}</div>` : ""}
-          <div style="margin-top:14px;font-size:12px;color:var(--nv-label-tertiary);">이 분석은 제안만 제공합니다. 실제 이동이나 삭제는 실행하지 않았습니다.</div>
+          ${candidates.length && belongs === false ? `<div style="margin-top:14px;padding-top:12px;border-top:0.5px solid var(--nv-separator);"><div style="font-size:13px;font-weight:700;margin-bottom:8px;">가능한 다른 해성계</div>${candidates.map((c, i) => `<div style="padding:10px 0;border-bottom:0.5px solid var(--nv-separator);"><strong class="nv-zh-simp">${esc(c.root || "")}</strong><div style="font-size:13px;color:var(--nv-label-secondary);margin-top:3px;">${esc(c.reason || "")}</div><button class="nv-btn-primary" style="margin-top:8px;width:100%;" onclick="approveCharacterMove('${esc(target.root)}',${target.rowNum},'${esc(c.root || "")}')">이 해성계로 이동</button></div>`).join("")}</div>` : ""}
+          ${belongs === false ? `<button class="nv-btn-plain" style="width:100%;margin-top:12px;" onclick="approveCharacterExclusion('${esc(target.root)}',${target.rowNum})">현재 해성계에서 제외</button>` : ""}
+          <div style="margin-top:14px;font-size:12px;color:var(--nv-label-tertiary);">실제 변경은 위 버튼을 누르고 확인한 경우에만 실행됩니다.</div>
         </div>`;
+    }
+
+    function approveCharacterMove(sourceRoot, rowNum, targetRoot) {
+      if (!confirm(`${targetRoot} 해성계로 이 한자를 이동할까요?\n기존 학습 내용은 유지됩니다.`)) return;
+      google.script.run.withSuccessHandler(data => {
+        if (data && data.groups) appState.groups = data.groups;
+        if (data && data.bookmarks) {
+          appState.bookmarks = data.bookmarks;
+          appState.bookmarkById = {};
+          data.bookmarks.forEach(b => { if (b && b.id) appState.bookmarkById[b.id] = b; });
+        }
+        closeReanalysisSheet();
+        renderCurrentPage(true);
+        showBanner(`${data.character}을(를) ${targetRoot} 해성계로 이동했습니다.`);
+      }).withFailureHandler(err => showBanner("이동 실패: " + (err && err.message || err)))
+        .webAppMoveCharacterGroup(appState.secretKey, sourceRoot, rowNum, targetRoot);
+    }
+
+    function approveCharacterExclusion(sourceRoot, rowNum) {
+      if (!confirm("이 한자를 현재 해성계에서 제외할까요?\n학습 내용은 삭제되지 않고 보존됩니다.")) return;
+      google.script.run.withSuccessHandler(data => {
+        if (data && data.groups) appState.groups = data.groups;
+        closeReanalysisSheet();
+        renderCurrentPage(true);
+        showBanner(`${data.character}을(를) 현재 해성계에서 제외했습니다.`);
+      }).withFailureHandler(err => showBanner("제외 실패: " + (err && err.message || err)))
+        .webAppExcludeCharacterGroup(appState.secretKey, sourceRoot, rowNum);
     }
 
     function closeReanalysisSheet() {
