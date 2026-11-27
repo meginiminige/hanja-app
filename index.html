@@ -1345,7 +1345,10 @@
        ========================================================================= */
     .nv-textarea {
       width: 100%;
-      min-height: 118px;
+      min-height: 190px;
+      max-height: 45vh;
+      box-sizing: border-box;
+      overflow-y: auto;
       border: none;
       background: transparent;
       padding: var(--nv-sp-4);
@@ -2653,15 +2656,20 @@
       filter: none !important;
       opacity: 1 !important;
       transition: none !important;
-      transform: translateZ(0);
+      /* 불필요한 합성 레이어를 만들지 않아 iOS 상단 상태바의 흐림 현상을 방지 */
+      isolation: isolate;
     }
-    /* iOS 러버밴드/상태바 영역까지 같은 색으로 덮어 비침 방지 */
+    /* iOS 상태바/Safe Area 뒤쪽도 헤더와 동일한 불투명 배경으로 유지 */
     .nv-header::before {
       content: "";
-      position: absolute;
-      left: 0; right: 0; top: -200px; height: 200px;
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: max(200px, env(safe-area-inset-top, 0px));
       background: var(--nv-bg-primary);
       pointer-events: none;
+      z-index: -1;
     }
     @media (min-width: 960px) {
       .nv-header::before { display: none; }
@@ -5120,6 +5128,16 @@
     }
 
     /* Input Page Logic */
+    function resizeInputSentenceArea() {
+      const ta = document.getElementById("inputSentenceArea");
+      if (!ta) return;
+      const maxHeight = Math.floor(window.innerHeight * 0.45);
+      ta.style.height = "auto";
+      const nextHeight = Math.min(ta.scrollHeight, maxHeight);
+      ta.style.height = `${Math.max(190, nextHeight)}px`;
+      ta.style.overflowY = ta.scrollHeight > maxHeight ? "auto" : "hidden";
+    }
+
     async function pasteFromClipboard() {
       const ta = document.getElementById("inputSentenceArea");
       try {
@@ -5127,6 +5145,7 @@
           const txt = await navigator.clipboard.readText();
           if (txt && ta) {
             ta.value = txt;
+            resizeInputSentenceArea();
             appState.draftQRow = 0;
             renderDraftTiles();
             showBanner("붙여넣기 완료");
@@ -5143,7 +5162,10 @@
       const man = document.getElementById("manualCharField");
       const trans = document.getElementById("inputTranslationBox");
       const fb = document.getElementById("registeredFeedbackBox");
-      if (ta) ta.value = "";
+      if (ta) {
+        ta.value = "";
+        resizeInputSentenceArea();
+      }
       if (man) man.value = "";
       if (trans) trans.style.display = "none";
       if (fb) fb.style.display = "none";
@@ -6243,9 +6265,13 @@
       });
 
       document.getElementById("inputSentenceArea")?.addEventListener("input", () => {
+        resizeInputSentenceArea();
         appState.draftQRow = 0;
         renderDraftTiles();
       });
+
+      window.addEventListener("resize", resizeInputSentenceArea, { passive: true });
+      resizeInputSentenceArea();
 
       document.addEventListener("keydown", handleKeydown);
       document.getElementById("authKeyInput")?.addEventListener("keydown", e => {
