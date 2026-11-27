@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <meta name="theme-color" id="metaThemeColor" content="#F2F2F7" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" id="metaStatusBarStyle" content="default" />
+  <meta name="apple-mobile-web-app-status-bar-style" id="metaStatusBarStyle" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="谐声系" />
   <title>谐声系</title>
   <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js" defer></script>
@@ -2360,76 +2360,81 @@
     }
 
     /* =========================================================================
-       V2 PATCHES: Layout, Zero Top Blur, Zero Bottom Gap, Learning UX
+       V3 PATCHES:
+       - Mobile: Native window document scroll (kills iOS top scroll-edge blur
+         and eliminates bottom black gap under tabbar)
+       - Tabbar: Flush to physical bottom edge (bottom: 0), 0 bottom padding,
+         vertically centered icons
+       - Phonetic Series Group Bar: Native CSS position: sticky on actual group
+         headers (active on BOTH Review and All tabs, never covers titles,
+         never pins awkwardly mid-screen)
+       - Desktop (>= 960px): Preserves macOS sidebar + internal workspace scroll
        ========================================================================= */
     :root {
       --nv-hanzi-size: 34px;
     }
 
-    /* Fix #3: Eliminate bottom black gap & center tab bar icons flush to bottom edge */
+    /* Mobile (< 960px): Native Window Scroll — fixes iOS top blur & bottom black gap */
     html, body {
-      position: fixed !important;
-      inset: 0 !important;
+      position: static !important;
       width: 100% !important;
-      height: 100% !important;
-      overflow: hidden !important;
+      height: auto !important;
+      min-height: 100lvh !important;
+      overflow-x: clip !important;
+      overflow-y: auto !important;
+      background-color: var(--nv-bg-primary);
     }
 
     .nv-app-shell {
-      position: fixed !important;
-      inset: 0 !important;
+      position: static !important;
       width: 100% !important;
-      height: 100% !important;
-      display: flex !important;
-      flex-direction: column !important;
-      overflow: hidden !important;
+      height: auto !important;
+      min-height: 100lvh !important;
+      display: block !important;
+      overflow: visible !important;
     }
 
     .nv-main-column {
-      flex: 1 1 auto !important;
-      min-height: 0 !important;
+      width: 100% !important;
       height: auto !important;
-      display: flex !important;
-      flex-direction: column !important;
-      overflow: hidden !important;
+      display: block !important;
+      overflow: visible !important;
     }
 
-    /* Fix #11: Zero top gradient blur — header is an opaque flex block, NOT fixed over scroll */
+    /* Opaque sticky top header — zero backdrop-filter, matches status bar seamlessly */
     .nv-header,
     .nv-header.is-scrolled,
     body.has-series-strip .nv-header,
     body.is-all-docked .nv-header {
-      position: relative !important;
-      top: auto !important;
-      left: auto !important;
-      right: auto !important;
-      flex-shrink: 0 !important;
+      position: sticky !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      padding-top: env(safe-area-inset-top, 0px) !important;
       background: var(--nv-bg-primary) !important;
       -webkit-backdrop-filter: none !important;
       backdrop-filter: none !important;
       border-bottom: 0.5px solid transparent !important;
-      z-index: 40 !important;
+      z-index: 120 !important;
     }
     .nv-header.is-scrolled {
       border-bottom-color: var(--nv-separator) !important;
     }
 
-    /* Workspace scrolls cleanly strictly BELOW the header and ABOVE the tabbar */
     .nv-workspace {
-      flex: 1 1 auto !important;
-      min-height: 0 !important;
+      width: 100% !important;
       height: auto !important;
-      padding: var(--nv-sp-2) var(--nv-sp-4) 92px !important;
+      overflow: visible !important;
+      padding: var(--nv-sp-2) var(--nv-sp-4) 118px !important;
     }
 
-    /* Tab bar flush to bottom edge with symmetric padding & vertically centered icons */
+    /* Tab bar flush to physical bottom edge with zero bottom padding & centered icons */
     .nv-tabbar {
-      position: relative !important;
-      left: auto !important;
-      right: auto !important;
-      bottom: auto !important;
-      flex-shrink: 0 !important;
-      height: 52px !important;
+      position: fixed !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      height: 50px !important;
       padding: 0 var(--nv-sp-2) !important;
       background: var(--nv-bg-secondary) !important;
       -webkit-backdrop-filter: none !important;
@@ -2438,7 +2443,7 @@
       display: grid !important;
       grid-template-columns: repeat(3, 1fr) !important;
       align-items: center !important;
-      z-index: 40 !important;
+      z-index: 130 !important;
     }
     .nv-tab-btn {
       height: 44px !important;
@@ -2450,18 +2455,42 @@
 
     /* Floating review dock sits tightly above the flush tabbar */
     .nv-review-dock {
-      bottom: 62px !important;
+      bottom: 60px !important;
     }
 
-    /* Series strip positioned cleanly below the non-fixed header when triggered by scroll */
+    /* Retire legacy floating fixed strip in favor of native CSS sticky headers */
     .nv-series-strip {
-      top: calc(env(safe-area-inset-top, 0px) + var(--nv-header-h)) !important;
-      background: var(--nv-bg-secondary) !important;
-      -webkit-backdrop-filter: none !important;
-      backdrop-filter: none !important;
+      display: none !important;
     }
 
-    /* Fix #12: Floating magnifying glass icon in header on All tab scroll */
+    /* Native CSS Sticky Phonetic Series Group Headers (Review + All tabs + Sheet) */
+    .nv-series-section,
+    .nv-series-index-list,
+    .nv-series-index-item {
+      overflow: clip !important;
+    }
+
+    .nv-series-header {
+      position: sticky !important;
+      top: calc(env(safe-area-inset-top, 0px) + var(--nv-header-h)) !important;
+      z-index: 25 !important;
+      background: var(--nv-bg-grouped) !important;
+      border-bottom: 0.5px solid var(--nv-separator) !important;
+    }
+
+    .nv-series-index-item.is-open > .nv-series-index-btn {
+      position: sticky !important;
+      top: calc(env(safe-area-inset-top, 0px) + var(--nv-header-h)) !important;
+      z-index: 25 !important;
+      background: var(--nv-bg-grouped) !important;
+      border-bottom: 0.5px solid var(--nv-separator) !important;
+    }
+
+    #seriesSheetBody .nv-series-header {
+      top: 0 !important;
+    }
+
+    /* Tab 3: Floating magnifying glass icon in header on scroll */
     .nv-header-search-btn {
       width: 34px;
       height: 34px;
@@ -2492,7 +2521,7 @@
       border-bottom: none !important;
     }
 
-    /* Fix #5 & #13: Larger phonetic root & group chars on Tab 3 */
+    /* Larger phonetic root & group chars on Tab 3 */
     .nv-index-root {
       font-size: 26px !important;
       font-weight: 700 !important;
@@ -2504,13 +2533,13 @@
       letter-spacing: 0.02em;
     }
 
-    /* Fix #4: Larger Hanzi glyph box when expanded */
+    /* Larger Hanzi glyph box when expanded */
     .nv-stroke-box {
       width: calc(var(--nv-hanzi-size) + 20px) !important;
       height: calc(var(--nv-hanzi-size) + 20px) !important;
     }
 
-    /* Fix #7: Radical placed right of frequency badge with thinner font than main Hanzi */
+    /* Radical placed right of frequency badge with thinner font than main Hanzi */
     .nv-radical-inline {
       display: inline-flex;
       align-items: center;
@@ -2525,13 +2554,13 @@
       white-space: nowrap;
     }
 
-    /* Fix #10: Pinyin color matches Hunum tertiary color */
+    /* Pinyin color matches Hunum tertiary color */
     .nv-row-pinyin {
       color: var(--nv-label-tertiary) !important;
       font-weight: var(--nv-pinyin-weight);
     }
 
-    /* Fix #8: Collapsible character detail block */
+    /* Collapsible character detail block */
     .nv-char-detail-wrap {
       display: flex;
       flex-direction: column;
@@ -2539,7 +2568,7 @@
       padding-top: 9px;
     }
 
-    /* Fix #2: Unified clickable example words trigger (selects all words & toggles all meanings at once) */
+    /* Unified clickable example words trigger (selects all words & toggles all meanings at once) */
     .nv-words-trigger {
       flex: 1;
       min-width: 0;
@@ -2566,7 +2595,7 @@
       gap: 4px !important;
     }
 
-    /* Fix #9: Refined Apple-style target character highlight in Review sentence */
+    /* Refined Apple-style target character highlight in Review sentence */
     .nv-target-char-mark {
       font-weight: 500 !important;
       color: var(--nv-label-primary) !important;
@@ -2585,20 +2614,47 @@
       padding: 1px 4px !important;
     }
 
-    /* Desktop Overrides (>= 960px) */
+    /* Desktop Overrides (>= 960px): macOS Sidebar + Internal Workspace Scroll */
     @media (min-width: 960px) {
-      .nv-app-shell {
-        flex-direction: row !important;
+      html, body {
+        height: 100dvh !important;
+        min-height: 0 !important;
+        overflow: hidden !important;
       }
-      .nv-tabbar {
-        display: none !important;
+      .nv-app-shell {
+        height: 100dvh !important;
+        min-height: 0 !important;
+        display: flex !important;
+        flex-direction: row !important;
+        overflow: hidden !important;
+      }
+      .nv-main-column {
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+        height: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        overflow: hidden !important;
       }
       .nv-header {
+        position: relative !important;
+        top: auto !important;
+        flex-shrink: 0 !important;
         background: var(--nv-bg-secondary) !important;
         border-bottom-color: var(--nv-separator) !important;
       }
       .nv-workspace {
+        flex: 1 1 auto !important;
+        min-height: 0 !important;
+        overflow-y: auto !important;
         padding: var(--nv-sp-4) var(--nv-sp-5) var(--nv-sp-10) !important;
+      }
+      .nv-series-header,
+      .nv-series-index-item.is-open > .nv-series-index-btn {
+        top: 0 !important;
+      }
+      .nv-tabbar {
+        display: none !important;
       }
     }
   </style>
@@ -3737,8 +3793,7 @@
       document.body.style.backgroundColor = barHex;
       const metaTheme = document.getElementById("metaThemeColor");
       if (metaTheme) metaTheme.setAttribute("content", barHex);
-      const metaStatus = document.getElementById("metaStatusBarStyle");
-      if (metaStatus) metaStatus.setAttribute("content", isDark ? "black" : "default");
+      // Keep apple-mobile-web-app-status-bar-style as black-translucent to prevent iOS top blur/band mismatch
 
       const glyph = document.getElementById("menuThemeGlyph");
       const label = document.getElementById("menuThemeLabel");
@@ -4241,6 +4296,7 @@
 
       const ws = document.getElementById("workspaceScroll");
       if (ws) ws.scrollTop = 0;
+      if (isMobileScrollMode()) window.scrollTo(0, 0);
       syncScrollChrome();
 
       if (tab === "input") requestAnimationFrame(() => renderCurrentPage(false));
@@ -4860,61 +4916,7 @@
       return best;
     }
 
-    function refreshSeriesStrip() {
-      const strip = document.getElementById("seriesContextStrip");
-      const scrollEl = document.getElementById("seriesContextScroll");
-      const bulkBtn = document.getElementById("bulkExpandToggleBtn");
-
-      // Never show floating series strip on Tab 3 (all) — prevents awkward mid-scroll pin & covering "전체표" title
-      if (!appState.sheetTargetChars && appState.activeTab === "all") {
-        if (strip) strip.classList.remove("is-visible");
-        document.body.classList.remove("has-series-strip");
-        if (bulkBtn) bulkBtn.classList.remove("is-visible");
-        return;
-      }
-
-      const sec = getActiveSeriesSection();
-      const root = sec ? sec.getAttribute("data-root") : "";
-      const g = root ? appState.groupMap[root] : null;
-
-      // Only show strip after the section's own header has scrolled past the top of the workspace
-      // so it NEVER covers the "복습" large title when a character is tapped!
-      let headerScrolledOut = false;
-      if (sec) {
-        const secHead = sec.querySelector(".nv-series-header");
-        const wsTop = appState.sheetTargetChars
-          ? (document.getElementById("seriesSheetBody")?.getBoundingClientRect().top || 0)
-          : (document.getElementById("workspaceScroll")?.getBoundingClientRect().top || 0);
-        if (secHead && secHead.getBoundingClientRect().bottom < wsTop + 2) {
-          headerScrolledOut = true;
-        }
-      }
-
-      if (!g || !strip || !scrollEl || !headerScrolledOut) {
-        if (strip) strip.classList.remove("is-visible");
-        document.body.classList.remove("has-series-strip");
-        if (bulkBtn) bulkBtn.classList.remove("is-visible");
-        return;
-      }
-
-      if (strip.getAttribute("data-root") !== root) {
-        strip.setAttribute("data-root", root);
-        const chars = g.rows.filter(r => !r.isPass || appState.showPass).map(r =>
-          r.isStar ? `<span class="nv-series-star-char">${esc(r.simp)}</span>` : esc(r.simp)
-        ).join(" ");
-        scrollEl.innerHTML = `<span class="nv-series-root-label nv-zh-simp">${esc(g.root)}</span><span class="nv-series-chars-label nv-zh-simp">${chars}</span>`;
-      }
-      strip.classList.add("is-visible");
-      document.body.classList.add("has-series-strip");
-
-      if (bulkBtn) {
-        const details = sec.querySelectorAll(".nv-char-row > .nv-disclosure");
-        const allOpen = details.length > 0 && Array.from(details).every(d => d.classList.contains("is-open"));
-        bulkBtn.classList.add("is-visible");
-        bulkBtn.classList.toggle("is-expanded", allOpen);
-        bulkBtn.innerHTML = allOpen ? SVG_CHEV_UP : SVG_CHEV_DOWN;
-      }
-    }
+    function refreshSeriesStrip() { /* Handled natively via CSS position: sticky */ }
 
     function toggleVisibleSeriesRows() {
       applyBulkRowToggle(getActiveSeriesSection());
@@ -5781,21 +5783,35 @@
       closeSheetById("shortcutsSheet");
     }
 
+    function isMobileScrollMode() {
+      return window.innerWidth < 960;
+    }
+
+    function getCurrentScrollY() {
+      if (isMobileScrollMode()) {
+        return window.scrollY || document.documentElement.scrollTop || 0;
+      }
+      const ws = document.getElementById("workspaceScroll");
+      return ws ? ws.scrollTop : 0;
+    }
+
     function scrollCurrentPageTop() {
-      document.getElementById("workspaceScroll")?.scrollTo({ top: 0, behavior: "smooth" });
+      if (isMobileScrollMode()) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        document.getElementById("workspaceScroll")?.scrollTo({ top: 0, behavior: "smooth" });
+      }
     }
 
     function focusAllSearchFromHeader() {
-      const ws = document.getElementById("workspaceScroll");
-      if (ws) ws.scrollTo({ top: 0, behavior: "smooth" });
+      scrollCurrentPageTop();
       setTimeout(() => document.getElementById("allSearchInput")?.focus(), 260);
     }
 
     function syncScrollChrome() {
-      const ws = document.getElementById("workspaceScroll");
       const hdr = document.getElementById("appHeader");
-      const y = ws ? ws.scrollTop : 0;
-      if (hdr) hdr.classList.toggle("is-scrolled", y > 24);
+      const y = getCurrentScrollY();
+      if (hdr) hdr.classList.toggle("is-scrolled", y > 20);
 
       const searchBtn = document.getElementById("headerSearchBtn");
       if (searchBtn) {
@@ -5805,8 +5821,6 @@
 
       document.getElementById("allSearchBar")?.classList.remove("is-docked");
       document.body.classList.remove("is-all-docked");
-
-      refreshSeriesStrip();
     }
 
     /* Gestures & Keyboard Shortcuts */
@@ -5976,6 +5990,7 @@
           syncScrollChrome();
         });
       };
+      window.addEventListener("scroll", onScroll, { passive: true });
       document.getElementById("workspaceScroll")?.addEventListener("scroll", onScroll, { passive: true });
       document.getElementById("seriesSheetBody")?.addEventListener("scroll", onScroll, { passive: true });
 
