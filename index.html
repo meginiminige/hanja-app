@@ -29,6 +29,7 @@
       --상단그룹바_글자크기: 14.5px;
       --상단배너_배율: 1;
       --상단바_높이: 48px;
+      --검색바_높이: 48px;
 
       --단어_글자크기: 16px;
       --단어병음_글자크기: 15px;
@@ -180,9 +181,9 @@
       padding: 0;
       width: 100%;
       max-width: 100%;
-      min-height: 100%;
-      min-height: 100dvh;
-      overflow-x: clip;
+      height: 100%;
+      height: 100dvh;
+      overflow: hidden;
       background-color: var(--화면_바탕_회색);
       color: var(--기본_글자색);
       font-family: var(--기본_폰트);
@@ -462,7 +463,11 @@
       position: relative;
       width: 100%;
       max-width: 1040px;
-      min-height: 100dvh;
+      height: 100%;
+      height: 100dvh;
+      overflow-y: auto;
+      overflow-x: clip;
+      -webkit-overflow-scrolling: touch;
       margin: 0 auto;
       padding: calc(var(--상단바_높이) + 4px) 16px calc(134px + env(safe-area-inset-bottom, 0px));
       background-color: var(--화면_바탕_회색);
@@ -580,6 +585,9 @@
       pointer-events: none;
       transform: translateY(-10px) scale(0.95);
       transition: opacity 0.2s var(--애플_이징), transform 0.3s var(--스프링_이징);
+    }
+    body.tab-all .floating-series-bar {
+      top: calc(var(--상단바_높이) + var(--검색바_높이) + 2px);
     }
     .floating-series-bar.show {
       opacity: 1;
@@ -3296,6 +3304,7 @@
       try { updateTabSliders(tab); } catch (e) {}
       const revBar = document.getElementById("mobileReviewBar");
       if (revBar) revBar.classList.toggle("is-hidden", tab !== "review");
+      document.body.classList.toggle("tab-all", tab === "all");
       const statPill = document.getElementById("allSummaryStat");
       if (statPill) statPill.classList.toggle("show", tab === "all");
       const mw = document.getElementById("mainWrap");
