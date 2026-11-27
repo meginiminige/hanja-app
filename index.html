@@ -21,7 +21,7 @@
   <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js" defer></script>
   <style>
     /* =====================================================================
-       Apple iOS / iPadOS / macOS Native HIG Design System (v6)
+       Apple iOS / iPadOS / macOS Native HIG Design System (v8 — True Structural Overhaul)
        True System Grouped Palette · Zero Card Drop Shadows · Inset Hairlines
        ===================================================================== */
     :root {
@@ -2274,6 +2274,377 @@
         transition-duration: 0.01ms !important;
       }
     }
+  
+    /* =====================================================================
+       v8 TRUE APPLE NATIVE STRUCTURAL OVERHAUL
+       - Ellipsis UIMenu Popover (Decluttered Top Navigation Bar)
+       - Unified InsetGrouped List for All Table (Zero Toss Card Stacks)
+       - iOS Scope Segmented Control for Search
+       - Floating Compact Glass Review Capsule (Zero 2-Story Bottom Bar)
+       - Apple Books / Dictionary Reading Surface
+       ===================================================================== */
+    :root {
+      --모서리_둥글기: 12px;
+    }
+
+    /* 1. Native iOS UIMenu Popover (ellipsis.circle dropdown) */
+    .ios-menu-popover {
+      position: fixed;
+      top: calc(var(--상단바_높이) + 6px);
+      right: 14px;
+      width: 248px;
+      z-index: 270;
+      background-color: var(--글라스_카드_배경);
+      -webkit-backdrop-filter: saturate(200%) blur(28px);
+      backdrop-filter: saturate(200%) blur(28px);
+      border-radius: 14px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.16), 0 0 0 0.5px var(--헤어라인_색);
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transform-origin: top right;
+      transform: translateY(-6px) scale(0.92);
+      transition: opacity 0.16s var(--애플_이징), transform 0.22s var(--스프링_이징);
+    }
+    body.dark .ios-menu-popover {
+      background-color: rgba(38, 38, 40, 0.92);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.62), 0 0 0 0.5px rgba(255, 255, 255, 0.14);
+    }
+    .ios-menu-popover.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+    .ios-menu-item {
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 16px;
+      border-radius: 0;
+      background: transparent;
+      color: var(--기본_글자색);
+      font-size: 15px;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      text-align: left;
+      position: relative;
+    }
+    .ios-menu-item:active {
+      background: var(--탭_하이라이트);
+      opacity: 1;
+    }
+    .ios-menu-item:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      left: 16px;
+      right: 0;
+      bottom: 0;
+      height: 0.5px;
+      background: var(--헤어라인_색);
+      pointer-events: none;
+    }
+    .ios-menu-sep {
+      height: 6px;
+      background: var(--안쪽_상자_배경);
+      border-top: 0.5px solid var(--헤어라인_색);
+      border-bottom: 0.5px solid var(--헤어라인_색);
+    }
+    .ios-menu-item.no-div::after { display: none; }
+    .ios-menu-left {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .ios-menu-right {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13.5px;
+      color: var(--흐린_글자색);
+      flex-shrink: 0;
+    }
+    .ios-menu-check {
+      width: 16px;
+      height: 16px;
+      color: var(--주요_강조색);
+      opacity: 0;
+      transition: opacity 0.14s ease;
+    }
+    .ios-menu-item.is-on .ios-menu-check { opacity: 1; }
+
+    /* Topbar minimalist spacing */
+    .topbar .top-controls {
+      gap: 6px;
+    }
+    .topbar .top-controls .pill-btn {
+      width: 32px;
+      height: 32px;
+    }
+
+    /* 2. Apple Books / Dictionary Reading Surface (Review Tab) */
+    .review-reading-card {
+      padding: 0;
+      overflow: hidden;
+      border-radius: var(--모서리_둥글기);
+    }
+    .review-reading-card .rev-progress-track {
+      margin: 0;
+      border-radius: 0;
+      height: 2.5px;
+      background: rgba(120, 120, 128, 0.10);
+    }
+    .review-reading-card .rev-progress-fill {
+      border-radius: 0 2px 2px 0;
+    }
+    .review-reading-inner {
+      padding: 20px 18px 16px;
+    }
+    .review-reading-card .example-box {
+      padding: 2px 2px 18px;
+      line-height: 1.85;
+    }
+    /* Airy Dictionary Disclosure Row (No Clunky 3-Box Vertical Dividers) */
+    .ios-action-strip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 0.5px solid var(--헤어라인_색);
+      margin: 2px 0 0;
+      padding: 6px 0 2px;
+      gap: 6px;
+    }
+    .ios-strip-btn {
+      height: 38px;
+      padding: 0 4px;
+      border-radius: 8px;
+      font-size: 14.5px;
+      font-weight: 500;
+    }
+    .ios-strip-btn.main-action {
+      flex: 1;
+      justify-content: flex-start;
+      padding-left: 2px;
+      gap: 6px;
+    }
+    .ios-strip-btn.icon-only {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      color: var(--흐린_글자색);
+    }
+    .ios-strip-btn.icon-only:active {
+      background: var(--안쪽_상자_배경);
+      color: var(--주요_강조색);
+    }
+    .ios-strip-btn.icon-only.bm-on {
+      color: var(--북마크_강조색);
+    }
+    .ios-strip-sep { display: none; }
+
+    .review-reading-card .trans-panel {
+      padding: 12px 2px 6px;
+      border-top: none;
+    }
+    .review-reading-card .char-chips {
+      margin-top: 10px;
+      padding-top: 14px;
+      gap: 8px;
+    }
+    .review-reading-card .tts-scrub-bar {
+      margin-left: 18px;
+      margin-right: 18px;
+    }
+    .review-reading-card .tts-scrub-bar.show {
+      margin-bottom: 14px;
+    }
+    .review-reading-card .pc-only {
+      padding: 0 18px 18px;
+      margin-top: 4px !important;
+    }
+
+    /* 3. Floating Compact iOS Glass Review Capsule (Replaces 2-Story Bottom Bar!) */
+    .mobile-review-bar {
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+      bottom: calc(58px + env(safe-area-inset-bottom, 0px));
+      width: auto;
+      min-width: 224px;
+      max-width: calc(100vw - 32px);
+      height: 44px;
+      padding: 4px 5px;
+      border-radius: 999px;
+      background-color: var(--글라스_카드_배경);
+      -webkit-backdrop-filter: saturate(200%) blur(24px);
+      backdrop-filter: saturate(200%) blur(24px);
+      border: 0.5px solid var(--헤어라인_색);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.06);
+      grid-template-columns: 36px 1fr 36px;
+      gap: 6px;
+    }
+    body.dark .mobile-review-bar {
+      background-color: rgba(34, 34, 36, 0.88);
+      border-color: rgba(255, 255, 255, 0.14);
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.52);
+    }
+    .mobile-review-bar.is-hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-50%) translateY(20px) scale(0.94);
+    }
+    .mobile-review-bar .btn {
+      min-height: 34px;
+      height: 34px;
+      font-size: 14.5px;
+      font-weight: 600;
+    }
+    .mobile-review-bar .btn-success {
+      min-width: 126px;
+      padding: 0 18px;
+      border-radius: 999px;
+    }
+    .mobile-review-bar .btn-soft {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+    }
+    .mobile-review-bar .btn-soft:active {
+      background: var(--안쪽_상자_배경);
+    }
+
+    /* 4. All Table: Authentic iOS Search + Scope Segmented Control */
+    .all-search-slot {
+      min-height: 78px;
+      margin: 0 0 14px;
+    }
+    .all-search-row {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+    }
+    .all-scope-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .ios-scope-seg {
+      position: relative;
+      display: inline-grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--안쪽_상자_배경);
+      border-radius: 8px;
+      padding: 2px;
+      min-width: 144px;
+    }
+    .ios-scope-slider {
+      position: absolute;
+      top: 2px;
+      bottom: 2px;
+      left: 2px;
+      width: calc(50% - 2px);
+      border-radius: 6.5px;
+      background: var(--카드_배경색);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), 0 0.5px 0.5px rgba(0, 0, 0, 0.06);
+      transition: transform 0.22s var(--스프링_이징);
+      pointer-events: none;
+    }
+    body.dark .ios-scope-slider { background: #636366; }
+    .ios-scope-btn {
+      position: relative;
+      z-index: 1;
+      height: 26px;
+      padding: 0 12px;
+      border-radius: 6.5px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--기본_글자색);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ios-scope-btn.on { font-weight: 600; }
+    .all-scope-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .search-clear-btn {
+      background: transparent;
+      color: var(--흐린_글자색);
+      width: 20px;
+      height: 20px;
+      right: 7px;
+    }
+
+    /* 5. All Table: Unified iOS InsetGrouped List (Zero Toss Card Stack!) */
+    #allGroupsList {
+      padding-bottom: 28px;
+    }
+    .ios-unified-list {
+      background: var(--카드_배경색);
+      border-radius: var(--모서리_둥글기);
+      overflow: hidden;
+    }
+    .ios-unified-list .group-block {
+      background: transparent;
+      border-radius: 0;
+      margin-bottom: 0;
+      position: relative;
+    }
+    .ios-unified-list .group-block:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      left: 58px;
+      right: 0;
+      bottom: 0;
+      height: 0.5px;
+      background: var(--헤어라인_색);
+      pointer-events: none;
+    }
+    .ios-unified-list .group-block.is-group-open:not(:last-child)::after {
+      left: 0;
+    }
+    .ios-unified-list .all-group-btn {
+      padding: 11px 16px;
+      min-height: 54px;
+    }
+    .ios-unified-list .root-badge {
+      width: 31px;
+      height: 31px;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    /* 6. Crisp Inline SVG Toggle Buttons (No Unicode ▼/▲) */
+    .grp-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-weight: 500;
+    }
+    .grp-toggle-btn .sf-ico,
+    .ios-more-chev {
+      width: 14px;
+      height: 14px;
+      transition: transform 0.22s var(--스프링_이징);
+    }
+    .settings-more-summary::after { display: none; }
+    .settings-more-details.is-open .ios-more-chev {
+      transform: rotate(90deg);
+      color: var(--주요_강조색);
+    }
+
+    @media (min-width: 960px) {
+      .all-search-slot { max-width: 640px; }
+      .review-reading-inner { padding: 22px 22px 18px; }
+      .ios-menu-popover { right: 24px; }
+    }
+
   </style>
 </head>
 <body>
@@ -2282,7 +2653,7 @@
   <!-- 상단 고정 해성계 그룹 바 -->
   <div id="floatingSeriesBar" class="floating-series-bar" aria-live="polite">
     <div id="floatingSeriesContent" style="display:flex;align-items:center;gap:6px;flex:1;min-width:0;overflow:hidden;"></div>
-    <button id="floatingExpandBtn" class="floating-expand-btn" onclick="toggleAllVisibleDetails()" title="현재 화면의 모든 한자 뜻·예문 일괄 펼치기/접기">▼</button>
+    <button id="floatingExpandBtn" class="floating-expand-btn" onclick="toggleAllVisibleDetails()" title="현재 화면의 모든 한자 뜻·예문 일괄 펼치기/접기" aria-label="일괄 펼치기"><svg class="sf-ico" style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
   </div>
 
   <!-- 복습 탭 대기열 문장 훑어보기 팝오버 -->
@@ -2293,6 +2664,45 @@
     </div>
     <div id="qcpList" class="qcp-list"></div>
   </div>
+
+  <!-- Native iOS ••• UIMenu Popover -->
+  <div id="moreMenuPopover" class="ios-menu-popover" role="menu" aria-label="더보기 메뉴">
+    <button id="menuStrokeItem" class="ios-menu-item" onclick="toggleStrokeAuto()">
+      <span class="ios-menu-left">
+        <svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        <span>획순 자동 재생</span>
+      </span>
+      <svg class="ios-menu-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </button>
+    <button id="menuThemeItem" class="ios-menu-item" onclick="toggleDarkMode()">
+      <span class="ios-menu-left">
+        <span id="menuThemeIcon"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18a9 9 0 0 0 0-18z" fill="currentColor" stroke="none"/></svg></span>
+        <span>화면 테마</span>
+      </span>
+      <span id="menuThemeVal" class="ios-menu-right">시스템</span>
+    </button>
+    <button id="menuPassItem" class="ios-menu-item" onclick="togglePassGlobal()">
+      <span class="ios-menu-left">
+        <svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span>PASS 한자 표시</span>
+      </span>
+      <svg class="ios-menu-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </button>
+    <button class="ios-menu-item no-div" onclick="toggleMoreMenu(false); refreshAllData()">
+      <span class="ios-menu-left">
+        <svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36L21 8"/><polyline points="21 3 21 8 16 8"/></svg>
+        <span>시트 동기화</span>
+      </span>
+    </button>
+    <div class="ios-menu-sep"></div>
+    <button class="ios-menu-item no-div" onclick="toggleMoreMenu(false); toggleSettingsDrawer(true)">
+      <span class="ios-menu-left">
+        <svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="7" x2="20" y2="7"/><circle cx="9" cy="7" r="2.2" fill="currentColor" stroke="none"/><line x1="4" y1="17" x2="20" y2="17"/><circle cx="15" cy="17" r="2.2" fill="currentColor" stroke="none"/></svg>
+        <span>화면 및 글꼴 설정…</span>
+      </span>
+    </button>
+  </div>
+
 
   <!-- 비밀키 잠금 화면 -->
   <div id="authScreen" style="display:none;">
@@ -2325,10 +2735,8 @@
       </div>
 
       <div class="top-controls">
-        <button id="bookmarkOpenBtn" class="pill-btn" onclick="openBookmarkModal()" title="즐겨찾기"><svg class="sf-ico sf-ico-fill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18l-6-4-6 4V4z"/></svg></button>
-        <button id="strokeToggleBtn" class="pill-btn" onclick="toggleStrokeAuto()" title="획순 자동 재생"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
-        <button id="themeBtn" class="pill-btn" onclick="toggleDarkMode()" title="다크/라이트 전환"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
-        <button id="settingsToggleBtn" class="pill-btn" onclick="toggleSettingsDrawer()" title="설정"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="7" x2="20" y2="7"/><circle cx="9" cy="7" r="2.2" fill="currentColor" stroke="none"/><line x1="4" y1="17" x2="20" y2="17"/><circle cx="15" cy="17" r="2.2" fill="currentColor" stroke="none"/></svg></button>
+        <button id="bookmarkOpenBtn" class="pill-btn" onclick="openBookmarkModal()" title="즐겨찾기" aria-label="즐겨찾기"><svg class="sf-ico sf-ico-fill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18l-6-4-6 4V4z"/></svg></button>
+        <button id="moreMenuBtn" class="pill-btn" onclick="toggleMoreMenu()" title="더보기" aria-label="더보기"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.25"/><circle cx="8" cy="12" r="1.15" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.15" fill="currentColor" stroke="none"/><circle cx="16" cy="12" r="1.15" fill="currentColor" stroke="none"/></svg></button>
       </div>
     </div>
   </header>
@@ -2344,14 +2752,13 @@
         <div class="pc-sticky">
           <div class="review-header">
             <span id="reviewCounter" class="review-meta">불러오는 중...</span>
-            <div style="display:flex;align-items:center;gap:4px;">
+            <div style="display:flex;align-items:center;gap:6px;">
               <button id="queuePeekBtn" class="ios-text-action" onclick="toggleQueueCornerPopover()" title="대기열 문장 훑어보기"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="4" cy="6" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="18" r="1" fill="currentColor"/></svg> 대기열</button>
               <button id="sortOrderBtn" class="ios-text-action" onclick="toggleReviewOrder()">오래된순</button>
-              <button id="passToggleReviewBtn" class="ios-text-action" onclick="togglePassGlobal()">PASS 제외</button>
             </div>
           </div>
 
-          <div class="card">
+          <div class="card review-reading-card">
             <div id="reviewBody">
               <div class="skel-wrap">
                 <div class="skel-line lg"></div>
@@ -2469,12 +2876,20 @@
           <div class="all-search-row">
             <div class="search-input-wrap">
               <svg class="search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <input id="allSearchInput" type="search" placeholder="검색" oninput="onAllSearchInput()" />
-              <button id="allSearchClearBtn" class="search-clear-btn" onclick="clearAllSearch()" aria-label="검색어 지우기">✕</button>
+              <input id="allSearchInput" type="search" placeholder="한자, 병음, 뜻, 예문 검색" oninput="onAllSearchInput()" />
+              <button id="allSearchClearBtn" class="search-clear-btn" onclick="clearAllSearch()" aria-label="검색어 지우기"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.71 12.29a1 1 0 0 1-1.42 1.42L12 13.41l-2.29 2.3a1 1 0 0 1-1.42-1.42L10.59 12l-2.3-2.29a1 1 0 0 1 1.42-1.42L12 10.59l2.29-2.3a1 1 0 0 1 1.42 1.42L13.41 12l2.3 2.29z"/></svg></button>
             </div>
-            <button id="allStarFilterBtn" class="pill-btn" onclick="toggleAllStarFilter()">즐겨찾기</button>
-            <button id="passToggleAllBtn" class="pill-btn" onclick="togglePassGlobal()">PASS</button>
-            <button class="pill-btn" onclick="collapseAllGroups()">접기</button>
+            <div class="all-scope-row">
+              <div class="ios-scope-seg" role="tablist" aria-label="전체표 필터">
+                <div id="allScopeSlider" class="ios-scope-slider" aria-hidden="true"></div>
+                <button id="allScopeAllBtn" class="ios-scope-btn on" onclick="setAllStarFilter(false)">전체</button>
+                <button id="allStarFilterBtn" class="ios-scope-btn" onclick="setAllStarFilter(true)">즐겨찾기</button>
+              </div>
+              <div class="all-scope-actions">
+                <button id="passToggleAllBtn" class="ios-text-action" onclick="togglePassGlobal()">PASS</button>
+                <button class="ios-text-action" onclick="collapseAllGroups()">모두 접기</button>
+              </div>
+            </div>
           </div>
           <div id="recentSearchBar" class="recent-q-bar"></div>
         </div>
@@ -2610,7 +3025,7 @@
 
           <!-- 5. 세부 크기 및 레이아웃 (접힘 아코디언) -->
           <div class="settings-more-details" id="settingsMoreDetails">
-            <button type="button" class="settings-more-summary" id="settingsMoreBtn" onclick="toggleSettingsMore(this)">세부 크기 및 레이아웃</button>
+            <button type="button" class="settings-more-summary" id="settingsMoreBtn" onclick="toggleSettingsMore(this)"><span>세부 크기 및 레이아웃</span><svg class="ios-more-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
             <div class="accordion-body" id="settingsMoreAcc">
               <div class="accordion-inner">
                 <div class="settings-more-body">
@@ -3290,6 +3705,11 @@
         if (pop && pop.classList.contains("open") && !pop.contains(e.target) && (!btn || !btn.contains(e.target))) {
           toggleQueueCornerPopover(false);
         }
+        const mpop = document.getElementById("moreMenuPopover");
+        const mbtn = document.getElementById("moreMenuBtn");
+        if (mpop && mpop.classList.contains("open") && !mpop.contains(e.target) && (!mbtn || !mbtn.contains(e.target))) {
+          toggleMoreMenu(false);
+        }
       });
       let floatScrollRaf = 0;
       const syncTopbarScrolled = () => {
@@ -3374,6 +3794,10 @@
         btn.innerHTML = mode === "auto" ? ICO_AUTO_THEME : (isDark ? ICO_SUN : ICO_MOON);
         btn.title = mode === "auto" ? "테마: 시스템 자동" : (isDark ? "테마: 다크" : "테마: 라이트");
       }
+      const mIcon = document.getElementById("menuThemeIcon");
+      const mVal = document.getElementById("menuThemeVal");
+      if (mIcon) mIcon.innerHTML = mode === "auto" ? ICO_AUTO_THEME : (isDark ? ICO_SUN : ICO_MOON);
+      if (mVal) mVal.textContent = mode === "auto" ? "시스템" : (isDark ? "다크" : "라이트");
     }
 
     function initThemeAndFont() {
@@ -3700,7 +4124,7 @@
       const dir = (tabOrder[tab] ?? 0) - (tabOrder[prevTab] ?? 0);
 
       try { stopChineseSpeech(); } catch (e) {}
-      try { toggleQueueCornerPopover(false); } catch (e) {}
+      try { toggleQueueCornerPopover(false); toggleMoreMenu(false); } catch (e) {}
       const prevTabEl = document.getElementById("tab-" + prevTab);
       if (prevTabEl && prevTab !== tab) {
         try { pauseStrokeBoxesIn(prevTabEl); } catch (e) {}
@@ -3910,6 +4334,8 @@
       }
       const sw = document.getElementById("swStrokeAuto");
       if (sw) sw.checked = state.strokeAuto;
+      const mStroke = document.getElementById("menuStrokeItem");
+      if (mStroke) mStroke.classList.toggle("is-on", state.strokeAuto);
     }
 
     function togglePassGlobal() {
@@ -3918,11 +4344,12 @@
       if (fsb) fsb.removeAttribute("data-shown-root");
       const swPass = document.getElementById("swShowPass");
       if (swPass) swPass.checked = state.showPass;
-      const label = state.showPass ? "PASS 포함" : "PASS 제외";
+      const mPass = document.getElementById("menuPassItem");
+      if (mPass) mPass.classList.toggle("is-on", state.showPass);
       ["passToggleReviewBtn", "passToggleAllBtn", "modalPassBtn"].forEach(id => {
         const b = document.getElementById(id);
         if (b) {
-          b.textContent = label;
+          b.textContent = id === "passToggleAllBtn" ? (state.showPass ? "PASS 표시중" : "PASS") : (state.showPass ? "PASS 포함" : "PASS 제외");
           b.classList.toggle("on", state.showPass);
         }
       });
@@ -3948,7 +4375,7 @@
         const acc = it.querySelector(".accordion-body");
         if (!acc || !acc.classList.contains("open")) allOpen = false;
       });
-      btn.textContent = allOpen ? "▲ 접기" : "▼ 펼치기";
+      btn.innerHTML = allOpen ? (ICO_CHEV_UP + " 접기") : (ICO_CHEV_DOWN + " 펼치기");
       btn.classList.toggle("is-open", allOpen);
     }
 
@@ -4209,9 +4636,11 @@
 
       body.innerHTML = `
         <div class="rev-progress-track"><div class="rev-progress-fill" style="width:${pct}%;"></div></div>
-        ${exBlockHtml}
-        ${transHtml}
-        <div class="char-chips">${chipsHtml}</div>
+        <div class="review-reading-inner">
+          ${exBlockHtml}
+          ${transHtml}
+          <div class="char-chips">${chipsHtml}</div>
+        </div>
       `;
 
       if (pcList) {
@@ -4399,7 +4828,7 @@
             <span class="root-badge hanzi">${escHtml(g.root)}</span>
             <span class="count-badge">${countLabel}</span>
             <div class="group-head-actions">
-              <button class="grp-toggle-btn" onclick="toggleGroupDetails(this)">▼ 펼치기</button>
+              <button class="grp-toggle-btn" onclick="toggleGroupDetails(this)">${ICO_CHEV_DOWN} 펼치기</button>
               ${fillBtn}
             </div>
           </div>
@@ -5020,7 +5449,7 @@
                 ${tilesHtml}
                 <div style="display:flex;justify-content:flex-end;gap:6px;margin-top:10px;">
                   ${!it.isNoExample ? `<button class="pill-btn" onclick="retranslateRow(${it.qRow})">${ICO_REFRESH} 재번역</button>` : ""}
-                  <button id="recentToggleBtn_${it.qRow}" class="pill-btn" onclick="toggleRecentExpand(${it.qRow})">${isOpen ? "접기 ▲" : "펼치기 ▼"}</button>
+                  <button id="recentToggleBtn_${it.qRow}" class="pill-btn" onclick="toggleRecentExpand(${it.qRow})">${isOpen ? (ICO_CHEV_UP + " 접기") : (ICO_CHEV_DOWN + " 펼치기")}</button>
                 </div>
               </div>
             </div>
@@ -5036,7 +5465,7 @@
       const nextOpen = !acc.classList.contains("open");
       state.recentManualOpen[qRow] = nextOpen;
       acc.classList.toggle("open", nextOpen);
-      if (btn) btn.textContent = nextOpen ? "접기 ▲" : "펼치기 ▼";
+      if (btn) btn.innerHTML = nextOpen ? (ICO_CHEV_UP + " 접기") : (ICO_CHEV_DOWN + " 펼치기");
     }
 
     function toggleRecentTile(qRow, ch, btnEl) {
@@ -5210,11 +5639,20 @@
       animateCloseBackdrop("shortcutModal");
     }
 
-    function toggleAllStarFilter() {
-      state.allStarOnly = !state.allStarOnly;
-      const btn = document.getElementById("allStarFilterBtn");
-      btn.classList.toggle("on", state.allStarOnly);
+    function setAllStarFilter(starOnly) {
+      const next = Boolean(starOnly);
+      if (state.allStarOnly === next) return;
+      state.allStarOnly = next;
+      const btnAll = document.getElementById("allScopeAllBtn");
+      const btnStar = document.getElementById("allStarFilterBtn");
+      const slider = document.getElementById("allScopeSlider");
+      if (btnAll) btnAll.classList.toggle("on", !next);
+      if (btnStar) btnStar.classList.toggle("on", next);
+      if (slider) slider.style.transform = next ? "translateX(100%)" : "translateX(0)";
       renderAllTable();
+    }
+    function toggleAllStarFilter() {
+      setAllStarFilter(!state.allStarOnly);
     }
 
     function collapseAllGroups() {
@@ -5264,6 +5702,7 @@
           const slot = blk.querySelector(".all-group-slot");
           if (acc && acc.classList.contains("open")) {
             acc.classList.remove("open");
+            blk.classList.remove("is-group-open");
             if (chev) chev.classList.remove("open");
             if (slot) {
               cleanupStrokeBoxes(slot);
@@ -5299,7 +5738,7 @@
         <div class="group-subbar ${g.emptyCount > 0 ? "has-warn" : ""}">
           ${leftInfo}
           <div style="display:flex;align-items:center;gap:6px;">
-            <button class="grp-toggle-btn" onclick="toggleGroupDetails(this)">▼ 펼치기</button>
+            <button class="grp-toggle-btn" onclick="toggleGroupDetails(this)">${ICO_CHEV_DOWN} 펼치기</button>
             ${fillBtn}
           </div>
         </div>
@@ -5318,6 +5757,7 @@
       if (isCurrentlyOpen) {
         state.expandedRoots.delete(root);
         acc.classList.remove("open");
+        if (blk) blk.classList.remove("is-group-open");
         if (chev) chev.classList.remove("open");
         cleanupStrokeBoxes(slot);
         setTimeout(() => {
@@ -5335,6 +5775,7 @@
           syncGroupToggleBtnLabel(blk);
         }
         acc.classList.add("open");
+        if (blk) blk.classList.add("is-group-open");
         if (chev) chev.classList.add("open");
         updateFloatingExpandBtn();
         if (g) {
@@ -5394,6 +5835,7 @@
 
       const frag = document.createDocumentFragment();
       const host = document.createElement("div");
+      host.className = "ios-unified-list";
       host.innerHTML = filtered.map(({ g, rootHit, matchedRowMap, matchedEntries }) => {
         const isOpen = autoOpenSearch || state.expandedRoots.has(g.root);
         const countLabel = g.passCount > 0 ? `${g.nonPassCount}•${g.passCount}` : `${g.nonPassCount}`;
@@ -5438,7 +5880,7 @@
         }
 
         return `
-          <div class="group-block" data-root="${escHtml(g.root)}">
+          <div class="group-block ${isOpen ? "is-group-open" : ""}" data-root="${escHtml(g.root)}">
             <button class="all-group-btn" onclick="toggleAllGroup('${escHtml(g.root)}', this)">
               <span class="root-badge hanzi ${rootHit ? "is-search-hit" : ""}">${escHtml(g.root)}</span>
               <span class="count-badge">${countLabel}</span>
@@ -5459,7 +5901,7 @@
           </div>
         `;
       }).join("");
-      while (host.firstChild) frag.appendChild(host.firstChild);
+      frag.appendChild(host);
       listEl.innerHTML = "";
       listEl.appendChild(frag);
 
@@ -5470,6 +5912,21 @@
     }
 
     /* ===== 복습 탭 대기열 문장 훑어보기 코너 팝업 ===== */
+    function toggleMoreMenu(forceState) {
+      const pop = document.getElementById("moreMenuPopover");
+      const btn = document.getElementById("moreMenuBtn");
+      if (!pop) return;
+      const nextOpen = (typeof forceState === "boolean") ? forceState : !pop.classList.contains("open");
+      if (nextOpen) {
+        toggleQueueCornerPopover(false);
+        pop.classList.add("open");
+        if (btn) btn.classList.add("on");
+      } else {
+        pop.classList.remove("open");
+        if (btn) btn.classList.remove("on");
+      }
+    }
+
     function toggleQueueCornerPopover(forceState) {
       const pop = document.getElementById("queueCornerPopover");
       const btn = document.getElementById("queuePeekBtn");
@@ -5797,6 +6254,7 @@
         toggleSettingsDrawer(false);
         closeShortcutModal();
         toggleQueueCornerPopover(false);
+        toggleMoreMenu(false);
         closeBookmarkModal();
         closeGroupChoiceModal(false);
         closeModal();
