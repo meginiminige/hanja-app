@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <meta name="theme-color" id="metaThemeColor" content="#F2F2F7" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" id="metaStatusBarStyle" content="black-translucent" />
+  <meta name="apple-mobile-web-app-status-bar-style" id="metaStatusBarStyle" content="default" />
   <meta name="apple-mobile-web-app-title" content="谐声系" />
   <title>谐声系</title>
   <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js" defer></script>
@@ -2360,28 +2360,40 @@
     }
 
     /* =========================================================================
-       V3 PATCHES:
-       - Mobile: Native window document scroll (kills iOS top scroll-edge blur
-         and eliminates bottom black gap under tabbar)
-       - Tabbar: Flush to physical bottom edge (bottom: 0), 0 bottom padding,
-         vertically centered icons
-       - Phonetic Series Group Bar: Native CSS position: sticky on actual group
-         headers (active on BOTH Review and All tabs, never covers titles,
-         never pins awkwardly mid-screen)
-       - Desktop (>= 960px): Preserves macOS sidebar + internal workspace scroll
+       V4 PATCHES:
+       1) Root document scroll (NO overflow-y:auto on html/body so window.scrollY
+          and scroll events work 100% reliably on iOS Safari & PWA)
+       2) Opaque top header with +8px top clearance & default/black status bar
+          (eliminates iOS top translucent gradient blur over header controls)
+       3) Bottom tabbar flush to bottom: 0, height 64px (4px top / 14px bottom
+          buffer for iPhone Home Indicator, icons centered in upper 46px)
+       4) Restored #seriesContextStrip dynamically locked to header.bottom,
+          only shown after section header scrolls past header (never covers
+          titles, never pins mid-screen)
+       5) Tab 3 header magnifying glass driven by IntersectionObserver + scroll
        ========================================================================= */
     :root {
       --nv-hanzi-size: 34px;
     }
 
-    /* Mobile (< 960px): Native Window Scroll — fixes iOS top blur & bottom black gap */
-    html, body {
+    /* Mobile (< 960px): True root document scroll (never put overflow-y:auto on html/body) */
+    html {
+      position: static !important;
+      width: 100% !important;
+      height: auto !important;
+      min-height: 100% !important;
+      overflow-x: clip !important;
+      overflow-y: visible !important;
+      background-color: var(--nv-bg-primary);
+    }
+
+    body {
       position: static !important;
       width: 100% !important;
       height: auto !important;
       min-height: 100lvh !important;
       overflow-x: clip !important;
-      overflow-y: auto !important;
+      overflow-y: visible !important;
       background-color: var(--nv-bg-primary);
     }
 
@@ -2401,7 +2413,7 @@
       overflow: visible !important;
     }
 
-    /* Opaque sticky top header — zero backdrop-filter, matches status bar seamlessly */
+    /* Fix #4: Opaque sticky top header with +8px clearance below status bar, zero blur */
     .nv-header,
     .nv-header.is-scrolled,
     body.has-series-strip .nv-header,
@@ -2410,14 +2422,15 @@
       top: 0 !important;
       left: 0 !important;
       right: 0 !important;
-      padding-top: env(safe-area-inset-top, 0px) !important;
+      padding-top: calc(env(safe-area-inset-top, 0px) + 8px) !important;
       background: var(--nv-bg-primary) !important;
       -webkit-backdrop-filter: none !important;
       backdrop-filter: none !important;
       border-bottom: 0.5px solid transparent !important;
       z-index: 120 !important;
     }
-    .nv-header.is-scrolled {
+    .nv-header.is-scrolled,
+    body.has-series-strip .nv-header {
       border-bottom-color: var(--nv-separator) !important;
     }
 
@@ -2425,17 +2438,17 @@
       width: 100% !important;
       height: auto !important;
       overflow: visible !important;
-      padding: var(--nv-sp-2) var(--nv-sp-4) 118px !important;
+      padding: var(--nv-sp-2) var(--nv-sp-4) 136px !important;
     }
 
-    /* Tab bar flush to physical bottom edge with zero bottom padding & centered icons */
+    /* Fix #3: Flush bottom tabbar (no black gap below), 14px bottom buffer for Home Indicator, icons centered */
     .nv-tabbar {
       position: fixed !important;
       left: 0 !important;
       right: 0 !important;
       bottom: 0 !important;
-      height: 50px !important;
-      padding: 0 var(--nv-sp-2) !important;
+      height: 64px !important;
+      padding: 4px var(--nv-sp-2) 14px !important;
       background: var(--nv-bg-secondary) !important;
       -webkit-backdrop-filter: none !important;
       backdrop-filter: none !important;
@@ -2447,50 +2460,48 @@
     }
     .nv-tab-btn {
       height: 44px !important;
+      display: flex !important;
+      flex-direction: column !important;
       justify-content: center !important;
       align-items: center !important;
+      gap: 2px !important;
       padding: 0 !important;
       margin: 0 !important;
     }
 
-    /* Floating review dock sits tightly above the flush tabbar */
+    /* Floating review dock sits cleanly above the 64px tabbar */
     .nv-review-dock {
-      bottom: 60px !important;
+      bottom: 74px !important;
     }
 
-    /* Retire legacy floating fixed strip in favor of native CSS sticky headers */
+    /* Fix #2: Restored Phonetic Series Group Banner — opaque, dynamically positioned below #appHeader */
     .nv-series-strip {
-      display: none !important;
-    }
-
-    /* Native CSS Sticky Phonetic Series Group Headers (Review + All tabs + Sheet) */
-    .nv-series-section,
-    .nv-series-index-list,
-    .nv-series-index-item {
-      overflow: clip !important;
-    }
-
-    .nv-series-header {
-      position: sticky !important;
-      top: calc(env(safe-area-inset-top, 0px) + var(--nv-header-h)) !important;
-      z-index: 25 !important;
-      background: var(--nv-bg-grouped) !important;
+      position: fixed !important;
+      left: 0;
+      right: 0;
+      z-index: 115 !important;
+      height: 38px !important;
+      padding: 0 var(--nv-sp-4) !important;
+      background: var(--nv-bg-secondary) !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
       border-bottom: 0.5px solid var(--nv-separator) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: var(--nv-sp-2) !important;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-4px);
+      transition: opacity 150ms var(--nv-ease-std), transform 180ms var(--nv-ease-spring);
+    }
+    .nv-series-strip.is-visible {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      transform: translateY(0) !important;
     }
 
-    .nv-series-index-item.is-open > .nv-series-index-btn {
-      position: sticky !important;
-      top: calc(env(safe-area-inset-top, 0px) + var(--nv-header-h)) !important;
-      z-index: 25 !important;
-      background: var(--nv-bg-grouped) !important;
-      border-bottom: 0.5px solid var(--nv-separator) !important;
-    }
-
-    #seriesSheetBody .nv-series-header {
-      top: 0 !important;
-    }
-
-    /* Tab 3: Floating magnifying glass icon in header on scroll */
+    /* Fix #1: Tab 3 header magnifying glass icon on scroll */
     .nv-header-search-btn {
       width: 34px;
       height: 34px;
@@ -2505,9 +2516,9 @@
       transition: opacity 180ms var(--nv-ease-std), transform 180ms var(--nv-ease-spring);
     }
     .nv-header-search-btn.is-visible {
-      opacity: 1;
-      pointer-events: auto;
-      transform: scale(1);
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      transform: scale(1) !important;
     }
     .nv-search-bar.is-docked {
       position: relative !important;
@@ -2568,7 +2579,7 @@
       padding-top: 9px;
     }
 
-    /* Unified clickable example words trigger (selects all words & toggles all meanings at once) */
+    /* Unified clickable example words trigger */
     .nv-words-trigger {
       flex: 1;
       min-width: 0;
@@ -2639,19 +2650,19 @@
       .nv-header {
         position: relative !important;
         top: auto !important;
+        padding-top: 0 !important;
         flex-shrink: 0 !important;
         background: var(--nv-bg-secondary) !important;
         border-bottom-color: var(--nv-separator) !important;
+      }
+      .nv-series-strip {
+        left: var(--nv-sidebar-w) !important;
       }
       .nv-workspace {
         flex: 1 1 auto !important;
         min-height: 0 !important;
         overflow-y: auto !important;
         padding: var(--nv-sp-4) var(--nv-sp-5) var(--nv-sp-10) !important;
-      }
-      .nv-series-header,
-      .nv-series-index-item.is-open > .nv-series-index-btn {
-        top: 0 !important;
       }
       .nv-tabbar {
         display: none !important;
@@ -3793,7 +3804,8 @@
       document.body.style.backgroundColor = barHex;
       const metaTheme = document.getElementById("metaThemeColor");
       if (metaTheme) metaTheme.setAttribute("content", barHex);
-      // Keep apple-mobile-web-app-status-bar-style as black-translucent to prevent iOS top blur/band mismatch
+      const metaStatus = document.getElementById("metaStatusBarStyle");
+      if (metaStatus) metaStatus.setAttribute("content", isDark ? "black" : "default");
 
       const glyph = document.getElementById("menuThemeGlyph");
       const label = document.getElementById("menuThemeLabel");
@@ -4916,7 +4928,76 @@
       return best;
     }
 
-    function refreshSeriesStrip() { /* Handled natively via CSS position: sticky */ }
+    function refreshSeriesStrip() {
+      const strip = document.getElementById("seriesContextStrip");
+      const scrollEl = document.getElementById("seriesContextScroll");
+      const bulkBtn = document.getElementById("bulkExpandToggleBtn");
+      if (!strip || !scrollEl) return;
+
+      const inSheet = Boolean(appState.sheetTargetChars);
+      const scope = inSheet
+        ? document.getElementById("seriesSheetBody")
+        : document.getElementById("page-" + appState.activeTab);
+      if (!scope) {
+        strip.classList.remove("is-visible");
+        document.body.classList.remove("has-series-strip");
+        if (bulkBtn) bulkBtn.classList.remove("is-visible");
+        return;
+      }
+
+      const hdrRect = document.getElementById("appHeader")?.getBoundingClientRect();
+      const topAnchor = inSheet
+        ? (scope.getBoundingClientRect().top || 0)
+        : (hdrRect ? hdrRect.bottom : 44);
+
+      // Find a section whose OWN header has scrolled above topAnchor while its rows are still visible below
+      const secs = scope.querySelectorAll(".nv-series-section");
+      let activeSec = null;
+      for (const sec of secs) {
+        if (!sec.querySelector(".nv-char-row")) continue;
+        const secRect = sec.getBoundingClientRect();
+        const ownHead = sec.querySelector(".nv-series-header") || sec.querySelector(".nv-series-index-btn");
+        if (!ownHead) continue;
+        const headRect = ownHead.getBoundingClientRect();
+        // Only activate when the section's own header has scrolled completely past topAnchor
+        // AND the section body still extends below the strip
+        if (headRect.bottom <= topAnchor + 2 && secRect.bottom > topAnchor + 48) {
+          activeSec = sec;
+          break;
+        }
+      }
+
+      const root = activeSec ? activeSec.getAttribute("data-root") : "";
+      const g = root ? appState.groupMap[root] : null;
+
+      if (!g) {
+        strip.classList.remove("is-visible");
+        document.body.classList.remove("has-series-strip");
+        if (bulkBtn) bulkBtn.classList.remove("is-visible");
+        return;
+      }
+
+      // Lock exact pixel top right beneath #appHeader (or sheet top) so it NEVER pins mid-screen
+      strip.style.top = Math.max(0, Math.round(topAnchor)) + "px";
+
+      if (strip.getAttribute("data-root") !== root) {
+        strip.setAttribute("data-root", root);
+        const chars = g.rows.filter(r => !r.isPass || appState.showPass).map(r =>
+          r.isStar ? `<span class="nv-series-star-char">${esc(r.simp)}</span>` : esc(r.simp)
+        ).join(" ");
+        scrollEl.innerHTML = `<span class="nv-series-root-label nv-zh-simp">${esc(g.root)}</span><span class="nv-series-chars-label nv-zh-simp">${chars}</span>`;
+      }
+      strip.classList.add("is-visible");
+      document.body.classList.add("has-series-strip");
+
+      if (bulkBtn) {
+        const details = activeSec.querySelectorAll(".nv-char-row > .nv-disclosure");
+        const allOpen = details.length > 0 && Array.from(details).every(d => d.classList.contains("is-open"));
+        bulkBtn.classList.add("is-visible");
+        bulkBtn.classList.toggle("is-expanded", allOpen);
+        bulkBtn.innerHTML = allOpen ? SVG_CHEV_UP : SVG_CHEV_DOWN;
+      }
+    }
 
     function toggleVisibleSeriesRows() {
       applyBulkRowToggle(getActiveSeriesSection());
@@ -5789,7 +5870,7 @@
 
     function getCurrentScrollY() {
       if (isMobileScrollMode()) {
-        return window.scrollY || document.documentElement.scrollTop || 0;
+        return window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
       }
       const ws = document.getElementById("workspaceScroll");
       return ws ? ws.scrollTop : 0;
@@ -5808,19 +5889,45 @@
       setTimeout(() => document.getElementById("allSearchInput")?.focus(), 260);
     }
 
+    let _searchBarOutOfView = false;
+
+    function initSearchBarObserver() {
+      const sb = document.getElementById("allSearchBar");
+      if (!sb || !("IntersectionObserver" in window)) return;
+      const obs = new IntersectionObserver(entries => {
+        const ent = entries[0];
+        if (!ent) return;
+        _searchBarOutOfView = !ent.isIntersecting && ent.boundingClientRect.bottom < 80;
+        updateHeaderSearchBtn();
+      }, { threshold: 0 });
+      obs.observe(sb);
+    }
+
+    function updateHeaderSearchBtn() {
+      const searchBtn = document.getElementById("headerSearchBtn");
+      if (!searchBtn) return;
+      if (appState.activeTab !== "all") {
+        searchBtn.classList.remove("is-visible");
+        return;
+      }
+      const sb = document.getElementById("allSearchBar");
+      const hdrBottom = document.getElementById("appHeader")?.getBoundingClientRect().bottom || 44;
+      const sbRect = sb ? sb.getBoundingClientRect() : null;
+      const scrolledPast = sbRect ? (sbRect.bottom < hdrBottom + 4) : (getCurrentScrollY() > 72);
+      searchBtn.classList.toggle("is-visible", Boolean(_searchBarOutOfView || scrolledPast));
+    }
+
     function syncScrollChrome() {
       const hdr = document.getElementById("appHeader");
       const y = getCurrentScrollY();
-      if (hdr) hdr.classList.toggle("is-scrolled", y > 20);
+      if (hdr) hdr.classList.toggle("is-scrolled", y > 12);
 
-      const searchBtn = document.getElementById("headerSearchBtn");
-      if (searchBtn) {
-        const showSearchIcon = appState.activeTab === "all" && y > 72;
-        searchBtn.classList.toggle("is-visible", showSearchIcon);
-      }
+      updateHeaderSearchBtn();
 
       document.getElementById("allSearchBar")?.classList.remove("is-docked");
       document.body.classList.remove("is-all-docked");
+
+      refreshSeriesStrip();
     }
 
     /* Gestures & Keyboard Shortcuts */
@@ -5981,6 +6088,7 @@
       syncTileScaleBtn();
       wireSheetDragDismiss();
       wireReviewSwipe();
+      initSearchBarObserver();
 
       let scrollFrame = 0;
       const onScroll = () => {
@@ -6029,4 +6137,3 @@
   </script>
 </body>
 </html>
-Refining mobile interface dimensions and scrolling rules
