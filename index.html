@@ -2127,6 +2127,12 @@
     }
 
     /* Bookmarks & Choice Options */
+    #bookmarkSheet .nv-seg-3 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    #bookmarkSheet .nv-seg-3-thumb {
+      width: calc((100% - 4px) / 4);
+    }
     .nv-seg-3 {
       position: relative;
       display: inline-grid;
@@ -2656,15 +2662,20 @@
       filter: none !important;
       opacity: 1 !important;
       transition: none !important;
-      transform: translateZ(0);
+      /* 불필요한 합성 레이어를 만들지 않아 iOS 상단 상태바의 흐림 현상을 방지 */
+      isolation: isolate;
     }
-    /* iOS 러버밴드/상태바 영역까지 같은 색으로 덮어 비침 방지 */
+    /* iOS 상태바/Safe Area 뒤쪽도 헤더와 동일한 불투명 배경으로 유지 */
     .nv-header::before {
       content: "";
-      position: absolute;
-      left: 0; right: 0; top: -200px; height: 200px;
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: max(200px, env(safe-area-inset-top, 0px));
       background: var(--nv-bg-primary);
       pointer-events: none;
+      z-index: -1;
     }
     @media (min-width: 960px) {
       .nv-header::before { display: none; }
@@ -2744,6 +2755,12 @@
       </span>
       <span id="menuThemeLabel" class="nv-popover-meta">시스템</span>
     </button>
+    <button id="menuCollapseAllSeries" class="nv-popover-item" role="menuitem" onclick="toggleOverflowMenu(false); collapseAllSeries()">
+      <span style="display:inline-flex;align-items:center;gap:10px;">
+        <svg class="nv-ico nv-ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/><path d="m8 9 4 4 4-4"/></svg>
+        <span>전체표 그룹 모두 접기</span>
+      </span>
+    </button>
     <button id="menuPassToggle" class="nv-popover-item" role="menuitem" onclick="togglePassVisibility()">
       <span style="display:inline-flex;align-items:center;gap:10px;">
         <svg class="nv-ico nv-ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -2764,6 +2781,24 @@
         <span>화면 및 글꼴 설정…</span>
       </span>
     </button>
+  </div>
+
+  <!-- Character Long-Press Action Menu -->
+  <div id="charActionMenu" class="nv-popover" role="menu" aria-label="한자 작업" style="top:auto;right:auto;width:164px;z-index:420;">
+    <button class="nv-popover-item" role="menuitem" onclick="runCharacterReanalysis()">
+      <span>재분석</span>
+    </button>
+  </div>
+
+  <!-- Character Reanalysis Result Sheet -->
+  <div id="reanalysisSheet" class="nv-sheet-backdrop" onclick="if(event.target===this) closeReanalysisSheet()">
+    <div class="nv-sheet" style="max-width:560px;">
+      <div class="nv-sheet-header">
+        <span>한자 재분석 결과</span>
+        <button class="nv-btn-plain" style="font-size:15px;" onclick="closeReanalysisSheet()">완료</button>
+      </div>
+      <div id="reanalysisResultBody" class="nv-sheet-body"></div>
+    </div>
   </div>
 
   <!-- Secret Key Auth Overlay -->
@@ -3027,10 +3062,6 @@
                   <div id="allScopeThumb" class="nv-scope-thumb" aria-hidden="true"></div>
                   <button id="scopeAllBtn" class="nv-scope-btn is-active" onclick="setStarredFilter(false)">전체</button>
                   <button id="scopeStarBtn" class="nv-scope-btn" onclick="setStarredFilter(true)">즐겨찾기</button>
-                </div>
-                <div class="nv-head-actions">
-                  <button id="allPassBtn" class="nv-btn-plain" onclick="togglePassVisibility()">PASS</button>
-                  <button class="nv-btn-plain" onclick="collapseAllSeries()">접기</button>
                 </div>
               </div>
 
@@ -3344,6 +3375,7 @@
             <button id="bmTabAll" class="nv-seg-3-btn is-active" onclick="selectBookmarkFilter('all')">전체</button>
             <button id="bmTabEx" class="nv-seg-3-btn" onclick="selectBookmarkFilter('example')">예문</button>
             <button id="bmTabWord" class="nv-seg-3-btn" onclick="selectBookmarkFilter('word')">단어</button>
+            <button id="bmTabCharacter" class="nv-seg-3-btn" onclick="selectBookmarkFilter('character')">한자</button>
           </div>
           <button class="nv-btn-plain" style="font-size:15px;" onclick="closeBookmarkSheet()">완료</button>
         </div>
@@ -3386,7 +3418,7 @@
         withSuccessHandler(fn) { onSuccess = fn; return client; },
         withFailureHandler(fn) { onFailure = fn; return client; }
       };
-      ["webAppGetInitData", "webAppMarkReviewed", "webAppTranslateExample", "webAppRegisterChars", "webAppFillGroup", "webAppToggleBookmark"].forEach(method => {
+      ["webAppGetInitData", "webAppMarkReviewed", "webAppTranslateExample", "webAppRegisterChars", "webAppFillGroup", "webAppToggleBookmark", "webAppReanalyzeCharacter"].forEach(method => {
         client[method] = function(...args) {
           fetch(GAS_EXEC_URL, {
             method: "POST",
@@ -4806,6 +4838,7 @@
         const hasWordsPy = r.wordsPinyin && r.wordsPinyin !== "-";
         const hasSent = r.sentence && r.sentence !== "-";
         const wordBmOn = Boolean(appState.bookmarkById["wd_" + r.rowNum]);
+        const charBmOn = Boolean(appState.bookmarkById["ch_" + r.rowNum]);
 
         const wordsTextHtml = q ? markText(r.words, q) : esc(r.words);
         const wordsRevealHtml = hasWordsPy
@@ -4813,8 +4846,8 @@
           : `<span style="color:var(--nv-label-tertiary);">(상세 뜻 정보 없음)</span>`;
 
         return `
-          <div class="nv-char-row ${isTarget ? "is-target" : ""} ${r.isPass ? "is-pass" : ""}" data-rowid="${rowId}">
-            <div class="nv-char-row-top" onclick="toggleCharDetail('${rowId}', this)">
+          <div class="nv-char-row ${isTarget ? "is-target" : ""} ${r.isPass ? "is-pass" : ""}" data-rowid="${rowId}" data-rownum="${r.rowNum}" data-root="${esc(g.root)}" data-char="${esc(r.simp)}">
+            <div class="nv-char-row-top" onpointerdown="startCharLongPress(event, this)" onpointermove="cancelCharLongPress(event)" onpointerup="cancelCharLongPress(event)" onpointerleave="cancelCharLongPress(event)" onpointercancel="cancelCharLongPress(event)" oncontextmenu="openCharActionFromContext(event, this)" onclick="toggleCharDetail('${rowId}', this)">
               <div class="nv-hanzi-freq-cluster">
                 <div class="nv-stroke-box ${r.isStar ? "is-starred" : ""}" data-char="${esc(r.simp)}" onclick="tapStrokeBox(event, this)">
                   <span class="nv-stroke-glyph nv-zh-simp">${esc(r.simp)}</span>
@@ -4827,6 +4860,7 @@
               <div class="nv-row-meta-right">
                 <div class="nv-row-pinyin nv-pinyin">${q ? markText(r.pinyin || "-", q) : esc(r.pinyin || "-")}</div>
                 ${r.hunum && r.hunum !== "-" ? `<div class="nv-row-hunum">${q ? markText(r.hunum, q) : esc(r.hunum)}</div>` : ""}
+                <button class="nv-icon-btn ${charBmOn ? "is-bookmarked" : ""}" style="width:26px;height:26px;margin-top:3px;" data-bmid="ch_${r.rowNum}" onclick="toggleCharacterBookmark(event, ${r.rowNum})" title="한자 북마크" aria-label="한자 북마크">${charBmOn ? SVG_BOOKMARK.replace("nv-ico-fill", "nv-ico-fill is-active") : SVG_BOOKMARK}</button>
               </div>
             </div>
 
@@ -4867,6 +4901,7 @@
     }
 
     function toggleCharDetail(rowId, el) {
+      if (Date.now() < suppressCharRowClickUntil) return;
       const disc = document.getElementById("charDetail_" + rowId);
       if (!disc) return;
       if (appState.openRowDetailIds.has(rowId)) {
@@ -5834,6 +5869,11 @@
     }
 
     /* Bookmarks & Popovers & Sheets */
+    document.addEventListener("pointerdown", evt => {
+      const menu = document.getElementById("charActionMenu");
+      if (menu?.classList.contains("is-open") && !menu.contains(evt.target)) closeCharActionMenu();
+    });
+
     function toggleOverflowMenu(forceOpen) {
       const pop = document.getElementById("overflowMenu");
       const btn = document.getElementById("overflowMenuBtn");
@@ -5881,6 +5921,7 @@
     function syncBookmarkDom(id, active) {
       document.querySelectorAll(`[data-bmid="${id}"]`).forEach(btn => {
         btn.classList.toggle("is-bookmarked", active);
+        if (String(id).startsWith("ch_")) btn.querySelector(".nv-ico-fill")?.classList.toggle("is-active", active);
       });
       const anySaved = appState.bookmarks.length > 0;
       document.getElementById("headerBookmarkBtn")?.classList.toggle("is-bookmarked", anySaved);
@@ -5901,7 +5942,9 @@
       }
       syncBookmarkDom(id, next);
       if (document.getElementById("bookmarkSheet")?.classList.contains("is-open")) renderBookmarkSheet();
-      showBanner(next ? "즐겨찾기에 추가됨" : "즐겨찾기에서 해제됨");
+      if (!(payload.type === "character" && next)) {
+        showBanner(next ? "즐겨찾기에 추가됨" : "즐겨찾기에서 해제됨");
+      }
 
       google.script.run
         .withFailureHandler(err => showBanner("북마크 동기화 오류: " + (err && err.message || err)))
@@ -5938,6 +5981,121 @@
       });
     }
 
+    function toggleCharacterBookmark(evt, rowNum) {
+      if (evt) evt.stopPropagation();
+      let found = null;
+      let root = "";
+      for (const group of appState.groups) {
+        const row = group.rows.find(x => x.rowNum === rowNum);
+        if (row) { found = row; root = group.root; break; }
+      }
+      if (!found) return;
+      toggleBookmarkEntry({
+        id: "ch_" + rowNum,
+        type: "character",
+        ref: root + ":" + found.simp,
+        title: found.display,
+        sub: [found.pinyin, found.hunum, found.meaning].filter(x => x && x !== "-").join(" · ")
+      });
+    }
+
+    let charLongPressTimer = null;
+    let charLongPressTarget = null;
+    let charLongPressStart = null;
+    let suppressCharRowClickUntil = 0;
+    let activeCharAction = null;
+
+    function startCharLongPress(evt, el) {
+      if (!el || evt.target.closest("button") || (evt.pointerType === "mouse" && evt.button !== 0)) return;
+      cancelCharLongPress();
+      charLongPressTarget = el;
+      charLongPressStart = { x: evt.clientX, y: evt.clientY };
+      const row = el.closest(".nv-char-row");
+      if (!row) return;
+      charLongPressTimer = setTimeout(() => {
+        suppressCharRowClickUntil = Date.now() + 450;
+        showCharActionMenu(row, charLongPressStart.x, charLongPressStart.y);
+        charLongPressTimer = null;
+      }, 560);
+    }
+
+    function cancelCharLongPress(evt) {
+      if (evt && charLongPressStart && evt.type === "pointermove") {
+        const dx = evt.clientX - charLongPressStart.x;
+        const dy = evt.clientY - charLongPressStart.y;
+        if (Math.hypot(dx, dy) < 10) return;
+      }
+      if (charLongPressTimer) clearTimeout(charLongPressTimer);
+      charLongPressTimer = null;
+      charLongPressTarget = null;
+      charLongPressStart = null;
+    }
+
+    function showCharActionMenu(row, x, y) {
+      const menu = document.getElementById("charActionMenu");
+      if (!menu || !row) return;
+      activeCharAction = {
+        rowNum: Number(row.getAttribute("data-rownum")),
+        root: row.getAttribute("data-root") || "",
+        char: row.getAttribute("data-char") || ""
+      };
+      menu.style.left = Math.max(8, Math.min(window.innerWidth - 176, x - 82)) + "px";
+      menu.style.top = Math.max(8, Math.min(window.innerHeight - 58, y - 18)) + "px";
+      menu.classList.add("is-open");
+    }
+
+    function openCharActionFromContext(evt, el) {
+      evt.preventDefault();
+      evt.stopPropagation();
+      cancelCharLongPress();
+      const row = el?.closest(".nv-char-row");
+      if (row) {
+        suppressCharRowClickUntil = Date.now() + 450;
+        showCharActionMenu(row, evt.clientX, evt.clientY);
+      }
+    }
+
+    function closeCharActionMenu() {
+      document.getElementById("charActionMenu")?.classList.remove("is-open");
+    }
+
+    function runCharacterReanalysis() {
+      const target = activeCharAction;
+      closeCharActionMenu();
+      if (!target || !target.rowNum || !target.root) return;
+      const body = document.getElementById("reanalysisResultBody");
+      if (body) body.innerHTML = `<div class="nv-empty"><div class="nv-empty-title">${esc(target.char)} 분석 중…</div><div class="nv-empty-sub">현재 [${esc(target.root)}] 해성계와의 관계를 확인하고 있습니다.</div></div>`;
+      document.getElementById("reanalysisSheet")?.classList.add("is-open");
+      google.script.run
+        .withSuccessHandler(result => renderCharacterReanalysisResult(result, target))
+        .withFailureHandler(err => {
+          if (body) body.innerHTML = `<div class="nv-empty"><div class="nv-empty-title">분석에 실패했습니다.</div><div class="nv-empty-sub">${esc(err && err.message || err || "알 수 없는 오류")}</div></div>`;
+        })
+        .webAppReanalyzeCharacter(appState.secretKey, target.root, target.rowNum);
+    }
+
+    function renderCharacterReanalysisResult(result, target) {
+      const body = document.getElementById("reanalysisResultBody");
+      if (!body) return;
+      const belongs = result && result.belongsToCurrentGroup;
+      const verdict = belongs === true ? "현재 해성계에 속하는 것이 타당합니다." : (belongs === false ? "현재 해성계 분류를 재검토할 필요가 있습니다." : "현재 해성계와의 관계가 명확하지 않습니다.");
+      const candidates = Array.isArray(result?.suggestedGroups) ? result.suggestedGroups : [];
+      body.innerHTML = `
+        <div class="nv-grouped-list" style="padding:14px;">
+          <div style="font-size:12px;color:var(--nv-label-tertiary);margin-bottom:6px;">${esc(target.char)} · 현재 그룹 ${esc(target.root)}</div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:10px;">${esc(verdict)}</div>
+          <div style="font-size:13px;color:var(--nv-label-secondary);margin-bottom:12px;">신뢰도: ${esc(result?.confidence || "판단 보류")}</div>
+          <div style="font-size:14px;line-height:1.6;white-space:pre-wrap;">${esc(result?.reason || "분석 근거가 반환되지 않았습니다.")}</div>
+          ${result?.idsEvidence ? `<div style="margin-top:12px;padding-top:12px;border-top:0.5px solid var(--nv-separator);font-size:13px;color:var(--nv-label-secondary);"><strong>IDS 구조 근거</strong><div style="margin-top:5px;white-space:pre-wrap;">${esc(result.idsEvidence)}</div></div>` : ""}
+          ${candidates.length ? `<div style="margin-top:14px;padding-top:12px;border-top:0.5px solid var(--nv-separator);"><div style="font-size:13px;font-weight:700;margin-bottom:8px;">가능한 다른 해성계</div>${candidates.map(c => `<div style="padding:8px 0;border-bottom:0.5px solid var(--nv-separator);"><strong class="nv-zh-simp">${esc(c.root || "")}</strong><div style="font-size:13px;color:var(--nv-label-secondary);margin-top:3px;">${esc(c.reason || "")}</div></div>`).join("")}</div>` : ""}
+          <div style="margin-top:14px;font-size:12px;color:var(--nv-label-tertiary);">이 분석은 제안만 제공합니다. 실제 이동이나 삭제는 실행하지 않았습니다.</div>
+        </div>`;
+    }
+
+    function closeReanalysisSheet() {
+      closeSheetById("reanalysisSheet");
+    }
+
     function openBookmarkSheet() {
       document.getElementById("bookmarkSheet")?.classList.add("is-open");
       renderBookmarkSheet();
@@ -5952,9 +6110,10 @@
       document.getElementById("bmTabAll")?.classList.toggle("is-active", filter === "all");
       document.getElementById("bmTabEx")?.classList.toggle("is-active", filter === "example");
       document.getElementById("bmTabWord")?.classList.toggle("is-active", filter === "word");
+      document.getElementById("bmTabCharacter")?.classList.toggle("is-active", filter === "character");
       const thumb = document.getElementById("bmSegThumb");
       if (thumb) {
-        const idx = filter === "example" ? 1 : (filter === "word" ? 2 : 0);
+        const idx = filter === "example" ? 1 : (filter === "word" ? 2 : (filter === "character" ? 3 : 0));
         thumb.style.transform = `translateX(calc(${idx} * 100%))`;
       }
       renderBookmarkSheet();
@@ -5965,18 +6124,18 @@
       if (!body) return;
       const items = appState.bookmarks.filter(b => appState.bookmarkFilter === "all" || b.type === appState.bookmarkFilter);
       if (!items.length) {
-        body.innerHTML = `<div class="nv-empty"><div class="nv-empty-title">북마크 없음</div><div class="nv-empty-sub">저장한 예문과 단어가 여기에 표시됩니다.</div></div>`;
+        body.innerHTML = `<div class="nv-empty"><div class="nv-empty-title">북마크 없음</div><div class="nv-empty-sub">저장한 예문, 단어와 한자가 여기에 표시됩니다.</div></div>`;
         return;
       }
       body.innerHTML = items.map(b => {
         const chars = extractChars(b.title);
-        const jumpAttr = (b.type === "word" && chars.length)
+        const jumpAttr = ((b.type === "word" || b.type === "character") && chars.length)
           ? `style="cursor:pointer;" onclick="closeBookmarkSheet(); openSeriesSheet(['${chars[0]}'], ${JSON.stringify(chars).replace(/"/g, "'")})"`
           : "";
         return `
           <div class="nv-bookmark-row">
             <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
-              <span class="${b.type === "example" ? "nv-status-done" : "nv-status-pending"}">${b.type === "example" ? "예문" : "단어"}</span>
+              <span class="${b.type === "example" ? "nv-status-done" : "nv-status-pending"}">${b.type === "example" ? "예문" : (b.type === "character" ? "한자" : "단어")}</span>
               <button class="nv-btn-plain nv-btn-sm" style="color:var(--nv-system-red);" onclick="toggleBookmarkEntry({id:'${esc(b.id)}',type:'${esc(b.type)}',ref:'${esc(b.ref)}',title:'',sub:''})">해제</button>
             </div>
             <div class="nv-zh-simp" style="font-size:16px;font-weight:700;word-break:break-word;" ${jumpAttr}>${esc(b.title)}</div>
