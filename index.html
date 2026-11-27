@@ -586,9 +586,6 @@
       transform: translateY(-10px) scale(0.95);
       transition: opacity 0.2s var(--애플_이징), transform 0.3s var(--스프링_이징);
     }
-    body.tab-all .floating-series-bar {
-      top: calc(var(--상단바_높이) + var(--검색바_높이) + 2px);
-    }
     .floating-series-bar.show {
       opacity: 1;
       pointer-events: auto;
@@ -1184,10 +1181,9 @@
        8. All Table Tab — Native Top-Sticky iOS UISearchBar
        ===================================================================== */
     .all-search-sticky {
-      position: sticky;
-      top: calc(var(--상단바_높이) + 4px);
+      position: relative;
       z-index: 40;
-      margin: 0 0 10px;
+      margin: 0 0 12px;
       padding: 5px 8px;
       border-radius: 999px;
       background-color: var(--글라스_카드_배경);
@@ -2857,6 +2853,7 @@
       syncTopbarHeight();
       initModalSwipeDismiss();
       initReviewSwipeGesture();
+      initAppleScrollPhysics();
 
       try { localStorage.removeItem(CACHE_KEY); } catch (e) {}
 
@@ -5121,6 +5118,115 @@
         rb.style.transition = "transform 0.28s var(--스프링_이징), opacity 0.22s var(--애플_이징)";
         rb.style.transform = "";
         rb.style.opacity = "";
+      }, { passive: true });
+    }
+
+
+    /* ===== Apple Native Spring Scroll Physics (Subtle & 60fps) ===== */
+    function initAppleScrollPhysics() {
+      const mw = document.getElementById("mainWrap");
+      if (!mw) return;
+      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      let lastScrollTop = mw.scrollTop;
+      let lastTime = performance.now();
+      let springPos = 0;   // normalized -1..1
+      let springVel = 0;
+      let rafId = 0;
+      const touchedEls = new Set();
+
+      // Critically-damped subtle spring constants
+      const STIFFNESS = 0.16;
+      const DAMPING = 0.74;
+
+      const clearAll = () => {
+        touchedEls.forEach(el => {
+          el.style.transform = "";
+          el.style.transformOrigin = "";
+          el.style.willChange = "";
+        });
+        touchedEls.clear();
+      };
+
+      const step = () => {
+        // Spring force pulling springPos back toward 0
+        const force = -STIFFNESS * springPos;
+        springVel = (springVel + force) * DAMPING;
+        springPos += springVel;
+
+        const isSettled = Math.abs(springPos) < 0.0025 && Math.abs(springVel) < 0.0025;
+        if (isSettled || document.body.classList.contains("modal-open")) {
+          springPos = 0;
+          springVel = 0;
+          clearAll();
+          rafId = 0;
+          return;
+        }
+
+        const activeView = document.querySelector(".tab-view.active");
+        if (!activeView) {
+          clearAll();
+          rafId = 0;
+          return;
+        }
+
+        const vh = window.innerHeight || 800;
+        const nodes = activeView.querySelectorAll(".group-block, .card");
+        const nextVisible = new Set();
+
+        for (let i = 0; i < nodes.length; i++) {
+          const el = nodes[i];
+          if (el.closest(".pc-sticky")) continue;
+          const rect = el.getBoundingClientRect();
+          if (rect.bottom < -30 || rect.top > vh + 30) continue;
+
+          nextVisible.add(el);
+          // Normalized position from top (0) to bottom (1) of viewport
+          const centerNorm = Math.max(0, Math.min(1, (rect.top + rect.height * 0.5) / vh));
+          // Cards trailing behind the scroll direction get a gentle elastic pull
+          const dirFactor = springPos > 0 ? centerNorm : (1 - centerNorm);
+          const lagY = -(springPos * (1.8 + dirFactor * 4.2));
+          // Subtle micro-stretch along Y axis (max ~1.3%)
+          const stretchY = 1 + Math.min(0.013, Math.abs(springPos) * (0.006 + dirFactor * 0.007));
+
+          el.style.willChange = "transform";
+          el.style.transformOrigin = springPos > 0 ? "center top" : "center bottom";
+          el.style.transform = `translate3d(0, ${lagY.toFixed(2)}px, 0) scaleY(${stretchY.toFixed(4)})`;
+          touchedEls.add(el);
+        }
+
+        // Clean up any element that scrolled out of view
+        touchedEls.forEach(el => {
+          if (!nextVisible.has(el)) {
+            el.style.transform = "";
+            el.style.transformOrigin = "";
+            el.style.willChange = "";
+            touchedEls.delete(el);
+          }
+        });
+
+        rafId = requestAnimationFrame(step);
+      };
+
+      mw.addEventListener("scroll", () => {
+        const now = performance.now();
+        const dt = Math.max(8, Math.min(64, now - lastTime));
+        const curTop = mw.scrollTop;
+        const dy = curTop - lastScrollTop;
+        lastScrollTop = curTop;
+        lastTime = now;
+
+        if (Math.abs(dy) < 0.5) return;
+
+        // Normalize velocity softly into -1..1 impulse
+        const velocity = dy / dt; // px per ms
+        const impulse = Math.max(-0.55, Math.min(0.55, velocity * 0.14));
+        springVel = Math.max(-0.9, Math.min(0.9, springVel + impulse));
+        springPos = Math.max(-1.0, Math.min(1.0, springPos + impulse * 0.35));
+
+        if (!rafId) {
+          rafId = requestAnimationFrame(step);
+        }
       }, { passive: true });
     }
 
