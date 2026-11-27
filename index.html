@@ -21,7 +21,7 @@
   <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js" defer></script>
   <style>
     /* =====================================================================
-       Apple Notes & Pages Native Design System (v9 — Ground-Up Rebuild)
+       Apple Notes & Pages Native Design System (v10 — Zero Blur / Zero Slit / Full-Height Edge-to-Edge)
        - Flex-Column Viewport Shell (Zero Topbar Overlap / Zero Bottom Void)
        - Warm Apple Notes Gold Accent (#C88A00 / Dark #FFD60A)
        - Editorial Paper Reading Canvas + 2-Line Apple Notes List
@@ -209,7 +209,6 @@
       padding: 0;
       width: 100%;
       height: 100%;
-      height: 100dvh;
       overflow: hidden;
       background-color: var(--화면_바탕_회색);
       color: var(--기본_글자색);
@@ -223,6 +222,8 @@
       -webkit-text-size-adjust: 100%;
     }
     body {
+      position: fixed;
+      inset: 0;
       display: flex;
       flex-direction: column;
     }
@@ -326,20 +327,18 @@
       flex: 0 0 auto;
       position: relative;
       z-index: 60;
-      padding-top: env(safe-area-inset-top, 0px);
+      padding-top: max(0px, calc(env(safe-area-inset-top, 0px) - 8px));
       background-color: var(--화면_바탕_회색);
       border-bottom: 0.5px solid transparent;
-      transition: background-color 0.2s var(--애플_이징), border-color 0.2s var(--애플_이징);
+      transition: border-color 0.16s var(--애플_이징);
     }
     .topbar.scrolled {
-      background-color: var(--툴바_글라스);
-      -webkit-backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
-      backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
+      background-color: var(--화면_바탕_회색);
       border-bottom-color: var(--헤어라인_색);
     }
     .topbar-inner {
       max-width: 1040px;
-      height: 44px;
+      height: 38px;
       margin: 0 auto;
       padding: 0 16px;
       display: grid;
@@ -635,7 +634,7 @@
       overflow-y: auto;
       overflow-x: clip;
       -webkit-overflow-scrolling: touch;
-      padding: 4px 16px 88px;
+      padding: 0 16px 76px;
       background-color: var(--화면_바탕_회색);
     }
 
@@ -1366,13 +1365,13 @@
        ===================================================================== */
     .all-search-slot {
       position: sticky;
-      top: 0;
+      top: -1px;
       z-index: 25;
       margin: 0 -16px 12px;
-      padding: 4px 16px 10px;
+      padding: 6px 16px 10px;
       background-color: var(--화면_바탕_회색);
       border-bottom: 0.5px solid transparent;
-      transition: border-color 0.18s ease, background-color 0.18s ease;
+      transition: border-color 0.18s ease;
     }
     .all-search-slot.is-stuck {
       border-bottom-color: var(--헤어라인_색);
@@ -1622,7 +1621,7 @@
       position: fixed;
       left: 50%;
       transform: translateX(-50%);
-      bottom: calc(62px + min(env(safe-area-inset-bottom, 0px), 12px));
+      bottom: 66px;
       z-index: 49;
       min-width: 218px;
       height: 42px;
@@ -1668,16 +1667,14 @@
       color: var(--주요_강조색);
     }
 
-    /* Tight, Grounded In-Flow Bottom Tab Bar (Capped Bottom Safe Area!) */
+    /* Ultra-Tight Grounded Bottom Tab Bar (Zero Wasted Space) */
     .mobile-tabbar {
       flex: 0 0 auto;
       position: relative;
       z-index: 50;
       width: 100%;
-      padding: 5px 8px calc(5px + min(env(safe-area-inset-bottom, 0px), 12px));
-      background-color: var(--툴바_글라스);
-      -webkit-backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
-      backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
+      padding: 4px 8px 14px;
+      background-color: var(--화면_바탕_회색);
       border-top: 0.5px solid var(--헤어라인_색);
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1686,7 +1683,7 @@
     }
     .tab-slider { display: none; }
     .tab-btn {
-      height: 42px;
+      height: 40px;
       border-radius: 8px;
       display: flex;
       flex-direction: column;
