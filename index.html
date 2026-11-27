@@ -21,15 +21,17 @@
   <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js" defer></script>
   <style>
     /* =====================================================================
-       Apple iOS / iPadOS / macOS Native HIG Design System (v8 — True Structural Overhaul)
-       True System Grouped Palette · Zero Card Drop Shadows · Inset Hairlines
+       Apple Notes & Pages Native Design System (v9 — Ground-Up Rebuild)
+       - Flex-Column Viewport Shell (Zero Topbar Overlap / Zero Bottom Void)
+       - Warm Apple Notes Gold Accent (#C88A00 / Dark #FFD60A)
+       - Editorial Paper Reading Canvas + 2-Line Apple Notes List
        ===================================================================== */
     :root {
       /* User-configurable Visual Tokens (100% synced with Settings sliders) */
-      --그룹목차_한자_크기: 16px;
+      --그룹목차_한자_크기: 15px;
       --번체_폰트: 'PingFang SC', 'Noto Serif SC', serif;
-      --글라스_투명도: 0.82;
-      --글라스_블러: 20px;
+      --글라스_투명도: 0.86;
+      --글라스_블러: 22px;
       --글라스_채도: 180%;
 
       --상단그룹바_높이: 34px;
@@ -41,15 +43,15 @@
 
       --단어_글자크기: 16px;
       --단어병음_글자크기: 14.5px;
-      --한자_박스_크기: 44px;
-      --한자_글자_크기: 28px;
-      --빈도_칸_너비: 32px;
+      --한자_박스_크기: 42px;
+      --한자_글자_크기: 26px;
+      --빈도_칸_너비: 30px;
       --사용빈도_글자크기: 13px;
       --병음_글자크기: 13.5px;
 
       --전체_글자배율: 1;
-      --예문_글자크기: 23px;
-      --타일_크기: 52px;
+      --예문_글자크기: 22px;
+      --타일_크기: 50px;
       --타일_간격: 8px;
       --한자_굵기: 400;
       --병기_번체_크기: 13px;
@@ -57,74 +59,65 @@
       --부수의미_글자크기: 14.5px;
       --예문칸_글자크기: 15.5px;
 
-      /* True iOS System Grouped Palette — Light */
-      --화면_바탕_회색: #F2F2F7;              /* systemGroupedBackground */
-      --카드_배경색: #FFFFFF;                 /* secondarySystemGroupedBackground */
+      /* Apple Notes Light Palette */
+      --화면_바탕_회색: #F2F2F7;
+      --카드_배경색: #FFFFFF;
       --모달_시트_배경: #F2F2F7;
       --모달_카드_배경: #FFFFFF;
-      --안쪽_상자_배경: rgba(118, 118, 128, 0.12); /* tertiarySystemFill */
-      --구분_회색: rgba(120, 120, 128, 0.12);      /* quaternarySystemFill */
-      --탭_하이라이트: rgba(120, 120, 128, 0.16);
-      --테두리_선_색: rgba(60, 60, 67, 0.18);
-      --헤어라인_색: rgba(60, 60, 67, 0.22);       /* separator */
+      --안쪽_상자_배경: rgba(118, 118, 128, 0.11);
+      --구분_회색: rgba(120, 120, 128, 0.10);
+      --탭_하이라이트: rgba(120, 120, 128, 0.14);
+      --테두리_선_색: rgba(60, 60, 67, 0.16);
+      --헤어라인_색: rgba(60, 60, 67, 0.18);
 
-      --기본_글자색: #000000;                      /* label */
-      --보조_글자색: rgba(60, 60, 67, 0.72);       /* secondaryLabel */
-      --흐린_글자색: rgba(60, 60, 67, 0.52);       /* tertiaryLabel */
-      --PASS_글자색: rgba(60, 60, 67, 0.34);
+      --기본_글자색: #1C1C1E;
+      --보조_글자색: rgba(60, 60, 67, 0.72);
+      --흐린_글자색: rgba(60, 60, 67, 0.48);
+      --PASS_글자색: rgba(60, 60, 67, 0.30);
 
-      --주요_강조색: #007AFF;                      /* systemBlue */
-      --주요_강조_진한색: #0051D5;
-      --강조_연한배경: rgba(0, 122, 255, 0.12);
-      --등록한자_하늘색: #007AFF;
-      --별표_강조색: #FF9500;                      /* systemOrange */
-      --북마크_강조색: #FF9500;
-      --북마크_연한배경: rgba(255, 149, 0, 0.13);
+      /* Signature Apple Notes Amber Gold */
+      --주요_강조색: #C88A00;
+      --주요_강조_진한색: #A67200;
+      --강조_연한배경: rgba(212, 147, 0, 0.12);
+      --등록한자_하늘색: #C88A00;
+      --별표_강조색: #D97706;
+      --북마크_강조색: #D97706;
+      --북마크_연한배경: rgba(217, 119, 6, 0.12);
 
-      --복습완료_초록: #34C759;                    /* systemGreen */
+      --복습완료_초록: #34C759;
       --완료_뱃지배경: rgba(52, 199, 89, 0.12);
       --완료_뱃지글자: #248A3D;
-      --미분석_경고배경: rgba(255, 149, 0, 0.10);
-      --미분석_경고글자: #C93400;
-      --위험_빨강: #FF3B30;                        /* systemRed */
+      --미분석_경고배경: rgba(217, 119, 6, 0.09);
+      --미분석_경고글자: #B45309;
+      --위험_빨강: #FF3B30;
 
-      --빈도_숫자색: rgba(60, 60, 67, 0.48);
-      --빈도_배지배경: transparent;
-      --빈도_핵심배경: transparent;
-      --빈도_핵심글자: #007AFF;
+      --빈도_숫자색: rgba(60, 60, 67, 0.45);
+      --빈도_핵심글자: #C88A00;
 
-      --병음훈음_흐린색: rgba(60, 60, 67, 0.56);
-      --병음훈음_투명도: 1;
-      --대상한자_행강조배경: rgba(0, 122, 255, 0.055);
-      /* Apple Notes / Safari Find-on-Page Style Search Highlight — Light */
-      --검색_하이라이트_배경: rgba(255, 204, 0, 0.36);
-      --검색_하이라이트_글자: #000000;
-      --검색_행강조_배경: rgba(255, 204, 0, 0.09);
+      --병음훈음_흐린색: rgba(60, 60, 67, 0.54);
+      --대상한자_행강조배경: rgba(212, 147, 0, 0.065);
+
+      /* Apple Notes Highlighter */
+      --검색_하이라이트_배경: rgba(255, 204, 0, 0.38);
+      --검색_하이라이트_글자: #1C1C1E;
+      --검색_행강조_배경: rgba(255, 204, 0, 0.10);
       --검색_한자강조_배경: rgba(255, 204, 0, 0.28);
-      --검색_한자강조_테두리: rgba(217, 145, 0, 0.45);
-      --검색_이유뱃지_배경: rgba(0, 122, 255, 0.10);
-      --검색_이유뱃지_글자: #007AFF;
+      --검색_한자강조_테두리: rgba(200, 138, 0, 0.42);
+      --검색_이유뱃지_배경: rgba(200, 138, 0, 0.12);
+      --검색_이유뱃지_글자: #A67200;
 
-      --펼침_패널_배경: rgba(118, 118, 128, 0.045);
-      --펼침_패널_테두리: rgba(60, 60, 67, 0.14);
+      --펼침_패널_배경: #FAFAFC;
+      --펼침_패널_테두리: rgba(60, 60, 67, 0.12);
 
-      --획순_글자색: #000000;
-      --획순_부수색: #007AFF;
+      --획순_글자색: #1C1C1E;
+      --획순_부수색: #C88A00;
       --획순_외곽선색: #D1D1D6;
 
-      /* Flat iOS Surface: ZERO drop shadow on grouped cards */
-      --시트_그림자: none;
-      --시트_호버_그림자: none;
-
-      /* Authentic iOS Chrome Material (UINavigationBar / UITabBar) */
       --툴바_글라스: rgba(242, 242, 247, var(--글라스_투명도));
-      --글라스_배경: rgba(249, 249, 249, var(--글라스_투명도));
-      --글라스_카드_배경: rgba(255, 255, 255, 0.90);
-      --글라스_테두리: rgba(60, 60, 67, 0.18);
-      --글라스_그림자: 0 8px 32px rgba(0, 0, 0, 0.12), 0 0 0 0.5px rgba(0, 0, 0, 0.08);
+      --글라스_카드_배경: rgba(255, 255, 255, 0.92);
+      --글라스_그림자: 0 10px 34px rgba(0, 0, 0, 0.13), 0 0 0 0.5px rgba(0, 0, 0, 0.08);
 
-      /* True iOS InsetGrouped Geometry & Springs */
-      --모서리_둥글기: 10px;
+      --모서리_둥글기: 12px;
       --애플_이징: cubic-bezier(0.25, 0.1, 0.25, 1);
       --스프링_이징: cubic-bezier(0.22, 1, 0.36, 1);
       --애플_바운스_이징: cubic-bezier(0.32, 1.32, 0.64, 1);
@@ -140,83 +133,81 @@
       background-color: var(--화면_바탕_회색);
       overscroll-behavior-y: none;
     }
-    html.dark-mode,
-    html.dark-mode body,
-    body.dark {
+    html.dark-mode, html.dark-mode body, body.dark {
       background-color: #000000;
     }
 
-    /* True iOS System Grouped Palette — Dark (Pure OLED Black) */
+    /* Apple Notes Dark Palette (Pure OLED Black + Warm Notes Yellow) */
     body.dark {
-      --화면_바탕_회색: #000000;              /* Pure OLED systemGroupedBackground */
-      --카드_배경색: #1C1C1E;                 /* secondarySystemGroupedBackground */
-      --모달_시트_배경: #1C1C1E;              /* Elevated PageSheet */
-      --모달_카드_배경: #2C2C2E;              /* Elevated grouped cell inside sheet */
+      --화면_바탕_회색: #000000;
+      --카드_배경색: #1C1C1E;
+      --모달_시트_배경: #1C1C1E;
+      --모달_카드_배경: #2C2C2E;
       --안쪽_상자_배경: rgba(118, 118, 128, 0.24);
-      --구분_회색: rgba(120, 120, 128, 0.24);
+      --구분_회색: rgba(120, 120, 128, 0.22);
       --탭_하이라이트: rgba(120, 120, 128, 0.28);
-      --테두리_선_색: rgba(84, 84, 88, 0.55);
-      --헤어라인_색: rgba(84, 84, 88, 0.62);
+      --테두리_선_색: rgba(84, 84, 88, 0.52);
+      --헤어라인_색: rgba(84, 84, 88, 0.52);
 
       --기본_글자색: #FFFFFF;
       --보조_글자색: rgba(235, 235, 245, 0.72);
-      --흐린_글자색: rgba(235, 235, 245, 0.52);
-      --PASS_글자색: rgba(235, 235, 245, 0.30);
+      --흐린_글자색: rgba(235, 235, 245, 0.48);
+      --PASS_글자색: rgba(235, 235, 245, 0.28);
 
-      --주요_강조색: #0A84FF;
-      --주요_강조_진한색: #409CFF;
-      --강조_연한배경: rgba(10, 132, 255, 0.18);
-      --등록한자_하늘색: #0A84FF;
+      --주요_강조색: #FFD60A;
+      --주요_강조_진한색: #E5BF00;
+      --강조_연한배경: rgba(255, 214, 10, 0.16);
+      --등록한자_하늘색: #FFD60A;
       --별표_강조색: #FF9F0A;
-      --북마크_강조색: #FF9F0A;
-      --북마크_연한배경: rgba(255, 159, 10, 0.18);
+      --북마크_강조색: #FFD60A;
+      --북마크_연한배경: rgba(255, 214, 10, 0.16);
 
       --복습완료_초록: #30D158;
       --완료_뱃지배경: rgba(48, 209, 88, 0.16);
       --완료_뱃지글자: #32D74B;
       --미분석_경고배경: rgba(255, 159, 10, 0.14);
-      --미분석_경고글자: #FF9F0A;
+      --미분석_경고글자: #FFB340;
       --위험_빨강: #FF453A;
 
-      --빈도_숫자색: rgba(235, 235, 245, 0.45);
-      --빈도_핵심글자: #0A84FF;
+      --빈도_숫자색: rgba(235, 235, 245, 0.42);
+      --빈도_핵심글자: #FFD60A;
 
-      --병음훈음_흐린색: rgba(235, 235, 245, 0.55);
-      --대상한자_행강조배경: rgba(10, 132, 255, 0.11);
-      /* Apple Notes / Safari Find-on-Page Style Search Highlight — Dark */
+      --병음훈음_흐린색: rgba(235, 235, 245, 0.52);
+      --대상한자_행강조배경: rgba(255, 214, 10, 0.09);
+
       --검색_하이라이트_배경: rgba(255, 214, 10, 0.30);
       --검색_하이라이트_글자: #FFFFFF;
-      --검색_행강조_배경: rgba(255, 214, 10, 0.10);
-      --검색_한자강조_배경: rgba(255, 214, 10, 0.24);
-      --검색_한자강조_테두리: rgba(255, 214, 10, 0.50);
-      --검색_이유뱃지_배경: rgba(10, 132, 255, 0.20);
-      --검색_이유뱃지_글자: #64D2FF;
+      --검색_행강조_배경: rgba(255, 214, 10, 0.09);
+      --검색_한자강조_배경: rgba(255, 214, 10, 0.22);
+      --검색_한자강조_테두리: rgba(255, 214, 10, 0.48);
+      --검색_이유뱃지_배경: rgba(255, 214, 10, 0.16);
+      --검색_이유뱃지_글자: #FFD60A;
 
-      --펼침_패널_배경: rgba(255, 255, 255, 0.035);
-      --펼침_패널_테두리: rgba(84, 84, 88, 0.45);
+      --펼침_패널_배경: rgba(255, 255, 255, 0.03);
+      --펼침_패널_테두리: rgba(84, 84, 88, 0.42);
 
       --획순_글자색: #FFFFFF;
-      --획순_부수색: #0A84FF;
+      --획순_부수색: #FFD60A;
       --획순_외곽선색: #3A3A3C;
 
-      --툴바_글라스: rgba(18, 18, 18, var(--글라스_투명도));
-      --글라스_배경: rgba(28, 28, 30, var(--글라스_투명도));
-      --글라스_카드_배경: rgba(44, 44, 46, 0.92);
-      --글라스_테두리: rgba(84, 84, 88, 0.55);
-      --글라스_그림자: 0 12px 36px rgba(0, 0, 0, 0.55), 0 0 0 0.5px rgba(255, 255, 255, 0.10);
+      --툴바_글라스: rgba(20, 20, 22, var(--글라스_투명도));
+      --글라스_카드_배경: rgba(36, 36, 38, 0.94);
+      --글라스_그림자: 0 14px 40px rgba(0, 0, 0, 0.62), 0 0 0 0.5px rgba(255, 255, 255, 0.12);
     }
 
-    body.font-kaiti { --한자_폰트: 'Kaiti SC', 'STKaiti', 'KaiTi', 'Noto Serif SC', serif; }
-    body.font-serif { --한자_폰트: 'Noto Serif SC', 'Songti SC', serif; }
+    body.font-kaiti  { --한자_폰트: 'Kaiti SC', 'STKaiti', 'KaiTi', 'Noto Serif SC', serif; }
+    body.font-serif  { --한자_폰트: 'Noto Serif SC', 'Songti SC', serif; }
     body.font-system { --한자_폰트: 'PingFang SC', -apple-system, sans-serif; }
 
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
+    /* =====================================================================
+       1. Flex-Column App Shell (Mathematically Prevents Topbar/Bottom Overlap)
+       ===================================================================== */
     html, body {
       margin: 0;
       padding: 0;
       width: 100%;
-      max-width: 100%;
       height: 100%;
       height: 100dvh;
       overflow: hidden;
@@ -224,25 +215,28 @@
       color: var(--기본_글자색);
       font-family: var(--기본_폰트);
       font-size: calc(16px * var(--전체_글자배율));
-      line-height: 1.45;
-      letter-spacing: -0.016em;
+      line-height: 1.48;
+      letter-spacing: -0.015em;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       -webkit-text-size-adjust: 100%;
     }
+    body {
+      display: flex;
+      flex-direction: column;
+    }
 
     /* Native iOS PageSheet Background Scale */
-    body.modal-open { overflow: hidden; }
     body.modal-open .main-wrap,
-    body.modal-open .topbar {
-      transform: scale(0.955);
-      filter: brightness(0.90);
-      border-radius: 12px;
-      transition: transform 0.34s var(--시트_이징), filter 0.28s var(--애플_이징);
+    body.modal-open .topbar,
+    body.modal-open .mobile-tabbar {
+      filter: brightness(0.92);
+      transition: filter 0.24s var(--애플_이징);
     }
     body.dark.modal-open .main-wrap,
-    body.dark.modal-open .topbar {
+    body.dark.modal-open .topbar,
+    body.dark.modal-open .mobile-tabbar {
       filter: brightness(0.75);
     }
 
@@ -253,7 +247,6 @@
       color: var(--흐린_글자색);
       font-weight: 400;
       white-space: nowrap;
-      letter-spacing: -0.01em;
     }
 
     button, input, textarea, select { font-family: inherit; color: inherit; }
@@ -277,7 +270,7 @@
     .bm-btn.active .sf-ico-fill, .on .sf-ico-fill { fill: currentColor; }
 
     /* =====================================================================
-       1. Auth Screen (iOS Sign-in Sheet)
+       2. Auth Screen (Minimal Apple Notes Lock Sheet)
        ===================================================================== */
     #authScreen {
       position: fixed;
@@ -293,7 +286,7 @@
       width: 100%;
       max-width: 320px;
       background: var(--카드_배경색);
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 32px 22px 24px;
       text-align: center;
     }
@@ -304,7 +297,7 @@
       letter-spacing: -0.03em;
     }
     .auth-card p {
-      margin: 0 0 22px;
+      margin: 0 0 20px;
       font-size: 14px;
       color: var(--흐린_글자색);
     }
@@ -325,26 +318,20 @@
     }
 
     /* =====================================================================
-       2. True iOS UINavigationBar (Tinted Controls, Crisp 0.5px Hairline)
+       3. Top Navigation Bar (In-Flow Flex Header — Never Clips Content!)
        ===================================================================== */
     /* [CRITICAL - DO NOT REMOVE] iOS 상단 검정 띠 방지:
-       viewport-fit=cover 와 함께 topbar가 top:0 부터 safe-area-inset-top을 덮어야 함 */
+       viewport-fit=cover 와 함께 topbar가 safe-area-inset-top을 덮어야 함 */
     .topbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      flex: 0 0 auto;
+      position: relative;
       z-index: 60;
       padding-top: env(safe-area-inset-top, 0px);
       background-color: var(--화면_바탕_회색);
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
       border-bottom: 0.5px solid transparent;
-      transition: background-color 0.2s var(--애플_이징), border-color 0.2s var(--애플_이징), transform 0.3s var(--시트_이징);
+      transition: background-color 0.2s var(--애플_이징), border-color 0.2s var(--애플_이징);
     }
-    .topbar.scrolled,
-    body.series-bar-open .topbar,
-    body.tab-all.all-search-docked .topbar {
+    .topbar.scrolled {
       background-color: var(--툴바_글라스);
       -webkit-backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
       backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
@@ -371,9 +358,9 @@
     }
     .brand-wordmark {
       display: none;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 16px;
-      letter-spacing: -0.022em;
+      letter-spacing: -0.025em;
       color: var(--기본_글자색);
     }
     .brand-badge {
@@ -381,14 +368,13 @@
       align-items: center;
       font-size: 13px;
       font-weight: 600;
-      color: var(--흐린_글자색);
-      background: var(--구분_회색);
-      padding: 2px 8px;
+      color: var(--주요_강조색);
+      background: var(--강조_연한배경);
+      padding: 2px 9px;
       border-radius: 999px;
       white-space: nowrap;
     }
 
-    /* Center: Collapsing Inline Title (17px Semibold — Exact iOS Spec) */
     .nav-center {
       justify-self: center;
       display: flex;
@@ -403,14 +389,14 @@
       opacity: 0;
       transform: translateY(3px);
       pointer-events: none;
-      transition: opacity 0.18s var(--애플_이징), transform 0.2s var(--스프링_이징);
+      transition: opacity 0.16s var(--애플_이징), transform 0.18s var(--스프링_이징);
     }
     .topbar.scrolled .nav-inline-title {
       opacity: 1;
       transform: translateY(0);
     }
 
-    /* Desktop / iPadOS Native Segmented Control */
+    /* Desktop Segmented Control */
     .pc-nav {
       display: none;
       position: relative;
@@ -426,7 +412,7 @@
       left: 2px;
       border-radius: 7px;
       background: var(--카드_배경색);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), 0 0.5px 0.5px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.10), 0 0.5px 0.5px rgba(0, 0, 0, 0.05);
       transition: transform 0.24s var(--스프링_이징), width 0.22s var(--스프링_이징);
       pointer-events: none;
       z-index: 0;
@@ -443,16 +429,15 @@
     }
     .pc-nav-btn.active { font-weight: 600; }
 
-    /* Right: Authentic iOS Tint-Colored Bar Button Items */
     .top-controls {
       justify-self: end;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 6px;
     }
     .topbar .top-controls .pill-btn {
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
       padding: 0;
       border-radius: 999px;
       background: transparent;
@@ -461,16 +446,11 @@
       align-items: center;
       justify-content: center;
     }
-    .topbar .top-controls .pill-btn:active {
-      background: var(--강조_연한배경);
-      opacity: 0.7;
-    }
+    .topbar .top-controls .pill-btn:active,
     .topbar .top-controls .pill-btn.on {
       background: var(--강조_연한배경);
-      color: var(--주요_강조색);
     }
 
-    /* Compact Native Tinted Filter / Text Buttons */
     .pill-btn {
       height: 28px;
       padding: 0 9px;
@@ -491,15 +471,15 @@
       color: #FFFFFF;
       font-weight: 600;
     }
+    body.dark .pill-btn.on { color: #000000; }
 
-    /* Native iOS Tinted Text Action (No Box, No Fill) */
     .ios-text-action {
       height: 28px;
       padding: 0 6px;
       border-radius: 6px;
       background: transparent;
       color: var(--주요_강조색);
-      font-size: 14px;
+      font-size: 14.5px;
       font-weight: 400;
       display: inline-flex;
       align-items: center;
@@ -515,196 +495,30 @@
     .ios-text-action .sf-ico { width: 15px; height: 15px; }
 
     /* =====================================================================
-       3. System Grouped Canvas & Large Title (34px Bold)
-       ===================================================================== */
-    .main-wrap {
-      position: relative;
-      width: 100%;
-      max-width: 1040px;
-      height: 100%;
-      height: 100dvh;
-      overflow-y: auto;
-      overflow-x: clip;
-      -webkit-overflow-scrolling: touch;
-      margin: 0 auto;
-      padding: calc(var(--상단바_높이) + 4px) 16px calc(130px + env(safe-area-inset-bottom, 0px));
-      background-color: var(--화면_바탕_회색);
-      transition: transform 0.34s var(--시트_이징), filter 0.28s var(--애플_이징);
-    }
-
-    .tab-view { display: none; width: 100%; }
-    .tab-view.active { display: block; }
-    .tab-view.tab-enter-right,
-    .tab-view.tab-enter-left { animation: iosTabFadeIn 0.16s var(--애플_이징) both; }
-    @keyframes iosTabFadeIn {
-      from { opacity: 0.4; }
-      to   { opacity: 1; }
-    }
-
-    .ios-large-title-bar {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      padding: 0 2px 12px;
-      gap: 10px;
-    }
-    .ios-large-title {
-      margin: 0;
-      font-size: 34px;
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      line-height: 1.15;
-      color: var(--기본_글자색);
-    }
-
-    /* Authentic iOS InsetGrouped Section Header */
-    .ios-section-strip {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      padding: 0 16px 6px;
-      margin-top: 4px;
-    }
-    .ios-section-title {
-      font-size: 13px;
-      font-weight: 400;
-      color: var(--흐린_글자색);
-      letter-spacing: -0.005em;
-    }
-
-    /* Flat iOS InsetGrouped Surface (NO DROP SHADOW!) */
-    .card {
-      background: var(--카드_배경색);
-      border-radius: var(--모서리_둥글기);
-      padding: 16px;
-      margin-bottom: 18px;
-      max-width: 100%;
-      box-shadow: none;
-    }
-    .card:last-child { margin-bottom: 0; }
-
-    /* Zero-padding InsetGrouped Table Container (for Settings / Input Form / Lists) */
-    .ios-inset-group {
-      background: var(--카드_배경색);
-      border-radius: var(--모서리_둥글기);
-      margin-bottom: 20px;
-      overflow: hidden;
-    }
-    .ios-inset-cell {
-      padding: 12px 16px;
-      position: relative;
-    }
-    .ios-inset-cell:not(:last-child)::after {
-      content: "";
-      position: absolute;
-      left: 16px;
-      right: 0;
-      bottom: 0;
-      height: 0.5px;
-      background: var(--헤어라인_색);
-      pointer-events: none;
-    }
-    /* Native iOS Full-Width Table Action Row (Replaces Toss Big Buttons!) */
-    .ios-row-action {
-      width: 100%;
-      min-height: 44px;
-      padding: 11px 16px;
-      border-radius: 0;
-      background: transparent;
-      color: var(--주요_강조색);
-      font-size: calc(16px * var(--전체_글자배율));
-      font-weight: 400;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      position: relative;
-    }
-    .ios-row-action.primary {
-      font-weight: 600;
-    }
-    .ios-row-action:active {
-      background: var(--탭_하이라이트);
-      opacity: 1;
-    }
-    .ios-row-action:not(:last-child)::after {
-      content: "";
-      position: absolute;
-      left: 16px;
-      right: 0;
-      bottom: 0;
-      height: 0.5px;
-      background: var(--헤어라인_색);
-      pointer-events: none;
-    }
-
-    /* Native iOS Buttons (Used only for primary CTAs & modals) */
-    .btn {
-      min-height: 44px;
-      padding: 0 16px;
-      border-radius: 10px;
-      font-size: calc(15.5px * var(--전체_글자배율));
-      font-weight: 600;
-      letter-spacing: -0.015em;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      background: var(--구분_회색);
-      color: var(--기본_글자색);
-    }
-    .btn-primary, .btn-success {
-      background: var(--주요_강조색);
-      color: #FFFFFF;
-    }
-    .btn-primary:active, .btn-success:active {
-      background: var(--주요_강조_진한색);
-      opacity: 1;
-    }
-    .btn-soft {
-      background: var(--강조_연한배경);
-      color: var(--주요_강조색);
-    }
-    .btn-warn {
-      background: transparent;
-      color: var(--미분석_경고글자);
-      font-weight: 500;
-    }
-    .btn-sm { min-height: 28px; padding: 0 10px; font-size: 13px; border-radius: 7px; }
-    .btn-full { width: 100%; }
-
-    /* =====================================================================
-       4. Docked Translucent Phonetic Header Strip (Flush under Nav Bar)
+       4. In-Flow Phonetic Series Strip (Zero Overlap with Topbar or Search!)
        ===================================================================== */
     .floating-series-bar {
-      position: fixed;
-      top: calc(var(--상단바_높이) - 0.5px);
-      left: 0;
-      right: 0;
-      height: calc(var(--상단그룹바_높이) * var(--상단배너_배율));
-      padding: 0 16px;
+      flex: 0 0 auto;
+      position: relative;
       z-index: 55;
+      max-height: 0;
+      padding: 0 16px;
       background-color: var(--툴바_글라스);
-      -webkit-backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
-      backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
-      border-bottom: 0.5px solid var(--헤어라인_색);
+      border-bottom: 0 solid transparent;
       display: flex;
       align-items: center;
       gap: 8px;
       overflow: hidden;
       opacity: 0;
       pointer-events: none;
-      transform: translateY(-4px);
-      transition: top 0.16s var(--애플_이징), opacity 0.16s var(--애플_이징), transform 0.2s var(--스프링_이징);
-    }
-    body.tab-all.all-search-docked .floating-series-bar {
-      top: calc(var(--상단바_높이) + var(--검색바_높이) - 1px);
+      transition: max-height 0.2s var(--스프링_이징), opacity 0.16s var(--애플_이징);
     }
     .floating-series-bar.show {
+      max-height: calc(var(--상단그룹바_높이) * var(--상단배너_배율));
+      height: calc(var(--상단그룹바_높이) * var(--상단배너_배율));
+      border-bottom: 0.5px solid var(--헤어라인_색);
       opacity: 1;
       pointer-events: auto;
-      transform: translateY(0);
     }
     .fsb-root {
       font-family: var(--한자_폰트);
@@ -745,103 +559,301 @@
     .floating-expand-btn.is-open { background: var(--강조_연한배경); }
 
     /* =====================================================================
-       5. Review Tab (Apple Books / Dictionary Clean Reading Surface)
+       5. Native iOS ••• UIMenu Popover
        ===================================================================== */
-    .rev-progress-track {
-      height: 2px;
-      width: 100%;
-      border-radius: 999px;
-      background: var(--구분_회색);
+    .ios-menu-popover {
+      position: fixed;
+      top: calc(env(safe-area-inset-top, 0px) + 48px);
+      right: 14px;
+      width: 246px;
+      z-index: 270;
+      background-color: var(--글라스_카드_배경);
+      -webkit-backdrop-filter: saturate(200%) blur(28px);
+      backdrop-filter: saturate(200%) blur(28px);
+      border-radius: 14px;
+      box-shadow: var(--글라스_그림자);
       overflow: hidden;
-      margin: 0 0 16px;
+      opacity: 0;
+      pointer-events: none;
+      transform-origin: top right;
+      transform: translateY(-6px) scale(0.92);
+      transition: opacity 0.16s var(--애플_이징), transform 0.22s var(--스프링_이징);
     }
-    .rev-progress-fill {
-      height: 100%;
-      background: var(--주요_강조색);
-      border-radius: 999px;
-      transition: width 0.3s var(--스프링_이징);
+    .ios-menu-popover.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+    .ios-menu-item {
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 16px;
+      border-radius: 0;
+      background: transparent;
+      color: var(--기본_글자색);
+      font-size: 15px;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      text-align: left;
+      position: relative;
+    }
+    .ios-menu-item:active { background: var(--탭_하이라이트); opacity: 1; }
+    .ios-menu-item:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      left: 16px;
+      right: 0;
+      bottom: 0;
+      height: 0.5px;
+      background: var(--헤어라인_색);
+      pointer-events: none;
+    }
+    .ios-menu-item.no-div::after { display: none; }
+    .ios-menu-sep {
+      height: 6px;
+      background: var(--안쪽_상자_배경);
+      border-top: 0.5px solid var(--헤어라인_색);
+      border-bottom: 0.5px solid var(--헤어라인_색);
+    }
+    .ios-menu-left { display: inline-flex; align-items: center; gap: 10px; min-width: 0; }
+    .ios-menu-right { display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; color: var(--흐린_글자색); flex-shrink: 0; }
+    .ios-menu-check { width: 16px; height: 16px; color: var(--주요_강조색); opacity: 0; transition: opacity 0.14s ease; }
+    .ios-menu-item.is-on .ios-menu-check { opacity: 1; }
+
+    /* =====================================================================
+       6. Main Scroll Workspace & Large Title
+       ===================================================================== */
+    .main-wrap {
+      flex: 1 1 auto;
+      min-height: 0;
+      width: 100%;
+      max-width: 1040px;
+      margin: 0 auto;
+      overflow-y: auto;
+      overflow-x: clip;
+      -webkit-overflow-scrolling: touch;
+      padding: 4px 16px 88px;
+      background-color: var(--화면_바탕_회색);
     }
 
+    .tab-view { display: none; width: 100%; }
+    .tab-view.active { display: block; }
+    .tab-view.tab-enter-right,
+    .tab-view.tab-enter-left { animation: iosTabFadeIn 0.15s var(--애플_이징) both; }
+    @keyframes iosTabFadeIn { from { opacity: 0.45; } to { opacity: 1; } }
+
+    .ios-large-title-bar {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 2px 2px 10px;
+      gap: 10px;
+    }
+    .ios-large-title {
+      margin: 0;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.038em;
+      line-height: 1.15;
+      color: var(--기본_글자색);
+    }
+
+    .ios-section-strip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 0 14px 6px;
+      margin-top: 6px;
+    }
+    .ios-section-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--흐린_글자색);
+    }
+
+    /* Crisp Flat Apple Notes Paper Container */
+    .card {
+      background: var(--카드_배경색);
+      border-radius: var(--모서리_둥글기);
+      padding: 18px;
+      margin-bottom: 16px;
+      max-width: 100%;
+    }
+    .card:last-child { margin-bottom: 0; }
+
+    .ios-inset-group {
+      background: var(--카드_배경색);
+      border-radius: var(--모서리_둥글기);
+      margin-bottom: 18px;
+      overflow: hidden;
+    }
+    .ios-row-action {
+      width: 100%;
+      min-height: 44px;
+      padding: 11px 16px;
+      border-radius: 0;
+      background: transparent;
+      color: var(--주요_강조색);
+      font-size: calc(15.5px * var(--전체_글자배율));
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      position: relative;
+    }
+    .ios-row-action.primary { font-weight: 600; }
+    .ios-row-action:active { background: var(--탭_하이라이트); opacity: 1; }
+    .ios-row-action:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      left: 16px;
+      right: 0;
+      bottom: 0;
+      height: 0.5px;
+      background: var(--헤어라인_색);
+      pointer-events: none;
+    }
+
+    .btn {
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: 10px;
+      font-size: calc(15.5px * var(--전체_글자배율));
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: var(--구분_회색);
+      color: var(--기본_글자색);
+    }
+    .btn-primary, .btn-success {
+      background: var(--주요_강조색);
+      color: #FFFFFF;
+    }
+    body.dark .btn-primary,
+    body.dark .btn-success { color: #000000; }
+    .btn-primary:active, .btn-success:active {
+      background: var(--주요_강조_진한색);
+      opacity: 1;
+    }
+    .btn-soft {
+      background: var(--강조_연한배경);
+      color: var(--주요_강조색);
+    }
+    .btn-warn {
+      background: transparent;
+      color: var(--미분석_경고글자);
+      font-weight: 500;
+    }
+    .btn-sm { min-height: 28px; padding: 0 10px; font-size: 13px; border-radius: 7px; }
+    .btn-full { width: 100%; }
+
+    /* =====================================================================
+       7. Review Tab — Apple Notes / Pages Reading Document
+       ===================================================================== */
     .review-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 6px;
-      padding: 0 16px 6px;
-      flex-wrap: wrap;
+      padding: 0 4px 8px;
     }
     .review-meta {
       font-size: 13px;
-      font-weight: 400;
+      font-weight: 500;
       color: var(--흐린_글자색);
     }
 
+    .review-reading-card {
+      padding: 0;
+      overflow: hidden;
+      border-radius: 14px;
+    }
+    .rev-progress-track {
+      height: 2.5px;
+      width: 100%;
+      background: var(--구분_회색);
+      overflow: hidden;
+    }
+    .rev-progress-fill {
+      height: 100%;
+      background: var(--주요_강조색);
+      transition: width 0.3s var(--스프링_이징);
+    }
+    .review-reading-inner {
+      padding: 22px 20px 18px;
+    }
     .ex-row-wrap {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
       gap: 10px;
-      padding: 2px 0 8px;
     }
     .example-box {
       flex: 1;
       min-width: 0;
       font-size: var(--예문_글자크기);
-      line-height: 1.82;
-      letter-spacing: 0.015em;
+      line-height: 1.88;
+      letter-spacing: 0.012em;
       word-break: break-word;
       color: var(--기본_글자색);
+      padding-bottom: 18px;
     }
-    /* Native Apple Books Underline Highlight */
+    /* Apple Notes Highlighter Marker */
     .ex-hl {
-      color: var(--주요_강조색);
+      color: var(--기본_글자색);
       font-weight: 600;
-      background: rgba(0, 122, 255, 0.09);
-      border-bottom: 1.5px solid rgba(0, 122, 255, 0.45);
+      background: rgba(255, 204, 0, 0.28);
+      border-bottom: 1.5px solid var(--주요_강조색);
       padding: 0 2px;
       border-radius: 3px;
       cursor: pointer;
       box-decoration-break: clone;
       -webkit-box-decoration-break: clone;
     }
-    .ex-hl:active { background: var(--강조_연한배경); }
+    body.dark .ex-hl {
+      background: rgba(255, 214, 10, 0.22);
+      color: #FFFFFF;
+    }
 
-    /* Native iOS Hairline Action Strip inside Review Card (Zero Toss Blue Boxes!) */
     .ios-action-strip {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       border-top: 0.5px solid var(--헤어라인_색);
-      margin: 8px -16px 0;
-      padding: 0 6px;
+      padding: 6px 0 2px;
+      gap: 4px;
     }
     .ios-strip-btn {
-      height: 44px;
-      padding: 0 10px;
-      border-radius: 0;
+      height: 36px;
+      padding: 0 4px;
+      border-radius: 8px;
       background: transparent;
       color: var(--주요_강조색);
-      font-size: 15px;
-      font-weight: 400;
+      font-size: 14.5px;
+      font-weight: 500;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
       gap: 5px;
     }
-    .ios-strip-btn.main-action {
-      flex: 1;
-      justify-content: flex-start;
-      padding-left: 10px;
-      font-weight: 500;
+    .ios-strip-btn.main-action { flex: 1; justify-content: flex-start; }
+    .ios-strip-btn.icon-only {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      justify-content: center;
+      color: var(--흐린_글자색);
     }
-    .ios-strip-btn:active { background: var(--탭_하이라이트); opacity: 1; }
-    .ios-strip-btn.icon-only { width: 42px; padding: 0; }
-    .ios-strip-btn.bm-on { color: var(--북마크_강조색); }
-    .ios-strip-sep {
-      width: 0.5px;
-      height: 20px;
-      background: var(--헤어라인_색);
-      flex-shrink: 0;
-    }
+    .ios-strip-btn.icon-only:active { background: var(--안쪽_상자_배경); color: var(--주요_강조색); }
+    .ios-strip-btn.icon-only.bm-on { color: var(--북마크_강조색); }
+    .ios-strip-sep { display: none; }
 
     .tts-btn {
       width: 32px;
@@ -853,13 +865,10 @@
       color: var(--주요_강조색);
       background: transparent;
       flex-shrink: 0;
-      margin-top: 2px;
     }
     .tts-btn:active { background: var(--강조_연한배경); }
-    .tts-btn.speaking {
-      background: var(--주요_강조색);
-      color: #FFFFFF;
-    }
+    .tts-btn.speaking { background: var(--주요_강조색); color: #FFFFFF; }
+    body.dark .tts-btn.speaking { color: #000000; }
     .tts-btn .sf-ico { width: 16px; height: 16px; }
 
     .tts-scrub-bar {
@@ -867,7 +876,7 @@
       align-items: center;
       gap: 10px;
       max-height: 0;
-      margin-top: 0;
+      margin: 0 20px;
       padding: 0;
       border-top: 0.5px solid transparent;
       font-size: 12px;
@@ -875,12 +884,11 @@
       opacity: 0;
       overflow: hidden;
       pointer-events: none;
-      transition: max-height 0.24s var(--스프링_이징), margin-top 0.24s var(--스프링_이징), padding 0.24s var(--스프링_이징), opacity 0.18s var(--애플_이징);
+      transition: max-height 0.24s var(--스프링_이징), padding 0.24s var(--스프링_이징), opacity 0.18s var(--애플_이징);
     }
     .tts-scrub-bar.show {
       max-height: 52px;
-      margin-top: 12px;
-      padding: 10px 0 0;
+      padding: 10px 0 14px;
       border-top-color: var(--헤어라인_색);
       opacity: 1;
       pointer-events: auto;
@@ -894,41 +902,32 @@
       border: none;
       background: var(--안쪽_상자_배경);
       font-size: 12px;
-      color: var(--기본_글자색);
     }
 
-    /* Clean Translation / Commentary Panel */
     .trans-panel {
-      background: transparent;
-      border-radius: 0;
-      border-top: 0.5px solid var(--헤어라인_색);
-      padding: 14px 0 4px;
-      margin-top: 0;
+      padding: 12px 0 6px;
     }
     .trans-text {
       font-size: calc(16px * var(--전체_글자배율));
       font-weight: 600;
-      line-height: 1.6;
+      line-height: 1.62;
       margin-bottom: 8px;
       white-space: pre-wrap;
-      letter-spacing: -0.015em;
       color: var(--기본_글자색);
     }
     .exp-text {
       font-size: calc(14px * var(--전체_글자배율));
       color: var(--보조_글자색);
-      padding-top: 2px;
       white-space: pre-wrap;
-      line-height: 1.72;
+      line-height: 1.74;
     }
 
-    /* Native iOS Tactile Character Selector Row */
     .char-chips {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 7px;
-      margin-top: 12px;
+      gap: 8px;
+      margin-top: 10px;
       padding-top: 14px;
       border-top: 0.5px solid var(--헤어라인_색);
     }
@@ -956,6 +955,11 @@
       color: #FFFFFF;
       font-weight: 600;
     }
+    body.dark .char-chip.active { color: #000000; }
+
+    .review-reading-card .pc-only {
+      padding: 0 20px 18px;
+    }
 
     .review-slide-in-next { animation: revSlideNext 0.22s var(--스프링_이징); }
     .review-slide-in-prev { animation: revSlidePrev 0.22s var(--스프링_이징); }
@@ -965,7 +969,7 @@
     @keyframes iosReviewCompleteOut { to { opacity: 0; transform: translateX(-18px); } }
 
     /* =====================================================================
-       6. Phonetic Series Table (Authentic iOS InsetGrouped UITableView)
+       8. Phonetic Series Detail Rows (Inside Review & Expanded Notes)
        ===================================================================== */
     .group-block {
       background: var(--카드_배경색);
@@ -973,7 +977,6 @@
       margin-bottom: 14px;
       overflow: hidden;
       max-width: 100%;
-      box-shadow: none;
     }
     .group-block:last-child { margin-bottom: 0; }
 
@@ -981,9 +984,8 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 11px 16px;
+      padding: 12px 16px;
       border-bottom: 0.5px solid var(--헤어라인_색);
-      flex-wrap: wrap;
     }
     .group-head-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
 
@@ -1004,18 +1006,18 @@
       border-radius: 6px;
       background: transparent;
       font-size: 13px;
-      font-weight: 400;
+      font-weight: 500;
       color: var(--주요_강조색);
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
       white-space: nowrap;
     }
+    .grp-toggle-btn .sf-ico { width: 14px; height: 14px; }
 
     .root-badge {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      font-size: 17px;
+      font-size: 20px;
       font-weight: 700;
-      background: var(--안쪽_상자_배경);
       color: var(--기본_글자색);
       display: inline-flex;
       align-items: center;
@@ -1025,8 +1027,6 @@
     .count-badge {
       font-size: 13px;
       font-weight: 400;
-      padding: 0;
-      background: transparent;
       color: var(--흐린_글자색);
     }
 
@@ -1034,18 +1034,16 @@
       position: relative;
       background: var(--카드_배경색);
     }
-    /* Authentic iOS Inset Separator (Flush to Right Edge!) */
     .compact-item:not(:last-child)::after {
       content: "";
       position: absolute;
-      left: calc(var(--빈도_칸_너비) + var(--한자_박스_크기) + 38px);
+      left: 16px;
       right: 0;
       bottom: 0;
       height: 0.5px;
       background: var(--헤어라인_색);
       pointer-events: none;
     }
-    .compact-item.is-expanded:not(:last-child)::after { left: 16px; }
     .compact-item.is-target { background: var(--대상한자_행강조배경); }
     .compact-item.is-pass { opacity: 0.42; }
 
@@ -1054,9 +1052,8 @@
       align-items: center;
       gap: 11px;
       padding: 10px 16px;
-      min-height: 60px;
+      min-height: 58px;
       cursor: pointer;
-      transition: background-color 0.1s ease;
     }
     .compact-row-main:active { background: var(--탭_하이라이트); }
 
@@ -1064,27 +1061,20 @@
       font-family: var(--빈도_폰트);
       font-size: var(--사용빈도_글자크기);
       font-weight: 500;
-      line-height: 1;
-      letter-spacing: -0.02em;
       color: var(--빈도_숫자색);
       width: var(--빈도_칸_너비);
-      height: 24px;
       flex: 0 0 var(--빈도_칸_너비);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       font-variant-numeric: tabular-nums;
     }
-    .freq-tulpen.is-high {
-      color: var(--빈도_핵심글자);
-      font-weight: 700;
-    }
+    .freq-tulpen.is-high { color: var(--빈도_핵심글자); font-weight: 700; }
     .freq-tulpen.is-ten { letter-spacing: -0.04em; }
     .freq-tulpen.is-pass-label {
       font-family: var(--기본_폰트);
       font-size: 9.5px;
       font-weight: 600;
-      letter-spacing: 0.02em;
       color: var(--PASS_글자색);
     }
 
@@ -1104,7 +1094,7 @@
     }
     .hw-box.is-star {
       background: var(--북마크_연한배경);
-      box-shadow: inset 0 0 0 1px rgba(255, 149, 0, 0.35);
+      box-shadow: inset 0 0 0 1px rgba(217, 119, 6, 0.35);
     }
     .hw-fallback {
       font-family: var(--한자_폰트);
@@ -1158,15 +1148,13 @@
       display: grid;
       grid-template-rows: 0fr;
       opacity: 0.4;
-      transition: grid-template-rows 0.26s var(--스프링_이징), opacity 0.18s var(--애플_이징);
+      transition: grid-template-rows 0.24s var(--스프링_이징), opacity 0.16s var(--애플_이징);
     }
     .accordion-body.open { grid-template-rows: 1fr; opacity: 1; }
     .accordion-inner { overflow: hidden; }
 
     .compact-detail {
-      margin: 0;
       padding: 12px 16px 16px;
-      border-radius: 0;
       background: var(--펼침_패널_배경);
       border-top: 0.5px solid var(--펼침_패널_테두리);
       display: flex;
@@ -1190,7 +1178,7 @@
     }
     .word-toggle-btn {
       font-size: 13px;
-      font-weight: 400;
+      font-weight: 500;
       padding: 2px 6px;
       border-radius: 6px;
       background: transparent;
@@ -1200,7 +1188,7 @@
       font-size: calc(var(--단어병음_글자크기) * var(--전체_글자배율));
       color: var(--보조_글자색);
       padding: 2px 0 2px 10px;
-      border-left: 2px solid var(--헤어라인_색);
+      border-left: 2px solid var(--주요_강조색);
       line-height: 1.65;
     }
     .detail-sent-row {
@@ -1217,21 +1205,19 @@
       font-size: calc(var(--예문칸_글자크기) * var(--전체_글자배율));
       line-height: 1.7;
       word-break: break-word;
-      color: var(--기본_글자색);
     }
 
     /* =====================================================================
-       7. Input Tab (True iOS Notes / Reminders InsetGrouped Sections)
+       9. Input Tab — Apple Notes Compose Sheet
        ===================================================================== */
     .big-textarea {
       width: 100%;
-      min-height: 118px;
-      border-radius: 0;
+      min-height: 120px;
       border: none;
       background: transparent;
-      padding: 14px 16px;
+      padding: 16px;
       font-size: var(--예문_글자크기);
-      line-height: 1.68;
+      line-height: 1.72;
       resize: vertical;
       font-family: var(--한자_폰트);
       display: block;
@@ -1243,8 +1229,6 @@
       max-height: 260px;
       overflow-y: auto;
       padding: 12px 14px;
-      border-radius: 0;
-      background: transparent;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -1254,7 +1238,7 @@
       position: relative;
       width: var(--타일_크기);
       height: var(--타일_크기);
-      border-radius: 9px;
+      border-radius: 10px;
       background: var(--구분_회색);
       font-family: var(--한자_폰트);
       font-size: calc(var(--타일_크기) * 0.45);
@@ -1279,6 +1263,7 @@
       color: #FFFFFF;
       font-weight: 600;
     }
+    body.dark .hanzi-tile.selected { color: #000000; }
     .tile-star {
       position: absolute;
       top: 5px;
@@ -1289,34 +1274,25 @@
       background: var(--별표_강조색);
     }
 
-    /* Native iOS Inline Input Cell (Zero Nested Box!) */
     .manual-capsule {
       display: flex;
       align-items: center;
       gap: 8px;
       padding: 6px 12px 6px 16px;
       min-height: 44px;
-      background: transparent;
       position: relative;
     }
-    .manual-capsule::before {
-      content: "";
-      position: absolute;
-      left: 16px;
-      right: 0;
-      top: 0;
-      height: 0.5px;
-      background: var(--헤어라인_색);
-    }
+    .manual-capsule::before,
     .manual-capsule::after {
       content: "";
       position: absolute;
       left: 16px;
       right: 0;
-      bottom: 0;
       height: 0.5px;
       background: var(--헤어라인_색);
     }
+    .manual-capsule::before { top: 0; }
+    .manual-capsule::after  { bottom: 0; }
     .manual-capsule input {
       flex: 1;
       min-width: 0;
@@ -1335,12 +1311,8 @@
       padding: 0 6px;
     }
 
-    /* Recent Records — True iOS Table Cells */
     .recent-item {
-      background: transparent;
-      border-radius: 0;
-      padding: 13px 16px;
-      margin-bottom: 0;
+      padding: 14px 16px;
       position: relative;
     }
     .recent-item:not(:last-child)::after {
@@ -1351,25 +1323,18 @@
       bottom: 0;
       height: 0.5px;
       background: var(--헤어라인_색);
-      pointer-events: none;
     }
     .recent-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 6px;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
       font-size: 12px;
       font-weight: 500;
       color: var(--흐린_글자색);
     }
-    .status-pill {
-      padding: 0;
-      border-radius: 0;
-      font-weight: 600;
-      font-size: 12px;
-      background: transparent;
-    }
+    .status-pill { font-weight: 600; font-size: 12px; }
     .status-pill.done { color: var(--완료_뱃지글자); }
     .status-pill.trans-only { color: var(--흐린_글자색); }
 
@@ -1377,7 +1342,6 @@
       height: 26px;
       padding: 0 6px;
       border-radius: 6px;
-      background: transparent;
       color: var(--흐린_글자색);
       font-size: 12.5px;
       font-weight: 500;
@@ -1392,65 +1356,52 @@
       border-radius: var(--모서리_둥글기);
       padding: 14px 16px;
       margin-bottom: 10px;
-      box-shadow: none;
       display: flex;
       flex-direction: column;
       gap: 6px;
     }
 
     /* =====================================================================
-       8. All Table Tab — Authentic iOS UISearchBar (No Shadowed Wrapper!)
+       10. All Table Tab — Authentic Apple Notes 2-Line List + Sticky Search
        ===================================================================== */
     .all-search-slot {
-      min-height: 40px;
-      margin: 0 0 12px;
+      position: sticky;
+      top: 0;
+      z-index: 25;
+      margin: 0 -16px 12px;
+      padding: 4px 16px 10px;
+      background-color: var(--화면_바탕_회색);
+      border-bottom: 0.5px solid transparent;
+      transition: border-color 0.18s ease, background-color 0.18s ease;
     }
-    .all-search-sticky {
-      position: relative;
-      z-index: 56;
-      padding: 0;
-      border-radius: 0;
-      background-color: transparent;
-      box-shadow: none;
-      transition: background-color 0.18s var(--애플_이징);
-    }
-    .all-search-sticky.is-floating {
-      position: fixed;
-      top: calc(var(--상단바_높이) - 0.5px);
-      left: 0;
-      right: 0;
-      max-width: none;
-      margin: 0;
-      padding: 6px 16px 8px;
-      border-radius: 0;
-      z-index: 58;
-      background-color: var(--툴바_글라스);
-      -webkit-backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
-      backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
-      border-bottom: 0.5px solid var(--헤어라인_색);
-      box-shadow: none;
+    .all-search-slot.is-stuck {
+      border-bottom-color: var(--헤어라인_색);
     }
     .all-search-row {
       display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .search-input-wrap {
+      position: relative;
+      display: flex;
       align-items: center;
-      gap: 6px;
-      flex-wrap: nowrap;
     }
-    .all-search-row .pill-btn {
-      height: 32px;
-      font-size: 13px;
-      padding: 0 8px;
+    .search-input-wrap .search-ico {
+      position: absolute;
+      left: 11px;
+      width: 15px;
+      height: 15px;
+      color: var(--흐린_글자색);
+      pointer-events: none;
     }
-    .search-input-wrap { position: relative; flex: 1; min-width: 90px; display: flex; align-items: center; }
-    .search-input-wrap .search-ico { position: absolute; left: 10px; width: 15px; height: 15px; color: var(--흐린_글자색); pointer-events: none; }
-    /* Exact iOS UISearchTextField: 36px height, 10px radius, systemFill */
     .search-input-wrap #allSearchInput {
       width: 100%;
       height: 36px;
       border-radius: 10px;
       border: none;
       background: var(--안쪽_상자_배경);
-      padding: 0 28px 0 31px;
+      padding: 0 32px 0 33px;
       font-size: 16px;
     }
     .search-input-wrap #allSearchInput::placeholder { color: var(--흐린_글자색); }
@@ -1459,37 +1410,58 @@
     .search-clear-btn {
       position: absolute;
       right: 8px;
-      width: 17px;
-      height: 17px;
-      border-radius: 999px;
-      background: var(--흐린_글자색);
-      color: var(--카드_배경색);
+      width: 20px;
+      height: 20px;
+      color: var(--흐린_글자색);
       display: none;
       align-items: center;
       justify-content: center;
-      font-size: 9.5px;
     }
     .search-clear-btn.show { display: inline-flex; }
 
-    .all-stat-pill {
-      display: none;
-      position: fixed;
-      right: 16px;
-      bottom: calc(58px + env(safe-area-inset-bottom, 0px));
-      z-index: 46;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background-color: var(--글라스_카드_배경);
-      -webkit-backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
-      backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
-      border: 0.5px solid var(--헤어라인_색);
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--흐린_글자색);
-      white-space: nowrap;
+    .all-scope-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .ios-scope-seg {
+      position: relative;
+      display: inline-grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--안쪽_상자_배경);
+      border-radius: 8px;
+      padding: 2px;
+      min-width: 146px;
+    }
+    .ios-scope-slider {
+      position: absolute;
+      top: 2px;
+      bottom: 2px;
+      left: 2px;
+      width: calc(50% - 2px);
+      border-radius: 6.5px;
+      background: var(--카드_배경색);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.11), 0 0.5px 0.5px rgba(0, 0, 0, 0.05);
+      transition: transform 0.22s var(--스프링_이징);
       pointer-events: none;
     }
-    .all-stat-pill.show { display: block; }
+    body.dark .ios-scope-slider { background: #636366; }
+    .ios-scope-btn {
+      position: relative;
+      z-index: 1;
+      height: 26px;
+      padding: 0 12px;
+      border-radius: 6.5px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--기본_글자색);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ios-scope-btn.on { font-weight: 600; }
+    .all-scope-actions { display: inline-flex; align-items: center; gap: 4px; }
 
     .recent-q-bar { display: none; flex-wrap: wrap; gap: 6px; padding-top: 8px; }
     .recent-q-bar.show { display: flex; }
@@ -1500,53 +1472,111 @@
       background: var(--안쪽_상자_배경);
       color: var(--보조_글자색);
       font-size: 12.5px;
-      font-weight: 400;
     }
 
-    #allGroupsList { padding-bottom: 24px; }
+    /* Unified Apple Notes 2-Line List */
+    #allGroupsList { padding-bottom: 12px; }
+    .notes-list {
+      background: var(--카드_배경색);
+      border-radius: var(--모서리_둥글기);
+      overflow: hidden;
+    }
+    .notes-list .group-block {
+      background: transparent;
+      border-radius: 0;
+      margin-bottom: 0;
+      position: relative;
+    }
+    .notes-list .group-block:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      left: 16px;
+      right: 0;
+      bottom: 0;
+      height: 0.5px;
+      background: var(--헤어라인_색);
+      pointer-events: none;
+    }
+    .notes-list .group-block.is-group-open:not(:last-child)::after { left: 0; }
+
+    /* Authentic Apple Notes Cell: Line 1 (Title + Meta), Line 2 (Preview) */
     .all-group-btn {
       width: 100%;
       text-align: left;
-      padding: 12px 16px;
+      padding: 13px 16px;
       display: flex;
-      align-items: center;
-      gap: 11px;
+      flex-direction: column;
+      gap: 4px;
       background: transparent;
       border-radius: 0;
     }
     .all-group-btn:active { background: var(--탭_하이라이트); opacity: 1; }
-    .all-group-chars {
-      flex: 1;
+    .note-row-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      width: 100%;
+    }
+    .note-row-title-wrap {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 7px;
       min-width: 0;
+    }
+    .note-root-title {
+      font-family: var(--한자_폰트);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--기본_글자색);
+      line-height: 1.25;
+    }
+    .note-root-title.is-search-hit {
+      background: var(--검색_한자강조_배경);
+      padding: 0 5px;
+      border-radius: 5px;
+    }
+    .note-row-count {
+      font-size: 12.5px;
+      font-weight: 400;
+      color: var(--흐린_글자색);
+    }
+    .all-group-right {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+    .all-group-idx {
+      font-size: 12px;
+      color: var(--흐린_글자색);
+    }
+    .chev {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--PASS_글자색);
+      transition: transform 0.22s var(--스프링_이징);
+    }
+    .chev.open { transform: rotate(90deg); color: var(--주요_강조색); }
+
+    .all-group-chars {
       font-family: var(--한자_폰트);
       font-weight: var(--한자_굵기);
       font-size: calc(var(--그룹목차_한자_크기) * var(--전체_글자배율));
-      color: var(--기본_글자색);
-      line-height: 1.55;
+      color: var(--보조_글자색);
+      line-height: 1.5;
       word-break: break-all;
     }
-    .all-char-star { color: var(--별표_강조색); font-weight: 700; }
-    .all-group-body {
-      flex: 1;
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
+    .all-char-star { color: var(--별표_강조색); font-weight: 600; }
     .all-char-match {
       display: inline-block;
       padding: 0 4px;
       margin: 0 1px;
-      border-radius: 5px;
+      border-radius: 4px;
       background: var(--검색_한자강조_배경);
-      box-shadow: inset 0 0 0 0.5px var(--검색_한자강조_테두리);
       color: var(--기본_글자색);
       font-weight: 700;
-    }
-    .root-badge.is-search-hit {
-      background: var(--검색_한자강조_배경);
-      box-shadow: inset 0 0 0 1px var(--검색_한자강조_테두리);
-      color: var(--기본_글자색);
     }
     mark.search-hl {
       background: var(--검색_하이라이트_배경);
@@ -1555,58 +1585,14 @@
       border-radius: 3px;
       font-weight: 600;
     }
-    .search-reason-list {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      margin-top: 2px;
-    }
-    .search-reason-item {
-      display: flex;
-      align-items: baseline;
-      gap: 5px;
-      font-size: 12px;
-      line-height: 1.4;
-      color: var(--보조_글자색);
-      min-width: 0;
-    }
-    .search-reason-char {
-      font-family: var(--한자_폰트);
-      font-weight: 700;
-      color: var(--기본_글자색);
-      background: var(--검색_한자강조_배경);
-      padding: 0 4px;
-      border-radius: 4px;
-      flex-shrink: 0;
-    }
-    .search-reason-tag {
-      font-size: 10.5px;
-      font-weight: 600;
-      color: var(--검색_이유뱃지_글자);
-      background: var(--검색_이유뱃지_배경);
-      padding: 0 5px;
-      border-radius: 4px;
-      flex-shrink: 0;
-    }
-    .search-reason-snip {
-      flex: 1;
-      min-width: 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .search-reason-more {
-      font-size: 11px;
-      color: var(--흐린_글자색);
-      padding-left: 2px;
-    }
-    .compact-item.is-search-match {
-      background: var(--검색_행강조_배경);
-    }
-    .hw-box.is-search-hit {
-      background: var(--검색_한자강조_배경);
-      box-shadow: inset 0 0 0 1.5px var(--검색_한자강조_테두리);
-    }
+    .search-reason-list { display: flex; flex-direction: column; gap: 3px; margin-top: 3px; }
+    .search-reason-item { display: flex; align-items: baseline; gap: 5px; font-size: 12px; line-height: 1.4; color: var(--보조_글자색); min-width: 0; }
+    .search-reason-char { font-family: var(--한자_폰트); font-weight: 700; color: var(--기본_글자색); background: var(--검색_한자강조_배경); padding: 0 4px; border-radius: 4px; flex-shrink: 0; }
+    .search-reason-tag { font-size: 10.5px; font-weight: 600; color: var(--검색_이유뱃지_글자); background: var(--검색_이유뱃지_배경); padding: 0 5px; border-radius: 4px; flex-shrink: 0; }
+    .search-reason-snip { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .search-reason-more { font-size: 11px; color: var(--흐린_글자색); }
+    .compact-item.is-search-match { background: var(--검색_행강조_배경); }
+    .hw-box.is-search-hit { background: var(--검색_한자강조_배경); box-shadow: inset 0 0 0 1.5px var(--검색_한자강조_테두리); }
     .row-match-pill {
       display: inline-flex;
       align-items: center;
@@ -1619,75 +1605,76 @@
       margin-right: 5px;
       vertical-align: middle;
     }
-    .all-group-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; margin-left: auto; }
-    .all-group-idx { font-size: 12.5px; font-weight: 400; color: var(--흐린_글자색); }
-    /* Authentic iOS Disclosure Indicator Chevron */
-    .chev {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--PASS_글자색);
-      transition: transform 0.22s var(--스프링_이징);
+
+    /* Apple Notes Static Footer Summary (No Floating Pill Covering Content!) */
+    .all-stat-footer {
+      text-align: center;
+      padding: 14px 12px 24px;
+      font-size: 12.5px;
+      font-weight: 400;
+      color: var(--흐린_글자색);
     }
-    .chev.open { transform: rotate(90deg); color: var(--주요_강조색); }
 
     /* =====================================================================
-       9. Edge-to-Edge Docked iOS Accessory Toolbar + UITabBar
-       (Zero Floating Double-Stacked Pills!)
+       11. Compact Floating Review Capsule + Tight Bottom UITabBar
        ===================================================================== */
     .mobile-review-bar {
       position: fixed;
-      left: 0;
-      right: 0;
-      bottom: calc(49px + env(safe-area-inset-bottom, 0px));
-      width: 100%;
-      height: 46px;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: calc(62px + min(env(safe-area-inset-bottom, 0px), 12px));
       z-index: 49;
-      background-color: var(--툴바_글라스);
-      -webkit-backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
-      backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
-      border-top: 0.5px solid var(--헤어라인_색);
-      padding: 0 12px;
+      min-width: 218px;
+      height: 42px;
+      padding: 4px 5px;
+      border-radius: 999px;
+      background-color: var(--글라스_카드_배경);
+      -webkit-backdrop-filter: saturate(200%) blur(24px);
+      backdrop-filter: saturate(200%) blur(24px);
+      border: 0.5px solid var(--헤어라인_색);
+      box-shadow: 0 8px 26px rgba(0, 0, 0, 0.12);
       display: grid;
-      grid-template-columns: 44px 1fr 44px;
-      gap: 8px;
+      grid-template-columns: 34px 1fr 34px;
+      gap: 6px;
       align-items: center;
       transition: opacity 0.18s var(--애플_이징), transform 0.22s var(--스프링_이징);
+    }
+    body.dark .mobile-review-bar {
+      background-color: rgba(34, 34, 36, 0.90);
+      border-color: rgba(255, 255, 255, 0.14);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
     }
     .mobile-review-bar.is-hidden {
       opacity: 0;
       pointer-events: none;
-      transform: translateY(100%);
+      transform: translateX(-50%) translateY(18px) scale(0.94);
     }
     .mobile-review-bar .btn {
-      min-height: 34px;
+      min-height: 32px;
+      height: 32px;
       border-radius: 999px;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
     }
     .mobile-review-bar .btn-success {
-      max-width: 210px;
-      width: 100%;
-      justify-self: center;
-      background: var(--주요_강조색);
-      color: #FFFFFF;
+      min-width: 122px;
+      padding: 0 16px;
     }
     .mobile-review-bar .btn-soft {
+      width: 34px;
+      height: 34px;
+      padding: 0;
       background: transparent;
       color: var(--주요_강조색);
-      padding: 0;
     }
 
-    /* Authentic Edge-to-Edge Translucent iOS UITabBar (49px Standard Height) */
+    /* Tight, Grounded In-Flow Bottom Tab Bar (Capped Bottom Safe Area!) */
     .mobile-tabbar {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      width: 100%;
+      flex: 0 0 auto;
+      position: relative;
       z-index: 50;
-      padding: 4px 8px calc(4px + env(safe-area-inset-bottom, 0px));
-      border-radius: 0;
+      width: 100%;
+      padding: 5px 8px calc(5px + min(env(safe-area-inset-bottom, 0px), 12px));
       background-color: var(--툴바_글라스);
       -webkit-backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
       backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
@@ -1699,9 +1686,7 @@
     }
     .tab-slider { display: none; }
     .tab-btn {
-      position: relative;
-      z-index: 1;
-      height: 41px;
+      height: 42px;
       border-radius: 8px;
       display: flex;
       flex-direction: column;
@@ -1713,17 +1698,12 @@
     .tab-btn:active { opacity: 0.5; }
     .tab-btn .ico { display: inline-flex; align-items: center; justify-content: center; }
     .tab-btn .sf-ico { width: 22px; height: 22px; }
-    .tab-btn .tab-lbl {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0;
-      line-height: 1.05;
-    }
+    .tab-btn .tab-lbl { font-size: 10px; font-weight: 500; line-height: 1.05; }
     .tab-btn.active { color: var(--주요_강조색); }
     .tab-btn.active .tab-lbl { font-weight: 600; }
 
     /* =====================================================================
-       10. Native iOS PageSheet Modals & Settings.app Controls
+       12. Modals, Settings PageSheet, Popovers & Micro-UI
        ===================================================================== */
     .modal-backdrop {
       position: fixed;
@@ -1733,29 +1713,25 @@
       display: none;
       align-items: flex-end;
       justify-content: center;
-      animation: iosBackdropFadeIn 0.2s var(--애플_이징) both;
+      animation: iosBackdropFadeIn 0.18s var(--애플_이징) both;
     }
     .modal-backdrop.open { display: flex; }
-    .modal-backdrop.closing {
-      animation: iosBackdropFadeOut 0.18s var(--애플_이징) both;
-      pointer-events: none;
-    }
+    .modal-backdrop.closing { animation: iosBackdropFadeOut 0.18s var(--애플_이징) both; pointer-events: none; }
     .modal-sheet {
       width: 100%;
       max-width: 680px;
       max-height: 92dvh;
       background: var(--모달_시트_배경);
-      border-radius: 14px 14px 0 0;
+      border-radius: 16px 16px 0 0;
       display: flex;
       flex-direction: column;
       overflow: hidden;
       box-shadow: 0 -8px 36px rgba(0, 0, 0, 0.22);
-      animation: iosSheetSpringUp 0.34s var(--시트_이징) both;
+      animation: iosSheetSpringUp 0.32s var(--시트_이징) both;
       transition: transform 0.24s var(--스프링_이징);
     }
     .modal-backdrop.closing .modal-sheet { animation: iosSheetSlideDown 0.18s var(--애플_이징) both; }
     .modal-sheet.dragging { transition: none; animation: none; }
-
     @keyframes iosBackdropFadeIn  { from { opacity: 0; } to { opacity: 1; } }
     @keyframes iosBackdropFadeOut { from { opacity: 1; } to { opacity: 0; } }
     @keyframes iosSheetSpringUp   { from { transform: translateY(100%); } to { transform: translateY(0); } }
@@ -1782,42 +1758,29 @@
       left: 50%;
       transform: translateX(-50%);
       width: 36px;
-      height: 5px;
+      height: 4.5px;
       border-radius: 999px;
-      background: rgba(120, 120, 128, 0.36);
+      background: rgba(120, 120, 128, 0.34);
     }
     .modal-body {
       padding: 16px;
-      padding-bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+      padding-bottom: calc(24px + min(env(safe-area-inset-bottom, 0px), 16px));
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
-      touch-action: pan-y;
       flex: 1 1 auto;
       min-height: 0;
       overscroll-behavior-y: contain;
     }
-    /* Elevated grouped surfaces inside Dark Mode PageSheets */
     .modal-body .group-block,
-    .modal-body .card {
-      background: var(--모달_카드_배경);
-    }
-    .modal-body .compact-item {
-      background: var(--모달_카드_배경);
-    }
+    .modal-body .card,
+    .modal-body .compact-item { background: var(--모달_카드_배경); }
 
-    /* Authentic iOS Settings.app Grouped Lists */
     .settings-stack { display: flex; flex-direction: column; gap: 22px; }
     .settings-section { display: flex; flex-direction: column; gap: 6px; }
-    .settings-sec-title {
-      font-size: 13px;
-      font-weight: 400;
-      color: var(--흐린_글자색);
-      padding: 0 16px;
-    }
+    .settings-sec-title { font-size: 13px; color: var(--흐린_글자색); padding: 0 16px; }
     .settings-group {
       background: var(--모달_카드_배경);
       border-radius: var(--모서리_둥글기);
-      box-shadow: none;
       overflow: hidden;
       display: grid;
       grid-template-columns: 1fr;
@@ -1838,17 +1801,9 @@
       height: 0.5px;
       background: var(--헤어라인_색);
     }
-    .ctrl-label {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 15px;
-      font-weight: 400;
-      color: var(--기본_글자색);
-    }
-    .ctrl-val { color: var(--흐린_글자색); font-size: 14px; font-weight: 400; }
+    .ctrl-label { display: flex; justify-content: space-between; align-items: center; font-size: 15px; }
+    .ctrl-val { color: var(--흐린_글자색); font-size: 14px; }
 
-    /* Authentic iOS UISlider */
     input[type="range"] {
       -webkit-appearance: none;
       appearance: none;
@@ -1879,7 +1834,6 @@
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.20), 0 0 1px rgba(0, 0, 0, 0.16);
     }
 
-    /* Native Right-Aligned Settings Picker */
     .font-select {
       -webkit-appearance: none;
       appearance: none;
@@ -1899,7 +1853,6 @@
     }
     .font-select:focus { outline: none; color: var(--주요_강조색); }
 
-    /* Authentic iOS UISwitch (51x31) */
     .ios-switch-row {
       display: flex;
       align-items: center;
@@ -1947,25 +1900,17 @@
     .settings-more-summary {
       background: var(--모달_카드_배경);
       border-radius: var(--모서리_둥글기);
-      box-shadow: none;
       padding: 12px 16px;
       min-height: 44px;
       font-size: 15px;
-      font-weight: 400;
       color: var(--주요_강조색);
       display: flex;
       align-items: center;
       justify-content: space-between;
       width: 100%;
     }
-    .settings-more-summary::after {
-      content: "›";
-      font-size: 20px;
-      line-height: 1;
-      color: var(--PASS_글자색);
-      transition: transform 0.22s var(--스프링_이징);
-    }
-    .settings-more-details.is-open .settings-more-summary::after { transform: rotate(90deg); }
+    .ios-more-chev { width: 15px; height: 15px; color: var(--PASS_글자색); transition: transform 0.22s var(--스프링_이징); }
+    .settings-more-details.is-open .ios-more-chev { transform: rotate(90deg); color: var(--주요_강조색); }
     .settings-more-body { display: flex; flex-direction: column; gap: 18px; }
     .settings-footer-row {
       background: var(--모달_카드_배경);
@@ -1975,18 +1920,17 @@
       flex-direction: column;
     }
 
-    /* Queue Popover (iOS UIPopoverPresentationController) */
     .queue-corner-popover {
       position: fixed;
-      top: calc(var(--상단바_높이) + 10px);
-      right: 16px;
-      width: min(320px, calc(100vw - 32px));
+      top: calc(env(safe-area-inset-top, 0px) + 48px);
+      right: 14px;
+      width: min(320px, calc(100vw - 28px));
       max-height: 52dvh;
       z-index: 260;
       background-color: var(--글라스_카드_배경);
-      -webkit-backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
-      backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
-      border-radius: 13px;
+      -webkit-backdrop-filter: saturate(200%) blur(24px);
+      backdrop-filter: saturate(200%) blur(24px);
+      border-radius: 14px;
       box-shadow: var(--글라스_그림자);
       display: flex;
       flex-direction: column;
@@ -2022,7 +1966,6 @@
     .qcp-item-top { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--흐린_글자색); }
     .qcp-item-ex { font-family: var(--한자_폰트); font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    /* Segmented Control in Bookmark Modal */
     .bm-seg {
       position: relative;
       display: inline-grid;
@@ -2057,7 +2000,6 @@
     }
     .bm-seg .pill-btn.on { background: transparent; color: var(--기본_글자색); font-weight: 600; }
 
-    /* Choice Modal */
     .choice-char-block {
       background: var(--모달_카드_배경);
       border-radius: var(--모서리_둥글기);
@@ -2070,7 +2012,6 @@
       text-align: left;
       padding: 10px 12px;
       border-radius: 9px;
-      background: transparent;
       border: 0.5px solid var(--헤어라인_색);
       margin-bottom: 6px;
       display: flex;
@@ -2078,20 +2019,16 @@
       gap: 10px;
     }
     .choice-opt:last-child { margin-bottom: 0; }
-    .choice-opt.selected {
-      background: var(--강조_연한배경);
-      border-color: var(--주요_강조색);
-    }
+    .choice-opt.selected { background: var(--강조_연한배경); border-color: var(--주요_강조색); }
 
-    /* Toast, Spinner, Skeleton, Empty States, Shortcuts */
     #toast {
       position: fixed;
       left: 50%;
-      top: calc(var(--상단바_높이) + 10px);
+      top: calc(env(safe-area-inset-top, 0px) + 52px);
       transform: translateX(-50%) translateY(-8px) scale(0.95);
       background-color: var(--글라스_카드_배경);
-      -webkit-backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
-      backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
+      -webkit-backdrop-filter: saturate(200%) blur(24px);
+      backdrop-filter: saturate(200%) blur(24px);
       color: var(--기본_글자색);
       box-shadow: var(--글라스_그림자);
       padding: 8px 16px;
@@ -2127,15 +2064,8 @@
     .ios-spinner-wrap.active { display: inline-flex; }
     .ios-spinner { width: 14px; height: 14px; position: relative; }
     .ios-spinner span {
-      position: absolute;
-      left: 6.2px;
-      top: 0;
-      width: 1.5px;
-      height: 4px;
-      border-radius: 999px;
-      background: var(--흐린_글자색);
-      transform-origin: 0.75px 7px;
-      animation: iosSpinFade 1s linear infinite;
+      position: absolute; left: 6.2px; top: 0; width: 1.5px; height: 4px; border-radius: 999px;
+      background: var(--흐린_글자색); transform-origin: 0.75px 7px; animation: iosSpinFade 1s linear infinite;
     }
     .ios-spinner span:nth-child(1)  { transform: rotate(0deg);   animation-delay: -0.916s; }
     .ios-spinner span:nth-child(2)  { transform: rotate(30deg);  animation-delay: -0.833s; }
@@ -2151,7 +2081,7 @@
     .ios-spinner span:nth-child(12) { transform: rotate(330deg); animation-delay: 0s; }
     @keyframes iosSpinFade { 0% { opacity: 1; } 100% { opacity: 0.18; } }
 
-    .skel-wrap { display: flex; flex-direction: column; gap: 10px; padding: 6px 0; }
+    .skel-wrap { display: flex; flex-direction: column; gap: 10px; padding: 18px; }
     .skel-line { height: 15px; border-radius: 7px; background: var(--구분_회색); }
     .skel-line.lg { height: 22px; width: 88%; }
     .skel-line.md { height: 16px; width: 64%; }
@@ -2159,36 +2089,21 @@
 
     .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 48px 20px; gap: 5px; }
     .empty-ico { width: 34px; height: 34px; color: var(--흐린_글자색); opacity: 0.55; margin-bottom: 4px; }
-    .empty-title { font-size: 16px; font-weight: 600; color: var(--기본_글자색); }
+    .empty-title { font-size: 16px; font-weight: 600; }
     .empty-sub { font-size: 13.5px; color: var(--흐린_글자색); }
 
     .pc-only { display: none; }
     .pc-shortcut-hint { display: none; }
     .kbd-item { display: inline-flex; align-items: center; gap: 4px; }
     .kbd-cap {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 20px;
-      height: 20px;
-      padding: 0 5px;
-      border-radius: 5px;
-      background: var(--구분_회색);
-      border: 0.5px solid var(--헤어라인_색);
-      font-family: var(--병음_폰트);
-      font-size: 10.5px;
-      font-weight: 600;
-      color: var(--보조_글자색);
+      display: inline-flex; align-items: center; justify-content: center; min-width: 20px; height: 20px; padding: 0 5px;
+      border-radius: 5px; background: var(--구분_회색); border: 0.5px solid var(--헤어라인_색);
+      font-family: var(--병음_폰트); font-size: 10.5px; font-weight: 600; color: var(--보조_글자색);
     }
     .kbd-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; padding: 4px; }
     .kbd-card {
-      background: var(--모달_카드_배경);
-      border-radius: var(--모서리_둥글기);
-      padding: 12px 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 13.5px;
+      background: var(--모달_카드_배경); border-radius: var(--모서리_둥글기); padding: 12px 14px;
+      display: flex; align-items: center; justify-content: space-between; font-size: 13.5px;
     }
 
     @keyframes bmPopAnim { 0% { transform: scale(1); } 45% { transform: scale(1.15); } 100% { transform: scale(1); } }
@@ -2200,14 +2115,11 @@
     .ios-panel-expand, .ios-fade-pop { animation: iosPanelFadeIn 0.2s var(--애플_이징) both; }
     @keyframes iosPanelFadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
     .detail-words-py.py-reveal { animation: iosPanelFadeIn 0.2s var(--스프링_이징) both; }
-    @keyframes groupFocusFlash {
-      0%   { box-shadow: inset 0 0 0 2px var(--주요_강조색); }
-      100% { box-shadow: none; }
-    }
+    @keyframes groupFocusFlash { 0% { box-shadow: inset 0 0 0 2px var(--주요_강조색); } 100% { box-shadow: none; } }
     .group-block.focus-flash { animation: groupFocusFlash 0.8s var(--애플_이징) both; }
 
     /* =====================================================================
-       11. iPadOS / macOS Native Split Workspace (960px+)
+       13. iPadOS / macOS Split View (960px+)
        ===================================================================== */
     @media (min-width: 680px) {
       .settings-group.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -2224,34 +2136,23 @@
 
       .topbar {
         background-color: var(--툴바_글라스);
-        -webkit-backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
-        backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
         border-bottom-color: var(--헤어라인_색);
       }
       .topbar-inner { height: 48px; padding: 0 24px; }
       .floating-series-bar { padding: 0 24px; }
 
-      .main-wrap { padding: calc(var(--상단바_높이) + 18px) 24px 56px; }
-      .card { padding: 20px; }
+      .main-wrap { padding: 16px 24px 48px; }
       .pc-split-review { display: grid; grid-template-columns: 430px minmax(0, 1fr); gap: 22px; align-items: start; }
       .pc-split-input  { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 22px; align-items: start; }
-      .pc-sticky { position: sticky; top: calc(var(--상단바_높이) + 18px); max-height: calc(100dvh - var(--상단바_높이) - 36px); overflow-y: auto; }
+      .pc-sticky { position: sticky; top: 12px; max-height: calc(100dvh - 80px); overflow-y: auto; }
       .pc-queue-list { display: none; }
       .pc-shortcut-hint {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 12px;
-        margin-top: 14px;
-        font-size: 11.5px;
-        color: var(--흐린_글자색);
+        display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+        margin-top: 14px; font-size: 11.5px; color: var(--흐린_글자색);
       }
 
-      .all-search-slot { margin: 0 0 14px; max-width: 560px; }
-      .all-search-sticky.is-floating { max-width: none; padding: 6px 24px 8px; }
-      .all-search-sticky.is-floating .all-search-row,
-      .all-search-sticky.is-floating .recent-q-bar { max-width: 992px; margin: 0 auto; }
-      .all-stat-pill { right: 24px; bottom: 20px; }
+      .all-search-slot { margin: 0 0 14px; padding: 6px 0 10px; max-width: 640px; }
+      .ios-menu-popover, .queue-corner-popover { right: 24px; }
 
       .modal-backdrop { align-items: center; padding: 24px; }
       .modal-sheet {
@@ -2274,389 +2175,237 @@
         transition-duration: 0.01ms !important;
       }
     }
-  
-    /* =====================================================================
-       v8 TRUE APPLE NATIVE STRUCTURAL OVERHAUL
-       - Ellipsis UIMenu Popover (Decluttered Top Navigation Bar)
-       - Unified InsetGrouped List for All Table (Zero Toss Card Stacks)
-       - iOS Scope Segmented Control for Search
-       - Floating Compact Glass Review Capsule (Zero 2-Story Bottom Bar)
-       - Apple Books / Dictionary Reading Surface
-       ===================================================================== */
-    :root {
-      --모서리_둥글기: 12px;
-    }
-
-    /* 1. Native iOS UIMenu Popover (ellipsis.circle dropdown) */
-    .ios-menu-popover {
-      position: fixed;
-      top: calc(var(--상단바_높이) + 6px);
-      right: 14px;
-      width: 248px;
-      z-index: 270;
-      background-color: var(--글라스_카드_배경);
-      -webkit-backdrop-filter: saturate(200%) blur(28px);
-      backdrop-filter: saturate(200%) blur(28px);
-      border-radius: 14px;
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.16), 0 0 0 0.5px var(--헤어라인_색);
-      overflow: hidden;
-      opacity: 0;
-      pointer-events: none;
-      transform-origin: top right;
-      transform: translateY(-6px) scale(0.92);
-      transition: opacity 0.16s var(--애플_이징), transform 0.22s var(--스프링_이징);
-    }
-    body.dark .ios-menu-popover {
-      background-color: rgba(38, 38, 40, 0.92);
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.62), 0 0 0 0.5px rgba(255, 255, 255, 0.14);
-    }
-    .ios-menu-popover.open {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0) scale(1);
-    }
-    .ios-menu-item {
-      width: 100%;
-      min-height: 44px;
-      padding: 10px 16px;
-      border-radius: 0;
-      background: transparent;
-      color: var(--기본_글자색);
-      font-size: 15px;
-      font-weight: 400;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      text-align: left;
-      position: relative;
-    }
-    .ios-menu-item:active {
-      background: var(--탭_하이라이트);
-      opacity: 1;
-    }
-    .ios-menu-item:not(:last-child)::after {
-      content: "";
-      position: absolute;
-      left: 16px;
-      right: 0;
-      bottom: 0;
-      height: 0.5px;
-      background: var(--헤어라인_색);
-      pointer-events: none;
-    }
-    .ios-menu-sep {
-      height: 6px;
-      background: var(--안쪽_상자_배경);
-      border-top: 0.5px solid var(--헤어라인_색);
-      border-bottom: 0.5px solid var(--헤어라인_색);
-    }
-    .ios-menu-item.no-div::after { display: none; }
-    .ios-menu-left {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-    }
-    .ios-menu-right {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13.5px;
-      color: var(--흐린_글자색);
-      flex-shrink: 0;
-    }
-    .ios-menu-check {
-      width: 16px;
-      height: 16px;
-      color: var(--주요_강조색);
-      opacity: 0;
-      transition: opacity 0.14s ease;
-    }
-    .ios-menu-item.is-on .ios-menu-check { opacity: 1; }
-
-    /* Topbar minimalist spacing */
-    .topbar .top-controls {
-      gap: 6px;
-    }
-    .topbar .top-controls .pill-btn {
-      width: 32px;
-      height: 32px;
-    }
-
-    /* 2. Apple Books / Dictionary Reading Surface (Review Tab) */
-    .review-reading-card {
-      padding: 0;
-      overflow: hidden;
-      border-radius: var(--모서리_둥글기);
-    }
-    .review-reading-card .rev-progress-track {
-      margin: 0;
-      border-radius: 0;
-      height: 2.5px;
-      background: rgba(120, 120, 128, 0.10);
-    }
-    .review-reading-card .rev-progress-fill {
-      border-radius: 0 2px 2px 0;
-    }
-    .review-reading-inner {
-      padding: 20px 18px 16px;
-    }
-    .review-reading-card .example-box {
-      padding: 2px 2px 18px;
-      line-height: 1.85;
-    }
-    /* Airy Dictionary Disclosure Row (No Clunky 3-Box Vertical Dividers) */
-    .ios-action-strip {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-top: 0.5px solid var(--헤어라인_색);
-      margin: 2px 0 0;
-      padding: 6px 0 2px;
-      gap: 6px;
-    }
-    .ios-strip-btn {
-      height: 38px;
-      padding: 0 4px;
-      border-radius: 8px;
-      font-size: 14.5px;
-      font-weight: 500;
-    }
-    .ios-strip-btn.main-action {
-      flex: 1;
-      justify-content: flex-start;
-      padding-left: 2px;
-      gap: 6px;
-    }
-    .ios-strip-btn.icon-only {
-      width: 34px;
-      height: 34px;
-      border-radius: 999px;
-      color: var(--흐린_글자색);
-    }
-    .ios-strip-btn.icon-only:active {
-      background: var(--안쪽_상자_배경);
-      color: var(--주요_강조색);
-    }
-    .ios-strip-btn.icon-only.bm-on {
-      color: var(--북마크_강조색);
-    }
-    .ios-strip-sep { display: none; }
-
-    .review-reading-card .trans-panel {
-      padding: 12px 2px 6px;
-      border-top: none;
-    }
-    .review-reading-card .char-chips {
-      margin-top: 10px;
-      padding-top: 14px;
-      gap: 8px;
-    }
-    .review-reading-card .tts-scrub-bar {
-      margin-left: 18px;
-      margin-right: 18px;
-    }
-    .review-reading-card .tts-scrub-bar.show {
-      margin-bottom: 14px;
-    }
-    .review-reading-card .pc-only {
-      padding: 0 18px 18px;
-      margin-top: 4px !important;
-    }
-
-    /* 3. Floating Compact iOS Glass Review Capsule (Replaces 2-Story Bottom Bar!) */
-    .mobile-review-bar {
-      left: 50%;
-      right: auto;
-      transform: translateX(-50%);
-      bottom: calc(58px + env(safe-area-inset-bottom, 0px));
-      width: auto;
-      min-width: 224px;
-      max-width: calc(100vw - 32px);
-      height: 44px;
-      padding: 4px 5px;
-      border-radius: 999px;
-      background-color: var(--글라스_카드_배경);
-      -webkit-backdrop-filter: saturate(200%) blur(24px);
-      backdrop-filter: saturate(200%) blur(24px);
-      border: 0.5px solid var(--헤어라인_색);
-      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.06);
-      grid-template-columns: 36px 1fr 36px;
-      gap: 6px;
-    }
-    body.dark .mobile-review-bar {
-      background-color: rgba(34, 34, 36, 0.88);
-      border-color: rgba(255, 255, 255, 0.14);
-      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.52);
-    }
-    .mobile-review-bar.is-hidden {
-      opacity: 0;
-      pointer-events: none;
-      transform: translateX(-50%) translateY(20px) scale(0.94);
-    }
-    .mobile-review-bar .btn {
-      min-height: 34px;
-      height: 34px;
-      font-size: 14.5px;
-      font-weight: 600;
-    }
-    .mobile-review-bar .btn-success {
-      min-width: 126px;
-      padding: 0 18px;
-      border-radius: 999px;
-    }
-    .mobile-review-bar .btn-soft {
-      width: 36px;
-      height: 36px;
-      border-radius: 999px;
-    }
-    .mobile-review-bar .btn-soft:active {
-      background: var(--안쪽_상자_배경);
-    }
-
-    /* 4. All Table: Authentic iOS Search + Scope Segmented Control */
-    .all-search-slot {
-      min-height: 78px;
-      margin: 0 0 14px;
-    }
-    .all-search-row {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 8px;
-    }
-    .all-scope-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-    }
-    .ios-scope-seg {
-      position: relative;
-      display: inline-grid;
-      grid-template-columns: 1fr 1fr;
-      background: var(--안쪽_상자_배경);
-      border-radius: 8px;
-      padding: 2px;
-      min-width: 144px;
-    }
-    .ios-scope-slider {
-      position: absolute;
-      top: 2px;
-      bottom: 2px;
-      left: 2px;
-      width: calc(50% - 2px);
-      border-radius: 6.5px;
-      background: var(--카드_배경색);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), 0 0.5px 0.5px rgba(0, 0, 0, 0.06);
-      transition: transform 0.22s var(--스프링_이징);
-      pointer-events: none;
-    }
-    body.dark .ios-scope-slider { background: #636366; }
-    .ios-scope-btn {
-      position: relative;
-      z-index: 1;
-      height: 26px;
-      padding: 0 12px;
-      border-radius: 6.5px;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--기본_글자색);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .ios-scope-btn.on { font-weight: 600; }
-    .all-scope-actions {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .search-clear-btn {
-      background: transparent;
-      color: var(--흐린_글자색);
-      width: 20px;
-      height: 20px;
-      right: 7px;
-    }
-
-    /* 5. All Table: Unified iOS InsetGrouped List (Zero Toss Card Stack!) */
-    #allGroupsList {
-      padding-bottom: 28px;
-    }
-    .ios-unified-list {
-      background: var(--카드_배경색);
-      border-radius: var(--모서리_둥글기);
-      overflow: hidden;
-    }
-    .ios-unified-list .group-block {
-      background: transparent;
-      border-radius: 0;
-      margin-bottom: 0;
-      position: relative;
-    }
-    .ios-unified-list .group-block:not(:last-child)::after {
-      content: "";
-      position: absolute;
-      left: 58px;
-      right: 0;
-      bottom: 0;
-      height: 0.5px;
-      background: var(--헤어라인_색);
-      pointer-events: none;
-    }
-    .ios-unified-list .group-block.is-group-open:not(:last-child)::after {
-      left: 0;
-    }
-    .ios-unified-list .all-group-btn {
-      padding: 11px 16px;
-      min-height: 54px;
-    }
-    .ios-unified-list .root-badge {
-      width: 31px;
-      height: 31px;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-
-    /* 6. Crisp Inline SVG Toggle Buttons (No Unicode ▼/▲) */
-    .grp-toggle-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      font-weight: 500;
-    }
-    .grp-toggle-btn .sf-ico,
-    .ios-more-chev {
-      width: 14px;
-      height: 14px;
-      transition: transform 0.22s var(--스프링_이징);
-    }
-    .settings-more-summary::after { display: none; }
-    .settings-more-details.is-open .ios-more-chev {
-      transform: rotate(90deg);
-      color: var(--주요_강조색);
-    }
-
-    @media (min-width: 960px) {
-      .all-search-slot { max-width: 640px; }
-      .review-reading-inner { padding: 22px 22px 18px; }
-      .ios-menu-popover { right: 24px; }
-    }
-
   </style>
 </head>
 <body>
   <div id="loadingBar" class="loading-bar"></div>
 
-  <!-- 상단 고정 해성계 그룹 바 -->
+  <!-- 비밀키 잠금 화면 -->
+  <div id="authScreen" style="display:none;">
+    <div class="auth-card">
+      <h2>谐声系</h2>
+      <p>비밀키를 입력하세요.</p>
+      <input id="authInput" class="auth-input" type="password" placeholder="비밀키" />
+      <button class="btn btn-primary btn-full" onclick="submitAuth()">계속</button>
+      <div id="authError" style="color:var(--위험_빨강);font-size:13px;margin-top:10px;"></div>
+    </div>
+  </div>
+
+  <!-- 1. In-Flow Apple Notes Navigation Bar -->
+  <header id="topbar" class="topbar">
+    <div class="topbar-inner">
+      <div class="brand" onclick="scrollActiveTabToTop()" title="맨 위로 이동">
+        <span class="brand-wordmark">谐声系</span>
+        <span id="remainBadge" class="brand-badge">0</span>
+        <span id="iosSpinner" class="ios-spinner-wrap" aria-hidden="true"><span class="ios-spinner"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></span>
+      </div>
+
+      <div class="nav-center">
+        <span id="navInlineTitle" class="nav-inline-title">복습</span>
+        <nav class="pc-nav" id="pcNav">
+          <div id="pcNavSlider" class="pc-nav-slider" aria-hidden="true"></div>
+          <button class="pc-nav-btn active" data-tab="review" onclick="switchTab('review')">복습</button>
+          <button class="pc-nav-btn" data-tab="input" onclick="switchTab('input')">입력</button>
+          <button class="pc-nav-btn" data-tab="all" onclick="switchTab('all')">전체표</button>
+        </nav>
+      </div>
+
+      <div class="top-controls">
+        <button id="bookmarkOpenBtn" class="pill-btn" onclick="openBookmarkModal()" title="즐겨찾기" aria-label="즐겨찾기"><svg class="sf-ico sf-ico-fill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18l-6-4-6 4V4z"/></svg></button>
+        <button id="moreMenuBtn" class="pill-btn" onclick="toggleMoreMenu()" title="더보기" aria-label="더보기"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.25"/><circle cx="8" cy="12" r="1.15" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.15" fill="currentColor" stroke="none"/><circle cx="16" cy="12" r="1.15" fill="currentColor" stroke="none"/></svg></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. In-Flow Docked Phonetic Series Bar (Never Overlaps Topbar or Search!) -->
   <div id="floatingSeriesBar" class="floating-series-bar" aria-live="polite">
     <div id="floatingSeriesContent" style="display:flex;align-items:center;gap:6px;flex:1;min-width:0;overflow:hidden;"></div>
     <button id="floatingExpandBtn" class="floating-expand-btn" onclick="toggleAllVisibleDetails()" title="현재 화면의 모든 한자 뜻·예문 일괄 펼치기/접기" aria-label="일괄 펼치기"><svg class="sf-ico" style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
   </div>
 
-  <!-- 복습 탭 대기열 문장 훑어보기 팝오버 -->
+  <!-- 3. Scrollable Main Workspace -->
+  <main id="mainWrap" class="main-wrap">
+    <!-- ==================== 탭 1: 복습 ==================== -->
+    <section id="tab-review" class="tab-view active">
+      <div class="ios-large-title-bar">
+        <h1 class="ios-large-title">복습</h1>
+      </div>
+
+      <div class="pc-split-review">
+        <div class="pc-sticky">
+          <div class="review-header">
+            <span id="reviewCounter" class="review-meta">불러오는 중...</span>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <button id="queuePeekBtn" class="ios-text-action" onclick="toggleQueueCornerPopover()" title="대기열 문장 훑어보기"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="4" cy="6" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="18" r="1" fill="currentColor"/></svg> 대기열</button>
+              <button id="sortOrderBtn" class="ios-text-action" onclick="toggleReviewOrder()">오래된순</button>
+            </div>
+          </div>
+
+          <div class="card review-reading-card">
+            <div id="reviewBody">
+              <div class="skel-wrap">
+                <div class="skel-line lg"></div>
+                <div class="skel-line md"></div>
+                <div class="skel-line sm"></div>
+              </div>
+            </div>
+            <div id="ttsScrubBar" class="tts-scrub-bar" aria-label="발음 재생 위치 및 음성 설정">
+              <span id="ttsProgressLbl" style="font-variant-numeric:tabular-nums;min-width:34px;">0%</span>
+              <input id="ttsScrubRange" class="tts-scrub-range" type="range" min="0" max="100" step="1" value="0" oninput="scrubChineseSpeech(this.value)" />
+              <select id="ttsVoiceSelect" class="tts-voice-select" onchange="changeChineseVoice(this.value)" title="중국어 음성 선택"></select>
+            </div>
+
+            <div class="pc-only">
+              <div style="display:grid;grid-template-columns:48px 1fr 48px;gap:8px;">
+                <button class="btn btn-soft" style="padding:0;" onclick="stepReview(-1)" aria-label="이전"><svg class="sf-ico" style="width:17px;height:17px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+                <button class="btn btn-success" onclick="completeCurrentReview()">복습 마침</button>
+                <button class="btn btn-soft" style="padding:0;" onclick="stepReview(1)" aria-label="다음"><svg class="sf-ico" style="width:17px;height:17px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+              </div>
+              <div class="pc-shortcut-hint">
+                <span class="kbd-item"><kbd class="kbd-cap">←</kbd><kbd class="kbd-cap">→</kbd> 이동</span>
+                <span class="kbd-item"><kbd class="kbd-cap">Space</kbd> 해설</span>
+                <span class="kbd-item"><kbd class="kbd-cap">1–9</kbd> 한자</span>
+                <span class="kbd-item"><kbd class="kbd-cap">0</kbd> 전체</span>
+                <span class="kbd-item"><kbd class="kbd-cap">P</kbd> PASS</span>
+              </div>
+              <div id="pcQueueList" class="pc-queue-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="reviewPhoneticArea"></div>
+      </div>
+    </section>
+
+    <!-- ==================== 탭 2: 입력 ==================== -->
+    <section id="tab-input" class="tab-view">
+      <div class="ios-large-title-bar">
+        <h1 class="ios-large-title">입력</h1>
+      </div>
+
+      <div class="pc-split-input">
+        <div>
+          <div class="ios-section-strip">
+            <span class="ios-section-title">새 예문</span>
+            <div style="display:flex;gap:6px;">
+              <button class="ios-text-action" onclick="tryPasteClipboard()">붙여넣기</button>
+              <button class="ios-text-action" style="color:var(--흐린_글자색);" onclick="clearInputForm()">비우기</button>
+            </div>
+          </div>
+
+          <div class="ios-inset-group">
+            <textarea id="inputExample" class="big-textarea" placeholder="중국어 예문을 입력하거나 붙여넣으세요…"></textarea>
+            <div style="border-top:0.5px solid var(--헤어라인_색);margin-left:16px;"></div>
+            <button id="btnTranslateNow" class="ios-row-action" onclick="runTranslateFromInput()"><svg class="sf-ico" style="width:17px;height:17px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg> 번역 및 해설</button>
+            <div id="inputTransResult" style="display:none;padding:14px 16px;" class="trans-panel"></div>
+          </div>
+
+          <div class="ios-section-strip">
+            <span class="ios-section-title">
+              대상 한자 <span id="selectedCountBadge" style="color:var(--주요_강조색);font-weight:600;margin-left:4px;">0자</span>
+            </span>
+            <button id="tileSizeBtn" class="ios-text-action" onclick="toggleTileSize()">크게</button>
+          </div>
+
+          <div class="ios-inset-group">
+            <div id="inputTileBox" class="tile-box">
+              <span style="font-size:13.5px;color:var(--흐린_글자색);padding:10px;">예문을 입력하면 한자가 표시됩니다.</span>
+            </div>
+
+            <div class="manual-capsule">
+              <input id="manualCharInput" type="text" placeholder="한자 직접 추가…" />
+              <button class="btn-sm" onclick="addManualChars()">추가</button>
+            </div>
+
+            <button id="btnRegisterChars" class="ios-row-action primary" onclick="runRegisterFromInput()">
+              <svg class="sf-ico" style="width:17px;height:17px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> 한자 등록
+            </button>
+          </div>
+
+          <div id="justRegisteredBar" style="display:none;margin-bottom:18px;"></div>
+        </div>
+
+        <div>
+          <div class="ios-section-strip">
+            <span class="ios-section-title" style="display:inline-flex;align-items:center;gap:6px;">최근 기록 <span id="recentUnregBadge" style="color:var(--주요_강조색);font-weight:600;">미완료 0</span></span>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <button id="recentFilterUnregBtn" class="ios-text-action" onclick="toggleRecentUnregOnly()">미완료만</button>
+              <button class="ios-text-action" onclick="refreshAllData()" title="새로고침"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36L21 8"/><polyline points="21 3 21 8 16 8"/></svg></button>
+            </div>
+          </div>
+
+          <div class="ios-inset-group">
+            <div id="recentListArea">
+              <div class="skel-wrap">
+                <div class="skel-line lg"></div>
+                <div class="skel-line md"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 탭 3: 전체표 (Apple Notes List) ==================== -->
+    <section id="tab-all" class="tab-view">
+      <div class="ios-large-title-bar">
+        <h1 class="ios-large-title">전체표</h1>
+      </div>
+
+      <div id="allSearchSlot" class="all-search-slot">
+        <div id="allSearchSticky" class="all-search-sticky">
+          <div class="all-search-row">
+            <div class="search-input-wrap">
+              <svg class="search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input id="allSearchInput" type="search" placeholder="검색" oninput="onAllSearchInput()" />
+              <button id="allSearchClearBtn" class="search-clear-btn" onclick="clearAllSearch()" aria-label="검색어 지우기"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.71 12.29a1 1 0 0 1-1.42 1.42L12 13.41l-2.29 2.3a1 1 0 0 1-1.42-1.42L10.59 12l-2.3-2.29a1 1 0 0 1 1.42-1.42L12 10.59l2.29-2.3a1 1 0 0 1 1.42 1.42L13.41 12l2.3 2.29z"/></svg></button>
+            </div>
+            <div class="all-scope-row">
+              <div class="ios-scope-seg" role="tablist" aria-label="전체표 필터">
+                <div id="allScopeSlider" class="ios-scope-slider" aria-hidden="true"></div>
+                <button id="allScopeAllBtn" class="ios-scope-btn on" onclick="setAllStarFilter(false)">전체</button>
+                <button id="allStarFilterBtn" class="ios-scope-btn" onclick="setAllStarFilter(true)">즐겨찾기</button>
+              </div>
+              <div class="all-scope-actions">
+                <button id="passToggleAllBtn" class="ios-text-action" onclick="togglePassGlobal()">PASS</button>
+                <button class="ios-text-action" onclick="collapseAllGroups()">접기</button>
+              </div>
+            </div>
+          </div>
+          <div id="recentSearchBar" class="recent-q-bar"></div>
+        </div>
+      </div>
+
+      <div id="allGroupsList"></div>
+      <div id="allSummaryStat" class="all-stat-footer"></div>
+    </section>
+  </main>
+
+  <!-- 모바일 전용 하단 복습 플로팅 캡슐 -->
+  <div id="mobileReviewBar" class="mobile-review-bar">
+    <button class="btn btn-soft" onclick="stepReview(-1)" aria-label="이전"><svg class="sf-ico" style="width:19px;height:19px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <button class="btn btn-success" onclick="completeCurrentReview()">복습 마침</button>
+    <button class="btn btn-soft" onclick="stepReview(1)" aria-label="다음"><svg class="sf-ico" style="width:19px;height:19px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+  </div>
+
+  <!-- 4. In-Flow Tight Bottom UITabBar -->
+  <nav class="mobile-tabbar" id="mobileTabbar">
+    <div id="mobileTabSlider" class="tab-slider" aria-hidden="true"></div>
+    <button class="tab-btn active" data-tab="review" onclick="switchTab('review')" aria-label="복습">
+      <span class="ico"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6s3-2 10 0v14c-7-2-10 0-10 0V6z"/><path d="M22 6s-3-2-10 0v14c7-2 10 0 10 0V6z"/></svg></span>
+      <span class="tab-lbl">복습</span>
+    </button>
+    <button class="tab-btn" data-tab="input" onclick="switchTab('input')" aria-label="입력">
+      <span class="ico"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>
+      <span class="tab-lbl">입력</span>
+    </button>
+    <button class="tab-btn" data-tab="all" onclick="switchTab('all')" aria-label="전체표">
+      <span class="ico"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.8"/><rect x="14" y="14" width="7" height="7" rx="1.8"/></svg></span>
+      <span class="tab-lbl">전체표</span>
+    </button>
+  </nav>
+
+  <!-- 복습 탭 대기열 팝오버 -->
   <div id="queueCornerPopover" class="queue-corner-popover">
     <div class="qcp-head">
       <span id="qcpTitle" style="display:inline-flex;align-items:center;gap:6px;"><svg class="sf-ico" style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="4" cy="6" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="18" r="1" fill="currentColor"/></svg> 대기열</span>
@@ -2703,230 +2452,7 @@
     </button>
   </div>
 
-
-  <!-- 비밀키 잠금 화면 -->
-  <div id="authScreen" style="display:none;">
-    <div class="auth-card">
-      <h2>谐声系</h2>
-      <p>비밀키를 입력하세요.</p>
-      <input id="authInput" class="auth-input" type="password" placeholder="비밀키" />
-      <button class="btn btn-primary btn-full" onclick="submitAuth()">계속</button>
-      <div id="authError" style="color:var(--위험_빨강);font-size:13px;margin-top:10px;"></div>
-    </div>
-  </div>
-
-  <!-- True iOS UINavigationBar -->
-  <header id="topbar" class="topbar">
-    <div class="topbar-inner">
-      <div class="brand" onclick="scrollActiveTabToTop()" title="맨 위로 이동">
-        <span class="brand-wordmark">谐声系</span>
-        <span id="remainBadge" class="brand-badge">0</span>
-        <span id="iosSpinner" class="ios-spinner-wrap" aria-hidden="true"><span class="ios-spinner"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></span>
-      </div>
-
-      <div class="nav-center">
-        <span id="navInlineTitle" class="nav-inline-title">복습</span>
-        <nav class="pc-nav" id="pcNav">
-          <div id="pcNavSlider" class="pc-nav-slider" aria-hidden="true"></div>
-          <button class="pc-nav-btn active" data-tab="review" onclick="switchTab('review')">복습</button>
-          <button class="pc-nav-btn" data-tab="input" onclick="switchTab('input')">입력</button>
-          <button class="pc-nav-btn" data-tab="all" onclick="switchTab('all')">전체표</button>
-        </nav>
-      </div>
-
-      <div class="top-controls">
-        <button id="bookmarkOpenBtn" class="pill-btn" onclick="openBookmarkModal()" title="즐겨찾기" aria-label="즐겨찾기"><svg class="sf-ico sf-ico-fill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18l-6-4-6 4V4z"/></svg></button>
-        <button id="moreMenuBtn" class="pill-btn" onclick="toggleMoreMenu()" title="더보기" aria-label="더보기"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.25"/><circle cx="8" cy="12" r="1.15" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.15" fill="currentColor" stroke="none"/><circle cx="16" cy="12" r="1.15" fill="currentColor" stroke="none"/></svg></button>
-      </div>
-    </div>
-  </header>
-
-  <main id="mainWrap" class="main-wrap">
-    <!-- ==================== 탭 1: 복습 ==================== -->
-    <section id="tab-review" class="tab-view active">
-      <div class="ios-large-title-bar">
-        <h1 class="ios-large-title">복습</h1>
-      </div>
-
-      <div class="pc-split-review">
-        <div class="pc-sticky">
-          <div class="review-header">
-            <span id="reviewCounter" class="review-meta">불러오는 중...</span>
-            <div style="display:flex;align-items:center;gap:6px;">
-              <button id="queuePeekBtn" class="ios-text-action" onclick="toggleQueueCornerPopover()" title="대기열 문장 훑어보기"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="4" cy="6" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="18" r="1" fill="currentColor"/></svg> 대기열</button>
-              <button id="sortOrderBtn" class="ios-text-action" onclick="toggleReviewOrder()">오래된순</button>
-            </div>
-          </div>
-
-          <div class="card review-reading-card">
-            <div id="reviewBody">
-              <div class="skel-wrap">
-                <div class="skel-line lg"></div>
-                <div class="skel-line md"></div>
-                <div class="skel-line sm"></div>
-              </div>
-            </div>
-            <div id="ttsScrubBar" class="tts-scrub-bar" aria-label="발음 재생 위치 및 음성 설정">
-              <span id="ttsProgressLbl" style="font-variant-numeric:tabular-nums;min-width:34px;">0%</span>
-              <input id="ttsScrubRange" class="tts-scrub-range" type="range" min="0" max="100" step="1" value="0" oninput="scrubChineseSpeech(this.value)" />
-              <select id="ttsVoiceSelect" class="tts-voice-select" onchange="changeChineseVoice(this.value)" title="중국어 음성 선택"></select>
-            </div>
-
-            <div class="pc-only" style="margin-top:20px;">
-              <div style="display:grid;grid-template-columns:48px 1fr 48px;gap:8px;">
-                <button class="btn btn-soft" style="padding:0;" onclick="stepReview(-1)" aria-label="이전"><svg class="sf-ico" style="width:17px;height:17px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
-                <button class="btn btn-success" onclick="completeCurrentReview()">복습 마침</button>
-                <button class="btn btn-soft" style="padding:0;" onclick="stepReview(1)" aria-label="다음"><svg class="sf-ico" style="width:17px;height:17px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
-              </div>
-              <div class="pc-shortcut-hint">
-                <span class="kbd-item"><kbd class="kbd-cap">←</kbd><kbd class="kbd-cap">→</kbd> 이동</span>
-                <span class="kbd-item"><kbd class="kbd-cap">Space</kbd> 해설</span>
-                <span class="kbd-item"><kbd class="kbd-cap">1–9</kbd> 한자</span>
-                <span class="kbd-item"><kbd class="kbd-cap">0</kbd> 전체</span>
-                <span class="kbd-item"><kbd class="kbd-cap">P</kbd> PASS</span>
-              </div>
-              <div id="pcQueueList" class="pc-queue-list"></div>
-            </div>
-          </div>
-        </div>
-
-        <div id="reviewPhoneticArea"></div>
-      </div>
-    </section>
-
-    <!-- ==================== 탭 2: 입력 ==================== -->
-    <section id="tab-input" class="tab-view">
-      <div class="ios-large-title-bar">
-        <h1 class="ios-large-title">입력</h1>
-      </div>
-
-      <div class="pc-split-input">
-        <div>
-          <!-- Section 1: 새 예문 (InsetGrouped Text + Action Row) -->
-          <div class="ios-section-strip">
-            <span class="ios-section-title">새 예문</span>
-            <div style="display:flex;gap:6px;">
-              <button class="ios-text-action" onclick="tryPasteClipboard()">붙여넣기</button>
-              <button class="ios-text-action" style="color:var(--흐린_글자색);" onclick="clearInputForm()">비우기</button>
-            </div>
-          </div>
-
-          <div class="ios-inset-group">
-            <textarea id="inputExample" class="big-textarea" placeholder="중국어 예문을 입력하거나 붙여넣으세요…"></textarea>
-            <div style="border-top:0.5px solid var(--헤어라인_색);margin-left:16px;"></div>
-            <button id="btnTranslateNow" class="ios-row-action" onclick="runTranslateFromInput()"><svg class="sf-ico" style="width:17px;height:17px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg> 번역 및 해설</button>
-            <div id="inputTransResult" style="display:none;padding:14px 16px;" class="trans-panel"></div>
-          </div>
-
-          <!-- Section 2: 대상 한자 (InsetGrouped Tiles + Inline Add + Action Row) -->
-          <div class="ios-section-strip">
-            <span class="ios-section-title">
-              대상 한자 <span id="selectedCountBadge" style="color:var(--주요_강조색);font-weight:600;margin-left:4px;">0자</span>
-            </span>
-            <button id="tileSizeBtn" class="ios-text-action" onclick="toggleTileSize()">크게</button>
-          </div>
-
-          <div class="ios-inset-group">
-            <div id="inputTileBox" class="tile-box">
-              <span style="font-size:13.5px;color:var(--흐린_글자색);padding:10px;">예문을 입력하면 한자가 표시됩니다.</span>
-            </div>
-
-            <div class="manual-capsule">
-              <input id="manualCharInput" type="text" placeholder="한자 직접 추가…" />
-              <button class="btn-sm" onclick="addManualChars()">추가</button>
-            </div>
-
-            <button id="btnRegisterChars" class="ios-row-action primary" onclick="runRegisterFromInput()">
-              <svg class="sf-ico" style="width:17px;height:17px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> 한자 등록
-            </button>
-          </div>
-
-          <div id="justRegisteredBar" style="display:none;margin-bottom:18px;"></div>
-        </div>
-
-        <div>
-          <div class="ios-section-strip">
-            <span class="ios-section-title" style="display:inline-flex;align-items:center;gap:6px;">최근 기록 <span id="recentUnregBadge" style="color:var(--주요_강조색);font-weight:600;">미완료 0</span></span>
-            <div style="display:flex;align-items:center;gap:6px;">
-              <button id="recentFilterUnregBtn" class="ios-text-action" onclick="toggleRecentUnregOnly()">미완료만</button>
-              <button class="ios-text-action" onclick="refreshAllData()" title="새로고침"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36L21 8"/><polyline points="21 3 21 8 16 8"/></svg></button>
-            </div>
-          </div>
-
-          <div class="ios-inset-group">
-            <div id="recentListArea">
-              <div class="skel-wrap" style="padding:16px;">
-                <div class="skel-line lg"></div>
-                <div class="skel-line md"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== 탭 3: 전체표 ==================== -->
-    <section id="tab-all" class="tab-view">
-      <div class="ios-large-title-bar">
-        <h1 class="ios-large-title">전체표</h1>
-      </div>
-
-      <div class="all-search-slot">
-        <div id="allSearchSticky" class="all-search-sticky">
-          <div class="all-search-row">
-            <div class="search-input-wrap">
-              <svg class="search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <input id="allSearchInput" type="search" placeholder="한자, 병음, 뜻, 예문 검색" oninput="onAllSearchInput()" />
-              <button id="allSearchClearBtn" class="search-clear-btn" onclick="clearAllSearch()" aria-label="검색어 지우기"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.71 12.29a1 1 0 0 1-1.42 1.42L12 13.41l-2.29 2.3a1 1 0 0 1-1.42-1.42L10.59 12l-2.3-2.29a1 1 0 0 1 1.42-1.42L12 10.59l2.29-2.3a1 1 0 0 1 1.42 1.42L13.41 12l2.3 2.29z"/></svg></button>
-            </div>
-            <div class="all-scope-row">
-              <div class="ios-scope-seg" role="tablist" aria-label="전체표 필터">
-                <div id="allScopeSlider" class="ios-scope-slider" aria-hidden="true"></div>
-                <button id="allScopeAllBtn" class="ios-scope-btn on" onclick="setAllStarFilter(false)">전체</button>
-                <button id="allStarFilterBtn" class="ios-scope-btn" onclick="setAllStarFilter(true)">즐겨찾기</button>
-              </div>
-              <div class="all-scope-actions">
-                <button id="passToggleAllBtn" class="ios-text-action" onclick="togglePassGlobal()">PASS</button>
-                <button class="ios-text-action" onclick="collapseAllGroups()">모두 접기</button>
-              </div>
-            </div>
-          </div>
-          <div id="recentSearchBar" class="recent-q-bar"></div>
-        </div>
-      </div>
-
-      <div id="allGroupsList"></div>
-    </section>
-  </main>
-
-  <!-- 탭 3 우측 하단 요약 플로팅 알약 -->
-  <div id="allSummaryStat" class="all-stat-pill"></div>
-
-  <!-- 모바일 전용 하단 복습 툴바 (Edge-to-Edge Tab Bar 위에 매끄럽게 밀착) -->
-  <div id="mobileReviewBar" class="mobile-review-bar">
-    <button class="btn btn-soft" onclick="stepReview(-1)" aria-label="이전"><svg class="sf-ico" style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
-    <button class="btn btn-success" onclick="completeCurrentReview()">복습 마침</button>
-    <button class="btn btn-soft" onclick="stepReview(1)" aria-label="다음"><svg class="sf-ico" style="width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
-  </div>
-
-  <!-- True iOS Edge-to-Edge Translucent UITabBar -->
-  <nav class="mobile-tabbar" id="mobileTabbar">
-    <div id="mobileTabSlider" class="tab-slider" aria-hidden="true"></div>
-    <button class="tab-btn active" data-tab="review" onclick="switchTab('review')" aria-label="복습">
-      <span class="ico"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6s3-2 10 0v14c-7-2-10 0-10 0V6z"/><path d="M22 6s-3-2-10 0v14c7-2 10 0 10 0V6z"/></svg></span>
-      <span class="tab-lbl">복습</span>
-    </button>
-    <button class="tab-btn" data-tab="input" onclick="switchTab('input')" aria-label="입력">
-      <span class="ico"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span>
-      <span class="tab-lbl">입력</span>
-    </button>
-    <button class="tab-btn" data-tab="all" onclick="switchTab('all')" aria-label="전체표">
-      <span class="ico"><svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.8"/><rect x="14" y="14" width="7" height="7" rx="1.8"/></svg></span>
-      <span class="tab-lbl">전체표</span>
-    </button>
-  </nav>
-
-  <!-- 설정 모달 시트 (True iOS Settings PageSheet) -->
+  <!-- 설정 모달 시트 -->
   <div id="settingsDrawer" class="modal-backdrop" onclick="if(event.target===this) toggleSettingsDrawer(false)">
     <div class="modal-sheet">
       <div class="modal-head">
@@ -2935,7 +2461,6 @@
       </div>
       <div class="modal-body">
         <div class="settings-stack">
-          <!-- 1. 서체 및 한자 스타일 -->
           <div class="settings-section">
             <div class="settings-sec-title">서체 및 한자 스타일</div>
             <div class="settings-group">
@@ -2964,7 +2489,6 @@
             </div>
           </div>
 
-          <!-- 2. 학습 및 재생 동작 -->
           <div class="settings-section">
             <div class="settings-sec-title">학습 및 재생</div>
             <div class="settings-group">
@@ -2993,7 +2517,6 @@
             </div>
           </div>
 
-          <!-- 3. 기본 텍스트 크기 -->
           <div class="settings-section">
             <div class="settings-sec-title">기본 텍스트 크기</div>
             <div class="settings-group cols-2">
@@ -3002,28 +2525,26 @@
                 <input id="rngFontScale" type="range" min="85" max="130" step="5" oninput="updateVisualSettings()" />
               </div>
               <div class="ctrl-item">
-                <div class="ctrl-label"><span>예문 글자 크기</span><span id="lblExampleSize" class="ctrl-val">23px</span></div>
+                <div class="ctrl-label"><span>예문 글자 크기</span><span id="lblExampleSize" class="ctrl-val">22px</span></div>
                 <input id="rngExampleSize" type="range" min="15" max="30" step="1" oninput="updateVisualSettings()" />
               </div>
             </div>
           </div>
 
-          <!-- 4. 리퀴드 글라스 (화면 효과) -->
           <div class="settings-section">
-            <div class="settings-sec-title">리퀴드 글라스</div>
+            <div class="settings-sec-title">글라스 효과</div>
             <div class="settings-group cols-2">
               <div class="ctrl-item">
-                <div class="ctrl-label"><span>글라스 투명도</span><span id="lblGlassAlpha" class="ctrl-val">0.27</span></div>
+                <div class="ctrl-label"><span>글라스 투명도</span><span id="lblGlassAlpha" class="ctrl-val">0.86</span></div>
                 <input id="rngGlassAlpha" type="range" min="0.10" max="0.95" step="0.01" oninput="updateGlassSettings()" />
               </div>
               <div class="ctrl-item">
-                <div class="ctrl-label"><span>글라스 블러</span><span id="lblGlassBlur" class="ctrl-val">14px</span></div>
+                <div class="ctrl-label"><span>글라스 블러</span><span id="lblGlassBlur" class="ctrl-val">22px</span></div>
                 <input id="rngGlassBlur" type="range" min="4" max="32" step="1" oninput="updateGlassSettings()" />
               </div>
             </div>
           </div>
 
-          <!-- 5. 세부 크기 및 레이아웃 (접힘 아코디언) -->
           <div class="settings-more-details" id="settingsMoreDetails">
             <button type="button" class="settings-more-summary" id="settingsMoreBtn" onclick="toggleSettingsMore(this)"><span>세부 크기 및 레이아웃</span><svg class="ios-more-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
             <div class="accordion-body" id="settingsMoreAcc">
@@ -3063,7 +2584,7 @@
                         <input id="rngWordPySize" type="range" min="11" max="26" step="0.5" oninput="updateVisualSettings()" />
                       </div>
                       <div class="ctrl-item">
-                        <div class="ctrl-label"><span>그룹 목차 한자 크기</span><span id="lblTocCharSize" class="ctrl-val">16px</span></div>
+                        <div class="ctrl-label"><span>그룹 목차 한자 크기</span><span id="lblTocCharSize" class="ctrl-val">15px</span></div>
                         <input id="rngTocCharSize" type="range" min="13" max="24" step="0.5" oninput="updateTocAndTradSettings()" />
                       </div>
                       <div class="ctrl-item">
@@ -3077,11 +2598,11 @@
                     <div class="settings-sec-title">한자 타일 레이아웃</div>
                     <div class="settings-group cols-2">
                       <div class="ctrl-item">
-                        <div class="ctrl-label"><span>한자 타일 크기</span><span id="lblTileSize" class="ctrl-val">56px</span></div>
+                        <div class="ctrl-label"><span>한자 타일 크기</span><span id="lblTileSize" class="ctrl-val">50px</span></div>
                         <input id="rngTileSize" type="range" min="44" max="76" step="2" oninput="updateVisualSettings()" />
                       </div>
                       <div class="ctrl-item">
-                        <div class="ctrl-label"><span>타일 간격</span><span id="lblTileGap" class="ctrl-val">10px</span></div>
+                        <div class="ctrl-label"><span>타일 간격</span><span id="lblTileGap" class="ctrl-val">8px</span></div>
                         <input id="rngTileGap" type="range" min="4" max="18" step="2" oninput="updateVisualSettings()" />
                       </div>
                     </div>
@@ -3091,7 +2612,6 @@
             </div>
           </div>
 
-          <!-- 6. 데이터 및 초기화 -->
           <div class="settings-section">
             <div class="settings-sec-title">데이터 및 초기화</div>
             <div class="settings-footer-row">
@@ -3127,7 +2647,7 @@
         <span style="width:36px;"></span>
       </div>
       <div id="groupChoiceBody" class="modal-body"></div>
-      <div style="padding:12px 16px calc(12px + env(safe-area-inset-bottom, 0px));background:var(--카드_배경색);border-top:0.5px solid var(--헤어라인_색);">
+      <div style="padding:12px 16px calc(12px + min(env(safe-area-inset-bottom, 0px), 12px));background:var(--카드_배경색);border-top:0.5px solid var(--헤어라인_색);">
         <button class="btn btn-primary btn-full" onclick="closeGroupChoiceModal(true)"><svg class="sf-ico" style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 이 해성계에 등록</button>
       </div>
     </div>
@@ -3789,11 +3309,6 @@
       if (metaTheme) metaTheme.setAttribute("content", bgHex);
       const metaStatus = document.getElementById("metaStatusBarStyle");
       if (metaStatus) metaStatus.setAttribute("content", isDark ? "black" : "default");
-      const btn = document.getElementById("themeBtn");
-      if (btn) {
-        btn.innerHTML = mode === "auto" ? ICO_AUTO_THEME : (isDark ? ICO_SUN : ICO_MOON);
-        btn.title = mode === "auto" ? "테마: 시스템 자동" : (isDark ? "테마: 다크" : "테마: 라이트");
-      }
       const mIcon = document.getElementById("menuThemeIcon");
       const mVal = document.getElementById("menuThemeVal");
       if (mIcon) mIcon.innerHTML = mode === "auto" ? ICO_AUTO_THEME : (isDark ? ICO_SUN : ICO_MOON);
@@ -4349,7 +3864,7 @@
       ["passToggleReviewBtn", "passToggleAllBtn", "modalPassBtn"].forEach(id => {
         const b = document.getElementById(id);
         if (b) {
-          b.textContent = id === "passToggleAllBtn" ? (state.showPass ? "PASS 표시중" : "PASS") : (state.showPass ? "PASS 포함" : "PASS 제외");
+          b.textContent = id === "passToggleAllBtn" ? (state.showPass ? "PASS 표시" : "PASS") : (state.showPass ? "PASS 포함" : "PASS 제외");
           b.classList.toggle("on", state.showPass);
         }
       });
@@ -5823,7 +5338,7 @@
         totalPass += g.passCount;
       }
 
-      statEl.textContent = `성부 ${filtered.length} · ${totalNonPass}자 · P${totalPass} · ★${state.starSet.size}`;
+      statEl.textContent = `${filtered.length}개의 성부 · ${totalNonPass.toLocaleString()}자${state.starSet.size ? " · 즐겨찾기 " + state.starSet.size : ""}`;
 
       if (filtered.length === 0) {
         listEl.innerHTML = `<div class="card"><div class="empty-state"><svg class="empty-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><div class="empty-title">검색 결과 없음</div><div class="empty-sub">한자, 병음, 뜻, 예시단어 또는 예문을 검색하세요.</div></div></div>`;
@@ -5835,7 +5350,7 @@
 
       const frag = document.createDocumentFragment();
       const host = document.createElement("div");
-      host.className = "ios-unified-list";
+      host.className = "notes-list";
       host.innerHTML = filtered.map(({ g, rootHit, matchedRowMap, matchedEntries }) => {
         const isOpen = autoOpenSearch || state.expandedRoots.has(g.root);
         const countLabel = g.passCount > 0 ? `${g.nonPassCount}•${g.passCount}` : `${g.nonPassCount}`;
@@ -5882,16 +5397,18 @@
         return `
           <div class="group-block ${isOpen ? "is-group-open" : ""}" data-root="${escHtml(g.root)}">
             <button class="all-group-btn" onclick="toggleAllGroup('${escHtml(g.root)}', this)">
-              <span class="root-badge hanzi ${rootHit ? "is-search-hit" : ""}">${escHtml(g.root)}</span>
-              <span class="count-badge">${countLabel}</span>
-              <div class="all-group-body">
-                <div class="all-group-chars">${summaryChars || `<span style="color:var(--흐린_글자색);">PASS만 있음</span>`}</div>
-                ${reasonHtml}
+              <div class="note-row-top">
+                <div class="note-row-title-wrap">
+                  <span class="note-root-title ${rootHit ? "is-search-hit" : ""}">${escHtml(g.root)}</span>
+                  <span class="note-row-count">${countLabel}자</span>
+                </div>
+                <div class="all-group-right">
+                  <span class="all-group-idx">${g.origIdx}/${totalGroupCount}</span>
+                  <span class="chev ${isOpen ? "open" : ""}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+                </div>
               </div>
-              <div class="all-group-right">
-                <span class="all-group-idx">${g.origIdx}/${totalGroupCount}</span>
-                <span class="chev ${isOpen ? "open" : ""}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
-              </div>
+              <div class="all-group-chars">${summaryChars || `<span style="color:var(--흐린_글자색);">PASS만 있음</span>`}</div>
+              ${reasonHtml}
             </button>
             <div class="accordion-body ${isOpen ? "open" : ""}">
               <div class="accordion-inner all-group-slot">
@@ -6201,23 +5718,12 @@
       const mw = document.getElementById("mainWrap");
       if (!mw) return;
 
-      const syncAllSearchDocked = () => {
-        const sb = document.getElementById("allSearchSticky");
-        if (!sb) return;
-        if (state.activeTab !== "all") {
-          sb.classList.remove("is-floating", "is-hidden");
-          document.body.classList.remove("all-search-docked");
-          return;
-        }
-        const shouldDock = mw.scrollTop > 52;
-        const wasDocked = sb.classList.contains("is-floating");
-        sb.classList.toggle("is-floating", shouldDock);
-        document.body.classList.toggle("all-search-docked", shouldDock);
-        if (shouldDock !== wasDocked) {
-          syncTopbarHeight();
-        }
+      const syncAllSearchStuck = () => {
+        const slot = document.getElementById("allSearchSlot");
+        if (!slot) return;
+        slot.classList.toggle("is-stuck", state.activeTab === "all" && mw.scrollTop > 44);
       };
-      mw.addEventListener("scroll", syncAllSearchDocked, { passive: true });
+      mw.addEventListener("scroll", syncAllSearchStuck, { passive: true });
     }
 
     function syncBodyModalState() {
