@@ -1062,10 +1062,6 @@
 
     /* =========================================================================
        CORE LEARNING UX: Phonetic Series Section & Character Rows
-       - Hanzi + Frequency Badge side-by-side on the left
-       - Pinyin & Hunum visually separated on the far right
-       - Direct word tap reveals Pinyin + Meaning inline (no extra button row)
-       - 1-Line collapsed example sentence preview below words
        ========================================================================= */
     .nv-series-section {
       background: var(--nv-bg-grouped);
@@ -1129,7 +1125,6 @@
     .nv-char-row.is-target { background: var(--nv-accent-tint); }
     .nv-char-row.is-pass { opacity: 0.48; }
 
-    /* Top Row: Hanzi + Immediate Frequency | Far Right = Separated Pinyin & Hunum */
     .nv-char-row-top {
       display: flex;
       align-items: center;
@@ -1187,7 +1182,6 @@
       font-size: 10.5px;
     }
 
-    /* Visually separated Pinyin & Hunum on far right */
     .nv-row-meta-right {
       margin-left: auto;
       max-width: 44%;
@@ -1234,7 +1228,6 @@
       cursor: pointer;
     }
 
-    /* Example Words + 1-Line Collapsed Example Preview Container */
     .nv-words-panel {
       padding: 9px 11px;
       border-radius: 9px;
@@ -1286,7 +1279,6 @@
       flex-shrink: 0;
     }
 
-    /* Inline Revealed Word Pinyin & Korean Meaning */
     .nv-word-reveal {
       display: none;
       padding: 6px 9px;
@@ -1320,7 +1312,6 @@
       color: var(--nv-label-secondary);
     }
 
-    /* 1-Line Collapsed Example Sentence Preview Row */
     .nv-example-preview-row {
       padding-top: 7px;
       border-top: 0.5px solid var(--nv-separator-subtle);
@@ -2360,23 +2351,12 @@
     }
 
     /* =========================================================================
-       V4 PATCHES:
-       1) Root document scroll (NO overflow-y:auto on html/body so window.scrollY
-          and scroll events work 100% reliably on iOS Safari & PWA)
-       2) Opaque top header with +8px top clearance & default/black status bar
-          (eliminates iOS top translucent gradient blur over header controls)
-       3) Bottom tabbar flush to bottom: 0, height 64px (4px top / 14px bottom
-          buffer for iPhone Home Indicator, icons centered in upper 46px)
-       4) Restored #seriesContextStrip dynamically locked to header.bottom,
-          only shown after section header scrolls past header (never covers
-          titles, never pins mid-screen)
-       5) Tab 3 header magnifying glass driven by IntersectionObserver + scroll
+       V4 PATCHES
        ========================================================================= */
     :root {
       --nv-hanzi-size: 34px;
     }
 
-    /* Mobile (< 960px): True root document scroll (never put overflow-y:auto on html/body) */
     html {
       position: static !important;
       width: 100% !important;
@@ -2413,7 +2393,6 @@
       overflow: visible !important;
     }
 
-    /* Fix #4: Opaque sticky top header with +8px clearance below status bar, zero blur */
     .nv-header,
     .nv-header.is-scrolled,
     body.has-series-strip .nv-header,
@@ -2441,7 +2420,6 @@
       padding: var(--nv-sp-2) var(--nv-sp-4) 136px !important;
     }
 
-    /* Fix #3: Flush bottom tabbar (no black gap below), 14px bottom buffer for Home Indicator, icons centered */
     .nv-tabbar {
       position: fixed !important;
       left: 0 !important;
@@ -2469,12 +2447,10 @@
       margin: 0 !important;
     }
 
-    /* Floating review dock sits cleanly above the 64px tabbar */
     .nv-review-dock {
       bottom: 74px !important;
     }
 
-    /* Fix #2: Restored Phonetic Series Group Banner — opaque, dynamically positioned below #appHeader */
     .nv-series-strip {
       position: fixed !important;
       left: 0;
@@ -2501,7 +2477,6 @@
       transform: translateY(0) !important;
     }
 
-    /* Fix #1: Tab 3 header magnifying glass icon on scroll */
     .nv-header-search-btn {
       width: 34px;
       height: 34px;
@@ -2532,7 +2507,6 @@
       border-bottom: none !important;
     }
 
-    /* Larger phonetic root & group chars on Tab 3 */
     .nv-index-root {
       font-size: 26px !important;
       font-weight: 700 !important;
@@ -2544,13 +2518,11 @@
       letter-spacing: 0.02em;
     }
 
-    /* Larger Hanzi glyph box when expanded */
     .nv-stroke-box {
       width: calc(var(--nv-hanzi-size) + 20px) !important;
       height: calc(var(--nv-hanzi-size) + 20px) !important;
     }
 
-    /* Radical placed right of frequency badge with thinner font than main Hanzi */
     .nv-radical-inline {
       display: inline-flex;
       align-items: center;
@@ -2565,13 +2537,11 @@
       white-space: nowrap;
     }
 
-    /* Pinyin color matches Hunum tertiary color */
     .nv-row-pinyin {
       color: var(--nv-label-tertiary) !important;
       font-weight: var(--nv-pinyin-weight);
     }
 
-    /* Collapsible character detail block */
     .nv-char-detail-wrap {
       display: flex;
       flex-direction: column;
@@ -2579,7 +2549,6 @@
       padding-top: 9px;
     }
 
-    /* Unified clickable example words trigger */
     .nv-words-trigger {
       flex: 1;
       min-width: 0;
@@ -2606,7 +2575,6 @@
       gap: 4px !important;
     }
 
-    /* Refined Apple-style target character highlight in Review sentence */
     .nv-target-char-mark {
       font-weight: 500 !important;
       color: var(--nv-label-primary) !important;
@@ -2625,7 +2593,6 @@
       padding: 1px 4px !important;
     }
 
-    /* Desktop Overrides (>= 960px): macOS Sidebar + Internal Workspace Scroll */
     @media (min-width: 960px) {
       html, body {
         height: 100dvh !important;
@@ -2667,6 +2634,72 @@
       .nv-tabbar {
         display: none !important;
       }
+    }
+
+    /* =========================================================================
+       V5 PATCHES
+       1) 최상단 바: 완전 불투명 고정 (블러/반투명/전환 제거)
+       2) 해성계 집합 배너: 크기·글씨 확대
+       3) 접기 스크롤 보정 시 애니메이션 일시 정지용 클래스
+       ========================================================================= */
+    .nv-header,
+    .nv-header.is-scrolled,
+    body.has-series-strip .nv-header,
+    body.is-all-docked .nv-header {
+      background-color: var(--nv-bg-primary) !important;
+      background-image: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+      filter: none !important;
+      opacity: 1 !important;
+      transition: none !important;
+      transform: translateZ(0);
+    }
+    /* iOS 러버밴드/상태바 영역까지 같은 색으로 덮어 비침 방지 */
+    .nv-header::before {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; top: -200px; height: 200px;
+      background: var(--nv-bg-primary);
+      pointer-events: none;
+    }
+    @media (min-width: 960px) {
+      .nv-header::before { display: none; }
+    }
+
+    :root { --nv-strip-h: 52px; }
+    .nv-series-strip {
+      height: var(--nv-strip-h) !important;
+      padding: 0 var(--nv-sp-4) !important;
+      background-color: var(--nv-bg-secondary) !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+      box-shadow: 0 1px 0 var(--nv-separator), 0 6px 14px rgba(0, 0, 0, 0.06);
+    }
+    .nv-series-strip-scroll { gap: 12px !important; }
+    .nv-series-root-label {
+      font-size: 24px !important;
+      font-weight: 700 !important;
+      line-height: 1 !important;
+    }
+    .nv-series-chars-label {
+      font-size: 19px !important;
+      letter-spacing: 0.06em !important;
+      line-height: 1 !important;
+    }
+    .nv-bulk-toggle-btn {
+      width: 38px !important;
+      height: 38px !important;
+    }
+    .nv-bulk-toggle-btn .nv-ico {
+      width: 20px !important;
+      height: 20px !important;
+    }
+
+    /* 접기 보정 중에는 펼침/접힘 애니메이션을 끄고 즉시 최종 레이아웃으로 */
+    body.nv-no-anim .nv-disclosure,
+    body.nv-no-anim .nv-chevron {
+      transition: none !important;
     }
   </style>
 
@@ -4541,8 +4574,6 @@
 
     /* =========================================================================
        Phonetic Series & Character Row Rendering
-       - Direct word token tap -> inline Pinyin & Korean Meaning
-       - 1-Line collapsed example preview row
        ========================================================================= */
     function formatRadicals(text) {
       return esc(text).replace(/\[([^\]]+)\]/g, (_, rad) => {
@@ -4913,19 +4944,36 @@
     function getActiveSeriesSection() {
       const scope = appState.sheetTargetChars ? document.getElementById("seriesSheetBody") : document.getElementById("page-" + appState.activeTab);
       if (!scope) return null;
-      const secs = scope.querySelectorAll(".nv-series-section");
-      if (!secs.length) return null;
-      const topBound = appState.sheetTargetChars ? scope.getBoundingClientRect().top : (document.getElementById("appHeader")?.offsetHeight || 44);
-      const botBound = appState.sheetTargetChars ? scope.getBoundingClientRect().bottom : window.innerHeight;
+      return findDominantSection(scope, appState.sheetTargetChars ? "sheet" : "page").sec;
+    }
+
+    /* -------------------------------------------------------------------------
+       화면 점유율이 가장 큰 해성계 섹션 찾기 (배너/접기 보정 공용)
+       ------------------------------------------------------------------------- */
+    function getViewportBounds(mode) {
+      if (mode === "sheet") {
+        const body = document.getElementById("seriesSheetBody");
+        const r = body ? body.getBoundingClientRect() : { top: 0, bottom: window.innerHeight };
+        return { top: r.top, bottom: r.bottom };
+      }
+      const hdr = document.getElementById("appHeader");
+      const top = hdr ? hdr.getBoundingClientRect().bottom : 44;
+      return { top, bottom: window.innerHeight };
+    }
+
+    function findDominantSection(scope, mode, selector) {
+      const bounds = getViewportBounds(mode);
+      const sel = selector || ".nv-series-section";
       let best = null;
-      let maxOv = -1;
-      secs.forEach(sec => {
+      let bestOv = 0;
+      if (!scope) return { sec: null, overlap: 0, bounds };
+      scope.querySelectorAll(sel).forEach(sec => {
         if (!sec.querySelector(".nv-char-row")) return;
-        const rect = sec.getBoundingClientRect();
-        const ov = Math.max(0, Math.min(rect.bottom, botBound) - Math.max(rect.top, topBound));
-        if (ov > maxOv) { maxOv = ov; best = sec; }
+        const rc = sec.getBoundingClientRect();
+        const ov = Math.min(rc.bottom, bounds.bottom) - Math.max(rc.top, bounds.top);
+        if (ov > bestOv) { bestOv = ov; best = sec; }
       });
-      return best;
+      return { sec: best, overlap: bestOv, bounds };
     }
 
     function refreshSeriesStrip() {
@@ -4934,51 +4982,49 @@
       const bulkBtn = document.getElementById("bulkExpandToggleBtn");
       if (!strip || !scrollEl) return;
 
+      const hide = () => {
+        strip.classList.remove("is-visible");
+        strip.removeAttribute("data-root");
+        document.body.classList.remove("has-series-strip");
+        if (bulkBtn) bulkBtn.classList.remove("is-visible");
+      };
+
       const inSheet = Boolean(appState.sheetTargetChars);
       const scope = inSheet
         ? document.getElementById("seriesSheetBody")
         : document.getElementById("page-" + appState.activeTab);
-      if (!scope) {
-        strip.classList.remove("is-visible");
-        document.body.classList.remove("has-series-strip");
-        if (bulkBtn) bulkBtn.classList.remove("is-visible");
-        return;
+      if (!scope) return hide();
+
+      // 배너가 붙을 기준선과 가로 범위
+      let topAnchor, boxLeft, boxWidth;
+      if (inSheet) {
+        const r = scope.getBoundingClientRect();
+        topAnchor = r.top; boxLeft = r.left; boxWidth = r.width;
+      } else {
+        const hr = document.getElementById("appHeader").getBoundingClientRect();
+        topAnchor = hr.bottom; boxLeft = hr.left; boxWidth = hr.width;
+
+        // 큰 제목(복습/입력/전체표)이 아직 보이면 배너를 숨겨 제목을 가리지 않음
+        const title = scope.querySelector(".nv-large-title");
+        if (title && title.getBoundingClientRect().bottom > topAnchor) return hide();
       }
 
-      const hdrRect = document.getElementById("appHeader")?.getBoundingClientRect();
-      const topAnchor = inSheet
-        ? (scope.getBoundingClientRect().top || 0)
-        : (hdrRect ? hdrRect.bottom : 44);
+      // 화면에서 가장 많은 면적을 차지하는 해성계 그룹 선택
+      const found = findDominantSection(scope, inSheet ? "sheet" : "page");
+      const best = found.sec;
+      if (!best) return hide();
 
-      // Find a section whose OWN header has scrolled above topAnchor while its rows are still visible below
-      const secs = scope.querySelectorAll(".nv-series-section");
-      let activeSec = null;
-      for (const sec of secs) {
-        if (!sec.querySelector(".nv-char-row")) continue;
-        const secRect = sec.getBoundingClientRect();
-        const ownHead = sec.querySelector(".nv-series-header") || sec.querySelector(".nv-series-index-btn");
-        if (!ownHead) continue;
-        const headRect = ownHead.getBoundingClientRect();
-        // Only activate when the section's own header has scrolled completely past topAnchor
-        // AND the section body still extends below the strip
-        if (headRect.bottom <= topAnchor + 2 && secRect.bottom > topAnchor + 48) {
-          activeSec = sec;
-          break;
-        }
-      }
-
-      const root = activeSec ? activeSec.getAttribute("data-root") : "";
+      const root = best.getAttribute("data-root");
       const g = root ? appState.groupMap[root] : null;
+      if (!g) return hide();
 
-      if (!g) {
-        strip.classList.remove("is-visible");
-        document.body.classList.remove("has-series-strip");
-        if (bulkBtn) bulkBtn.classList.remove("is-visible");
-        return;
-      }
-
-      // Lock exact pixel top right beneath #appHeader (or sheet top) so it NEVER pins mid-screen
-      strip.style.top = Math.max(0, Math.round(topAnchor)) + "px";
+      // 항상 헤더(또는 시트 본문) 바로 아래, 같은 가로 폭에 고정 → 중앙에 뜨지 않음
+      const sp = (k, v) => strip.style.setProperty(k, v, "important");
+      sp("top", Math.round(topAnchor) + "px");
+      sp("left", Math.round(boxLeft) + "px");
+      sp("width", Math.round(boxWidth) + "px");
+      sp("right", "auto");
+      sp("z-index", inSheet ? "400" : "115"); // 시트(300) 뒤에 숨지 않게
 
       if (strip.getAttribute("data-root") !== root) {
         strip.setAttribute("data-root", root);
@@ -4986,12 +5032,13 @@
           r.isStar ? `<span class="nv-series-star-char">${esc(r.simp)}</span>` : esc(r.simp)
         ).join(" ");
         scrollEl.innerHTML = `<span class="nv-series-root-label nv-zh-simp">${esc(g.root)}</span><span class="nv-series-chars-label nv-zh-simp">${chars}</span>`;
+        scrollEl.scrollLeft = 0;
       }
       strip.classList.add("is-visible");
       document.body.classList.add("has-series-strip");
 
       if (bulkBtn) {
-        const details = activeSec.querySelectorAll(".nv-char-row > .nv-disclosure");
+        const details = best.querySelectorAll(".nv-char-row > .nv-disclosure");
         const allOpen = details.length > 0 && Array.from(details).every(d => d.classList.contains("is-open"));
         bulkBtn.classList.add("is-visible");
         bulkBtn.classList.toggle("is-expanded", allOpen);
@@ -5517,20 +5564,107 @@
       renderAllSeries();
     }
 
+    /* -------------------------------------------------------------------------
+       접기 시 스크롤 보정
+       - 접기 직전 화면을 가장 많이 점유하던 그룹을 기억
+       - 접은 뒤 그 그룹의 목차 줄을 화면 상단 ~38% 위치에 배치
+       - (접은 그룹이 점유 그룹이 아니면 점유 그룹의 화면상 위치를 그대로 유지)
+       ------------------------------------------------------------------------- */
+    const COLLAPSE_ANCHOR_RATIO = 0.38;
+
+    function scrollByAmount(delta) {
+      if (!isFinite(delta) || Math.abs(delta) < 1) return;
+      if (isMobileScrollMode()) {
+        window.scrollTo({ top: Math.max(0, getCurrentScrollY() + delta), behavior: "auto" });
+      } else {
+        const ws = document.getElementById("workspaceScroll");
+        if (ws) ws.scrollTop = Math.max(0, ws.scrollTop + delta);
+      }
+    }
+
+    function findIndexItemByRoot(root) {
+      const box = document.getElementById("allSeriesContainer");
+      if (!box || !root) return null;
+      const items = box.querySelectorAll(".nv-series-index-item");
+      for (const it of items) {
+        if (it.getAttribute("data-root") === root) return it;
+      }
+      return null;
+    }
+
+    function getDominantIndexItem() {
+      const box = document.getElementById("allSeriesContainer");
+      if (!box) return null;
+      const bounds = getViewportBounds("page");
+      let best = null;
+      let bestOv = 0;
+      box.querySelectorAll(".nv-series-index-item").forEach(item => {
+        const rc = item.getBoundingClientRect();
+        const ov = Math.min(rc.bottom, bounds.bottom) - Math.max(rc.top, bounds.top);
+        if (ov > bestOv) { bestOv = ov; best = item; }
+      });
+      return best;
+    }
+
+    /**
+     * mutator: 실제로 그룹을 접는 함수 (DOM을 즉시 최종 상태로 만들어야 함)
+     * clickedRoot: 사용자가 직접 접은 그룹의 root (전체 접기면 undefined)
+     */
+    function collapseWithAnchor(mutator, clickedRoot) {
+      const dom = getDominantIndexItem();
+      const domRoot = dom ? dom.getAttribute("data-root") : null;
+      const beforeTop = dom ? dom.getBoundingClientRect().top : 0;
+
+      document.body.classList.add("nv-no-anim");
+      try {
+        mutator();
+        void document.body.offsetHeight; // 강제 리플로우 → 최종 레이아웃 확정
+      } finally {
+        // 애니메이션 복구는 다음 프레임 이후
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          document.body.classList.remove("nv-no-anim");
+        }));
+      }
+
+      if (domRoot) {
+        const el = findIndexItemByRoot(domRoot);
+        if (el) {
+          const nowTop = el.getBoundingClientRect().top;
+          const bounds = getViewportBounds("page");
+          const wasClicked = clickedRoot === undefined || clickedRoot === domRoot;
+          const desiredTop = wasClicked
+            ? bounds.top + (bounds.bottom - bounds.top) * COLLAPSE_ANCHOR_RATIO
+            : beforeTop; // 다른 그룹을 접은 경우: 점유 그룹의 화면상 위치 유지
+          scrollByAmount(nowTop - desiredTop);
+        }
+      }
+      syncScrollChrome();
+    }
+
+    function closeIndexItemDom(item, root) {
+      const disc = item.querySelector(".nv-disclosure");
+      const chev = item.querySelector(".nv-chevron");
+      const slot = item.querySelector(".nv-index-slot");
+      appState.openRoots.delete(root);
+      item.classList.remove("is-open");
+      disc?.classList.remove("is-open");
+      chev?.classList.remove("is-open");
+      if (slot) {
+        cleanupStrokeBoxes(slot);
+        slot.innerHTML = "";
+      }
+    }
+
     function collapseAllSeries() {
-      appState.openRoots.clear();
       const box = document.getElementById("allSeriesContainer");
       if (!box) return;
-      box.querySelectorAll(".nv-series-index-item").forEach(item => {
-        item.classList.remove("is-open");
-        item.querySelector(".nv-disclosure")?.classList.remove("is-open");
-        item.querySelector(".nv-chevron")?.classList.remove("is-open");
-        const slot = item.querySelector(".nv-index-slot");
-        if (slot) {
-          cleanupStrokeBoxes(slot);
-          slot.innerHTML = "";
-        }
-      });
+      collapseWithAnchor(() => {
+        appState.openRoots.clear();
+        box.querySelectorAll(".nv-series-index-item").forEach(item => {
+          const root = item.getAttribute("data-root");
+          closeIndexItemDom(item, root);
+        });
+      }, undefined);
       refreshSeriesStrip();
     }
 
@@ -5564,17 +5698,9 @@
 
       const isOpen = disc.classList.contains("is-open");
       if (isOpen) {
-        appState.openRoots.delete(root);
-        disc.classList.remove("is-open");
-        item.classList.remove("is-open");
-        chev?.classList.remove("is-open");
-        cleanupStrokeBoxes(slot);
-        setTimeout(() => {
-          if (!disc.classList.contains("is-open")) {
-            slot.innerHTML = "";
-            refreshSeriesStrip();
-          }
-        }, 200);
+        // 접기: 즉시 최종 상태로 만들고 스크롤 위치 보정
+        collapseWithAnchor(() => closeIndexItemDom(item, root), root);
+        refreshSeriesStrip();
       } else {
         appState.openRoots.add(root);
         const g = appState.groupMap[root];
@@ -6099,6 +6225,7 @@
         });
       };
       window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll, { passive: true });
       document.getElementById("workspaceScroll")?.addEventListener("scroll", onScroll, { passive: true });
       document.getElementById("seriesSheetBody")?.addEventListener("scroll", onScroll, { passive: true });
 
