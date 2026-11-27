@@ -4913,13 +4913,18 @@
       const tb = document.getElementById("topbar");
       const sb = document.getElementById("allSearchSticky");
 
-      // Remember the group occupying the most screen space before collapsing
+      const tbH = tb ? tb.offsetHeight : 48;
+      const sbH = sb ? sb.offsetHeight : 44;
+      const safeTop = tbH + sbH + 8;
+      const safeBottom = window.innerHeight - 84;
+
+      // Remember the group occupying the most screen space and its visual top before collapsing
       let anchorBlk = getDominantGroupBlock();
       if (anchorBlk && (!listEl || !listEl.contains(anchorBlk))) {
         anchorBlk = null;
       }
       if (!anchorBlk && listEl) {
-        const viewTop = (tb ? tb.offsetHeight : 48) + (sb && sb.classList.contains("is-floating") ? sb.offsetHeight : 0);
+        const viewTop = tbH + (sb && sb.classList.contains("is-floating") ? sbH : 0);
         const viewBottom = window.innerHeight;
         let maxOv = -1;
         listEl.querySelectorAll(".group-block").forEach(blk => {
@@ -4930,6 +4935,15 @@
             anchorBlk = blk;
           }
         });
+      }
+
+      let desiredVisualTop = Math.max(safeTop + 12, Math.round(window.innerHeight * 0.36));
+      if (anchorBlk) {
+        const prevTop = anchorBlk.getBoundingClientRect().top;
+        // If the group's first row is currently visible in the viewport, keep it right in place
+        if (prevTop >= safeTop - 12 && prevTop <= safeBottom) {
+          desiredVisualTop = Math.max(safeTop, Math.min(safeBottom - 56, prevTop));
+        }
       }
 
       state.expandedRoots.clear();
@@ -4950,13 +4964,11 @@
       }
 
       if (anchorBlk && mw) {
-        const tbH = tb ? tb.offsetHeight : 48;
-        const sbH = sb ? sb.offsetHeight : 44;
         const mwRect = mw.getBoundingClientRect();
         const blkRect = anchorBlk.getBoundingClientRect();
         const absTop = mw.scrollTop + (blkRect.top - mwRect.top);
-        const targetScroll = Math.max(0, absTop - (tbH + sbH + 10));
-        mw.scrollTop = targetScroll <= 52 ? 0 : targetScroll;
+        const targetScroll = Math.max(0, absTop - (desiredVisualTop - mwRect.top));
+        mw.scrollTop = targetScroll;
 
         anchorBlk.classList.remove("focus-flash");
         void anchorBlk.offsetWidth;
