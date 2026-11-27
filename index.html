@@ -2360,88 +2360,111 @@
     }
 
     /* =========================================================================
-       V4 PATCHES:
-       1) Root document scroll (NO overflow-y:auto on html/body so window.scrollY
-          and scroll events work 100% reliably on iOS Safari & PWA)
-       2) Opaque top header with +8px top clearance & default/black status bar
-          (eliminates iOS top translucent gradient blur over header controls)
-       3) Bottom tabbar flush to bottom: 0, height 64px (4px top / 14px bottom
-          buffer for iPhone Home Indicator, icons centered in upper 46px)
-       4) Restored #seriesContextStrip dynamically locked to header.bottom,
-          only shown after section header scrolls past header (never covers
-          titles, never pins mid-screen)
-       5) Tab 3 header magnifying glass driven by IntersectionObserver + scroll
+       V5 PATCHES:
+       - Topbar: Fixed opaque solid background (no backdrop-filter, no blur),
+         padding: max(6px, env(safe-area-inset-top, 0px)) 8px 6px
+       - Bottom Tabbar: Flush to bottom: 0 (zero black gap below), 14px bottom
+         buffer for iPhone Home Indicator, icons centered in upper 46px
+       - Series Context Banner (#seriesContextStrip): Restored and shown
+         immediately when a review char or series group is active/expanded,
+         positioned cleanly right below #appHeader without covering page titles
+         or pinning awkwardly mid-screen
        ========================================================================= */
     :root {
       --nv-hanzi-size: 34px;
     }
 
-    /* Mobile (< 960px): True root document scroll (never put overflow-y:auto on html/body) */
     html {
-      position: static !important;
-      width: 100% !important;
-      height: auto !important;
-      min-height: 100% !important;
-      overflow-x: clip !important;
-      overflow-y: visible !important;
       background-color: var(--nv-bg-primary);
+      overscroll-behavior: none;
     }
 
-    body {
-      position: static !important;
+    body.dark {
+      background-color: #000000;
+    }
+
+    html, body {
+      position: fixed !important;
+      inset: 0 !important;
       width: 100% !important;
-      height: auto !important;
-      min-height: 100lvh !important;
-      overflow-x: clip !important;
-      overflow-y: visible !important;
-      background-color: var(--nv-bg-primary);
+      height: 100% !important;
+      height: 100dvh !important;
+      overflow: hidden !important;
+      overscroll-behavior: none !important;
     }
 
     .nv-app-shell {
-      position: static !important;
+      position: fixed !important;
+      inset: 0 !important;
       width: 100% !important;
-      height: auto !important;
-      min-height: 100lvh !important;
-      display: block !important;
-      overflow: visible !important;
+      height: 100% !important;
+      height: 100dvh !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
     }
 
     .nv-main-column {
-      width: 100% !important;
-      height: auto !important;
-      display: block !important;
-      overflow: visible !important;
+      flex: 1 1 auto !important;
+      min-height: 0 !important;
+      height: 100% !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
+      position: relative !important;
     }
 
-    /* Fix #4: Opaque sticky top header with +8px clearance below status bar, zero blur */
+    /* Solid opaque topbar matching reference snippet — zero blur */
     .nv-header,
     .nv-header.is-scrolled,
     body.has-series-strip .nv-header,
     body.is-all-docked .nv-header {
-      position: sticky !important;
+      position: fixed !important;
       top: 0 !important;
       left: 0 !important;
       right: 0 !important;
-      padding-top: calc(env(safe-area-inset-top, 0px) + 8px) !important;
-      background: var(--nv-bg-primary) !important;
+      padding-top: max(6px, env(safe-area-inset-top, 0px)) !important;
+      padding-bottom: 6px !important;
+      background-color: var(--nv-bg-primary) !important;
       -webkit-backdrop-filter: none !important;
       backdrop-filter: none !important;
-      border-bottom: 0.5px solid transparent !important;
+      border-bottom: 0.5px solid var(--nv-separator-subtle) !important;
       z-index: 120 !important;
     }
-    .nv-header.is-scrolled,
-    body.has-series-strip .nv-header {
-      border-bottom-color: var(--nv-separator) !important;
+
+    body.dark .nv-header,
+    body.dark .nv-header.is-scrolled {
+      background-color: #000000 !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
     }
 
-    .nv-workspace {
-      width: 100% !important;
+    .nv-header-inner {
       height: auto !important;
-      overflow: visible !important;
-      padding: var(--nv-sp-2) var(--nv-sp-4) 136px !important;
+      min-height: 36px !important;
+      padding: 0 var(--nv-sp-2) !important;
     }
 
-    /* Fix #3: Flush bottom tabbar (no black gap below), 14px bottom buffer for Home Indicator, icons centered */
+    /* Scrollable workspace starts cleanly below topbar & above bottom tabbar */
+    .nv-workspace {
+      flex: 1 1 auto !important;
+      min-height: 0 !important;
+      height: auto !important;
+      overflow-y: auto !important;
+      overflow-x: clip !important;
+      -webkit-overflow-scrolling: touch !important;
+      overscroll-behavior: none !important;
+      padding-top: calc(max(6px, env(safe-area-inset-top, 0px)) + 50px) !important;
+      padding-left: var(--nv-sp-4) !important;
+      padding-right: var(--nv-sp-4) !important;
+      padding-bottom: 142px !important;
+    }
+
+    body.has-series-strip .nv-workspace {
+      padding-top: calc(max(6px, env(safe-area-inset-top, 0px)) + 88px) !important;
+    }
+
+    /* Bottom tabbar flush to bottom: 0 (no black gap below), 14px buffer for Home Indicator, icons centered */
     .nv-tabbar {
       position: fixed !important;
       left: 0 !important;
@@ -2449,7 +2472,7 @@
       bottom: 0 !important;
       height: 64px !important;
       padding: 4px var(--nv-sp-2) 14px !important;
-      background: var(--nv-bg-secondary) !important;
+      background-color: var(--nv-bg-secondary) !important;
       -webkit-backdrop-filter: none !important;
       backdrop-filter: none !important;
       border-top: 0.5px solid var(--nv-separator) !important;
@@ -2469,20 +2492,19 @@
       margin: 0 !important;
     }
 
-    /* Floating review dock sits cleanly above the 64px tabbar */
     .nv-review-dock {
       bottom: 74px !important;
     }
 
-    /* Fix #2: Restored Phonetic Series Group Banner — opaque, dynamically positioned below #appHeader */
+    /* Phonetic series banner — sits cleanly right below #appHeader without covering page titles */
     .nv-series-strip {
       position: fixed !important;
       left: 0;
       right: 0;
       z-index: 115 !important;
-      height: 38px !important;
+      height: 36px !important;
       padding: 0 var(--nv-sp-4) !important;
-      background: var(--nv-bg-secondary) !important;
+      background-color: var(--nv-bg-secondary) !important;
       -webkit-backdrop-filter: none !important;
       backdrop-filter: none !important;
       border-bottom: 0.5px solid var(--nv-separator) !important;
@@ -2501,7 +2523,7 @@
       transform: translateY(0) !important;
     }
 
-    /* Fix #1: Tab 3 header magnifying glass icon on scroll */
+    /* Tab 3 header magnifying glass icon on scroll */
     .nv-header-search-btn {
       width: 34px;
       height: 34px;
@@ -2627,17 +2649,8 @@
 
     /* Desktop Overrides (>= 960px): macOS Sidebar + Internal Workspace Scroll */
     @media (min-width: 960px) {
-      html, body {
-        height: 100dvh !important;
-        min-height: 0 !important;
-        overflow: hidden !important;
-      }
       .nv-app-shell {
-        height: 100dvh !important;
-        min-height: 0 !important;
-        display: flex !important;
         flex-direction: row !important;
-        overflow: hidden !important;
       }
       .nv-main-column {
         flex: 1 1 auto !important;
@@ -2649,11 +2662,18 @@
       }
       .nv-header {
         position: relative !important;
+        left: auto !important;
+        right: auto !important;
         top: auto !important;
         padding-top: 0 !important;
+        padding-bottom: 0 !important;
         flex-shrink: 0 !important;
-        background: var(--nv-bg-secondary) !important;
+        background-color: var(--nv-bg-secondary) !important;
         border-bottom-color: var(--nv-separator) !important;
+      }
+      .nv-header-inner {
+        height: var(--nv-header-h) !important;
+        padding: 0 var(--nv-sp-4) !important;
       }
       .nv-series-strip {
         left: var(--nv-sidebar-w) !important;
@@ -2662,7 +2682,13 @@
         flex: 1 1 auto !important;
         min-height: 0 !important;
         overflow-y: auto !important;
-        padding: var(--nv-sp-4) var(--nv-sp-5) var(--nv-sp-10) !important;
+        padding-top: var(--nv-sp-4) !important;
+        padding-left: var(--nv-sp-5) !important;
+        padding-right: var(--nv-sp-5) !important;
+        padding-bottom: var(--nv-sp-10) !important;
+      }
+      body.has-series-strip .nv-workspace {
+        padding-top: calc(var(--nv-sp-4) + 38px) !important;
       }
       .nv-tabbar {
         display: none !important;
@@ -4948,22 +4974,37 @@
       const hdrRect = document.getElementById("appHeader")?.getBoundingClientRect();
       const topAnchor = inSheet
         ? (scope.getBoundingClientRect().top || 0)
-        : (hdrRect ? hdrRect.bottom : 44);
+        : (hdrRect ? hdrRect.bottom : 48);
 
-      // Find a section whose OWN header has scrolled above topAnchor while its rows are still visible below
-      const secs = scope.querySelectorAll(".nv-series-section");
+      // Pick dominant/expanded series section
+      const secs = Array.from(scope.querySelectorAll(".nv-series-section")).filter(s => s.querySelector(".nv-char-row"));
       let activeSec = null;
-      for (const sec of secs) {
-        if (!sec.querySelector(".nv-char-row")) continue;
-        const secRect = sec.getBoundingClientRect();
-        const ownHead = sec.querySelector(".nv-series-header") || sec.querySelector(".nv-series-index-btn");
-        if (!ownHead) continue;
-        const headRect = ownHead.getBoundingClientRect();
-        // Only activate when the section's own header has scrolled completely past topAnchor
-        // AND the section body still extends below the strip
-        if (headRect.bottom <= topAnchor + 2 && secRect.bottom > topAnchor + 48) {
-          activeSec = sec;
-          break;
+
+      if (inSheet || appState.activeTab === "review") {
+        // On Review or Sheet, show strip as soon as a char is selected & series sections exist
+        const hasSelection = inSheet || Boolean(appState.reviewSelectedChar);
+        if (hasSelection && secs.length > 0) {
+          const botBound = inSheet ? scope.getBoundingClientRect().bottom : window.innerHeight;
+          let bestOv = -1;
+          for (const sec of secs) {
+            const rect = sec.getBoundingClientRect();
+            const ov = Math.max(0, Math.min(rect.bottom, botBound) - Math.max(rect.top, topAnchor));
+            if (ov > bestOv) { bestOv = ov; activeSec = sec; }
+          }
+          if (!activeSec) activeSec = secs[0];
+        }
+      } else if (appState.activeTab === "all") {
+        // On All tab, show strip when at least one group is expanded (or scrolled past top)
+        const openSecs = secs.filter(s => s.classList.contains("is-open") && s.querySelector(".nv-disclosure.is-open"));
+        if (openSecs.length > 0) {
+          const botBound = window.innerHeight;
+          let bestOv = -1;
+          for (const sec of openSecs) {
+            const rect = sec.getBoundingClientRect();
+            const ov = Math.max(0, Math.min(rect.bottom, botBound) - Math.max(rect.top, topAnchor));
+            if (ov > bestOv) { bestOv = ov; activeSec = sec; }
+          }
+          if (!activeSec) activeSec = openSecs[0];
         }
       }
 
@@ -4977,7 +5018,7 @@
         return;
       }
 
-      // Lock exact pixel top right beneath #appHeader (or sheet top) so it NEVER pins mid-screen
+      // Lock exact pixel top right beneath #appHeader so it NEVER pins mid-screen
       strip.style.top = Math.max(0, Math.round(topAnchor)) + "px";
 
       if (strip.getAttribute("data-root") !== root) {
@@ -5869,19 +5910,13 @@
     }
 
     function getCurrentScrollY() {
-      if (isMobileScrollMode()) {
-        return window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
-      }
       const ws = document.getElementById("workspaceScroll");
-      return ws ? ws.scrollTop : 0;
+      return ws ? ws.scrollTop : (window.scrollY || document.documentElement.scrollTop || 0);
     }
 
     function scrollCurrentPageTop() {
-      if (isMobileScrollMode()) {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      } else {
-        document.getElementById("workspaceScroll")?.scrollTo({ top: 0, behavior: "smooth" });
-      }
+      document.getElementById("workspaceScroll")?.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function focusAllSearchFromHeader() {
