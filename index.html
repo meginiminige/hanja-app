@@ -2358,7 +2358,251 @@
         transition-duration: 0.01ms !important;
       }
     }
+
+    /* =========================================================================
+       V2 PATCHES: Layout, Zero Top Blur, Zero Bottom Gap, Learning UX
+       ========================================================================= */
+    :root {
+      --nv-hanzi-size: 34px;
+    }
+
+    /* Fix #3: Eliminate bottom black gap & center tab bar icons flush to bottom edge */
+    html, body {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      overflow: hidden !important;
+    }
+
+    .nv-app-shell {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
+    }
+
+    .nv-main-column {
+      flex: 1 1 auto !important;
+      min-height: 0 !important;
+      height: auto !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: hidden !important;
+    }
+
+    /* Fix #11: Zero top gradient blur — header is an opaque flex block, NOT fixed over scroll */
+    .nv-header,
+    .nv-header.is-scrolled,
+    body.has-series-strip .nv-header,
+    body.is-all-docked .nv-header {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      right: auto !important;
+      flex-shrink: 0 !important;
+      background: var(--nv-bg-primary) !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+      border-bottom: 0.5px solid transparent !important;
+      z-index: 40 !important;
+    }
+    .nv-header.is-scrolled {
+      border-bottom-color: var(--nv-separator) !important;
+    }
+
+    /* Workspace scrolls cleanly strictly BELOW the header and ABOVE the tabbar */
+    .nv-workspace {
+      flex: 1 1 auto !important;
+      min-height: 0 !important;
+      height: auto !important;
+      padding: var(--nv-sp-2) var(--nv-sp-4) 92px !important;
+    }
+
+    /* Tab bar flush to bottom edge with symmetric padding & vertically centered icons */
+    .nv-tabbar {
+      position: relative !important;
+      left: auto !important;
+      right: auto !important;
+      bottom: auto !important;
+      flex-shrink: 0 !important;
+      height: 52px !important;
+      padding: 0 var(--nv-sp-2) !important;
+      background: var(--nv-bg-secondary) !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+      border-top: 0.5px solid var(--nv-separator) !important;
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr) !important;
+      align-items: center !important;
+      z-index: 40 !important;
+    }
+    .nv-tab-btn {
+      height: 44px !important;
+      justify-content: center !important;
+      align-items: center !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+
+    /* Floating review dock sits tightly above the flush tabbar */
+    .nv-review-dock {
+      bottom: 62px !important;
+    }
+
+    /* Series strip positioned cleanly below the non-fixed header when triggered by scroll */
+    .nv-series-strip {
+      top: calc(env(safe-area-inset-top, 0px) + var(--nv-header-h)) !important;
+      background: var(--nv-bg-secondary) !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+
+    /* Fix #12: Floating magnifying glass icon in header on All tab scroll */
+    .nv-header-search-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--nv-r-xl);
+      color: var(--nv-accent);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.85);
+      transition: opacity 180ms var(--nv-ease-std), transform 180ms var(--nv-ease-spring);
+    }
+    .nv-header-search-btn.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+    .nv-search-bar.is-docked {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      right: auto !important;
+      padding: 0 !important;
+      background: transparent !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      border-bottom: none !important;
+    }
+
+    /* Fix #5 & #13: Larger phonetic root & group chars on Tab 3 */
+    .nv-index-root {
+      font-size: 26px !important;
+      font-weight: 700 !important;
+      line-height: 1.2 !important;
+    }
+    .nv-index-chars {
+      font-size: 18px !important;
+      line-height: 1.62 !important;
+      letter-spacing: 0.02em;
+    }
+
+    /* Fix #4: Larger Hanzi glyph box when expanded */
+    .nv-stroke-box {
+      width: calc(var(--nv-hanzi-size) + 20px) !important;
+      height: calc(var(--nv-hanzi-size) + 20px) !important;
+    }
+
+    /* Fix #7: Radical placed right of frequency badge with thinner font than main Hanzi */
+    .nv-radical-inline {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 6px;
+      border-radius: 5px;
+      background: var(--nv-fill-quaternary);
+      color: var(--nv-label-secondary);
+      font-family: var(--nv-font-simp);
+      font-size: 13px;
+      font-weight: 300 !important;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    /* Fix #10: Pinyin color matches Hunum tertiary color */
+    .nv-row-pinyin {
+      color: var(--nv-label-tertiary) !important;
+      font-weight: var(--nv-pinyin-weight);
+    }
+
+    /* Fix #8: Collapsible character detail block */
+    .nv-char-detail-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      padding-top: 9px;
+    }
+
+    /* Fix #2: Unified clickable example words trigger (selects all words & toggles all meanings at once) */
+    .nv-words-trigger {
+      flex: 1;
+      min-width: 0;
+      text-align: left;
+      padding: 3px 6px;
+      margin: -3px -6px;
+      border-radius: 7px;
+      font-family: var(--nv-font-simp);
+      font-size: var(--nv-word-size);
+      font-weight: var(--nv-word-weight);
+      color: var(--nv-label-primary);
+      line-height: 1.48;
+      word-break: break-word;
+    }
+    .nv-words-trigger:hover {
+      background: var(--nv-fill-tertiary);
+    }
+    .nv-words-trigger.is-open {
+      background: var(--nv-accent-tint);
+      color: var(--nv-accent);
+    }
+    .nv-word-reveal {
+      flex-direction: column !important;
+      gap: 4px !important;
+    }
+
+    /* Fix #9: Refined Apple-style target character highlight in Review sentence */
+    .nv-target-char-mark {
+      font-weight: 500 !important;
+      color: var(--nv-label-primary) !important;
+      background: transparent !important;
+      border-bottom: 1.5px solid var(--nv-accent-border);
+      padding: 0 2px 1px !important;
+      border-radius: 0 !important;
+      transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+    }
+    .nv-target-char-mark.is-picked {
+      font-weight: 700 !important;
+      color: var(--nv-accent) !important;
+      background: var(--nv-accent-tint) !important;
+      border-bottom: 2px solid var(--nv-accent) !important;
+      border-radius: 5px !important;
+      padding: 1px 4px !important;
+    }
+
+    /* Desktop Overrides (>= 960px) */
+    @media (min-width: 960px) {
+      .nv-app-shell {
+        flex-direction: row !important;
+      }
+      .nv-tabbar {
+        display: none !important;
+      }
+      .nv-header {
+        background: var(--nv-bg-secondary) !important;
+        border-bottom-color: var(--nv-separator) !important;
+      }
+      .nv-workspace {
+        padding: var(--nv-sp-4) var(--nv-sp-5) var(--nv-sp-10) !important;
+      }
+    }
   </style>
+
 </head>
 <body>
   <div id="topProgress" class="nv-top-progress" aria-hidden="true"></div>
@@ -2511,6 +2755,9 @@
               <button id="macPassToolBtn" class="nv-mac-tool-btn" onclick="togglePassVisibility()">PASS</button>
               <button class="nv-mac-tool-btn" onclick="cycleThemeMode()">테마</button>
             </div>
+            <button id="headerSearchBtn" class="nv-header-search-btn" onclick="focusAllSearchFromHeader()" title="검색으로 이동" aria-label="검색">
+              <svg class="nv-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </button>
             <button id="headerBookmarkBtn" class="nv-icon-btn" onclick="openBookmarkSheet()" title="즐겨찾기" aria-label="즐겨찾기">
               <svg class="nv-ico nv-ico-fill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18l-6-4-6 4V4z"/></svg>
             </button>
@@ -2693,19 +2940,6 @@
         </section>
       </main>
     </div>
-  </div>
-
-  <!-- Floating Review Action Pill (Mobile) -->
-  <div id="mobileReviewDock" class="nv-review-dock">
-    <button class="nv-btn nv-btn-tinted" onclick="stepReviewItem(-1)" aria-label="이전">
-      <svg class="nv-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-    </button>
-    <button class="nv-btn nv-btn-filled" onclick="completeReviewItem()">복습 마침</button>
-    <button class="nv-btn nv-btn-tinted" onclick="stepReviewItem(1)" aria-label="다음">
-      <svg class="nv-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-    </button>
-  </div>
-
   <!-- Bottom Tab Bar (Mobile) -->
   <nav id="mobileTabBar" class="nv-tabbar" aria-label="메인 탭">
     <button class="nv-tab-btn is-active" data-tab="review" onclick="switchTab('review')" aria-label="복습">
@@ -2721,6 +2955,20 @@
       <span class="nv-tab-label">전체표</span>
     </button>
   </nav>
+  </div>
+
+  <!-- Floating Review Action Pill (Mobile) -->
+  <div id="mobileReviewDock" class="nv-review-dock">
+    <button class="nv-btn nv-btn-tinted" onclick="stepReviewItem(-1)" aria-label="이전">
+      <svg class="nv-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="nv-btn nv-btn-filled" onclick="completeReviewItem()">복습 마침</button>
+    <button class="nv-btn nv-btn-tinted" onclick="stepReviewItem(1)" aria-label="다음">
+      <svg class="nv-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+
+
 
   <!-- Settings Sheet (Granular Typography + Language Fonts + All Controls) -->
   <div id="settingsSheet" class="nv-sheet-backdrop" onclick="if(event.target===this) toggleSettingsSheet(false)">
@@ -2812,11 +3060,11 @@
               </div>
 
               <div class="nv-dual-slider-row">
-                <div class="nv-dual-head"><span>한자 표제자</span><span id="valGroupHanzi" class="nv-dual-val nv-num">27px · 400</span></div>
+                <div class="nv-dual-head"><span>한자 표제자</span><span id="valGroupHanzi" class="nv-dual-val nv-num">34px · 400</span></div>
                 <div class="nv-dual-grid">
                   <div class="nv-mini-slider">
-                    <div class="nv-mini-slider-lbl"><span>크기</span><span>20–38px</span></div>
-                    <input id="rngHanziSize" type="range" min="20" max="38" step="1" oninput="applySettingsFromControls()" />
+                    <div class="nv-mini-slider-lbl"><span>크기</span><span>22–44px</span></div>
+                    <input id="rngHanziSize" type="range" min="22" max="44" step="1" oninput="applySettingsFromControls()" />
                   </div>
                   <div class="nv-mini-slider">
                     <div class="nv-mini-slider-lbl"><span>두께</span><span>300–700</span></div>
@@ -2944,6 +3192,7 @@
             <div class="nv-settings-heading">데이터</div>
             <div class="nv-settings-card">
               <button class="nv-list-action-btn" onclick="syncFromServer()">시트 동기화</button>
+              <button class="nv-list-action-btn" onclick="saveCurrentAsDefaultSettings()">현재 설정을 기본값으로 저장</button>
               <button class="nv-list-action-btn is-destructive" onclick="restoreDefaultSettings()">기본값 복원</button>
             </div>
           </div>
@@ -3108,7 +3357,7 @@
       exampleWeight: 400,
       glossSize: 15,
       glossWeight: 500,
-      hanziSize: 27,
+      hanziSize: 34,
       hanziWeight: 400,
       pinyinSize: 13.5,
       pinyinWeight: 600,
@@ -3160,6 +3409,8 @@
       tileCompact: localStorage.getItem("nv_tile_compact") === "1",
       starredOnly: false,
       openRoots: new Set(),
+      openRowDetailIds: new Set(),
+      openWordRowIds: new Set(),
       openPreviewIds: new Set(),
       openWordTokens: {},
       draftQRow: 0,
@@ -3442,11 +3693,33 @@
       applyPrefsToDom();
     }
 
+    function saveCurrentAsDefaultSettings() {
+      const payload = {
+        prefs: Object.assign({}, appState.prefs),
+        themeMode: getStoredThemeMode(),
+        showPass: appState.showPass,
+        strokeAuto: appState.strokeAuto
+      };
+      localStorage.setItem("nv_hanja_user_defaults", JSON.stringify(payload));
+      showBanner("현재 설정을 기본값으로 저장했습니다.");
+    }
+
     function restoreDefaultSettings() {
+      try {
+        const saved = JSON.parse(localStorage.getItem("nv_hanja_user_defaults") || "null");
+        if (saved && saved.prefs) {
+          appState.prefs = Object.assign({}, DEFAULT_PREFS, saved.prefs);
+          if (saved.themeMode) setThemeMode(saved.themeMode);
+          localStorage.setItem("nv_hanja_prefs_v3", JSON.stringify(appState.prefs));
+          applyPrefsToDom();
+          showBanner("저장된 기본값으로 복원됨");
+          return;
+        }
+      } catch (e) {}
       appState.prefs = Object.assign({}, DEFAULT_PREFS);
       localStorage.setItem("nv_hanja_prefs_v3", JSON.stringify(appState.prefs));
       applyPrefsToDom();
-      showBanner("기본값으로 복원됨");
+      showBanner("초기 기본값으로 복원됨");
     }
 
     function getStoredThemeMode() {
@@ -4043,11 +4316,11 @@
       const targetSet = new Set(item.chars);
       const sentenceHtml = item.isNoExample
         ? `<span style="color:var(--nv-label-tertiary);font-size:16px;">예문 없음</span>`
-        : Array.from(item.example).map(ch =>
-            targetSet.has(ch)
-              ? `<span class="nv-target-char-mark nv-zh-simp" onclick="pickReviewChar('${esc(ch).replace(/'/g, "")}')">${esc(ch)}</span>`
-              : `<span class="nv-zh-simp">${esc(ch)}</span>`
-          ).join("");
+        : Array.from(item.example).map(ch => {
+            if (!targetSet.has(ch)) return `<span class="nv-zh-simp">${esc(ch)}</span>`;
+            const picked = appState.reviewSelectedChar === ch || appState.reviewSelectedChar === "ALL";
+            return `<span class="nv-target-char-mark nv-zh-simp ${picked ? "is-picked" : ""}" data-schar="${esc(ch)}" onclick="pickReviewChar('${esc(ch).replace(/'/g, "")}')">${esc(ch)}</span>`;
+          }).join("");
 
       const pct = Math.round(((appState.reviewIndex + 1) / list.length) * 100);
       const bmActive = Boolean(appState.bookmarkById["ex_" + item.qRow]);
@@ -4108,6 +4381,11 @@
       appState.reviewSelectedChar = appState.reviewSelectedChar === ch ? "" : ch;
       document.querySelectorAll("#reviewCardBody .nv-char-key[data-rchar]").forEach(btn => {
         btn.classList.toggle("is-selected", btn.getAttribute("data-rchar") === appState.reviewSelectedChar);
+      });
+      document.querySelectorAll("#reviewCardBody .nv-target-char-mark[data-schar]").forEach(sp => {
+        const sc = sp.getAttribute("data-schar");
+        const isPicked = appState.reviewSelectedChar === "ALL" || appState.reviewSelectedChar === sc;
+        sp.classList.toggle("is-picked", isPicked);
       });
       renderReviewSeries();
     }
@@ -4285,7 +4563,7 @@
             <span class="nv-series-root nv-zh-simp">${esc(g.root)}</span>
             <span class="nv-series-count nv-num">${countTxt}자</span>
             <div class="nv-series-header-actions">
-              <button class="nv-btn-plain nv-sec-toggle-btn" onclick="toggleSectionRows(this)">${SVG_CHEV_DOWN}<span>예문 펼치기</span></button>
+              <button class="nv-btn-plain nv-sec-toggle-btn" onclick="toggleSectionRows(this)">${SVG_CHEV_DOWN}<span>펼치기</span></button>
               ${fillAction}
             </div>
           </div>
@@ -4371,6 +4649,21 @@
       };
     }
 
+    function extractRadicalsFromMeaning(rawMeaning) {
+      const str = String(rawMeaning || "");
+      const rads = [];
+      const cleaned = str.replace(/\[([^\]]+)\]/g, (_, r) => {
+        const c = r.trim();
+        if (c) rads.push(c);
+        return "";
+      }).replace(/^\s*[,·:：\-–]+\s*/, "").trim();
+      return { rads, cleaned };
+    }
+
+    function formatWordsPinyinDisplay(raw) {
+      return esc(raw).replace(/(\([^)]+\))/g, '<span class="nv-pinyin" style="color:var(--nv-label-primary);">$1</span>');
+    }
+
     function buildCharacterRowsHtml(g, hlSet, searchQ) {
       const q = String(searchQ || "").trim();
       const rows = g.rows.filter(r => {
@@ -4385,6 +4678,8 @@
         const rowId = `row_${r.rowNum}`;
         const hit = q ? matchCharacterRow(r, q) : null;
         const isTarget = hlSet && r.chars.some(c => hlSet.has(c));
+        const isDetailOpen = appState.openRowDetailIds.has(rowId) || Boolean(hit && (hit.openPreview || hit.openWord));
+        const isWordsOpen = appState.openWordRowIds.has(rowId) || Boolean(hit && hit.openWord);
         const isPreviewExpanded = appState.openPreviewIds.has(rowId) || Boolean(hit && hit.openPreview);
 
         const tradMatch = r.display.match(/\(([^)]+)\)/);
@@ -4395,46 +4690,36 @@
         const freqNum = parseFloat(rawFreq);
         const isHighFreq = !r.isPass && !isNaN(freqNum) && freqNum >= 7;
 
-        const baseGloss = r.meaning && r.meaning !== "-"
-          ? formatRadicals(r.meaning)
+        const { rads, cleaned } = extractRadicalsFromMeaning(r.meaning && r.meaning !== "-" ? r.meaning : "");
+        const radInlineHtml = rads.map(rad =>
+          `<span class="nv-radical-inline" onclick="showRadicalToast(event, '${esc(rad).replace(/'/g, "")}')">[${esc(rad)}]</span>`
+        ).join("");
+
+        const baseGloss = cleaned
+          ? esc(cleaned)
           : esc(r.isAnalyzed ? "-" : "미분석");
         const glossHtml = q ? markHtml(baseGloss, q) : baseGloss;
 
         const hasWords = r.words && r.words !== "-";
+        const hasWordsPy = r.wordsPinyin && r.wordsPinyin !== "-";
         const hasSent = r.sentence && r.sentence !== "-";
         const wordBmOn = Boolean(appState.bookmarkById["wd_" + r.rowNum]);
 
-        const wordEntries = hasWords ? parseWordEntries(r.words, r.wordsPinyin) : [];
-        const activeWordIdx = appState.openWordTokens[rowId] !== undefined
-          ? appState.openWordTokens[rowId]
-          : (hit && hit.openWord && wordEntries.length ? 0 : -1);
-        const activeEntry = activeWordIdx >= 0 ? wordEntries[activeWordIdx] : null;
-
-        const wordsTokensHtml = wordEntries.map((ent, idx) => `
-          ${idx > 0 ? `<span class="nv-word-dot">·</span>` : ""}
-          <button class="nv-word-token ${activeWordIdx === idx ? "is-open" : ""}"
-                  data-widx="${idx}"
-                  data-wzh="${esc(ent.zh)}"
-                  data-wpy="${esc(ent.py)}"
-                  data-wko="${esc(ent.ko)}"
-                  onclick="tapWordToken(event, '${rowId}', this)">${q ? markText(ent.zh, q) : esc(ent.zh)}</button>
-        `).join("");
-
-        const revealHtml = activeEntry ? `
-          <span class="nv-word-reveal-zh">${esc(activeEntry.zh)}</span>
-          ${activeEntry.py ? `<span class="nv-word-reveal-py">${q ? markText(activeEntry.py, q) : esc(activeEntry.py)}</span>` : ""}
-          ${activeEntry.ko ? `<span class="nv-word-reveal-ko">${q ? markText(activeEntry.ko, q) : esc(activeEntry.ko)}</span>` : ""}
-        ` : "";
+        const wordsTextHtml = q ? markText(r.words, q) : esc(r.words);
+        const wordsRevealHtml = hasWordsPy
+          ? (q ? markHtml(formatWordsPinyinDisplay(r.wordsPinyin), q) : formatWordsPinyinDisplay(r.wordsPinyin))
+          : `<span style="color:var(--nv-label-tertiary);">(상세 뜻 정보 없음)</span>`;
 
         return `
           <div class="nv-char-row ${isTarget ? "is-target" : ""} ${r.isPass ? "is-pass" : ""}" data-rowid="${rowId}">
-            <div class="nv-char-row-top" onclick="toggleCharExamplePreview('${rowId}', this)">
+            <div class="nv-char-row-top" onclick="toggleCharDetail('${rowId}', this)">
               <div class="nv-hanzi-freq-cluster">
                 <div class="nv-stroke-box ${r.isStar ? "is-starred" : ""}" data-char="${esc(r.simp)}" onclick="tapStrokeBox(event, this)">
                   <span class="nv-stroke-glyph nv-zh-simp">${esc(r.simp)}</span>
                 </div>
                 ${tradText ? `<span class="nv-zh-trad">${q ? markText(tradText, q) : esc(tradText)}</span>` : ""}
                 <span class="nv-freq-badge nv-num ${r.isPass ? "is-pass" : (!isHighFreq ? "is-low" : "")}">${esc(freqText)}</span>
+                ${radInlineHtml}
               </div>
 
               <div class="nv-row-meta-right">
@@ -4443,65 +4728,74 @@
               </div>
             </div>
 
-            <div class="nv-char-core-gloss">${glossHtml}</div>
+            <div class="nv-disclosure ${isDetailOpen ? "is-open" : ""}" id="charDetail_${rowId}">
+              <div class="nv-disclosure-inner">
+                <div class="nv-char-detail-wrap">
+                  <div class="nv-char-core-gloss">${glossHtml}</div>
 
-            ${(hasWords || hasSent) ? `
-              <div class="nv-words-panel">
-                ${hasWords ? `
-                  <div class="nv-words-header">
-                    <div class="nv-words-tokens">${wordsTokensHtml}</div>
-                    <div class="nv-words-tools">
-                      <button class="nv-icon-btn" style="width:26px;height:26px;" title="예시 단어 발음" onclick="toggleSpeech(event, '${esc(r.words).replace(/'/g, "\\'")}', this)">${SVG_SPEAKER}</button>
-                      <button class="nv-icon-btn ${wordBmOn ? "is-bookmarked" : ""}" style="width:26px;height:26px;" data-bmid="wd_${r.rowNum}" onclick="toggleWordBookmark(event, ${r.rowNum})" title="단어 즐겨찾기">${SVG_BOOKMARK}</button>
+                  ${(hasWords || hasSent) ? `
+                    <div class="nv-words-panel">
+                      ${hasWords ? `
+                        <div class="nv-words-header">
+                          <button class="nv-words-trigger ${isWordsOpen ? "is-open" : ""}" id="wordsBtn_${rowId}" onclick="toggleAllWordsMeaning(event, '${rowId}')">${wordsTextHtml}</button>
+                          <div class="nv-words-tools">
+                            <button class="nv-icon-btn" style="width:26px;height:26px;" title="예시 단어 발음" onclick="toggleSpeech(event, '${esc(r.words).replace(/'/g, "\\'")}', this)">${SVG_SPEAKER}</button>
+                            <button class="nv-icon-btn ${wordBmOn ? "is-bookmarked" : ""}" style="width:26px;height:26px;" data-bmid="wd_${r.rowNum}" onclick="toggleWordBookmark(event, ${r.rowNum})" title="단어 즐겨찾기">${SVG_BOOKMARK}</button>
+                          </div>
+                        </div>
+                        <div class="nv-word-reveal ${isWordsOpen ? "is-open" : ""}" id="wordReveal_${rowId}">
+                          <div class="nv-word-reveal-ko" style="color:var(--nv-label-secondary);">${wordsRevealHtml}</div>
+                        </div>
+                      ` : ""}
+
+                      ${hasSent ? `
+                        <div class="nv-example-preview-row ${isPreviewExpanded ? "is-expanded" : ""}" id="exPrev_${rowId}" onclick="toggleCharExamplePreview(event, '${rowId}')">
+                          <div class="nv-example-preview-text">${q ? markText(r.sentence, q) : esc(r.sentence)}</div>
+                          <button class="nv-audio-btn" style="width:24px;height:24px;" title="예문 발음 듣기" onclick="toggleSpeech(event, '${esc(r.sentence).replace(/'/g, "\\'")}', this)">${SVG_SPEAKER}</button>
+                        </div>
+                      ` : ""}
                     </div>
-                  </div>
-                  <div class="nv-word-reveal ${activeEntry ? "is-open" : ""}" id="wordReveal_${rowId}">${revealHtml}</div>
-                ` : ""}
-
-                ${hasSent ? `
-                  <div class="nv-example-preview-row ${isPreviewExpanded ? "is-expanded" : ""}" id="exPrev_${rowId}" onclick="toggleCharExamplePreview('${rowId}', this)">
-                    <div class="nv-example-preview-text">${q ? markText(r.sentence, q) : esc(r.sentence)}</div>
-                    <button class="nv-audio-btn" style="width:24px;height:24px;" title="예문 발음 듣기" onclick="toggleSpeech(event, '${esc(r.sentence).replace(/'/g, "\\'")}', this)">${SVG_SPEAKER}</button>
-                  </div>
-                ` : ""}
+                  ` : ""}
+                </div>
               </div>
-            ` : ""}
+            </div>
           </div>
         `;
       }).join("");
     }
 
-    function tapWordToken(evt, rowId, btnEl) {
-      if (evt) evt.stopPropagation();
-      const idx = Number(btnEl.getAttribute("data-widx"));
-      const zh = btnEl.getAttribute("data-wzh") || "";
-      const py = btnEl.getAttribute("data-wpy") || "";
-      const ko = btnEl.getAttribute("data-wko") || "";
-      const revealEl = document.getElementById("wordReveal_" + rowId);
-      const wrap = btnEl.parentElement;
-      if (!revealEl || !wrap) return;
-
-      const wasOpen = appState.openWordTokens[rowId] === idx;
-      wrap.querySelectorAll(".nv-word-token").forEach(b => b.classList.remove("is-open"));
-
-      if (wasOpen) {
-        delete appState.openWordTokens[rowId];
-        revealEl.classList.remove("is-open");
-        revealEl.innerHTML = "";
+    function toggleCharDetail(rowId, el) {
+      const disc = document.getElementById("charDetail_" + rowId);
+      if (!disc) return;
+      if (appState.openRowDetailIds.has(rowId)) {
+        appState.openRowDetailIds.delete(rowId);
+        disc.classList.remove("is-open");
       } else {
-        appState.openWordTokens[rowId] = idx;
-        btnEl.classList.add("is-open");
-        revealEl.innerHTML = `
-          <span class="nv-word-reveal-zh">${esc(zh)}</span>
-          ${py ? `<span class="nv-word-reveal-py">${esc(py)}</span>` : ""}
-          ${ko ? `<span class="nv-word-reveal-ko">${esc(ko)}</span>` : ""}
-          ${(!py && !ko) ? `<span class="nv-word-reveal-ko">(상세 뜻 정보 없음)</span>` : ""}
-        `;
-        revealEl.classList.add("is-open");
+        appState.openRowDetailIds.add(rowId);
+        disc.classList.add("is-open");
+      }
+      syncSectionBulkLabel(el ? el.closest(".nv-series-section") : null);
+      refreshSeriesStrip();
+    }
+
+    function toggleAllWordsMeaning(evt, rowId) {
+      if (evt) evt.stopPropagation();
+      const btn = document.getElementById("wordsBtn_" + rowId);
+      const rev = document.getElementById("wordReveal_" + rowId);
+      if (!btn || !rev) return;
+      if (appState.openWordRowIds.has(rowId)) {
+        appState.openWordRowIds.delete(rowId);
+        btn.classList.remove("is-open");
+        rev.classList.remove("is-open");
+      } else {
+        appState.openWordRowIds.add(rowId);
+        btn.classList.add("is-open");
+        rev.classList.add("is-open");
       }
     }
 
-    function toggleCharExamplePreview(rowId, el) {
+    function toggleCharExamplePreview(evt, rowId) {
+      if (evt) evt.stopPropagation();
       const prevEl = document.getElementById("exPrev_" + rowId);
       if (!prevEl) return;
       if (appState.openPreviewIds.has(rowId)) {
@@ -4511,35 +4805,33 @@
         appState.openPreviewIds.add(rowId);
         prevEl.classList.add("is-expanded");
       }
-      syncSectionBulkLabel(el ? el.closest(".nv-series-section") : null);
-      refreshSeriesStrip();
     }
 
     function syncSectionBulkLabel(secEl) {
       if (!secEl) return;
       const btn = secEl.querySelector(".nv-sec-toggle-btn");
-      const previews = secEl.querySelectorAll(".nv-example-preview-row");
-      if (!btn || !previews.length) return;
-      const allOpen = Array.from(previews).every(p => p.classList.contains("is-expanded"));
-      btn.innerHTML = `${allOpen ? SVG_CHEV_UP : SVG_CHEV_DOWN}<span>${allOpen ? "예문 접기" : "예문 펼치기"}</span>`;
+      const details = secEl.querySelectorAll(".nv-char-row > .nv-disclosure");
+      if (!btn || !details.length) return;
+      const allOpen = Array.from(details).every(d => d.classList.contains("is-open"));
+      btn.innerHTML = `${allOpen ? SVG_CHEV_UP : SVG_CHEV_DOWN}<span>${allOpen ? "접기" : "펼치기"}</span>`;
     }
 
     function applyBulkRowToggle(secEl) {
       if (!secEl) return;
       const rows = secEl.querySelectorAll(".nv-char-row");
       if (!rows.length) return;
-      const previews = secEl.querySelectorAll(".nv-example-preview-row");
-      const allOpen = previews.length > 0 && Array.from(previews).every(p => p.classList.contains("is-expanded"));
+      const details = secEl.querySelectorAll(".nv-char-row > .nv-disclosure");
+      const allOpen = details.length > 0 && Array.from(details).every(d => d.classList.contains("is-open"));
       const nextOpen = !allOpen;
       rows.forEach(r => {
         const rowId = r.getAttribute("data-rowid");
-        const prevEl = r.querySelector(".nv-example-preview-row");
+        const disc = r.querySelector(".nv-char-row > .nv-disclosure");
         if (nextOpen) {
-          if (rowId) appState.openPreviewIds.add(rowId);
-          if (prevEl) prevEl.classList.add("is-expanded");
+          if (rowId) appState.openRowDetailIds.add(rowId);
+          if (disc) disc.classList.add("is-open");
         } else {
-          if (rowId) appState.openPreviewIds.delete(rowId);
-          if (prevEl) prevEl.classList.remove("is-expanded");
+          if (rowId) appState.openRowDetailIds.delete(rowId);
+          if (disc) disc.classList.remove("is-open");
         }
       });
       syncSectionBulkLabel(secEl);
@@ -4572,11 +4864,33 @@
       const strip = document.getElementById("seriesContextStrip");
       const scrollEl = document.getElementById("seriesContextScroll");
       const bulkBtn = document.getElementById("bulkExpandToggleBtn");
+
+      // Never show floating series strip on Tab 3 (all) — prevents awkward mid-scroll pin & covering "전체표" title
+      if (!appState.sheetTargetChars && appState.activeTab === "all") {
+        if (strip) strip.classList.remove("is-visible");
+        document.body.classList.remove("has-series-strip");
+        if (bulkBtn) bulkBtn.classList.remove("is-visible");
+        return;
+      }
+
       const sec = getActiveSeriesSection();
       const root = sec ? sec.getAttribute("data-root") : "";
       const g = root ? appState.groupMap[root] : null;
 
-      if (!g || !strip || !scrollEl) {
+      // Only show strip after the section's own header has scrolled past the top of the workspace
+      // so it NEVER covers the "복습" large title when a character is tapped!
+      let headerScrolledOut = false;
+      if (sec) {
+        const secHead = sec.querySelector(".nv-series-header");
+        const wsTop = appState.sheetTargetChars
+          ? (document.getElementById("seriesSheetBody")?.getBoundingClientRect().top || 0)
+          : (document.getElementById("workspaceScroll")?.getBoundingClientRect().top || 0);
+        if (secHead && secHead.getBoundingClientRect().bottom < wsTop + 2) {
+          headerScrolledOut = true;
+        }
+      }
+
+      if (!g || !strip || !scrollEl || !headerScrolledOut) {
         if (strip) strip.classList.remove("is-visible");
         document.body.classList.remove("has-series-strip");
         if (bulkBtn) bulkBtn.classList.remove("is-visible");
@@ -4594,8 +4908,8 @@
       document.body.classList.add("has-series-strip");
 
       if (bulkBtn) {
-        const previews = sec.querySelectorAll(".nv-example-preview-row");
-        const allOpen = previews.length > 0 && Array.from(previews).every(p => p.classList.contains("is-expanded"));
+        const details = sec.querySelectorAll(".nv-char-row > .nv-disclosure");
+        const allOpen = details.length > 0 && Array.from(details).every(d => d.classList.contains("is-open"));
         bulkBtn.classList.add("is-visible");
         bulkBtn.classList.toggle("is-expanded", allOpen);
         bulkBtn.innerHTML = allOpen ? SVG_CHEV_UP : SVG_CHEV_DOWN;
@@ -5149,7 +5463,7 @@
           <div class="nv-series-subbar ${g.emptyCount > 0 ? "has-pending" : ""}">
             ${statusText}
             <div style="display:inline-flex;align-items:center;gap:6px;">
-              <button class="nv-btn-plain nv-sec-toggle-btn" onclick="toggleSectionRows(this)">${SVG_CHEV_DOWN}<span>예문 펼치기</span></button>
+              <button class="nv-btn-plain nv-sec-toggle-btn" onclick="toggleSectionRows(this)">${SVG_CHEV_DOWN}<span>펼치기</span></button>
               ${fillBtn}
             </div>
           </div>
@@ -5471,26 +5785,27 @@
       document.getElementById("workspaceScroll")?.scrollTo({ top: 0, behavior: "smooth" });
     }
 
+    function focusAllSearchFromHeader() {
+      const ws = document.getElementById("workspaceScroll");
+      if (ws) ws.scrollTo({ top: 0, behavior: "smooth" });
+      setTimeout(() => document.getElementById("allSearchInput")?.focus(), 260);
+    }
+
     function syncScrollChrome() {
       const ws = document.getElementById("workspaceScroll");
       const hdr = document.getElementById("appHeader");
       const y = ws ? ws.scrollTop : 0;
       if (hdr) hdr.classList.toggle("is-scrolled", y > 24);
 
-      const sb = document.getElementById("allSearchBar");
-      if (sb) {
-        if (appState.activeTab !== "all") {
-          sb.classList.remove("is-docked");
-          document.body.classList.remove("is-all-docked");
-        } else {
-          const docked = y > 36;
-          sb.classList.toggle("is-docked", docked);
-          document.body.classList.toggle("is-all-docked", docked);
-          if (sb.offsetHeight > 0) {
-            document.documentElement.style.setProperty("--nv-search-h", sb.offsetHeight + "px");
-          }
-        }
+      const searchBtn = document.getElementById("headerSearchBtn");
+      if (searchBtn) {
+        const showSearchIcon = appState.activeTab === "all" && y > 72;
+        searchBtn.classList.toggle("is-visible", showSearchIcon);
       }
+
+      document.getElementById("allSearchBar")?.classList.remove("is-docked");
+      document.body.classList.remove("is-all-docked");
+
       refreshSeriesStrip();
     }
 
