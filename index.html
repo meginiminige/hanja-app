@@ -20,8 +20,8 @@
       /* User-configurable Visual Tokens (synced with Settings sliders) */
       --그룹목차_한자_크기: 16px;
       --번체_폰트: 'PingFang SC', 'Noto Serif SC', serif;
-      --글라스_투명도: 0.78;
-      --글라스_블러: 22px;
+      --글라스_투명도: 0.27;
+      --글라스_블러: 14px;
       --글라스_채도: 185%;
 
       --상단그룹바_높이: 34px;
@@ -93,10 +93,10 @@
       --획순_외곽선색: #D1D1D6;
 
       /* iOS Translucent Chrome Materials */
-      --글라스_배경: rgba(242, 242, 247, var(--글라스_투명도));
-      --글라스_카드_배경: rgba(249, 249, 251, calc(var(--글라스_투명도) + 0.08));
-      --글라스_테두리: rgba(60, 60, 67, 0.14);
-      --글라스_그림자: 0 8px 28px rgba(0, 0, 0, 0.08), 0 0 0 0.5px rgba(60, 60, 67, 0.08);
+      --글라스_배경: rgba(255, 255, 255, var(--글라스_투명도));
+      --글라스_카드_배경: rgba(255, 255, 255, var(--글라스_투명도));
+      --글라스_테두리: rgba(255, 255, 255, 0.55);
+      --글라스_그림자: 0 8px 28px rgba(0, 0, 0, 0.09), 0 0 0 0.5px rgba(60, 60, 67, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.45);
 
       /* Motion Curves & Typography */
       --모서리_둥글기: 14px;
@@ -163,10 +163,10 @@
       --획순_부수색: #0A84FF;
       --획순_외곽선색: #3A3A3C;
 
-      --글라스_배경: rgba(22, 22, 24, var(--글라스_투명도));
-      --글라스_카드_배경: rgba(28, 28, 30, calc(var(--글라스_투명도) + 0.08));
-      --글라스_테두리: rgba(255, 255, 255, 0.12);
-      --글라스_그림자: 0 10px 32px rgba(0, 0, 0, 0.52), 0 0 0 0.5px rgba(255, 255, 255, 0.10);
+      --글라스_배경: rgba(34, 34, 38, var(--글라스_투명도));
+      --글라스_카드_배경: rgba(34, 34, 38, var(--글라스_투명도));
+      --글라스_테두리: rgba(255, 255, 255, 0.16);
+      --글라스_그림자: 0 10px 32px rgba(0, 0, 0, 0.48), 0 0 0 0.5px rgba(255, 255, 255, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.10);
     }
 
     body.font-kaiti { --한자_폰트: 'Kaiti SC', 'STKaiti', 'KaiTi', 'Noto Serif SC', serif; }
@@ -281,14 +281,16 @@
       right: 0;
       z-index: 60;
       padding-top: env(safe-area-inset-top, 0px);
-      background-color: transparent;
+      background-color: var(--화면_바탕_회색);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
       border-bottom: 0.5px solid transparent;
-      transition: background-color 0.22s var(--애플_이징), border-color 0.22s var(--애플_이징), transform 0.3s var(--시트_이징);
+      transition: border-color 0.22s var(--애플_이징), transform 0.3s var(--시트_이징);
     }
     .topbar.scrolled {
-      background-color: var(--글라스_배경);
-      -webkit-backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
-      backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
+      background-color: var(--화면_바탕_회색);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
       border-bottom-color: var(--헤어라인_색);
     }
     .topbar-inner {
@@ -1177,49 +1179,74 @@
       position: sticky;
       top: calc(var(--상단바_높이) + 4px);
       z-index: 40;
-      margin: 0 -16px 12px;
-      padding: 8px 16px 10px;
-      background-color: var(--글라스_배경);
+      margin: 0 0 10px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background-color: var(--글라스_카드_배경);
       -webkit-backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
       backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
-      border-bottom: 0.5px solid var(--헤어라인_색);
+      border: 0.5px solid var(--글라스_테두리);
+      box-shadow: var(--글라스_그림자);
     }
-    .search-input-wrap { position: relative; flex: 1; min-width: 120px; display: flex; align-items: center; }
-    .search-input-wrap .search-ico { position: absolute; left: 10px; width: 16px; height: 16px; color: var(--흐린_글자색); pointer-events: none; }
+    .all-search-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-wrap: nowrap;
+    }
+    .all-search-row .pill-btn {
+      height: 28px;
+      font-size: 12px;
+      padding: 0 9px;
+    }
+    .search-input-wrap { position: relative; flex: 1; min-width: 84px; display: flex; align-items: center; }
+    .search-input-wrap .search-ico { position: absolute; left: 9px; width: 13.5px; height: 13.5px; color: var(--흐린_글자색); pointer-events: none; }
     .search-input-wrap #allSearchInput {
       width: 100%;
-      height: 36px;
-      border-radius: 10px;
+      height: 28px;
+      border-radius: 999px;
       border: none;
       background: var(--구분_회색);
-      padding: 0 30px 0 32px;
-      font-size: 15.5px;
+      padding: 0 24px 0 26px;
+      font-size: 13px;
     }
     .search-input-wrap #allSearchInput:focus { outline: none; }
     #allSearchInput::-webkit-search-cancel-button { appearance: none; -webkit-appearance: none; }
     .search-clear-btn {
       position: absolute;
-      right: 8px;
-      width: 17px;
-      height: 17px;
+      right: 6px;
+      width: 15px;
+      height: 15px;
       border-radius: 999px;
       background: var(--흐린_글자색);
       color: var(--카드_배경색);
       display: none;
       align-items: center;
       justify-content: center;
-      font-size: 10px;
+      font-size: 9px;
     }
     .search-clear-btn.show { display: inline-flex; }
 
-    .all-filter-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 8px;
-      flex-wrap: wrap;
+    /* Tab 3 Bottom-Right Floating Compact Stat Pill */
+    .all-stat-pill {
+      position: fixed;
+      right: 14px;
+      bottom: max(64px, calc(env(safe-area-inset-bottom, 0px) + 58px));
+      z-index: 46;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background-color: var(--글라스_카드_배경);
+      -webkit-backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
+      backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
+      border: 0.5px solid var(--글라스_테두리);
+      box-shadow: var(--글라스_그림자);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--보조_글자색);
+      white-space: nowrap;
+      pointer-events: none;
+      letter-spacing: -0.01em;
     }
-    .all-filter-row .pill-btn { height: 28px; font-size: 12.5px; padding: 0 11px; }
 
     .recent-q-bar { display: none; flex-wrap: wrap; gap: 6px; padding-top: 8px; }
     .recent-q-bar.show { display: flex; }
@@ -1267,28 +1294,32 @@
       position: fixed;
       left: 0;
       right: 0;
-      bottom: calc(50px + env(safe-area-inset-bottom, 0px));
+      bottom: max(62px, calc(env(safe-area-inset-bottom, 0px) + 56px));
+      width: min(296px, calc(100vw - 32px));
+      margin: 0 auto;
       z-index: 48;
-      background-color: var(--글라스_배경);
+      background-color: var(--글라스_카드_배경);
       -webkit-backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
       backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
-      border-top: 0.5px solid var(--헤어라인_색);
-      padding: 7px 16px;
+      border: 0.5px solid var(--글라스_테두리);
+      border-radius: 999px;
+      box-shadow: var(--글라스_그림자);
+      padding: 4px;
       display: grid;
-      grid-template-columns: 44px 1fr 44px;
-      gap: 10px;
+      grid-template-columns: 38px 1fr 38px;
+      gap: 6px;
       align-items: center;
-      transition: opacity 0.2s var(--애플_이징), transform 0.26s var(--스프링_이징);
+      transition: opacity 0.2s var(--애플_이징), transform 0.28s var(--스프링_이징);
     }
     .mobile-review-bar.is-hidden {
       opacity: 0;
       pointer-events: none;
-      transform: translateY(100%);
+      transform: translateY(20px) scale(0.94);
     }
     .mobile-review-bar .btn {
-      min-height: 38px;
-      border-radius: 10px;
-      font-size: 15px;
+      min-height: 36px;
+      border-radius: 999px;
+      font-size: 14.5px;
     }
     .mobile-review-bar .btn-soft {
       background: transparent;
@@ -1296,42 +1327,61 @@
       padding: 0;
     }
 
+    /* Floating Liquid Glass Pill Tab Bar — Low & Floating, Full-Bleed Content Behind */
     .mobile-tabbar {
       position: fixed;
       left: 0;
       right: 0;
-      bottom: 0;
+      bottom: max(10px, calc(env(safe-area-inset-bottom, 0px) + 4px));
+      width: min(296px, calc(100vw - 32px));
+      margin: 0 auto;
       z-index: 50;
-      height: calc(50px + env(safe-area-inset-bottom, 0px));
-      padding-bottom: env(safe-area-inset-bottom, 0px);
+      height: 46px;
+      padding: 4px;
+      border-radius: 999px;
       background-color: var(--글라스_배경);
       -webkit-backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
       backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
-      border-top: 0.5px solid var(--헤어라인_색);
+      border: 0.5px solid var(--글라스_테두리);
+      box-shadow: var(--글라스_그림자);
       display: grid;
       grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
       align-items: center;
     }
-    .tab-slider { display: none; }
+    .tab-slider {
+      display: block;
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: calc((100% - 16px) / 3);
+      height: 38px;
+      border-radius: 999px;
+      background: var(--강조_연한배경);
+      transition: transform 0.34s var(--애플_바운스_이징);
+      pointer-events: none;
+      z-index: 0;
+    }
     .tab-btn {
-      height: 49px;
-      border-radius: 0;
+      position: relative;
+      z-index: 1;
+      height: 38px;
+      border-radius: 999px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 2px;
+      gap: 1px;
       color: var(--흐린_글자색);
-      padding-top: 2px;
     }
-    .tab-btn:active { transform: scale(0.94); opacity: 0.7; }
+    .tab-btn:active { transform: scale(0.93); opacity: 0.72; }
     .tab-btn .ico { display: inline-flex; align-items: center; justify-content: center; }
-    .tab-btn .sf-ico { width: 22px; height: 22px; }
+    .tab-btn .sf-ico { width: 19px; height: 19px; }
     .tab-btn .tab-lbl {
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 500;
       letter-spacing: -0.01em;
-      line-height: 1.1;
+      line-height: 1.05;
     }
     .tab-btn.active { color: var(--주요_강조색); }
     .tab-btn.active .tab-lbl { font-weight: 600; }
@@ -1742,9 +1792,9 @@
       .mobile-tabbar, .mobile-review-bar { display: none; }
 
       .topbar {
-        background-color: var(--글라스_배경);
-        -webkit-backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
-        backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
+        background-color: var(--화면_바탕_회색);
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
         border-bottom-color: var(--헤어라인_색);
       }
       .topbar-inner { height: 50px; padding: 0 24px; }
@@ -1766,8 +1816,11 @@
 
       .all-search-sticky {
         margin: 0 0 14px;
-        border-radius: 14px;
-        border: 0.5px solid var(--헤어라인_색);
+        max-width: 560px;
+      }
+      .all-stat-pill {
+        right: 24px;
+        bottom: 20px;
       }
 
       .modal-backdrop { align-items: center; padding: 24px; }
@@ -1981,21 +2034,21 @@
       </div>
 
       <div class="all-search-sticky">
-        <div class="search-input-wrap">
-          <svg class="search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input id="allSearchInput" type="search" placeholder="한자, 병음, 뜻 검색" oninput="onAllSearchInput()" />
-          <button id="allSearchClearBtn" class="search-clear-btn" onclick="clearAllSearch()" aria-label="검색어 지우기">✕</button>
-        </div>
-        <div class="all-filter-row">
+        <div class="all-search-row">
+          <div class="search-input-wrap">
+            <svg class="search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input id="allSearchInput" type="search" placeholder="검색" oninput="onAllSearchInput()" />
+            <button id="allSearchClearBtn" class="search-clear-btn" onclick="clearAllSearch()" aria-label="검색어 지우기">✕</button>
+          </div>
           <button id="allStarFilterBtn" class="pill-btn" onclick="toggleAllStarFilter()">즐겨찾기</button>
-          <button id="passToggleAllBtn" class="pill-btn" onclick="togglePassGlobal()">PASS 제외</button>
-          <button class="pill-btn" onclick="collapseAllGroups()">모두 접기</button>
-          <span id="allSummaryStat" style="font-size:11.5px;color:var(--흐린_글자색);margin-left:auto;"></span>
+          <button id="passToggleAllBtn" class="pill-btn" onclick="togglePassGlobal()">PASS</button>
+          <button class="pill-btn" onclick="collapseAllGroups()">접기</button>
         </div>
         <div id="recentSearchBar" class="recent-q-bar"></div>
       </div>
 
       <div id="allGroupsList"></div>
+      <div id="allSummaryStat" class="all-stat-pill"></div>
     </section>
   </main>
 
@@ -2032,8 +2085,9 @@
       </div>
       <div class="modal-body">
         <div class="settings-stack">
+          <!-- 1. 서체 및 한자 스타일 -->
           <div class="settings-section">
-            <div class="settings-sec-title">글꼴 및 표시</div>
+            <div class="settings-sec-title">서체 및 한자 스타일</div>
             <div class="settings-group">
               <div class="ios-switch-row">
                 <span>간체 한자 글꼴</span>
@@ -2053,6 +2107,17 @@
                   <option value="mono">고정폭 (Menlo)</option>
                 </select>
               </div>
+              <div class="ctrl-item">
+                <div class="ctrl-label"><span>한자 글씨 두께</span><span id="lblHanziWeight" class="ctrl-val">400</span></div>
+                <input id="rngHanziWeight" type="range" min="300" max="700" step="100" oninput="updateVisualSettings()" />
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. 학습 및 재생 동작 -->
+          <div class="settings-section">
+            <div class="settings-sec-title">학습 및 재생</div>
+            <div class="settings-group">
               <div class="ios-switch-row">
                 <span>PASS 한자 표시</span>
                 <label class="ios-switch">
@@ -2061,21 +2126,26 @@
                 </label>
               </div>
               <div class="ios-switch-row">
-                <span>중국어 음성 모델</span>
-                <select id="settingsVoiceSelect" class="font-select" style="max-width:175px;" onchange="changeChineseVoice(this.value)" title="중국어 음성 모델 선택"></select>
-              </div>
-              <div class="ios-switch-row">
                 <span>획순 자동 재생</span>
                 <label class="ios-switch">
                   <input id="swStrokeAuto" type="checkbox" onchange="toggleStrokeAuto()" />
                   <span class="ios-switch-track"></span>
                 </label>
               </div>
+              <div class="ios-switch-row">
+                <span>중국어 음성 모델</span>
+                <select id="settingsVoiceSelect" class="font-select" style="max-width:175px;" onchange="changeChineseVoice(this.value)" title="중국어 음성 모델 선택"></select>
+              </div>
+              <div class="ctrl-item">
+                <div class="ctrl-label"><span>최근 해설 자동 표시</span><span id="lblAutoExpand" class="ctrl-val">20분</span></div>
+                <input id="rngAutoExpand" type="range" min="0" max="60" step="5" oninput="updateVisualSettings()" />
+              </div>
             </div>
           </div>
 
+          <!-- 3. 기본 텍스트 크기 -->
           <div class="settings-section">
-            <div class="settings-sec-title">텍스트 크기</div>
+            <div class="settings-sec-title">기본 텍스트 크기</div>
             <div class="settings-group cols-2">
               <div class="ctrl-item">
                 <div class="ctrl-label"><span>전체 글자 배율</span><span id="lblFontScale" class="ctrl-val">100%</span></div>
@@ -2088,13 +2158,29 @@
             </div>
           </div>
 
+          <!-- 4. 리퀴드 글라스 (화면 효과) -->
+          <div class="settings-section">
+            <div class="settings-sec-title">리퀴드 글라스</div>
+            <div class="settings-group cols-2">
+              <div class="ctrl-item">
+                <div class="ctrl-label"><span>글라스 투명도</span><span id="lblGlassAlpha" class="ctrl-val">0.27</span></div>
+                <input id="rngGlassAlpha" type="range" min="0.10" max="0.95" step="0.01" oninput="updateGlassSettings()" />
+              </div>
+              <div class="ctrl-item">
+                <div class="ctrl-label"><span>글라스 블러</span><span id="lblGlassBlur" class="ctrl-val">14px</span></div>
+                <input id="rngGlassBlur" type="range" min="4" max="32" step="1" oninput="updateGlassSettings()" />
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. 세부 크기 및 레이아웃 (접힘 아코디언) -->
           <div class="settings-more-details" id="settingsMoreDetails">
-            <button type="button" class="settings-more-summary" id="settingsMoreBtn" onclick="toggleSettingsMore(this)">세부 크기 및 화면 효과</button>
+            <button type="button" class="settings-more-summary" id="settingsMoreBtn" onclick="toggleSettingsMore(this)">세부 크기 및 레이아웃</button>
             <div class="accordion-body" id="settingsMoreAcc">
               <div class="accordion-inner">
                 <div class="settings-more-body">
                   <div class="settings-section">
-                    <div class="settings-sec-title">세부 글자 및 지표</div>
+                    <div class="settings-sec-title">해성계 행 항목 크기</div>
                     <div class="settings-group cols-2">
                       <div class="ctrl-item">
                         <div class="ctrl-label"><span>현대사용빈도 크기</span><span id="lblFreqSize" class="ctrl-val">14px</span></div>
@@ -2112,6 +2198,12 @@
                         <div class="ctrl-label"><span>병기 번체자 크기</span><span id="lblTradSize" class="ctrl-val">13.5px</span></div>
                         <input id="rngTradSize" type="range" min="10" max="24" step="1" oninput="updateVisualSettings()" />
                       </div>
+                    </div>
+                  </div>
+
+                  <div class="settings-section">
+                    <div class="settings-sec-title">단어 · 목차 · 배너 크기</div>
+                    <div class="settings-group cols-2">
                       <div class="ctrl-item">
                         <div class="ctrl-label"><span>예시 단어 크기</span><span id="lblWordSize" class="ctrl-val">16px</span></div>
                         <input id="rngWordSize" type="range" min="12" max="28" step="0.5" oninput="updateVisualSettings()" />
@@ -2132,12 +2224,8 @@
                   </div>
 
                   <div class="settings-section">
-                    <div class="settings-sec-title">한자 · 타일 · 화면</div>
+                    <div class="settings-sec-title">한자 타일 레이아웃</div>
                     <div class="settings-group cols-2">
-                      <div class="ctrl-item">
-                        <div class="ctrl-label"><span>한자 글씨 두께</span><span id="lblHanziWeight" class="ctrl-val">400</span></div>
-                        <input id="rngHanziWeight" type="range" min="300" max="700" step="100" oninput="updateVisualSettings()" />
-                      </div>
                       <div class="ctrl-item">
                         <div class="ctrl-label"><span>한자 타일 크기</span><span id="lblTileSize" class="ctrl-val">56px</span></div>
                         <input id="rngTileSize" type="range" min="44" max="76" step="2" oninput="updateVisualSettings()" />
@@ -2146,18 +2234,6 @@
                         <div class="ctrl-label"><span>타일 간격</span><span id="lblTileGap" class="ctrl-val">10px</span></div>
                         <input id="rngTileGap" type="range" min="4" max="18" step="2" oninput="updateVisualSettings()" />
                       </div>
-                      <div class="ctrl-item">
-                        <div class="ctrl-label"><span>최근 해설 자동 표시</span><span id="lblAutoExpand" class="ctrl-val">20분</span></div>
-                        <input id="rngAutoExpand" type="range" min="0" max="60" step="5" oninput="updateVisualSettings()" />
-                      </div>
-                      <div class="ctrl-item">
-                        <div class="ctrl-label"><span>글라스 투명도</span><span id="lblGlassAlpha" class="ctrl-val">0.78</span></div>
-                        <input id="rngGlassAlpha" type="range" min="0.25" max="0.95" step="0.02" oninput="updateGlassSettings()" />
-                      </div>
-                      <div class="ctrl-item">
-                        <div class="ctrl-label"><span>글라스 블러</span><span id="lblGlassBlur" class="ctrl-val">22px</span></div>
-                        <input id="rngGlassBlur" type="range" min="6" max="32" step="2" oninput="updateGlassSettings()" />
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -2165,9 +2241,13 @@
             </div>
           </div>
 
-          <div class="settings-footer-row">
-            <button class="btn btn-soft" style="min-height:42px;font-size:14px;" onclick="refreshAllData()"><svg class="sf-ico" style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36L21 8"/><polyline points="21 3 21 8 16 8"/></svg> 시트 동기화</button>
-            <button class="btn" style="min-height:42px;font-size:14px;background:var(--카드_배경색);color:var(--위험_빨강);" onclick="resetVisualSettings()">기본값 복원</button>
+          <!-- 6. 데이터 및 초기화 -->
+          <div class="settings-section">
+            <div class="settings-sec-title">데이터 및 초기화</div>
+            <div class="settings-footer-row">
+              <button class="btn btn-soft" style="min-height:42px;font-size:14px;" onclick="refreshAllData()"><svg class="sf-ico" style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36L21 8"/><polyline points="21 3 21 8 16 8"/></svg> 시트 동기화</button>
+              <button class="btn" style="min-height:42px;font-size:14px;background:var(--카드_배경색);color:var(--위험_빨강);" onclick="resetVisualSettings()">기본값 복원</button>
+            </div>
           </div>
         </div>
       </div>
@@ -2437,8 +2517,8 @@
 
     function syncGlassSlidersUI() {
       const rootStyle = getComputedStyle(document.documentElement);
-      const alpha = parseFloat(rootStyle.getPropertyValue("--글라스_투명도")) || 0.76;
-      const blur = parseFloat(rootStyle.getPropertyValue("--글라스_블러")) || 20;
+      const alpha = parseFloat(rootStyle.getPropertyValue("--글라스_투명도")) || 0.27;
+      const blur = parseFloat(rootStyle.getPropertyValue("--글라스_블러")) || 14;
       const aEl = document.getElementById("rngGlassAlpha");
       const bEl = document.getElementById("rngGlassBlur");
       const aLbl = document.getElementById("lblGlassAlpha");
@@ -2707,6 +2787,8 @@
     function resetVisualSettings() {
       state.visual = Object.assign({}, DEFAULT_VISUAL_CFG);
       localStorage.setItem("hanja_visual_cfg", JSON.stringify(state.visual));
+      document.documentElement.style.setProperty("--글라스_투명도", "0.27");
+      document.documentElement.style.setProperty("--글라스_블러", "14px");
       applyVisualConfigToDom();
       showToast("기본값 복원됨");
     }
@@ -4681,7 +4763,7 @@
         }
       }
 
-      statEl.textContent = `성부 ${filtered.length} · 한자 ${totalNonPass} · PASS ${totalPass} · 북마크 ${state.starSet.size}`;
+      statEl.textContent = `성부 ${filtered.length} · ${totalNonPass}자 · P${totalPass} · ★${state.starSet.size}`;
 
       if (filtered.length === 0) {
         listEl.innerHTML = `<div class="card"><div class="empty-state"><svg class="empty-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><div class="empty-title">검색 결과 없음</div><div class="empty-sub">한자, 병음 또는 뜻을 검색하세요.</div></div></div>`;
