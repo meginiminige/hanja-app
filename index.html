@@ -318,7 +318,8 @@
       border-bottom: 0.5px solid transparent;
       transition: background-color 0.24s var(--애플_이징), border-color 0.24s var(--애플_이징), transform 0.3s var(--시트_이징);
     }
-    .topbar.scrolled {
+    .topbar.scrolled,
+    body.series-bar-open .topbar {
       background-color: var(--툴바_글라스);
       -webkit-backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
       backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
@@ -525,8 +526,8 @@
     .tab-view.tab-enter-right,
     .tab-view.tab-enter-left { animation: iosTabFadeIn 0.22s var(--애플_이징) both; }
     @keyframes iosTabFadeIn {
-      from { opacity: 0.25; transform: translateY(4px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from { opacity: 0.25; }
+      to   { opacity: 1; }
     }
 
     .ios-large-title-bar {
@@ -613,7 +614,7 @@
        ===================================================================== */
     .floating-series-bar {
       position: fixed;
-      top: var(--상단바_높이);
+      top: calc(var(--상단바_높이) - 0.5px);
       left: 0;
       right: 0;
       height: calc(var(--상단그룹바_높이) * var(--상단배너_배율));
@@ -629,11 +630,8 @@
       overflow: hidden;
       opacity: 0;
       pointer-events: none;
-      transform: translateY(-6px);
-      transition: top 0.26s var(--스프링_이징), opacity 0.2s var(--애플_이징), transform 0.26s var(--스프링_이징);
-    }
-    body.tab-all.all-search-revealed .floating-series-bar {
-      top: calc(var(--상단바_높이) + var(--검색바_높이) + 4px);
+      transform: translateY(-4px);
+      transition: opacity 0.18s var(--애플_이징), transform 0.22s var(--스프링_이징);
     }
     .floating-series-bar.show {
       opacity: 1;
@@ -3813,6 +3811,7 @@
       const g = root ? state.groupByRoot[root] : null;
       if (!g) {
         bar.classList.remove("show");
+        document.body.classList.remove("series-bar-open");
         return;
       }
       if (bar.getAttribute("data-shown-root") !== root) {
@@ -3826,6 +3825,7 @@
         content.innerHTML = `<span class="fsb-root">${escHtml(g.root)}</span><span class="fsb-colon">：</span><span class="fsb-chars">${charsHtml}</span>`;
       }
       bar.classList.add("show");
+      document.body.classList.add("series-bar-open");
     }
 
     function updateFloatingExpandBtn() {
@@ -5342,55 +5342,8 @@
       const mw = document.getElementById("mainWrap");
       if (!mw) return;
 
-      // 1) Safari-style Scroll-Up Reveal for Tab 3 Search Bar + Floating Series Bar Sync
-      let prevSearchY = mw.scrollTop;
-      let upAccum = 0;
-      let downAccum = 0;
-      const syncAllSearchVisibility = () => {
-        const sb = document.getElementById("allSearchSticky");
-        if (!sb) return;
-        if (state.activeTab !== "all") {
-          sb.classList.remove("is-floating", "is-hidden");
-          document.body.classList.remove("all-search-revealed");
-          return;
-        }
-        const y = mw.scrollTop;
-        const dy = y - prevSearchY;
-        prevSearchY = y;
-
-        const isFocused = document.activeElement && document.activeElement.id === "allSearchInput";
-        if (y <= 58) {
-          upAccum = 0;
-          downAccum = 0;
-          sb.classList.remove("is-floating", "is-hidden");
-          document.body.classList.remove("all-search-revealed");
-          return;
-        }
-
-        sb.classList.add("is-floating");
-        if (isFocused) {
-          sb.classList.remove("is-hidden");
-          document.body.classList.add("all-search-revealed");
-          return;
-        }
-
-        if (dy > 0) {
-          downAccum += dy;
-          upAccum = 0;
-          if (downAccum > 14) {
-            sb.classList.add("is-hidden");
-            document.body.classList.remove("all-search-revealed");
-          }
-        } else if (dy < 0) {
-          upAccum += -dy;
-          downAccum = 0;
-          if (upAccum > 18) {
-            sb.classList.remove("is-hidden");
-            document.body.classList.add("all-search-revealed");
-          }
-        }
-      };
-      mw.addEventListener("scroll", syncAllSearchVisibility, { passive: true });
+      // 1) Keep Tab 3 Search Bar anchored naturally at the top so the docked Series Bar always sits flush under Topbar
+      document.body.classList.remove("all-search-revealed");
 
       // 2) Overdamped Elastic Card Drift (no overshoot, no scaleY text flicker)
       if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
