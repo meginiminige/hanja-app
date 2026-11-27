@@ -1569,6 +1569,7 @@
 
     .modal-head {
       position: relative;
+      flex-shrink: 0;
       padding: 18px 18px 12px;
       background: var(--툴바_글라스);
       -webkit-backdrop-filter: saturate(var(--글라스_채도)) blur(var(--글라스_블러));
@@ -1598,9 +1599,10 @@
       padding-bottom: calc(28px + env(safe-area-inset-bottom, 0px));
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
       flex: 1 1 auto;
       min-height: 0;
-      overscroll-behavior: contain;
+      overscroll-behavior-y: contain;
     }
 
     /* Pages Format Inspector Groups */
@@ -1650,6 +1652,7 @@
       outline: none;
       cursor: pointer;
       margin: 8px 0;
+      touch-action: pan-y;
     }
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
@@ -1985,6 +1988,14 @@
     @keyframes iosPanelFadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
 
     .detail-words-py.py-reveal { animation: iosPanelFadeIn 0.22s var(--스프링_이징) both; }
+
+    @keyframes groupFocusFlash {
+      0%   { box-shadow: 0 0 0 2px var(--주요_강조색), var(--시트_그림자); }
+      100% { box-shadow: var(--시트_그림자); }
+    }
+    .group-block.focus-flash {
+      animation: groupFocusFlash 0.85s var(--애플_이징) both;
+    }
 
     /* =====================================================================
        11. iPadOS / macOS iWork Split Workspace (960px+)
@@ -4897,21 +4908,61 @@
     }
 
     function collapseAllGroups() {
-      state.expandedRoots.clear();
       const listEl = document.getElementById("allGroupsList");
-      listEl.querySelectorAll(".group-block").forEach(blk => {
-        const acc = blk.querySelector(".accordion-body");
-        const chev = blk.querySelector(".chev");
-        const slot = blk.querySelector(".all-group-slot");
-        if (acc && acc.classList.contains("open")) {
-          acc.classList.remove("open");
-          if (chev) chev.classList.remove("open");
-          if (slot) {
-            cleanupStrokeBoxes(slot);
-            slot.innerHTML = "";
+      const mw = document.getElementById("mainWrap");
+      const tb = document.getElementById("topbar");
+      const sb = document.getElementById("allSearchSticky");
+
+      // Remember the group occupying the most screen space before collapsing
+      let anchorBlk = getDominantGroupBlock();
+      if (anchorBlk && (!listEl || !listEl.contains(anchorBlk))) {
+        anchorBlk = null;
+      }
+      if (!anchorBlk && listEl) {
+        const viewTop = (tb ? tb.offsetHeight : 48) + (sb && sb.classList.contains("is-floating") ? sb.offsetHeight : 0);
+        const viewBottom = window.innerHeight;
+        let maxOv = -1;
+        listEl.querySelectorAll(".group-block").forEach(blk => {
+          const r = blk.getBoundingClientRect();
+          const ov = Math.max(0, Math.min(r.bottom, viewBottom) - Math.max(r.top, viewTop));
+          if (ov > maxOv) {
+            maxOv = ov;
+            anchorBlk = blk;
           }
-        }
-      });
+        });
+      }
+
+      state.expandedRoots.clear();
+      if (listEl) {
+        listEl.querySelectorAll(".group-block").forEach(blk => {
+          const acc = blk.querySelector(".accordion-body");
+          const chev = blk.querySelector(".chev");
+          const slot = blk.querySelector(".all-group-slot");
+          if (acc && acc.classList.contains("open")) {
+            acc.classList.remove("open");
+            if (chev) chev.classList.remove("open");
+            if (slot) {
+              cleanupStrokeBoxes(slot);
+              slot.innerHTML = "";
+            }
+          }
+        });
+      }
+
+      if (anchorBlk && mw) {
+        const tbH = tb ? tb.offsetHeight : 48;
+        const sbH = sb ? sb.offsetHeight : 44;
+        const mwRect = mw.getBoundingClientRect();
+        const blkRect = anchorBlk.getBoundingClientRect();
+        const absTop = mw.scrollTop + (blkRect.top - mwRect.top);
+        const targetScroll = Math.max(0, absTop - (tbH + sbH + 10));
+        mw.scrollTop = targetScroll <= 52 ? 0 : targetScroll;
+
+        anchorBlk.classList.remove("focus-flash");
+        void anchorBlk.offsetWidth;
+        anchorBlk.classList.add("focus-flash");
+      }
+
       updateFloatingExpandBtn();
     }
 
@@ -5234,44 +5285,23 @@
         if (!backdrop) return;
         const sheet = backdrop.querySelector(".modal-sheet");
         const head = backdrop.querySelector(".modal-head");
-        const body = backdrop.querySelector(".modal-body");
         if (!sheet || !head) return;
 
         let startY = 0;
         let curY = 0;
         let dragging = false;
-        let fromBody = false;
-
-        const beginDrag = (y, isBody) => {
-          startY = y;
-          curY = 0;
-          dragging = true;
-          fromBody = isBody;
-          sheet.classList.add("dragging");
-        };
 
         head.addEventListener("touchstart", e => {
-          if (e.target.closest("button")) return;
-          beginDrag(e.touches[0].clientY, false);
+          if (e.target.closest("button, input, select")) return;
+          startY = e.touches[0].clientY;
+          curY = 0;
+          dragging = true;
+          sheet.classList.add("dragging");
         }, { passive: true });
 
-        if (body) {
-          body.addEventListener("touchstart", e => {
-            if (body.scrollTop <= 0 && !e.target.closest("button, input, textarea, select")) {
-              beginDrag(e.touches[0].clientY, true);
-            }
-          }, { passive: true });
-        }
-
-        sheet.addEventListener("touchmove", e => {
+        head.addEventListener("touchmove", e => {
           if (!dragging) return;
           const dy = e.touches[0].clientY - startY;
-          if (fromBody && body && body.scrollTop > 0) {
-            dragging = false;
-            sheet.classList.remove("dragging");
-            sheet.style.transform = "";
-            return;
-          }
           if (dy > 0) {
             curY = dy;
             const damped = dy < 120 ? dy : 120 + (dy - 120) * 0.42;
@@ -5283,15 +5313,13 @@
           if (!dragging) return;
           dragging = false;
           sheet.classList.remove("dragging");
+          sheet.style.transform = "";
           if (curY > 75) {
-            sheet.style.transform = "";
             cfg.close();
-          } else {
-            sheet.style.transform = "";
           }
         };
-        sheet.addEventListener("touchend", endDrag, { passive: true });
-        sheet.addEventListener("touchcancel", endDrag, { passive: true });
+        head.addEventListener("touchend", endDrag, { passive: true });
+        head.addEventListener("touchcancel", endDrag, { passive: true });
       });
     }
 
