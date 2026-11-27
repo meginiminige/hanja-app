@@ -2,10 +2,17 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <!-- =========================================================================
+       [CRITICAL - DO NOT REMOVE OR MODIFY]
+       iOS Safari / PWA 상단 다이나믹 아일랜드·상태바 검정 띠 방지 필수 설정:
+       1) viewport-fit=cover 가 빠지면 iOS 안전영역(safe-area-inset-top)이 검정 띠로 잘림.
+       2) meta#metaThemeColor 와 .topbar padding-top: env(safe-area-inset-top) 연동 필수.
+       이후 수정 시 절대로 viewport-fit=cover 및 상태바 메타 태그를 제거하지 말 것!
+       ========================================================================= -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <meta name="theme-color" id="metaThemeColor" content="#F2F2F7" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-status-bar-style" id="metaStatusBarStyle" content="default" />
   <meta name="apple-mobile-web-app-title" content="谐声系" />
   <title>谐声系</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -89,6 +96,14 @@
       --병음훈음_흐린색: rgba(60, 60, 67, 0.56);
       --병음훈음_투명도: 1;
       --대상한자_행강조배경: rgba(0, 122, 255, 0.055);
+      /* Apple Notes / Safari Find-on-Page Style Search Highlight — Light */
+      --검색_하이라이트_배경: rgba(255, 204, 0, 0.36);
+      --검색_하이라이트_글자: #000000;
+      --검색_행강조_배경: rgba(255, 204, 0, 0.09);
+      --검색_한자강조_배경: rgba(255, 204, 0, 0.28);
+      --검색_한자강조_테두리: rgba(217, 145, 0, 0.45);
+      --검색_이유뱃지_배경: rgba(0, 122, 255, 0.10);
+      --검색_이유뱃지_글자: #007AFF;
 
       --펼침_패널_배경: rgba(118, 118, 128, 0.045);
       --펼침_패널_테두리: rgba(60, 60, 67, 0.14);
@@ -168,6 +183,14 @@
 
       --병음훈음_흐린색: rgba(235, 235, 245, 0.55);
       --대상한자_행강조배경: rgba(10, 132, 255, 0.11);
+      /* Apple Notes / Safari Find-on-Page Style Search Highlight — Dark */
+      --검색_하이라이트_배경: rgba(255, 214, 10, 0.30);
+      --검색_하이라이트_글자: #FFFFFF;
+      --검색_행강조_배경: rgba(255, 214, 10, 0.10);
+      --검색_한자강조_배경: rgba(255, 214, 10, 0.24);
+      --검색_한자강조_테두리: rgba(255, 214, 10, 0.50);
+      --검색_이유뱃지_배경: rgba(10, 132, 255, 0.20);
+      --검색_이유뱃지_글자: #64D2FF;
 
       --펼침_패널_배경: rgba(255, 255, 255, 0.035);
       --펼침_패널_테두리: rgba(84, 84, 88, 0.45);
@@ -304,6 +327,8 @@
     /* =====================================================================
        2. True iOS UINavigationBar (Tinted Controls, Crisp 0.5px Hairline)
        ===================================================================== */
+    /* [CRITICAL - DO NOT REMOVE] iOS 상단 검정 띠 방지:
+       viewport-fit=cover 와 함께 topbar가 top:0 부터 safe-area-inset-top을 덮어야 함 */
     .topbar {
       position: fixed;
       top: 0;
@@ -1501,6 +1526,99 @@
       word-break: break-all;
     }
     .all-char-star { color: var(--별표_강조색); font-weight: 700; }
+    .all-group-body {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .all-char-match {
+      display: inline-block;
+      padding: 0 4px;
+      margin: 0 1px;
+      border-radius: 5px;
+      background: var(--검색_한자강조_배경);
+      box-shadow: inset 0 0 0 0.5px var(--검색_한자강조_테두리);
+      color: var(--기본_글자색);
+      font-weight: 700;
+    }
+    .root-badge.is-search-hit {
+      background: var(--검색_한자강조_배경);
+      box-shadow: inset 0 0 0 1px var(--검색_한자강조_테두리);
+      color: var(--기본_글자색);
+    }
+    mark.search-hl {
+      background: var(--검색_하이라이트_배경);
+      color: var(--검색_하이라이트_글자);
+      padding: 0 2px;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+    .search-reason-list {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      margin-top: 2px;
+    }
+    .search-reason-item {
+      display: flex;
+      align-items: baseline;
+      gap: 5px;
+      font-size: 12px;
+      line-height: 1.4;
+      color: var(--보조_글자색);
+      min-width: 0;
+    }
+    .search-reason-char {
+      font-family: var(--한자_폰트);
+      font-weight: 700;
+      color: var(--기본_글자색);
+      background: var(--검색_한자강조_배경);
+      padding: 0 4px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .search-reason-tag {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--검색_이유뱃지_글자);
+      background: var(--검색_이유뱃지_배경);
+      padding: 0 5px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .search-reason-snip {
+      flex: 1;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .search-reason-more {
+      font-size: 11px;
+      color: var(--흐린_글자색);
+      padding-left: 2px;
+    }
+    .compact-item.is-search-match {
+      background: var(--검색_행강조_배경);
+    }
+    .hw-box.is-search-hit {
+      background: var(--검색_한자강조_배경);
+      box-shadow: inset 0 0 0 1.5px var(--검색_한자강조_테두리);
+    }
+    .row-match-pill {
+      display: inline-flex;
+      align-items: center;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--검색_이유뱃지_글자);
+      background: var(--검색_이유뱃지_배경);
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-right: 5px;
+      vertical-align: middle;
+    }
     .all-group-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; margin-left: auto; }
     .all-group-idx { font-size: 12.5px; font-weight: 400; color: var(--흐린_글자색); }
     /* Authentic iOS Disclosure Indicator Chevron */
@@ -3243,11 +3361,14 @@
       const isDark = mode === "dark" || (mode === "auto" && prefersDark);
       document.body.classList.toggle("dark", isDark);
       document.documentElement.classList.toggle("dark-mode", isDark);
+      /* [CRITICAL - DO NOT REMOVE] iOS 상태바·다이나믹 아일랜드 검정 띠 방지용 동적 theme-color 동기화 */
       const bgHex = isDark ? "#000000" : "#F2F2F7";
       document.documentElement.style.backgroundColor = bgHex;
       document.body.style.backgroundColor = bgHex;
       const metaTheme = document.getElementById("metaThemeColor");
       if (metaTheme) metaTheme.setAttribute("content", bgHex);
+      const metaStatus = document.getElementById("metaStatusBarStyle");
+      if (metaStatus) metaStatus.setAttribute("content", isDark ? "black" : "default");
       const btn = document.getElementById("themeBtn");
       if (btn) {
         btn.innerHTML = mode === "auto" ? ICO_AUTO_THEME : (isDark ? ICO_SUN : ICO_MOON);
@@ -4287,17 +4408,105 @@
       `;
     }
 
-    function buildCompactRowsHtml(g, hlSet) {
-      const visibleRows = g.rows.filter(r => !r.isPass || state.showPass);
+
+    /* ===== 전체표 검색 매칭·이유·하이라이트 헬퍼 ===== */
+    function escapeRegExp(s) {
+      return String(s || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    function highlightPlainText(text, q) {
+      const raw = String(text || "");
+      const query = String(q || "").trim();
+      if (!query || !raw) return escHtml(raw);
+      const re = new RegExp(escapeRegExp(query), "gi");
+      let out = "";
+      let last = 0;
+      let m;
+      while ((m = re.exec(raw)) !== null) {
+        if (m[0].length === 0) { re.lastIndex++; continue; }
+        out += escHtml(raw.slice(last, m.index));
+        out += `<mark class="search-hl">${escHtml(m[0])}</mark>`;
+        last = m.index + m[0].length;
+      }
+      out += escHtml(raw.slice(last));
+      return out;
+    }
+
+    function highlightFormattedHtml(formattedHtml, q) {
+      const query = String(q || "").trim();
+      if (!query || !formattedHtml) return formattedHtml;
+      const re = new RegExp(escapeRegExp(query), "gi");
+      return formattedHtml.split(/(<[^>]+>)/g).map(part => {
+        if (!part || part.startsWith("<")) return part;
+        return part.replace(re, match => `<mark class="search-hl">${match}</mark>`);
+      }).join("");
+    }
+
+    function makeSearchSnippet(text, q, maxLen) {
+      const raw = String(text || "").replace(/\s+/g, " ").trim();
+      const query = String(q || "").trim();
+      const limit = maxLen || 34;
+      if (!raw || !query) return raw;
+      const idx = raw.toLowerCase().indexOf(query.toLowerCase());
+      if (idx === -1 || raw.length <= limit) return raw;
+      const half = Math.max(8, Math.floor((limit - query.length) / 2));
+      const start = Math.max(0, idx - half);
+      const end = Math.min(raw.length, idx + query.length + half);
+      return (start > 0 ? "…" : "") + raw.slice(start, end) + (end < raw.length ? "…" : "");
+    }
+
+    function getRowSearchMatch(r, q) {
+      const ql = String(q || "").trim().toLowerCase();
+      if (!ql || !r) return null;
+      const fields = [
+        { key: "display",     label: "한자",     val: r.display || "",     inDetail: false, inWordsPy: false },
+        { key: "pinyin",      label: "병음",     val: r.pinyin || "",      inDetail: false, inWordsPy: false },
+        { key: "hunum",       label: "훈음",     val: r.hunum || "",       inDetail: false, inWordsPy: false },
+        { key: "meaning",     label: "뜻",       val: r.meaning || "",     inDetail: false, inWordsPy: false },
+        { key: "words",       label: "예시단어", val: r.words || "",       inDetail: true,  inWordsPy: false },
+        { key: "wordsPinyin", label: "단어뜻",   val: r.wordsPinyin || "", inDetail: true,  inWordsPy: true  },
+        { key: "sentence",    label: "예문",     val: r.sentence || "",    inDetail: true,  inWordsPy: false }
+      ];
+      const hits = [];
+      let inDetail = false;
+      let inWordsPy = false;
+      for (const f of fields) {
+        if (f.val && f.val !== "-" && f.val.toLowerCase().includes(ql)) {
+          hits.push(f);
+          if (f.inDetail) inDetail = true;
+          if (f.inWordsPy) inWordsPy = true;
+        }
+      }
+      if (hits.length === 0) return null;
+      // Prefer showing the most informative match reason first (if matched in words/sentence/meaning, highlight it clearly)
+      const primary = hits[0];
+      return {
+        hits,
+        labels: hits.map(h => h.label),
+        primaryLabel: primary.label,
+        primarySnippet: makeSearchSnippet(primary.val, q, 32),
+        inDetail,
+        inWordsPy
+      };
+    }
+
+    function buildCompactRowsHtml(g, hlSet, searchQ) {
+      const q = String(searchQ || "").trim();
+      const visibleRows = g.rows.filter(r => {
+        if (!r.isPass || state.showPass) return true;
+        // 검색어가 있을 때 PASS 한자라도 검색에 걸렸다면 결과를 보여줌
+        return Boolean(q && getRowSearchMatch(r, q));
+      });
       if (visibleRows.length === 0) {
         return `<div style="padding:16px;text-align:center;color:var(--흐린_글자색);font-size:13px;">표시할 한자가 없습니다.</div>`;
       }
 
       return visibleRows.map(r => {
         const rowId = `r_${r.rowNum}`;
+        const match = q ? getRowSearchMatch(r, q) : null;
         const isTarget = hlSet && r.chars.some(c => hlSet.has(c));
-        const isOpen = state.expandedRowIds.has(rowId);
-        const isWordPyOpen = state.expandedWordPyIds.has(rowId);
+        const isOpen = state.expandedRowIds.has(rowId) || Boolean(match && match.inDetail);
+        const isWordPyOpen = state.expandedWordPyIds.has(rowId) || Boolean(match && match.inWordsPy);
         const tradMatch = r.display.match(/\(([^)]+)\)/);
         const tradLabel = tradMatch ? `(${tradMatch[1]})` : "";
 
@@ -4307,47 +4516,69 @@
         const isHighFreq = !r.isPass && !isNaN(freqNum) && freqNum >= 7;
         const isTen = !r.isPass && freqText.length >= 2;
 
-        const midHtml = r.meaning && r.meaning !== "-"
+        const baseMidHtml = r.meaning && r.meaning !== "-"
           ? formatMeaningWithRadicals(r.meaning)
           : escHtml(r.isAnalyzed ? "-" : "미분석");
+        const midHtml = q ? highlightFormattedHtml(baseMidHtml, q) : baseMidHtml;
+        const matchPillHtml = match
+          ? `<span class="row-match-pill">${escHtml(match.labels.join("·"))}</span>`
+          : "";
+
+        const pinyinHtml = q ? highlightPlainText(r.pinyin || "-", q) : escHtml(r.pinyin || "-");
+        const hunumHtml = (r.hunum && r.hunum !== "-")
+          ? (q ? highlightPlainText(r.hunum, q) : escHtml(r.hunum))
+          : "";
 
         const hasWords = r.words && r.words !== "-";
         const hasWordsPy = r.wordsPinyin && r.wordsPinyin !== "-";
         const hasSent = r.sentence && r.sentence !== "-";
 
+        const detailMeaningHtml = r.meaning && r.meaning !== "-"
+          ? (q ? highlightFormattedHtml(formatMeaningWithRadicals(r.meaning), q) : formatMeaningWithRadicals(r.meaning))
+          : "";
+        const wordsHtml = hasWords
+          ? (q ? highlightPlainText(r.words, q) : escHtml(r.words))
+          : "";
+        const wordsPyHtml = hasWordsPy
+          ? (q ? highlightFormattedHtml(formatWordsPinyin(r.wordsPinyin), q) : formatWordsPinyin(r.wordsPinyin))
+          : "";
+        const sentHtml = hasSent
+          ? (q ? highlightPlainText(r.sentence, q) : escHtml(r.sentence))
+          : "";
+
         return `
-          <div class="compact-item ${isTarget ? "is-target" : ""} ${r.isPass ? "is-pass" : ""} ${isOpen ? "is-expanded" : ""}" data-rowid="${rowId}">
+          <div class="compact-item ${isTarget ? "is-target" : ""} ${match ? "is-search-match" : ""} ${r.isPass ? "is-pass" : ""} ${isOpen ? "is-expanded" : ""}" data-rowid="${rowId}">
             <div class="compact-row-main" onclick="toggleCompactRow('${rowId}', this)">
               <span class="freq-tulpen ${r.isPass ? "is-pass-label" : ""} ${isHighFreq ? "is-high" : ""} ${isTen ? "is-ten" : ""}" title="현대사용빈도">${escHtml(freqText)}</span>
 
               <div class="hw-wrap">
-                <div class="hw-box ${r.isStar ? "is-star" : ""}" data-char="${escHtml(r.simp)}" onclick="tapStrokeBox(event, this)">
+                <div class="hw-box ${r.isStar ? "is-star" : ""} ${match ? "is-search-hit" : ""}" data-char="${escHtml(r.simp)}" onclick="tapStrokeBox(event, this)">
                   <span class="hw-fallback">${escHtml(r.simp)}</span>
                 </div>
-                ${tradLabel ? `<span class="hw-trad hanzi">${escHtml(tradLabel)}</span>` : ""}
+                ${tradLabel ? `<span class="hw-trad hanzi">${q ? highlightPlainText(tradLabel, q) : escHtml(tradLabel)}</span>` : ""}
               </div>
 
-              <div class="compact-mid">${midHtml}</div>
+              <div class="compact-mid">${matchPillHtml}${midHtml}</div>
 
               <div class="compact-right-memo">
-                <div class="memo-line memo-pinyin">${escHtml(r.pinyin || "-")}</div>
-                ${r.hunum && r.hunum !== "-" ? `<div class="memo-line">${escHtml(r.hunum)}</div>` : ""}
+                <div class="memo-line memo-pinyin">${pinyinHtml}</div>
+                ${hunumHtml ? `<div class="memo-line">${hunumHtml}</div>` : ""}
               </div>
             </div>
 
             <div class="accordion-body ${isOpen ? "open" : ""}">
               <div class="accordion-inner">
                 <div class="compact-detail">
-                  ${r.meaning && r.meaning !== "-" ? `<div class="detail-meaning">${formatMeaningWithRadicals(r.meaning)}</div>` : ""}
+                  ${detailMeaningHtml ? `<div class="detail-meaning">${detailMeaningHtml}</div>` : ""}
                   ${hasWords ? `
                     <div class="detail-words-row hanzi">
-                      <strong>${escHtml(r.words)}</strong>
+                      <strong>${wordsHtml}</strong>
                       ${hasWordsPy ? `<button class="word-toggle-btn" onclick="toggleWordPy(event, '${rowId}', this)">${isWordPyOpen ? "병음 숨기기" : "병음 보기"}</button>` : ""}
                       <button class="bm-btn ${state.bookmarkMap['wd_' + r.rowNum] ? 'active' : ''}" data-bmid="wd_${r.rowNum}" onclick="toggleWordBookmark(event, ${r.rowNum}, this)" title="단어 즐겨찾기">${ICO_BOOKMARK}</button>
                     </div>
-                    ${hasWordsPy ? `<div class="detail-words-py" style="display:${isWordPyOpen ? "block" : "none"};">${formatWordsPinyin(r.wordsPinyin)}</div>` : ""}
+                    ${hasWordsPy ? `<div class="detail-words-py" style="display:${isWordPyOpen ? "block" : "none"};">${wordsPyHtml}</div>` : ""}
                   ` : ""}
-                  ${hasSent ? `<div class="detail-sent-row"><div class="detail-sent hanzi">${escHtml(r.sentence)}</div><button class="tts-btn" title="예문 발음 듣기" onclick="speakChinese(event, '${escHtml(r.sentence).replace(/'/g, "\'")}', this)">${ICO_SPEAKER}</button></div>` : ""}
+                  ${hasSent ? `<div class="detail-sent-row"><div class="detail-sent hanzi">${sentHtml}</div><button class="tts-btn" title="예문 발음 듣기" onclick="speakChinese(event, '${escHtml(r.sentence).replace(/'/g, "\'")}', this)">${ICO_SPEAKER}</button></div>` : ""}
                 </div>
               </div>
             </div>
@@ -5057,7 +5288,7 @@
       updateFloatingExpandBtn();
     }
 
-    function buildAllGroupInnerHtml(g) {
+    function buildAllGroupInnerHtml(g, searchQ) {
       const leftInfo = g.emptyCount > 0
         ? `<span style="font-size:12px;font-weight:700;color:var(--미분석_경고글자);">미분석 ${g.emptyCount}자</span>`
         : `<span style="font-size:11.5px;color:var(--흐린_글자색);">${(!state.showPass && g.passCount > 0) ? `PASS ${g.passCount}자 숨김` : "뜻·예문 일괄 제어"}</span>`;
@@ -5073,7 +5304,7 @@
           </div>
         </div>
       `;
-      return `<div style="border-top:0.5px solid var(--헤어라인_색);">${subbar}${buildCompactRowsHtml(g, null)}</div>`;
+      return `<div style="border-top:0.5px solid var(--헤어라인_색);">${subbar}${buildCompactRowsHtml(g, null, searchQ)}</div>`;
     }
 
     function toggleAllGroup(root, btnEl) {
@@ -5098,8 +5329,9 @@
       } else {
         state.expandedRoots.add(root);
         const g = state.groupByRoot[root];
+        const curQ = (document.getElementById("allSearchInput")?.value || "").trim();
         if (g) {
-          slot.innerHTML = buildAllGroupInnerHtml(g);
+          slot.innerHTML = buildAllGroupInnerHtml(g, curQ);
           syncGroupToggleBtnLabel(blk);
         }
         acc.classList.add("open");
@@ -5114,7 +5346,8 @@
     }
 
     function renderAllTable() {
-      const q = (document.getElementById("allSearchInput").value || "").trim().toLowerCase();
+      const rawQ = (document.getElementById("allSearchInput").value || "").trim();
+      const q = rawQ.toLowerCase();
       const listEl = document.getElementById("allGroupsList");
       const statEl = document.getElementById("allSummaryStat");
 
@@ -5126,30 +5359,33 @@
       let totalPass = 0;
 
       for (const g of state.groups) {
-        let match = true;
-        if (state.allStarOnly) {
-          match = g.rows.some(r => r.isStar);
+        if (state.allStarOnly && !g.rows.some(r => r.isStar)) continue;
+
+        let rootHit = false;
+        const matchedRowMap = new Map();
+        const matchedEntries = [];
+
+        if (q) {
+          rootHit = g.root.toLowerCase().includes(q);
+          for (const r of g.rows) {
+            const m = getRowSearchMatch(r, rawQ);
+            if (m) {
+              matchedRowMap.set(r.rowNum, m);
+              matchedEntries.push({ row: r, match: m });
+            }
+          }
+          if (!rootHit && matchedEntries.length === 0) continue;
         }
-        if (match && q) {
-          match = g.root.toLowerCase().includes(q) || g.rows.some(r =>
-            r.display.toLowerCase().includes(q) ||
-            r.pinyin.toLowerCase().includes(q) ||
-            r.meaning.toLowerCase().includes(q) ||
-            r.words.toLowerCase().includes(q) ||
-            r.hunum.toLowerCase().includes(q)
-          );
-        }
-        if (match) {
-          filtered.push(g);
-          totalNonPass += g.nonPassCount;
-          totalPass += g.passCount;
-        }
+
+        filtered.push({ g, rootHit, matchedRowMap, matchedEntries });
+        totalNonPass += g.nonPassCount;
+        totalPass += g.passCount;
       }
 
       statEl.textContent = `성부 ${filtered.length} · ${totalNonPass}자 · P${totalPass} · ★${state.starSet.size}`;
 
       if (filtered.length === 0) {
-        listEl.innerHTML = `<div class="card"><div class="empty-state"><svg class="empty-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><div class="empty-title">검색 결과 없음</div><div class="empty-sub">한자, 병음 또는 뜻을 검색하세요.</div></div></div>`;
+        listEl.innerHTML = `<div class="card"><div class="empty-state"><svg class="empty-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><div class="empty-title">검색 결과 없음</div><div class="empty-sub">한자, 병음, 뜻, 예시단어 또는 예문을 검색하세요.</div></div></div>`;
         updateFloatingExpandBtn();
         return;
       }
@@ -5158,23 +5394,58 @@
 
       const frag = document.createDocumentFragment();
       const host = document.createElement("div");
-      host.innerHTML = filtered.map(g => {
+      host.innerHTML = filtered.map(({ g, rootHit, matchedRowMap, matchedEntries }) => {
         const isOpen = autoOpenSearch || state.expandedRoots.has(g.root);
         const countLabel = g.passCount > 0 ? `${g.nonPassCount}•${g.passCount}` : `${g.nonPassCount}`;
 
         const summaryChars = g.rows
-          .filter(r => !r.isPass)
-          .map(r => r.isStar
-            ? `<span class="all-char-star">${escHtml(r.display)}</span>`
-            : escHtml(r.display)
-          ).join(" · ");
+          .filter(r => !r.isPass || (q && matchedRowMap.has(r.rowNum)))
+          .map(r => {
+            const isMatched = q && matchedRowMap.has(r.rowNum);
+            const inner = r.isStar
+              ? `<span class="all-char-star">${escHtml(r.display)}</span>`
+              : escHtml(r.display);
+            return isMatched ? `<span class="all-char-match">${inner}</span>` : inner;
+          }).join(" · ");
+
+        let reasonHtml = "";
+        if (q) {
+          const reasonItems = [];
+          if (rootHit && matchedEntries.length === 0) {
+            reasonItems.push(`
+              <div class="search-reason-item">
+                <span class="search-reason-tag">성부</span>
+                <span class="search-reason-snip hanzi">${highlightPlainText(g.root, rawQ)}</span>
+              </div>
+            `);
+          }
+          const previewList = matchedEntries.slice(0, 3);
+          for (const ent of previewList) {
+            reasonItems.push(`
+              <div class="search-reason-item">
+                <span class="search-reason-char">${escHtml(ent.row.simp)}</span>
+                <span class="search-reason-tag">${escHtml(ent.match.primaryLabel)}</span>
+                <span class="search-reason-snip hanzi">${highlightPlainText(ent.match.primarySnippet, rawQ)}</span>
+              </div>
+            `);
+          }
+          if (matchedEntries.length > 3) {
+            reasonItems.push(`<div class="search-reason-more">외 ${matchedEntries.length - 3}자 더 일치</div>`);
+          }
+          if (reasonItems.length > 0) {
+            reasonHtml = `<div class="search-reason-list">${reasonItems.join("")}</div>`;
+          }
+        }
 
         return `
           <div class="group-block" data-root="${escHtml(g.root)}">
             <button class="all-group-btn" onclick="toggleAllGroup('${escHtml(g.root)}', this)">
-              <span class="root-badge hanzi">${escHtml(g.root)}</span>
+              <span class="root-badge hanzi ${rootHit ? "is-search-hit" : ""}">${escHtml(g.root)}</span>
               <span class="count-badge">${countLabel}</span>
-              <div class="all-group-chars">${summaryChars || `<span style="color:var(--흐린_글자색);">PASS만 있음</span>`}</div>
+              <div class="all-group-body">
+                <div class="all-group-chars">${summaryChars || `<span style="color:var(--흐린_글자색);">PASS만 있음</span>`}</div>
+                ${reasonHtml}
+              </div>
               <div class="all-group-right">
                 <span class="all-group-idx">${g.origIdx}/${totalGroupCount}</span>
                 <span class="chev ${isOpen ? "open" : ""}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
@@ -5182,7 +5453,7 @@
             </button>
             <div class="accordion-body ${isOpen ? "open" : ""}">
               <div class="accordion-inner all-group-slot">
-                ${isOpen ? buildAllGroupInnerHtml(g) : ""}
+                ${isOpen ? buildAllGroupInnerHtml(g, rawQ) : ""}
               </div>
             </div>
           </div>
