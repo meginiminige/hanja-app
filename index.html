@@ -281,16 +281,16 @@
       right: 0;
       z-index: 60;
       padding-top: env(safe-area-inset-top, 0px);
-      background-color: var(--화면_바탕_회색);
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
+      background-color: var(--화면_바탕_회색) !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
       border-bottom: 0.5px solid transparent;
       transition: border-color 0.22s var(--애플_이징), transform 0.3s var(--시트_이징);
     }
     .topbar.scrolled {
-      background-color: var(--화면_바탕_회색);
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
+      background-color: var(--화면_바탕_회색) !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
       border-bottom-color: var(--헤어라인_색);
     }
     .topbar-inner {
@@ -1229,6 +1229,7 @@
 
     /* Tab 3 Bottom-Right Floating Compact Stat Pill */
     .all-stat-pill {
+      display: none;
       position: fixed;
       right: 14px;
       bottom: max(64px, calc(env(safe-area-inset-bottom, 0px) + 58px));
@@ -1247,6 +1248,7 @@
       pointer-events: none;
       letter-spacing: -0.01em;
     }
+    .all-stat-pill.show { display: block; }
 
     .recent-q-bar { display: none; flex-wrap: wrap; gap: 6px; padding-top: 8px; }
     .recent-q-bar.show { display: flex; }
@@ -1455,9 +1457,11 @@
     }
     .modal-body {
       padding: 16px;
-      padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+      padding-bottom: calc(28px + env(safe-area-inset-bottom, 0px));
       overflow-y: auto;
-      flex: 1;
+      -webkit-overflow-scrolling: touch;
+      flex: 1 1 auto;
+      min-height: 0;
       overscroll-behavior: contain;
     }
 
@@ -2048,9 +2052,11 @@
       </div>
 
       <div id="allGroupsList"></div>
-      <div id="allSummaryStat" class="all-stat-pill"></div>
     </section>
   </main>
+
+  <!-- 탭 3 우측 하단 요약 플로팅 알약 -->
+  <div id="allSummaryStat" class="all-stat-pill"></div>
 
   <!-- 모바일 전용 하단 복습 툴바 (Edge-to-Edge Tab Bar 위에 매끄럽게 밀착) -->
   <div id="mobileReviewBar" class="mobile-review-bar">
@@ -3290,6 +3296,8 @@
       try { updateTabSliders(tab); } catch (e) {}
       const revBar = document.getElementById("mobileReviewBar");
       if (revBar) revBar.classList.toggle("is-hidden", tab !== "review");
+      const statPill = document.getElementById("allSummaryStat");
+      if (statPill) statPill.classList.toggle("show", tab === "all");
       const mw = document.getElementById("mainWrap");
       if (mw) mw.scrollTop = 0;
       if (window.syncTopbarScrolled) window.syncTopbarScrolled();
