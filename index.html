@@ -2672,7 +2672,7 @@
       left: 0;
       right: 0;
       top: 0;
-      height: max(200px, env(safe-area-inset-top, 0px));
+      height: env(safe-area-inset-top, 0px);
       background: var(--nv-bg-primary);
       pointer-events: none;
       z-index: -1;
@@ -5942,8 +5942,8 @@
       }
       syncBookmarkDom(id, next);
       if (document.getElementById("bookmarkSheet")?.classList.contains("is-open")) renderBookmarkSheet();
-      if (!(payload.type === "character" && next)) {
-        showBanner(next ? "즐겨찾기에 추가됨" : "즐겨찾기에서 해제됨");
+      if (next && payload.type !== "character") {
+        showBanner("즐겨찾기에 추가됨");
       }
 
       google.script.run
