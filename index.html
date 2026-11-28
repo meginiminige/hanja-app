@@ -20,33 +20,43 @@ iOS Safari / PWA 상단 다이나믹 아일랜드·상태바 검정 띠 방지 �
 Apple Native HIG Design System (Warm Amber/Gold #C88A00 + Granular Typography)
 - Preserves 100% of GAS, HanziWriter, Web Speech TTS, Auth, Bookmarks, Shortcuts
 - Platform-distinct layouts: iOS TabBar + Sheet vs macOS Sidebar + Split + Inspector
-========================================================================= /
+========================================================================= */
 :root {
-/ User-Selectable Language Font Families */
+/* User-Selectable Language Font Families */
 --nv-font-ko: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "SF Pro Text", sans-serif;
 --nv-font-simp: "PingFang SC", "Hiragino Sans GB", sans-serif;
 --nv-font-trad: "PingFang TC", "Hiragino Sans CNS", sans-serif;
 --nv-font-pinyin: "SF Mono", "Menlo", monospace;
 --nv-font-num: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+
 /* Granular User-Adjustable Font Sizes & Weights */
 --nv-ui-scale: 1;
 --nv-ui-weight: 500;
+
 --nv-example-size: 23px;
 --nv-example-weight: 400;
+
 --nv-gloss-size: 15px;
 --nv-gloss-weight: 500;
+
 --nv-hanzi-size: 27px;
 --nv-hanzi-weight: 400;
+
 --nv-pinyin-size: 13.5px;
 --nv-pinyin-weight: 600;
+
 --nv-hunum-size: 12px;
 --nv-hunum-weight: 400;
+
 --nv-word-size: 15.5px;
 --nv-word-weight: 600;
+
 --nv-preview-size: 13px;
 --nv-preview-weight: 400;
+
 --nv-tile-size: 46px;
 --nv-tile-gap: 8px;
+
 /* Liquid Glass Controls (Opacity % & Blur px) */
 --nv-glass-queue-alpha: 0.72;
 --nv-glass-queue-blur: 28px;
@@ -56,6 +66,7 @@ Apple Native HIG Design System (Warm Amber/Gold #C88A00 + Granular Typography)
 --nv-glass-header-blur: 24px;
 --nv-glass-tabbar-alpha: 0.78;
 --nv-glass-tabbar-blur: 26px;
+
 /* Palette Tokens (Light — Warm Amber/Gold #C88A00) */
 --nv-bg-primary: #F2F2F7;
 --nv-bg-secondary: #FFFFFF;
@@ -64,25 +75,31 @@ Apple Native HIG Design System (Warm Amber/Gold #C88A00 + Granular Typography)
 --nv-bg-grouped-secondary: #F9F9FB;
 --nv-bg-sidebar: #EBEBF0;
 --nv-bg-inspector: #F7F7FA;
+
 --nv-fill-quaternary: rgba(116, 116, 128, 0.08);
 --nv-fill-tertiary: #E4E4E9;
 --nv-fill-secondary: rgba(120, 120, 128, 0.18);
+
 --nv-separator: #D1D1D6;
 --nv-separator-subtle: rgba(209, 209, 214, 0.65);
+
 --nv-label-primary: #1C1C1E;
 --nv-label-secondary: rgba(28, 28, 30, 0.72);
 --nv-label-tertiary: #8E8E93;
 --nv-label-quaternary: #AEAEB2;
+
 /* Core Amber/Gold Accent */
 --nv-accent: #C88A00;
 --nv-accent-pressed: #AD7700;
 --nv-accent-tint: rgba(200, 138, 0, 0.12);
 --nv-accent-border: rgba(200, 138, 0, 0.36);
 --nv-accent-contrast: #FFFFFF;
+
 /* Semantic System Colors */
 --nv-system-green: #34C759;
 --nv-system-orange: #FF9500;
 --nv-system-red: #FF3B30;
+
 /* Materials & Elevation */
 --nv-material-bar: rgba(242, 242, 247, 0.88);
 --nv-material-popover: rgba(255, 255, 255, 0.94);
@@ -90,6 +107,7 @@ Apple Native HIG Design System (Warm Amber/Gold #C88A00 + Granular Typography)
 --nv-material-saturate: 180%;
 --nv-shadow-popover: 0 10px 28px rgba(0, 0, 0, 0.12), 0 0 0 0.5px rgba(0, 0, 0, 0.12);
 --nv-shadow-sheet: 0 18px 48px rgba(0, 0, 0, 0.20), 0 0 0 0.5px rgba(0, 0, 0, 0.12);
+
 /* Spacing & Radii */
 --nv-sp-1: 4px;
 --nv-sp-2: 8px;
@@ -99,14 +117,17 @@ Apple Native HIG Design System (Warm Amber/Gold #C88A00 + Granular Typography)
 --nv-sp-6: 24px;
 --nv-sp-8: 32px;
 --nv-sp-10: 40px;
+
 --nv-r-sm: 8px;
 --nv-r-md: 12px;
 --nv-r-lg: 14px;
 --nv-r-xl: 22px;
+
 --nv-header-h: 38px;
 --nv-search-h: 48px;
 --nv-sidebar-w: 228px;
 --nv-inspector-w: 272px;
+
 /* Motion */
 --nv-ease-std: cubic-bezier(0.25, 0.1, 0.25, 1);
 --nv-ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
@@ -114,11 +135,13 @@ Apple Native HIG Design System (Warm Amber/Gold #C88A00 + Granular Typography)
 --nv-dur-fast: 150ms;
 --nv-dur-base: 220ms;
 --nv-dur-sheet: 300ms;
+
 /* Stroke Writer Colors */
 --nv-stroke-ink: #1C1C1E;
 --nv-stroke-radical: #C88A00;
 --nv-stroke-outline: #D1D1D6;
 }
+
 body.dark {
 --nv-bg-primary: #000000;
 --nv-bg-secondary: #1C1C1E;
@@ -127,32 +150,41 @@ body.dark {
 --nv-bg-grouped-secondary: #242426;
 --nv-bg-sidebar: #161618;
 --nv-bg-inspector: #18181A;
+
 --nv-fill-quaternary: rgba(118, 118, 128, 0.14);
 --nv-fill-tertiary: #2C2C2E;
 --nv-fill-secondary: rgba(120, 120, 128, 0.32);
+
 --nv-separator: #38383A;
 --nv-separator-subtle: rgba(56, 56, 58, 0.72);
+
 --nv-label-primary: #F5F5F7;
 --nv-label-secondary: rgba(245, 245, 247, 0.72);
 --nv-label-tertiary: #8E8E93;
 --nv-label-quaternary: #636366;
+
 --nv-accent: #E0A100;
 --nv-accent-pressed: #F0B218;
 --nv-accent-tint: rgba(224, 161, 0, 0.18);
 --nv-accent-border: rgba(224, 161, 0, 0.44);
 --nv-accent-contrast: #141108;
+
 --nv-system-green: #30D158;
 --nv-system-orange: #FF9F0A;
 --nv-system-red: #FF453A;
+
 --nv-material-bar: rgba(22, 22, 24, 0.88);
 --nv-material-popover: rgba(34, 34, 36, 0.95);
 --nv-shadow-popover: 0 14px 36px rgba(0, 0, 0, 0.65), 0 0 0 0.5px rgba(255, 255, 255, 0.12);
 --nv-shadow-sheet: 0 22px 56px rgba(0, 0, 0, 0.72), 0 0 0 0.5px rgba(255, 255, 255, 0.14);
+
 --nv-stroke-ink: #F5F5F7;
 --nv-stroke-radical: #E0A100;
 --nv-stroke-outline: #3A3A3C;
 }
+
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
 html, body {
 margin: 0;
 padding: 0;
@@ -170,6 +202,7 @@ letter-spacing: -0.02em;
 -moz-osx-font-smoothing: grayscale;
 -webkit-text-size-adjust: 100%;
 }
+
 /* Script / Language Font Rules */
 .nv-zh-simp {
 font-family: var(--nv-font-simp);
@@ -192,6 +225,7 @@ letter-spacing: -0.01em;
 font-family: var(--nv-font-num);
 font-variant-numeric: tabular-nums;
 }
+
 button, input, textarea, select {
 font-family: inherit;
 color: inherit;
@@ -208,6 +242,7 @@ transform var(--nv-dur-fast) var(--nv-ease-spring);
 }
 button:active { opacity: 0.6; }
 button:disabled { opacity: 0.35; pointer-events: none; }
+
 /* Icons */
 .nv-ico {
 width: 19px;
@@ -219,6 +254,7 @@ flex-shrink: 0;
 .nv-ico-sm { width: 15px; height: 15px; }
 .nv-ico-lg { width: 21px; height: 21px; }
 .nv-ico-fill.is-active { fill: currentColor; }
+
 /* Top Progress Bar */
 .nv-top-progress {
 position: fixed;
@@ -239,6 +275,7 @@ transform 420ms var(--nv-ease-spring);
 opacity: 1;
 transform: scaleX(1);
 }
+
 /* Toast Banner */
 .nv-toast {
 position: fixed;
@@ -266,6 +303,7 @@ transform var(--nv-dur-base) var(--nv-ease-spring);
 opacity: 1;
 transform: translateX(-50%) translateY(0) scale(1);
 }
+
 /* Auth Gate */
 .nv-auth-gate {
 position: fixed;
@@ -317,6 +355,7 @@ margin-top: var(--nv-sp-2);
 font-size: 13px;
 color: var(--nv-system-red);
 }
+
 /* =========================================================================
 App Shell: Mobile Header + Desktop macOS Sidebar & Toolbar
 ========================================================================= */
@@ -327,6 +366,7 @@ height: 100%;
 height: 100dvh;
 overflow: hidden;
 }
+
 /* macOS Native Sidebar (Hidden on Mobile < 960px) */
 .nv-mac-sidebar {
 display: none;
@@ -401,6 +441,7 @@ font-weight: 600;
 color: var(--nv-label-tertiary);
 }
 .nv-mac-nav-btn.is-active .nv-mac-nav-badge { color: var(--nv-accent); }
+
 .nv-mac-queue-mini {
 display: flex;
 flex-direction: column;
@@ -430,6 +471,7 @@ white-space: nowrap;
 overflow: hidden;
 text-overflow: ellipsis;
 }
+
 .nv-mac-side-footer {
 padding: 10px 14px;
 border-top: 0.5px solid var(--nv-separator);
@@ -439,6 +481,7 @@ justify-content: space-between;
 font-size: 12px;
 color: var(--nv-label-tertiary);
 }
+
 .nv-main-column {
 flex: 1;
 min-width: 0;
@@ -447,6 +490,7 @@ display: flex;
 flex-direction: column;
 position: relative;
 }
+
 /* Navigation Bar (iOS UINavigationBar / macOS Window Toolbar) */
 .nv-header {
 position: fixed;
@@ -504,6 +548,7 @@ color: var(--nv-accent);
 font-size: 12.5px;
 font-weight: 700;
 }
+
 .nv-header-center {
 justify-self: center;
 display: flex;
@@ -524,6 +569,7 @@ pointer-events: none;
 opacity: 1;
 transform: translateY(0);
 }
+
 .nv-header-right {
 justify-self: end;
 display: inline-flex;
@@ -547,6 +593,7 @@ opacity: 1;
 .nv-icon-btn.is-bookmarked {
 color: var(--nv-accent);
 }
+
 .nv-mac-toolbar-group {
 display: none;
 align-items: center;
@@ -571,6 +618,7 @@ border-color: var(--nv-accent-border);
 color: var(--nv-accent);
 font-weight: 600;
 }
+
 /* Activity Spinner */
 .nv-spinner {
 display: none;
@@ -606,6 +654,7 @@ animation: nvSpinFade 900ms linear infinite;
 0% { opacity: 1; }
 100% { opacity: 0.18; }
 }
+
 /* Floating Phonetic Series Context Bar */
 .nv-series-strip {
 position: fixed;
@@ -676,6 +725,7 @@ flex-shrink: 0;
 }
 .nv-bulk-toggle-btn.is-visible { display: inline-flex; }
 .nv-bulk-toggle-btn.is-expanded { background: var(--nv-accent-tint); }
+
 /* Main Scrollable Workspace */
 .nv-workspace {
 position: relative;
@@ -688,6 +738,7 @@ overflow-x: clip;
 padding: calc(env(safe-area-inset-top, 0px) + var(--nv-header-h) + var(--nv-sp-2)) var(--nv-sp-4) 124px;
 background: var(--nv-bg-primary);
 }
+
 .nv-page { display: none; }
 .nv-page.is-active {
 display: block;
@@ -697,6 +748,7 @@ animation: nvPageEnter var(--nv-dur-fast) var(--nv-ease-std) both;
 from { opacity: 0.45; transform: translateY(3px); }
 to { opacity: 1; transform: translateY(0); }
 }
+
 /* Large Title Header */
 .nv-page-head {
 display: flex;
@@ -717,6 +769,7 @@ display: inline-flex;
 align-items: center;
 gap: var(--nv-sp-1);
 }
+
 /* Grouped List & Action Primitives */
 .nv-section-label-row {
 display: flex;
@@ -736,6 +789,7 @@ font-size: calc(12.5px * var(--nv-ui-scale));
 font-weight: 700;
 color: var(--nv-accent);
 }
+
 .nv-grouped-list {
 background: var(--nv-bg-grouped);
 border-radius: var(--nv-r-md);
@@ -743,6 +797,7 @@ border: 0.5px solid var(--nv-separator);
 overflow: hidden;
 margin-bottom: var(--nv-sp-4);
 }
+
 .nv-list-action-btn {
 width: 100%;
 min-height: 44px;
@@ -771,6 +826,7 @@ height: 0.5px;
 background: var(--nv-separator);
 pointer-events: none;
 }
+
 /* Native Buttons */
 .nv-btn {
 min-height: 42px;
@@ -816,6 +872,7 @@ border-radius: 6px;
 font-size: 12.5px;
 }
 .nv-btn-block { width: 100%; }
+
 /* Accordion Disclosure */
 .nv-disclosure {
 display: grid;
@@ -829,6 +886,7 @@ grid-template-rows: 1fr;
 opacity: 1;
 }
 .nv-disclosure-inner { overflow: hidden; }
+
 /* =========================================================================
 Review Screen
 ========================================================================= */
@@ -890,6 +948,7 @@ cursor: pointer;
 box-decoration-break: clone;
 -webkit-box-decoration-break: clone;
 }
+
 .nv-reading-toolbar {
 display: flex;
 align-items: center;
@@ -903,6 +962,7 @@ display: inline-flex;
 align-items: center;
 gap: var(--nv-sp-1);
 }
+
 .nv-audio-btn {
 width: 32px;
 height: 32px;
@@ -917,6 +977,7 @@ flex-shrink: 0;
 background: var(--nv-accent);
 color: var(--nv-accent-contrast);
 }
+
 .nv-audio-scrubber {
 display: none;
 align-items: center;
@@ -937,6 +998,7 @@ background: var(--nv-fill-tertiary);
 padding: 0 var(--nv-sp-2);
 font-size: 12px;
 }
+
 .nv-explanation-box {
 padding: var(--nv-sp-3) 0 var(--nv-sp-2);
 font-family: var(--nv-font-ko);
@@ -955,6 +1017,7 @@ color: var(--nv-label-secondary);
 line-height: 1.68;
 white-space: pre-wrap;
 }
+
 /* Character Selector Row */
 .nv-char-selector {
 display: flex;
@@ -991,6 +1054,7 @@ border-color: var(--nv-accent);
 color: var(--nv-accent-contrast);
 font-weight: 700;
 }
+
 .nv-slide-next { animation: nvSlideNext var(--nv-dur-base) var(--nv-ease-spring); }
 .nv-slide-prev { animation: nvSlidePrev var(--nv-dur-base) var(--nv-ease-spring); }
 .nv-slide-out { animation: nvSlideOut var(--nv-dur-fast) var(--nv-ease-std) forwards; }
@@ -1005,6 +1069,7 @@ to { opacity: 1; transform: translateX(0); }
 @keyframes nvSlideOut {
 to { opacity: 0; transform: translateX(-16px); }
 }
+
 /* =========================================================================
 CORE LEARNING UX: Phonetic Series Section & Character Rows
 ========================================================================= */
@@ -1048,6 +1113,7 @@ border-bottom: 0.5px solid var(--nv-separator);
 .nv-series-subbar.has-pending {
 background: var(--nv-accent-tint);
 }
+
 .nv-char-row {
 position: relative;
 background: var(--nv-bg-grouped);
@@ -1068,6 +1134,7 @@ pointer-events: none;
 }
 .nv-char-row.is-target { background: var(--nv-accent-tint); }
 .nv-char-row.is-pass { opacity: 0.48; }
+
 /* Apple iOS Native Swipe-to-Reveal Action on Character Row */
 .nv-char-row.has-swipe-action {
 padding: 0;
@@ -1128,6 +1195,7 @@ letter-spacing: -0.01em;
 .nv-char-swipe-btn:active {
 opacity: 0.82;
 }
+
 .nv-char-row-top {
 display: flex;
 align-items: center;
@@ -1135,12 +1203,14 @@ justify-content: space-between;
 gap: var(--nv-sp-3);
 cursor: pointer;
 }
+
 .nv-hanzi-freq-cluster {
 display: inline-flex;
 align-items: center;
 gap: 9px;
 flex-shrink: 0;
 }
+
 .nv-stroke-box {
 width: calc(var(--nv-hanzi-size) + 19px);
 height: calc(var(--nv-hanzi-size) + 19px);
@@ -1160,6 +1230,7 @@ font-size: var(--nv-hanzi-size);
 font-weight: var(--nv-hanzi-weight);
 line-height: 1;
 }
+
 .nv-freq-badge {
 display: inline-flex;
 align-items: center;
@@ -1181,6 +1252,7 @@ background: var(--nv-fill-tertiary);
 color: var(--nv-label-quaternary);
 font-size: 10.5px;
 }
+
 .nv-row-meta-right {
 margin-left: auto;
 max-width: 44%;
@@ -1208,6 +1280,7 @@ overflow: hidden;
 text-overflow: ellipsis;
 max-width: 100%;
 }
+
 .nv-char-core-gloss {
 font-family: var(--nv-font-ko);
 font-size: var(--nv-gloss-size);
@@ -1215,6 +1288,7 @@ font-weight: var(--nv-gloss-weight);
 line-height: 1.52;
 color: var(--nv-label-primary);
 }
+
 .nv-radical-tag {
 display: inline-block;
 padding: 0 5px;
@@ -1224,6 +1298,7 @@ color: var(--nv-label-primary);
 font-weight: 600;
 cursor: pointer;
 }
+
 .nv-words-panel {
 padding: 9px 11px;
 border-radius: 9px;
@@ -1274,6 +1349,7 @@ align-items: center;
 gap: 2px;
 flex-shrink: 0;
 }
+
 .nv-word-reveal {
 display: none;
 padding: 6px 9px;
@@ -1306,6 +1382,7 @@ font-size: calc(var(--nv-gloss-size) * 0.9);
 font-weight: var(--nv-gloss-weight);
 color: var(--nv-label-secondary);
 }
+
 .nv-example-preview-row {
 padding-top: 7px;
 border-top: 0.5px solid var(--nv-separator-subtle);
@@ -1333,6 +1410,7 @@ overflow: visible;
 text-overflow: unset;
 color: var(--nv-label-primary);
 }
+
 /* =========================================================================
 Input Screen
 ========================================================================= */
@@ -1354,6 +1432,7 @@ display: block;
 }
 .nv-textarea:focus { outline: none; }
 .nv-textarea::placeholder { color: var(--nv-label-tertiary); }
+
 .nv-tile-grid {
 max-height: 260px;
 overflow-y: auto;
@@ -1405,6 +1484,7 @@ background: var(--nv-accent);
 .nv-tile.is-selected .nv-tile-star-dot {
 background: var(--nv-accent-contrast);
 }
+
 .nv-inline-add-row {
 display: flex;
 align-items: center;
@@ -1423,6 +1503,7 @@ font-size: 15px;
 }
 .nv-inline-add-input:focus { outline: none; }
 .nv-inline-add-input::placeholder { color: var(--nv-label-tertiary); }
+
 .nv-history-row {
 padding: var(--nv-sp-3) var(--nv-sp-4);
 position: relative;
@@ -1447,6 +1528,7 @@ color: var(--nv-label-tertiary);
 }
 .nv-status-done { color: var(--nv-system-green); font-weight: 600; }
 .nv-status-pending { color: var(--nv-accent); font-weight: 600; }
+
 /* =========================================================================
 All Characters Screen
 ========================================================================= */
@@ -1507,6 +1589,7 @@ align-items: center;
 justify-content: center;
 }
 .nv-search-clear.is-visible { display: inline-flex; }
+
 .nv-filter-row {
 display: flex;
 align-items: center;
@@ -1544,6 +1627,7 @@ font-size: 13px;
 font-weight: 500;
 }
 .nv-scope-btn.is-active { font-weight: 600; }
+
 .nv-recent-queries {
 display: none;
 flex-wrap: wrap;
@@ -1559,6 +1643,7 @@ background: var(--nv-fill-tertiary);
 color: var(--nv-label-secondary);
 font-size: 13px;
 }
+
 .nv-series-index-list {
 background: var(--nv-bg-grouped);
 border-radius: var(--nv-r-lg);
@@ -1685,6 +1770,7 @@ padding: var(--nv-sp-4) var(--nv-sp-3) var(--nv-sp-6);
 font-size: 13px;
 color: var(--nv-label-tertiary);
 }
+
 /* Floating Review Bar + Native iOS TabBar */
 .nv-review-dock {
 position: fixed;
@@ -1724,6 +1810,7 @@ padding: 0;
 background: transparent;
 color: var(--nv-accent);
 }
+
 .nv-tabbar {
 position: fixed;
 left: 0;
@@ -1755,6 +1842,7 @@ font-weight: 500;
 line-height: 1.1;
 }
 .nv-tab-btn.is-active .nv-tab-label { font-weight: 600; }
+
 /* Popover Menus */
 .nv-popover {
 position: fixed;
@@ -1829,6 +1917,7 @@ color: var(--nv-accent);
 opacity: 0;
 }
 .nv-popover-item.is-checked .nv-popover-check { opacity: 1; }
+
 .nv-queue-list {
 overflow-y: auto;
 max-height: calc(58dvh - 44px);
@@ -1859,6 +1948,7 @@ white-space: nowrap;
 overflow: hidden;
 text-overflow: ellipsis;
 }
+
 /* Sheets & Modals */
 .nv-sheet-backdrop {
 position: fixed;
@@ -1896,6 +1986,7 @@ animation: nvSheetDown var(--nv-dur-fast) var(--nv-ease-std) both;
 @keyframes nvFadeOut { from { opacity: 1; } to { opacity: 0; } }
 @keyframes nvSheetUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 @keyframes nvSheetDown { from { transform: translateY(0); } to { transform: translateY(100%); } }
+
 .nv-sheet-header {
 position: relative;
 flex-shrink: 0;
@@ -1934,6 +2025,7 @@ padding: var(--nv-sp-3) var(--nv-sp-4) calc(var(--nv-sp-3) + env(safe-area-inset
 background: var(--nv-bg-secondary);
 border-top: 0.5px solid var(--nv-separator);
 }
+
 /* Granular Settings Controls */
 .nv-settings-stack {
 display: flex;
@@ -1978,6 +2070,7 @@ bottom: 0;
 height: 0.5px;
 background: var(--nv-separator);
 }
+
 .nv-dual-slider-row {
 padding: 11px var(--nv-sp-4);
 display: flex;
@@ -2022,6 +2115,7 @@ justify-content: space-between;
 font-size: 11.5px;
 color: var(--nv-label-tertiary);
 }
+
 .nv-slider-row {
 display: flex;
 flex-direction: column;
@@ -2058,6 +2152,7 @@ background: var(--nv-fill-tertiary);
 padding: 0 var(--nv-sp-2);
 font-size: 13px;
 }
+
 input[type="range"] {
 -webkit-appearance: none;
 appearance: none;
@@ -2078,6 +2173,7 @@ background: #FFFFFF;
 border: 0.5px solid var(--nv-separator);
 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
 }
+
 /* Native UISwitch */
 .nv-switch {
 position: relative;
@@ -2112,6 +2208,7 @@ background: var(--nv-accent);
 .nv-switch input:checked + .nv-switch-track::after {
 transform: translateX(20px);
 }
+
 /* Bookmarks & Choice Options */
 #bookmarkSheet .nv-seg-3 {
 grid-template-columns: repeat(4, 1fr);
@@ -2149,6 +2246,7 @@ font-size: 13px;
 font-weight: 500;
 }
 .nv-seg-3-btn.is-active { font-weight: 600; }
+
 .nv-bookmark-row {
 background: var(--nv-bg-secondary);
 border-radius: var(--nv-r-md);
@@ -2181,6 +2279,7 @@ gap: var(--nv-sp-3);
 background: var(--nv-accent-tint);
 border-color: var(--nv-accent);
 }
+
 /* Empty & Skeleton States */
 .nv-empty {
 padding: var(--nv-sp-10) var(--nv-sp-4);
@@ -2197,6 +2296,7 @@ font-weight: 600;
 color: var(--nv-label-secondary);
 }
 .nv-empty-sub { font-size: 13px; }
+
 .nv-skeleton-list {
 padding: var(--nv-sp-4);
 display: flex;
@@ -2210,6 +2310,7 @@ background: var(--nv-fill-tertiary);
 }
 .nv-skeleton-bar.is-wide { height: 22px; width: 85%; }
 .nv-skeleton-bar.is-mid { width: 62%; }
+
 .nv-kbd-row {
 display: flex;
 align-items: center;
@@ -2241,7 +2342,9 @@ font-size: 11px;
 font-weight: 600;
 color: var(--nv-label-secondary);
 }
+
 .nv-desktop-only { display: none; }
+
 /* =========================================================================
 Responsive Breakpoints: Tablet & macOS Native Desktop (1280px & 1440px+)
 ========================================================================= */
@@ -2258,13 +2361,15 @@ border-right: 0.5px solid var(--nv-separator);
 border-right: none;
 }
 }
+
 @media (min-width: 960px) {
-:root { --nv-header-h: 48px; }
+:root { --nv-header-h: 44px; }
 .nv-mac-sidebar { display: flex; }
 .nv-mac-toolbar-group { display: inline-flex; }
 .nv-inline-title { display: none; }
 .nv-desktop-only { display: block; }
 .nv-tabbar, .nv-review-dock { display: none; }
+
 .nv-header {
 left: var(--nv-sidebar-w);
 background: var(--nv-bg-secondary);
@@ -2309,6 +2414,7 @@ color: var(--nv-label-tertiary);
 left: var(--nv-sidebar-w);
 padding: var(--nv-sp-2) var(--nv-sp-5);
 }
+
 .nv-sheet-backdrop {
 align-items: center;
 padding: var(--nv-sp-6);
@@ -2320,6 +2426,7 @@ max-height: 86dvh;
 .nv-sheet-header::before { display: none; }
 .nv-sheet-header { padding: var(--nv-sp-3) var(--nv-sp-4); }
 }
+
 @media (min-width: 960px) and (max-width: 1290px) {
 :root { --nv-sidebar-w: 204px; }
 .nv-review-split {
@@ -2327,18 +2434,21 @@ grid-template-columns: minmax(330px, 370px) minmax(0, 1fr);
 gap: var(--nv-sp-4);
 }
 }
+
 @media (prefers-reduced-motion: reduce) {
 *, *::before, *::after {
 animation-duration: 0.01ms !important;
 transition-duration: 0.01ms !important;
 }
 }
+
 /* =========================================================================
 V4 PATCHES
 ========================================================================= */
 :root {
 --nv-hanzi-size: 34px;
 }
+
 html {
 position: static !important;
 width: 100% !important;
@@ -2348,6 +2458,7 @@ overflow-x: clip !important;
 overflow-y: visible !important;
 background-color: var(--nv-bg-primary);
 }
+
 body {
 position: static !important;
 width: 100% !important;
@@ -2357,6 +2468,7 @@ overflow-x: clip !important;
 overflow-y: visible !important;
 background-color: var(--nv-bg-primary);
 }
+
 .nv-app-shell {
 position: static !important;
 width: 100% !important;
@@ -2365,17 +2477,19 @@ min-height: 100lvh !important;
 display: block !important;
 overflow: visible !important;
 }
+
 .nv-main-column {
 width: 100% !important;
 height: auto !important;
 display: block !important;
 overflow: visible !important;
 }
+
 .nv-header,
 .nv-header.is-scrolled,
 body.has-series-strip .nv-header,
 body.is-all-docked .nv-header {
-position: fixed !important;
+position: sticky !important;
 top: 0 !important;
 left: 0 !important;
 right: 0 !important;
@@ -2390,12 +2504,14 @@ z-index: 120 !important;
 body.has-series-strip .nv-header {
 border-bottom-color: var(--nv-separator) !important;
 }
+
 .nv-workspace {
 width: 100% !important;
 height: auto !important;
 overflow: visible !important;
-padding: calc(env(safe-area-inset-top, 0px) + var(--nv-header-h) + 4px) var(--nv-sp-4) 136px !important;
+padding: var(--nv-sp-1) var(--nv-sp-4) 136px !important;
 }
+
 .nv-tabbar {
 position: fixed !important;
 left: 0 !important;
@@ -2428,9 +2544,11 @@ gap: 2px !important;
 padding: 0 !important;
 margin: 0 !important;
 }
+
 .nv-review-dock {
 bottom: 74px !important;
 }
+
 .nv-series-strip {
 position: fixed !important;
 left: 0;
@@ -2456,6 +2574,7 @@ opacity: 1 !important;
 pointer-events: auto !important;
 transform: translateY(0) !important;
 }
+
 .nv-header-search-btn {
 width: 34px;
 height: 34px;
@@ -2485,6 +2604,7 @@ backdrop-filter: none !important;
 -webkit-backdrop-filter: none !important;
 border-bottom: none !important;
 }
+
 .nv-index-root {
 font-size: 26px !important;
 font-weight: 700 !important;
@@ -2495,10 +2615,12 @@ font-size: 18px !important;
 line-height: 1.62 !important;
 letter-spacing: 0.02em;
 }
+
 .nv-stroke-box {
 width: calc(var(--nv-hanzi-size) + 20px) !important;
 height: calc(var(--nv-hanzi-size) + 20px) !important;
 }
+
 .nv-radical-inline {
 display: inline-flex;
 align-items: center;
@@ -2512,16 +2634,19 @@ font-weight: 300 !important;
 cursor: pointer;
 white-space: nowrap;
 }
+
 .nv-row-pinyin {
 color: var(--nv-label-tertiary) !important;
 font-weight: var(--nv-pinyin-weight);
 }
+
 .nv-char-detail-wrap {
 display: flex;
 flex-direction: column;
 gap: 9px;
 padding-top: 9px;
 }
+
 .nv-words-trigger {
 flex: 1;
 min-width: 0;
@@ -2547,6 +2672,7 @@ color: var(--nv-accent);
 flex-direction: column !important;
 gap: 4px !important;
 }
+
 .nv-target-char-mark {
 font-weight: 500 !important;
 color: var(--nv-label-primary) !important;
@@ -2564,6 +2690,7 @@ border-bottom: 2px solid var(--nv-accent) !important;
 border-radius: 5px !important;
 padding: 1px 4px !important;
 }
+
 @media (min-width: 960px) {
 html, body {
 height: 100dvh !important;
@@ -2606,9 +2733,10 @@ padding: var(--nv-sp-4) var(--nv-sp-5) var(--nv-sp-10) !important;
 display: none !important;
 }
 }
+
 /* =========================================================================
 V5 PATCHES
-1) 최상단 바: 상태바 포함 단일 리퀴드 글라스 + 전경 텍스트/아이콘 블러 방지
+1) 최상단 바: 상태바 포함 단일 리퀴드 글라스 + 텍스트/아이콘 블러 방지
 2) 해성계 집합 배너: 크기·글씨 확대
 3) 접기 스크롤 보정 시 애니메이션 일시 정지용 클래스
 ========================================================================= */
@@ -2642,11 +2770,9 @@ pointer-events: none;
 background-color: rgba(242, 242, 247, var(--nv-glass-header-alpha));
 -webkit-backdrop-filter: saturate(190%) blur(var(--nv-glass-header-blur));
 backdrop-filter: saturate(190%) blur(var(--nv-glass-header-blur));
-border-bottom: 0.5px solid rgba(255, 255, 255, 0.45);
 }
 body.dark .nv-header-glass {
 background-color: rgba(18, 18, 20, var(--nv-glass-header-alpha));
-border-bottom-color: rgba(255, 255, 255, 0.14);
 }
 @media (min-width: 960px) {
 .nv-header-glass {
@@ -2658,10 +2784,11 @@ z-index: 0;
 }
 .nv-header-inner {
 position: relative;
-z-index: 121;
-transform: translateZ(0);
+z-index: 2;
 will-change: transform;
+transform: translateZ(0);
 }
+
 :root { --nv-strip-h: 52px; }
 .nv-series-strip {
 height: var(--nv-strip-h) !important;
@@ -2696,16 +2823,19 @@ height: 38px !important;
 width: 20px !important;
 height: 20px !important;
 }
+
 /* 접기 보정 중에는 펼침/접힘 애니메이션을 끄고 즉시 최종 레이아웃으로 */
 body.nv-no-anim .nv-disclosure,
 body.nv-no-anim .nv-chevron {
 transition: none !important;
 }
 </style>
+
 </head>
 <body>
 <div id="topProgress" class="nv-top-progress" aria-hidden="true"></div>
 <div id="toastBanner" class="nv-toast" role="status" aria-live="polite"></div>
+
 <!-- Floating Phonetic Series Context Bar -->
 <div id="seriesContextStrip" class="nv-series-strip" aria-live="polite">
 <div id="seriesContextScroll" class="nv-series-strip-scroll"></div>
@@ -2713,6 +2843,7 @@ transition: none !important;
 <svg class="nv-ico nv-ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
 </button>
 </div>
+
 <!-- Queue Popover -->
 <div id="queuePopover" class="nv-popover" role="dialog" aria-label="복습 대기열">
 <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:0.5px solid var(--nv-separator);">
@@ -2721,6 +2852,7 @@ transition: none !important;
 </div>
 <div id="queuePopoverList" class="nv-queue-list"></div>
 </div>
+
 <!-- Overflow Action Menu -->
 <div id="overflowMenu" class="nv-popover" role="menu" aria-label="추가 작업">
 <button id="menuStrokeToggle" class="nv-popover-item" role="menuitem" onclick="toggleStrokeAuto()">
@@ -2764,6 +2896,7 @@ transition: none !important;
 </span>
 </button>
 </div>
+
 <!-- Character Reanalysis Result Sheet -->
 <div id="reanalysisSheet" class="nv-sheet-backdrop" onclick="if(event.target===this) closeReanalysisSheet()">
 <div class="nv-sheet" style="max-width:560px;">
@@ -2774,6 +2907,7 @@ transition: none !important;
 <div id="reanalysisResultBody" class="nv-sheet-body"></div>
 </div>
 </div>
+
 <!-- Secret Key Auth Overlay -->
 <div id="authGate" class="nv-auth-gate" aria-modal="true" role="dialog">
 <div class="nv-auth-panel">
@@ -2784,6 +2918,7 @@ transition: none !important;
 <div id="authErrorMsg" class="nv-auth-error"></div>
 </div>
 </div>
+
 <!-- App Shell -->
 <div class="nv-app-shell">
 <!-- macOS Fixed Sidebar -->
@@ -2792,6 +2927,7 @@ transition: none !important;
 <span class="nv-mac-brand" onclick="scrollCurrentPageTop()">谐声系</span>
 <span id="sidebarQueuePill" class="nv-queue-pill nv-num">0</span>
 </div>
+
 <div class="nv-mac-side-body">
 <div>
 <div class="nv-mac-side-label">학습</div>
@@ -2826,16 +2962,19 @@ transition: none !important;
 </button>
 </nav>
 </div>
+
 <div style="flex:1;min-height:0;display:flex;flex-direction:column;">
 <div class="nv-mac-side-label">복습 대기열</div>
 <div id="macSidebarQueueList" class="nv-mac-queue-mini"></div>
 </div>
 </div>
+
 <div class="nv-mac-side-footer">
 <button class="nv-btn-plain" style="padding:0;font-size:12px;" onclick="syncFromServer()">시트 동기화</button>
 <button class="nv-btn-plain" style="padding:0;font-size:12px;" onclick="toggleSettingsSheet(true)">설정…</button>
 </div>
 </aside>
+
 <!-- Main Column -->
 <div class="nv-main-column">
 <!-- Top Navigation Bar -->
@@ -2851,9 +2990,11 @@ transition: none !important;
 <span></span><span></span><span></span><span></span><span></span><span></span>
 </div>
 </div>
+
 <div class="nv-header-center">
 <span id="headerCollapsedTitle" class="nv-inline-title">복습</span>
 </div>
+
 <div class="nv-header-right">
 <div class="nv-mac-toolbar-group">
 <button id="macStrokeToolBtn" class="nv-mac-tool-btn" onclick="toggleStrokeAuto()">획순 자동</button>
@@ -2872,6 +3013,7 @@ transition: none !important;
 </div>
 </div>
 </header>
+
 <!-- Primary Scrollable Workspace -->
 <main id="workspaceScroll" class="nv-workspace">
 <!-- 1. Review Page -->
@@ -2879,6 +3021,7 @@ transition: none !important;
 <div class="nv-page-head">
 <h1 class="nv-large-title">복습</h1>
 </div>
+
 <div class="nv-review-split">
 <div class="nv-sticky-col">
 <div class="nv-review-meta-bar">
@@ -2891,6 +3034,7 @@ transition: none !important;
 <button id="reviewOrderBtn" class="nv-btn-plain" onclick="toggleReviewOrder()">오래된순</button>
 </div>
 </div>
+
 <div class="nv-reading-surface">
 <div id="reviewCardBody">
 <div class="nv-skeleton-list">
@@ -2899,11 +3043,13 @@ transition: none !important;
 <div class="nv-skeleton-bar"></div>
 </div>
 </div>
+
 <div id="audioScrubberBar" class="nv-audio-scrubber" aria-label="발음 재생 위치 및 음성 선택">
 <span id="audioPercentLabel" class="nv-num" style="min-width:34px;">0%</span>
 <input id="audioScrubRange" class="nv-audio-range" type="range" min="0" max="100" step="1" value="0" oninput="scrubSpeech(this.value)" />
 <select id="audioVoiceSelect" class="nv-voice-picker" onchange="changeVoiceSelection(this.value)" title="중국어 음성 선택"></select>
 </div>
+
 <div class="nv-desktop-only nv-desktop-review-controls">
 <div style="display:grid;grid-template-columns:48px 1fr 48px;gap:8px;">
 <button class="nv-btn nv-btn-tinted" style="padding:0;" onclick="stepReviewItem(-1)" aria-label="이전">
@@ -2924,14 +3070,17 @@ transition: none !important;
 </div>
 </div>
 </div>
+
 <div id="reviewSeriesContainer"></div>
 </div>
 </section>
+
 <!-- 2. Input Page -->
 <section id="page-input" class="nv-page">
 <div class="nv-page-head">
 <h1 class="nv-large-title">입력</h1>
 </div>
+
 <div class="nv-input-split">
 <div>
 <div class="nv-section-label-row">
@@ -2941,6 +3090,7 @@ transition: none !important;
 <button class="nv-btn-plain" style="color:var(--nv-label-tertiary);" onclick="resetInputForm()">비우기</button>
 </div>
 </div>
+
 <div class="nv-grouped-list">
 <textarea id="inputSentenceArea" class="nv-textarea nv-zh-simp" placeholder="중국어 예문을 입력하거나 붙여넣으세요…"></textarea>
 <button id="translateActionBtn" class="nv-list-action-btn" style="border-top:0.5px solid var(--nv-separator);" onclick="translateInputSentence()">
@@ -2949,6 +3099,7 @@ transition: none !important;
 </button>
 <div id="inputTranslationBox" style="display:none;padding:12px 16px 16px;" class="nv-explanation-box"></div>
 </div>
+
 <div class="nv-section-label-row">
 <span class="nv-section-label">대상 한자</span>
 <div class="nv-head-actions">
@@ -2956,21 +3107,26 @@ transition: none !important;
 <button id="tileScaleBtn" class="nv-btn-plain" onclick="toggleTileScale()">크게</button>
 </div>
 </div>
+
 <div class="nv-grouped-list">
 <div id="inputTileContainer" class="nv-tile-grid">
 <span class="nv-empty-sub" style="padding:8px;">예문을 입력하면 한자가 표시됩니다.</span>
 </div>
+
 <div class="nv-inline-add-row">
 <input id="manualCharField" class="nv-inline-add-input nv-zh-simp" type="text" placeholder="한자 직접 추가…" onkeydown="if(event.key==='Enter'){event.preventDefault();appendManualChars();}" />
 <button class="nv-btn-plain" onclick="appendManualChars()">추가</button>
 </div>
+
 <button id="registerCharsBtn" class="nv-list-action-btn is-primary" onclick="registerSelectedChars()">
 <svg class="nv-ico nv-ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
 <span>한자 등록</span>
 </button>
 </div>
+
 <div id="registeredFeedbackBox" style="display:none;margin-bottom:16px;"></div>
 </div>
+
 <div>
 <div class="nv-section-label-row">
 <span class="nv-section-label">최근 기록</span>
@@ -2982,6 +3138,7 @@ transition: none !important;
 </button>
 </div>
 </div>
+
 <div id="recentHistoryList" class="nv-grouped-list">
 <div class="nv-skeleton-list">
 <div class="nv-skeleton-bar is-wide"></div>
@@ -2991,11 +3148,13 @@ transition: none !important;
 </div>
 </div>
 </section>
+
 <!-- 3. All Characters Page -->
 <section id="page-all" class="nv-page">
 <div class="nv-page-head">
 <h1 class="nv-large-title">전체표</h1>
 </div>
+
 <div class="nv-search-anchor">
 <div id="allSearchBar" class="nv-search-bar">
 <div class="nv-search-field-wrap">
@@ -3005,6 +3164,7 @@ transition: none !important;
 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.71 12.29a1 1 0 0 1-1.42 1.42L12 13.41l-2.29 2.3a1 1 0 0 1-1.42-1.42L10.59 12l-2.3-2.29a1 1 0 0 1 1.42-1.42L12 10.59l2.29-2.3a1 1 0 0 1 1.42 1.42L13.41 12l2.3 2.29z"/></svg>
 </button>
 </div>
+
 <div class="nv-filter-row">
 <div class="nv-scope-seg" role="tablist" aria-label="전체표 범위">
 <div id="allScopeThumb" class="nv-scope-thumb" aria-hidden="true"></div>
@@ -3012,9 +3172,11 @@ transition: none !important;
 <button id="scopeStarBtn" class="nv-scope-btn" onclick="setStarredFilter(true)">즐겨찾기</button>
 </div>
 </div>
+
 <div id="recentQueryStrip" class="nv-recent-queries"></div>
 </div>
 </div>
+
 <div id="allSeriesContainer"></div>
 <div id="allSummaryLabel" class="nv-summary-footer nv-num"></div>
 </section>
@@ -3036,6 +3198,7 @@ transition: none !important;
 </button>
 </nav>
 </div>
+
 <!-- Floating Review Action Pill (Mobile) -->
 <div id="mobileReviewDock" class="nv-review-dock">
 <button class="nv-btn nv-btn-tinted" onclick="stepReviewItem(-1)" aria-label="이전">
@@ -3046,6 +3209,9 @@ transition: none !important;
 <svg class="nv-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
 </button>
 </div>
+
+
+
 <!-- Settings Sheet (Granular Typography + Language Fonts + All Controls) -->
 <div id="settingsSheet" class="nv-sheet-backdrop" onclick="if(event.target===this) toggleSettingsSheet(false)">
 <div class="nv-sheet">
@@ -3102,6 +3268,7 @@ transition: none !important;
 </div>
 </div>
 </div>
+
 <!-- 2. Granular Text Size & Weight Controls -->
 <div class="nv-settings-block">
 <div class="nv-settings-heading">텍스트별 크기 및 글씨 두께</div>
@@ -3119,6 +3286,7 @@ transition: none !important;
 </div>
 </div>
 </div>
+
 <div class="nv-dual-slider-row">
 <div class="nv-dual-head"><span>한국어 해석 및 해설</span><span id="valGroupGloss" class="nv-dual-val nv-num">15px · 500</span></div>
 <div class="nv-dual-grid">
@@ -3132,6 +3300,7 @@ transition: none !important;
 </div>
 </div>
 </div>
+
 <div class="nv-dual-slider-row">
 <div class="nv-dual-head"><span>한자 표제자</span><span id="valGroupHanzi" class="nv-dual-val nv-num">34px · 400</span></div>
 <div class="nv-dual-grid">
@@ -3145,6 +3314,7 @@ transition: none !important;
 </div>
 </div>
 </div>
+
 <div class="nv-dual-slider-row">
 <div class="nv-dual-head"><span>병음 (Pinyin)</span><span id="valGroupPinyin" class="nv-dual-val nv-num">13.5px · 600</span></div>
 <div class="nv-dual-grid">
@@ -3158,6 +3328,7 @@ transition: none !important;
 </div>
 </div>
 </div>
+
 <div class="nv-dual-slider-row">
 <div class="nv-dual-head"><span>훈음</span><span id="valGroupHunum" class="nv-dual-val nv-num">12px · 400</span></div>
 <div class="nv-dual-grid">
@@ -3171,6 +3342,7 @@ transition: none !important;
 </div>
 </div>
 </div>
+
 <div class="nv-dual-slider-row">
 <div class="nv-dual-head"><span>예시 단어</span><span id="valGroupWord" class="nv-dual-val nv-num">15.5px · 600</span></div>
 <div class="nv-dual-grid">
@@ -3184,6 +3356,7 @@ transition: none !important;
 </div>
 </div>
 </div>
+
 <div class="nv-dual-slider-row">
 <div class="nv-dual-head"><span>예문 한 줄 미리보기</span><span id="valGroupPreview" class="nv-dual-val nv-num">13px · 400</span></div>
 <div class="nv-dual-grid">
@@ -3197,6 +3370,7 @@ transition: none !important;
 </div>
 </div>
 </div>
+
 <div class="nv-dual-slider-row">
 <div class="nv-dual-head"><span>UI 라벨 배율 · 두께</span><span id="valGroupUi" class="nv-dual-val nv-num">100% · 500</span></div>
 <div class="nv-dual-grid">
@@ -3212,6 +3386,7 @@ transition: none !important;
 </div>
 </div>
 </div>
+
 <!-- 3. Learning, Speech & Tile Geometry -->
 <div class="nv-settings-block">
 <div class="nv-settings-heading">학습 · 음성 · 입력 타일</div>
@@ -3253,6 +3428,7 @@ transition: none !important;
 </div>
 </div>
 </div>
+
 <!-- 4. Liquid Glass Controls -->
 <div class="nv-settings-block">
 <div class="nv-settings-heading">리퀴드 글라스 (투명도 · 블러)</div>
@@ -3270,6 +3446,7 @@ transition: none !important;
 </div>
 </div>
 </div>
+
 <div class="nv-dual-slider-row">
 <div class="nv-dual-head"><span>해성계 집합 배너</span><span id="valGlassStrip" class="nv-dual-val nv-num">72% · 24px</span></div>
 <div class="nv-dual-grid">
@@ -3283,6 +3460,7 @@ transition: none !important;
 </div>
 </div>
 </div>
+
 <div class="nv-dual-slider-row">
 <div class="nv-dual-head"><span>최상단 바</span><span id="valGlassHeader" class="nv-dual-val nv-num">78% · 24px</span></div>
 <div class="nv-dual-grid">
@@ -3296,6 +3474,7 @@ transition: none !important;
 </div>
 </div>
 </div>
+
 <div class="nv-dual-slider-row">
 <div class="nv-dual-head"><span>최하단 바</span><span id="valGlassTabbar" class="nv-dual-val nv-num">78% · 26px</span></div>
 <div class="nv-dual-grid">
@@ -3311,6 +3490,7 @@ transition: none !important;
 </div>
 </div>
 </div>
+
 <!-- 5. Data -->
 <div class="nv-settings-block">
 <div class="nv-settings-heading">데이터</div>
@@ -3324,6 +3504,7 @@ transition: none !important;
 </div>
 </div>
 </div>
+
 <!-- Phonetic Series Detail Sheet -->
 <div id="seriesSheet" class="nv-sheet-backdrop" onclick="if(event.target===this) closeSeriesSheet()">
 <div class="nv-sheet">
@@ -3337,6 +3518,7 @@ transition: none !important;
 <div id="seriesSheetBody" class="nv-sheet-body"></div>
 </div>
 </div>
+
 <!-- Series Selection Sheet for Ambiguous Characters -->
 <div id="seriesChoiceSheet" class="nv-sheet-backdrop" onclick="if(event.target===this) finishSeriesChoice(false)">
 <div class="nv-sheet">
@@ -3351,6 +3533,7 @@ transition: none !important;
 </div>
 </div>
 </div>
+
 <!-- Bookmarks Sheet -->
 <div id="bookmarkSheet" class="nv-sheet-backdrop" onclick="if(event.target===this) closeBookmarkSheet()">
 <div class="nv-sheet">
@@ -3370,6 +3553,7 @@ transition: none !important;
 <div id="bookmarkSheetBody" class="nv-sheet-body"></div>
 </div>
 </div>
+
 <!-- Keyboard Shortcuts Sheet -->
 <div id="shortcutsSheet" class="nv-sheet-backdrop" onclick="if(event.target===this) closeShortcutsSheet()">
 <div class="nv-sheet" style="max-width:480px;">
@@ -3389,12 +3573,14 @@ transition: none !important;
 </div>
 </div>
 </div>
+
 <script>
 const GAS_EXEC_URL = "https://script.google.com/macros/s/AKfycbwAGM27Wz6rdpm4-3e_Mj9QAZctqLpAipqbNB9kVjIJE_COUj824Pqf-GUCzydq7CQA/exec";
 const _params = new URLSearchParams(window.location.search);
 const INITIAL_KEY = (_params.get("k") || "").trim();
 const INITIAL_TEXT = (_params.get("text") || "").trim();
 const DEFAULT_AUTO_EXPAND_MIN = 20;
+
 function createGasClient() {
 let onSuccess = null;
 let onFailure = null;
@@ -3422,6 +3608,7 @@ if (onFailure) onFailure(err);
 return client;
 }
 window.google = { script: { get run() { return createGasClient(); } } };
+
 const SVG_BOOKMARK = '<svg class="nv-ico nv-ico-sm nv-ico-fill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18l-6-4-6 4V4z"/></svg>';
 const SVG_REFRESH = '<svg class="nv-ico nv-ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36L21 8"/><polyline points="21 3 21 8 16 8"/></svg>';
 const SVG_CHEV_DOWN = '<svg class="nv-ico nv-ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>';
@@ -3433,9 +3620,11 @@ const SVG_SPEAKER = '<svg class="nv-ico nv-ico-sm" viewBox="0 0 24 24" fill="non
 const SVG_MOON = '<svg class="nv-ico nv-ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
 const SVG_SUN = '<svg class="nv-ico nv-ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4.5"/><line x1="12" y1="19.5" x2="12" y2="22"/><line x1="4.9" y1="4.9" x2="6.7" y2="6.7"/><line x1="17.3" y1="17.3" x2="19.1" y2="19.1"/><line x1="2" y1="12" x2="4.5" y2="12"/><line x1="19.5" y1="12" x2="22" y2="12"/><line x1="4.9" y1="19.1" x2="6.7" y2="17.3"/><line x1="17.3" y1="6.7" x2="19.1" y2="4.9"/></svg>';
 const SVG_AUTO = '<svg class="nv-ico nv-ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18a9 9 0 0 0 0-18z" fill="currentColor" stroke="none"/></svg>';
+
 const COMMON_HANZI = new Set((
 "的一是不了人我在有他之大以中上到和地也子道出而要于就下得可年生自那后能着事其里所去行家十用天如然作方成者多日都三小二无同法起好看分此心前面又定只主公但因些想把最回太打走住做叫看吃喝睡笑走坐站水火山木石花草手口耳目心身脚男女老少哥姐弟妹朋友同今天明昨早多少大小短高低冷好新快慢前后左右里外白黑一二三四五六七八九十百千万半每什哈"
 ).split(""));
+
 const RADICAL_MEANINGS = {
 "氵":"삼수변 (물 水)","水":"물 수","扌":"재방변 (손 手)","手":"손 수","亻":"사람인변 (사람 人)","人":"사람 인",
 "讠":"말씀언변 (말씀 言)","訁":"말씀언변 (말씀 言)","言":"말씀 언","钅":"쇠금변 (쇠 金)","釒":"쇠금변 (쇠 金)","金":"쇠 금",
@@ -3465,6 +3654,7 @@ const RADICAL_MEANINGS = {
 "冫":"이수변 (얼음 빙)","几":"안석 궤","勹":"쌀 포","匕":"비수 비","亠":"돼지해머리","冖":"민갓머리",
 "八":"여덟 팔","攵":"등글월문 (칠 복)","攴":"칠 복","母":"어미 모","无":"없을 무","曰":"가로 왈"
 };
+
 const DEFAULT_PREFS = {
 fontScale: 100,
 uiWeight: 500,
@@ -3498,6 +3688,7 @@ fontTrad: '"PingFang TC", "Hiragino Sans CNS", sans-serif',
 fontKo: '-apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "SF Pro Text", sans-serif',
 fontPinyin: '"SF Mono", "Menlo", monospace'
 };
+
 function readPrefs() {
 try {
 const raw = JSON.parse(localStorage.getItem("nv_hanja_prefs_v3") || "{}");
@@ -3506,6 +3697,7 @@ return Object.assign({}, DEFAULT_PREFS, raw);
 return Object.assign({}, DEFAULT_PREFS);
 }
 }
+
 const appState = {
 secretKey: "",
 activeTab: localStorage.getItem("nv_active_tab") || "review",
@@ -3550,6 +3742,7 @@ staleTabs: { review: true, input: true, all: true },
 searchDebounce: null,
 prefs: readPrefs()
 };
+
 /* Audio Playback Controller */
 const audioCtl = {
 text: "",
@@ -3560,25 +3753,28 @@ playing: false,
 scrubTimer: null,
 gen: 0
 };
+
 function listZhVoices() {
 if (!("speechSynthesis" in window)) return [];
 const all = window.speechSynthesis.getVoices() || [];
 const zh = all.filter(v => /^zh/i.test(v.lang || ""));
 return zh.length > 0 ? zh : all;
 }
+
 function refreshVoiceSelectors() {
 const picks = [document.getElementById("audioVoiceSelect"), document.getElementById("settingsVoiceSelect")].filter(Boolean);
 if (!picks.length) return;
 const voices = listZhVoices();
 const saved = localStorage.getItem("nv_tts_voice") || "";
 const optionsHtml = voices.length === 0
-? ⁠<option value="">기본 음성</option>⁠
-: voices.map(v => ⁠<option value="${esc(v.voiceURI || v.name)}">${esc(v.name.replace(/^(Microsoft|Apple|Google)\s+/i, ""))} (${esc(v.lang)})</option>⁠).join("");
+? `<option value="">기본 음성</option>`
+: voices.map(v => `<option value="${esc(v.voiceURI || v.name)}">${esc(v.name.replace(/^(Microsoft|Apple|Google)\s+/i, ""))} (${esc(v.lang)})</option>`).join("");
 picks.forEach(sel => {
 sel.innerHTML = optionsHtml;
 if (saved && Array.from(sel.options).some(o => o.value === saved)) sel.value = saved;
 });
 }
+
 function changeVoiceSelection(uri) {
 localStorage.setItem("nv_tts_voice", uri || "");
 [document.getElementById("audioVoiceSelect"), document.getElementById("settingsVoiceSelect")].forEach(sel => {
@@ -3593,10 +3789,12 @@ const startIdx = Math.floor((pct / 100) * Math.max(1, splitSegments(curText).len
 runSpeechFrom(curText, curBtn, startIdx);
 }
 }
+
 function splitSegments(raw) {
 const matches = String(raw || "").match(/[^。！？；.!?;…\r\n]+[。！？；.!?;…\r\n]?/g);
 return (!matches || !matches.length) ? [String(raw || "").trim()] : matches.map(s => s.trim()).filter(Boolean);
 }
+
 function syncAudioScrubber(pct) {
 const bar = document.getElementById("audioScrubberBar");
 const rng = document.getElementById("audioScrubRange");
@@ -3604,8 +3802,9 @@ const lbl = document.getElementById("audioPercentLabel");
 const clamped = Math.max(0, Math.min(100, Math.round(pct)));
 if (bar) bar.classList.toggle("is-visible", audioCtl.playing);
 if (rng) rng.value = String(clamped);
-if (lbl) lbl.textContent = ⁠${clamped}%⁠;
+if (lbl) lbl.textContent = `${clamped}%`;
 }
+
 function stopSpeech() {
 if (audioCtl.scrubTimer) {
 clearTimeout(audioCtl.scrubTimer);
@@ -3622,6 +3821,7 @@ try { window.speechSynthesis.cancel(); } catch (e) {}
 document.querySelectorAll(".nv-audio-btn.is-playing").forEach(b => b.classList.remove("is-playing"));
 syncAudioScrubber(0);
 }
+
 function speakSegment(token) {
 if (!audioCtl.playing || token !== audioCtl.gen) return;
 if (audioCtl.segIdx >= audioCtl.segments.length) {
@@ -3630,6 +3830,7 @@ return;
 }
 const pct = Math.round(((audioCtl.segIdx + 0.5) / audioCtl.segments.length) * 100);
 syncAudioScrubber(pct);
+
 const utter = new SpeechSynthesisUtterance(audioCtl.segments[audioCtl.segIdx]);
 utter.lang = "zh-CN";
 utter.rate = 0.95;
@@ -3653,6 +3854,7 @@ window.speechSynthesis.speak(utter);
 stopSpeech();
 }
 }
+
 function runSpeechFrom(cleanText, btnEl, startIndex) {
 refreshVoiceSelectors();
 const segs = splitSegments(cleanText);
@@ -3666,15 +3868,17 @@ audioCtl.text = cleanText;
 audioCtl.btn = btnEl || null;
 audioCtl.segments = segs;
 audioCtl.segIdx = Math.max(0, Math.min(segs.length - 1, startIndex || 0));
+
 document.querySelectorAll(".nv-audio-btn.is-playing").forEach(b => b.classList.remove("is-playing"));
 if (btnEl) btnEl.classList.add("is-playing");
 syncAudioScrubber(Math.round((audioCtl.segIdx / segs.length) * 100));
 speakSegment(audioCtl.gen);
 }
+
 function scrubSpeech(val) {
 const pct = Math.max(0, Math.min(100, Number(val) || 0));
 const lbl = document.getElementById("audioPercentLabel");
-if (lbl) lbl.textContent = ⁠${pct}%⁠;
+if (lbl) lbl.textContent = `${pct}%`;
 if (!audioCtl.text) return;
 const segs = audioCtl.segments.length ? audioCtl.segments : splitSegments(audioCtl.text);
 const target = Math.min(segs.length - 1, Math.floor((pct / 100) * segs.length));
@@ -3684,6 +3888,7 @@ audioCtl.scrubTimer = null;
 runSpeechFrom(audioCtl.text, audioCtl.btn, target);
 }, 140);
 }
+
 function toggleSpeech(evt, rawText, btnEl) {
 if (evt) evt.stopPropagation();
 const clean = String(rawText || "").trim();
@@ -3697,6 +3902,7 @@ return;
 }
 runSpeechFrom(clean, btnEl, 0);
 }
+
 /* Granular Typography & Preferences */
 function applyPrefsToDom() {
 const p = appState.prefs;
@@ -3719,6 +3925,7 @@ rootStyle.setProperty("--nv-preview-size", p.previewSize + "px");
 rootStyle.setProperty("--nv-preview-weight", String(p.previewWeight));
 rootStyle.setProperty("--nv-tile-size", p.tileSize + "px");
 rootStyle.setProperty("--nv-tile-gap", p.tileGap + "px");
+
 rootStyle.setProperty("--nv-glass-queue-alpha", (Number(p.glassQueueAlpha) / 100).toFixed(2));
 rootStyle.setProperty("--nv-glass-queue-blur", p.glassQueueBlur + "px");
 rootStyle.setProperty("--nv-glass-strip-alpha", (Number(p.glassStripAlpha) / 100).toFixed(2));
@@ -3727,12 +3934,15 @@ rootStyle.setProperty("--nv-glass-header-alpha", (Number(p.glassHeaderAlpha) / 1
 rootStyle.setProperty("--nv-glass-header-blur", p.glassHeaderBlur + "px");
 rootStyle.setProperty("--nv-glass-tabbar-alpha", (Number(p.glassTabbarAlpha) / 100).toFixed(2));
 rootStyle.setProperty("--nv-glass-tabbar-blur", p.glassTabbarBlur + "px");
+
 rootStyle.setProperty("--nv-font-simp", p.fontSimp);
 rootStyle.setProperty("--nv-font-trad", p.fontTrad);
 rootStyle.setProperty("--nv-font-ko", p.fontKo);
 rootStyle.setProperty("--nv-font-pinyin", p.fontPinyin);
+
 const setVal = (id, v) => { const el = document.getElementById(id); if (el) el.value = String(v); };
 const setTxt = (id, t) => { const el = document.getElementById(id); if (el) el.textContent = t; };
+
 setVal("rngFontScale", p.fontScale);
 setVal("rngUiWeight", p.uiWeight);
 setVal("rngExampleSize", p.exampleSize);
@@ -3760,25 +3970,28 @@ setVal("rngGlassHeaderAlpha", p.glassHeaderAlpha);
 setVal("rngGlassHeaderBlur", p.glassHeaderBlur);
 setVal("rngGlassTabbarAlpha", p.glassTabbarAlpha);
 setVal("rngGlassTabbarBlur", p.glassTabbarBlur);
+
 setVal("fontSelectSimp", p.fontSimp);
 setVal("fontSelectTrad", p.fontTrad);
 setVal("fontSelectKo", p.fontKo);
 setVal("fontSelectPinyin", p.fontPinyin);
-setTxt("valGroupEx", ⁠${p.exampleSize}px · ${p.exampleWeight}⁠);
-setTxt("valGroupGloss", ⁠${p.glossSize}px · ${p.glossWeight}⁠);
-setTxt("valGroupHanzi", ⁠${p.hanziSize}px · ${p.hanziWeight}⁠);
-setTxt("valGroupPinyin", ⁠${p.pinyinSize}px · ${p.pinyinWeight}⁠);
-setTxt("valGroupHunum", ⁠${p.hunumSize}px · ${p.hunumWeight}⁠);
-setTxt("valGroupWord", ⁠${p.wordSize}px · ${p.wordWeight}⁠);
-setTxt("valGroupPreview", ⁠${p.previewSize}px · ${p.previewWeight}⁠);
-setTxt("valGroupUi", ⁠${p.fontScale}% · ${p.uiWeight}⁠);
-setTxt("valGroupTile", ⁠${p.tileSize}px · ${p.tileGap}px⁠);
+
+setTxt("valGroupEx", `${p.exampleSize}px · ${p.exampleWeight}`);
+setTxt("valGroupGloss", `${p.glossSize}px · ${p.glossWeight}`);
+setTxt("valGroupHanzi", `${p.hanziSize}px · ${p.hanziWeight}`);
+setTxt("valGroupPinyin", `${p.pinyinSize}px · ${p.pinyinWeight}`);
+setTxt("valGroupHunum", `${p.hunumSize}px · ${p.hunumWeight}`);
+setTxt("valGroupWord", `${p.wordSize}px · ${p.wordWeight}`);
+setTxt("valGroupPreview", `${p.previewSize}px · ${p.previewWeight}`);
+setTxt("valGroupUi", `${p.fontScale}% · ${p.uiWeight}`);
+setTxt("valGroupTile", `${p.tileSize}px · ${p.tileGap}px`);
 setTxt("valAutoExpand", p.autoExpandMin + "분");
-setTxt("valGlassQueue", ⁠${p.glassQueueAlpha}% · ${p.glassQueueBlur}px⁠);
-setTxt("valGlassStrip", ⁠${p.glassStripAlpha}% · ${p.glassStripBlur}px⁠);
-setTxt("valGlassHeader", ⁠${p.glassHeaderAlpha}% · ${p.glassHeaderBlur}px⁠);
-setTxt("valGlassTabbar", ⁠${p.glassTabbarAlpha}% · ${p.glassTabbarBlur}px⁠);
+setTxt("valGlassQueue", `${p.glassQueueAlpha}% · ${p.glassQueueBlur}px`);
+setTxt("valGlassStrip", `${p.glassStripAlpha}% · ${p.glassStripBlur}px`);
+setTxt("valGlassHeader", `${p.glassHeaderAlpha}% · ${p.glassHeaderBlur}px`);
+setTxt("valGlassTabbar", `${p.glassTabbarAlpha}% · ${p.glassTabbarBlur}px`);
 }
+
 function applySettingsFromControls() {
 appState.prefs = Object.assign({}, appState.prefs, {
 fontScale: Number(document.getElementById("rngFontScale").value),
@@ -3812,6 +4025,7 @@ glassTabbarBlur: Number(document.getElementById("rngGlassTabbarBlur").value)
 localStorage.setItem("nv_hanja_prefs_v3", JSON.stringify(appState.prefs));
 applyPrefsToDom();
 }
+
 function changeScriptFont(role, fontFamily) {
 if (role === "simp") appState.prefs.fontSimp = fontFamily;
 else if (role === "trad") appState.prefs.fontTrad = fontFamily;
@@ -3820,6 +4034,7 @@ else if (role === "pinyin") appState.prefs.fontPinyin = fontFamily;
 localStorage.setItem("nv_hanja_prefs_v3", JSON.stringify(appState.prefs));
 applyPrefsToDom();
 }
+
 function saveCurrentAsDefaultSettings() {
 const payload = {
 prefs: Object.assign({}, appState.prefs),
@@ -3830,6 +4045,7 @@ strokeAuto: appState.strokeAuto
 localStorage.setItem("nv_hanja_user_defaults", JSON.stringify(payload));
 showBanner("현재 설정을 기본값으로 저장했습니다.");
 }
+
 function restoreDefaultSettings() {
 try {
 const saved = JSON.parse(localStorage.getItem("nv_hanja_user_defaults") || "null");
@@ -3847,11 +4063,13 @@ localStorage.setItem("nv_hanja_prefs_v3", JSON.stringify(appState.prefs));
 applyPrefsToDom();
 showBanner("초기 기본값으로 복원됨");
 }
+
 function getStoredThemeMode() {
 const mode = localStorage.getItem("nv_theme_mode");
 if (mode === "auto" || mode === "light" || mode === "dark") return mode;
 return "auto";
 }
+
 function applyTheme(mode) {
 const darkPref = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
 const isDark = mode === "dark" || (mode === "auto" && darkPref);
@@ -3863,6 +4081,7 @@ const metaTheme = document.getElementById("metaThemeColor");
 if (metaTheme) metaTheme.setAttribute("content", barHex);
 const metaStatus = document.getElementById("metaStatusBarStyle");
 if (metaStatus) metaStatus.setAttribute("content", "black-translucent");
+
 const glyph = document.getElementById("menuThemeGlyph");
 const label = document.getElementById("menuThemeLabel");
 const sel = document.getElementById("settingsThemeSelect");
@@ -3870,17 +4089,20 @@ if (glyph) glyph.innerHTML = mode === "auto" ? SVG_AUTO : (isDark ? SVG_SUN : SV
 if (label) label.textContent = mode === "auto" ? "시스템" : (isDark ? "다크" : "라이트");
 if (sel && sel.value !== mode) sel.value = mode;
 }
+
 function setThemeMode(mode) {
 localStorage.setItem("nv_theme_mode", mode);
 applyTheme(mode);
 resetAllStrokeWriters();
 }
+
 function cycleThemeMode() {
 const cur = getStoredThemeMode();
 const next = cur === "auto" ? "light" : (cur === "light" ? "dark" : "auto");
 setThemeMode(next);
 showBanner(next === "auto" ? "시스템 테마" : (next === "dark" ? "다크 모드" : "라이트 모드"));
 }
+
 /* Stroke Animation Controller */
 function initStrokeObserver() {
 if (!("IntersectionObserver" in window)) return;
@@ -3911,6 +4133,7 @@ if (!appState.strokeAuto && w) restoreGlyph(el);
 });
 }, { rootMargin: "20px 0px", threshold: 0.2 });
 }
+
 function clearWriterTimer(el) {
 const t = appState.writerTimers.get(el);
 if (t) {
@@ -3918,11 +4141,13 @@ clearTimeout(t);
 appState.writerTimers.delete(el);
 }
 }
+
 function bumpWriterToken(el) {
 const next = (appState.writerTokens.get(el) || 0) + 1;
 appState.writerTokens.set(el, next);
 return next;
 }
+
 function restoreGlyph(el) {
 bumpWriterToken(el);
 clearWriterTimer(el);
@@ -3932,8 +4157,9 @@ try { w.pauseAnimation(); } catch (e) {}
 }
 appState.writers.delete(el);
 const ch = el.getAttribute("data-char");
-if (ch) el.innerHTML = ⁠<span class="nv-stroke-glyph nv-zh-simp">${esc(ch)}</span>⁠;
+if (ch) el.innerHTML = `<span class="nv-stroke-glyph nv-zh-simp">${esc(ch)}</span>`;
 }
+
 function cleanupStrokeBoxes(container) {
 if (!container) return;
 container.querySelectorAll(".nv-stroke-box[data-char]").forEach(el => {
@@ -3947,6 +4173,7 @@ try { w.pauseAnimation(); } catch (e) {}
 appState.writers.delete(el);
 });
 }
+
 function pauseStrokeBoxes(container) {
 if (!container) return;
 container.querySelectorAll(".nv-stroke-box[data-char]").forEach(el => {
@@ -3958,6 +4185,7 @@ try { w.pauseAnimation(); } catch (e) {}
 }
 });
 }
+
 function resetAllStrokeWriters() {
 appState.writerTimers.forEach(t => clearTimeout(t));
 appState.writerTimers.clear();
@@ -3976,10 +4204,12 @@ if (rect.width > 0 && rect.top < window.innerHeight && rect.bottom > 0) runStrok
 });
 }
 }
+
 function attachStrokeObserver(container) {
 if (!container || !appState.writerObserver) return;
 container.querySelectorAll(".nv-stroke-box[data-char]").forEach(el => appState.writerObserver.observe(el));
 }
+
 function runStrokeOnBox(el, loop) {
 const ch = el.getAttribute("data-char");
 if (!ch || typeof HanziWriter === "undefined" || !el.isConnected) return;
@@ -3992,6 +4222,7 @@ appState.writers.delete(el);
 }
 const token = bumpWriterToken(el);
 clearWriterTimer(el);
+
 let writer = appState.writers.get(el);
 if (!writer) {
 el.innerHTML = "";
@@ -4014,6 +4245,7 @@ if (appState.writerTokens.get(el) === token) restoreGlyph(el);
 });
 appState.writers.set(el, writer);
 }
+
 if (loop) {
 writer.loopCharacterAnimation();
 } else {
@@ -4044,6 +4276,7 @@ restoreGlyph(el);
 stepAnim();
 }
 }
+
 function tapStrokeBox(evt, el) {
 if (evt) evt.stopPropagation();
 if (appState.writers.has(el)) {
@@ -4052,6 +4285,7 @@ return;
 }
 runStrokeOnBox(el, false);
 }
+
 function toggleStrokeAuto() {
 appState.strokeAuto = !appState.strokeAuto;
 localStorage.setItem("nv_stroke_auto", appState.strokeAuto ? "1" : "0");
@@ -4071,12 +4305,14 @@ if (rect.width > 0 && rect.top < window.innerHeight && rect.bottom > 0) runStrok
 }
 showBanner(appState.strokeAuto ? "획순 자동 재생 켜짐" : "획순 자동 재생 꺼짐");
 }
+
 function syncStrokeControls() {
 const sw = document.getElementById("swStrokeAuto");
 if (sw) sw.checked = appState.strokeAuto;
 document.getElementById("menuStrokeToggle")?.classList.toggle("is-checked", appState.strokeAuto);
 document.getElementById("macStrokeToolBtn")?.classList.toggle("is-on", appState.strokeAuto);
 }
+
 function togglePassVisibility() {
 appState.showPass = !appState.showPass;
 const strip = document.getElementById("seriesContextStrip");
@@ -4085,6 +4321,7 @@ const sw = document.getElementById("swShowPass");
 if (sw) sw.checked = appState.showPass;
 document.getElementById("menuPassToggle")?.classList.toggle("is-checked", appState.showPass);
 document.getElementById("macPassToolBtn")?.classList.toggle("is-on", appState.showPass);
+
 const allBtn = document.getElementById("allPassBtn");
 if (allBtn) {
 allBtn.textContent = appState.showPass ? "PASS 표시" : "PASS";
@@ -4095,6 +4332,7 @@ if (sheetBtn) {
 sheetBtn.textContent = appState.showPass ? "PASS 포함" : "PASS 제외";
 sheetBtn.classList.toggle("is-on", appState.showPass);
 }
+
 appState.staleTabs.all = true;
 if (appState.activeTab === "review") renderReviewSeries();
 else if (appState.activeTab === "all") {
@@ -4104,6 +4342,7 @@ renderAllSeries();
 if (appState.sheetTargetChars) renderSeriesSheet();
 refreshSeriesStrip();
 }
+
 /* Core Utilities & Data Sync */
 let toastTimer = null;
 function showBanner(msg) {
@@ -4114,27 +4353,32 @@ el.classList.add("is-visible");
 clearTimeout(toastTimer);
 toastTimer = setTimeout(() => el.classList.remove("is-visible"), 2400);
 }
+
 function setBusyState(busy) {
 const bar = document.getElementById("topProgress");
 const sp = document.getElementById("headerSpinner");
 if (bar) bar.classList.toggle("is-active", Boolean(busy));
 if (sp) sp.classList.toggle("is-spinning", Boolean(busy));
 }
+
 function esc(s) {
 return String(s || "")
-.replace(/&/g, "&")
-.replace(/</g, "<")
-.replace(/>/g, ">")
-.replace(/"/g, """);
+.replace(/&/g, "&amp;")
+.replace(/</g, "&lt;")
+.replace(/>/g, "&gt;")
+.replace(/"/g, "&quot;");
 }
+
 function extractChars(text) {
 const m = String(text || "").match(/[\u4E00-\u9FFF\u3400-\u4DBF]/g);
 return m ? Array.from(new Set(m)) : [];
 }
+
 function withinAutoExpand(ts) {
 const mins = appState.prefs.autoExpandMin;
 return mins > 0 && ts > 0 && (Date.now() - ts) <= mins * 60 * 1000;
 }
+
 function openAuthGate(errText) {
 const gate = document.getElementById("authGate");
 const errEl = document.getElementById("authErrorMsg");
@@ -4142,6 +4386,7 @@ if (gate) gate.classList.add("is-open");
 if (errEl) errEl.textContent = errText || "";
 setTimeout(() => document.getElementById("authKeyInput")?.focus(), 80);
 }
+
 function submitAuthKey() {
 const val = (document.getElementById("authKeyInput")?.value || "").trim();
 if (!val) return;
@@ -4151,10 +4396,12 @@ const errEl = document.getElementById("authErrorMsg");
 if (errEl) errEl.textContent = "확인 중…";
 fetchInitData(true);
 }
+
 let watchdog = null;
 function clearWatchdog() {
 if (watchdog) { clearTimeout(watchdog); watchdog = null; }
 }
+
 function fetchInitData(isInitial) {
 clearWatchdog();
 setBusyState(true);
@@ -4164,6 +4411,7 @@ const lbl = document.getElementById("reviewProgressLabel");
 if (lbl && lbl.textContent.indexOf("불러오는 중") !== -1) lbl.textContent = "0 / 0";
 showBanner("동기화가 지연되고 있습니다.");
 }, 15000);
+
 try {
 if (!window.google || !google.script || !google.script.run) {
 clearWatchdog();
@@ -4207,20 +4455,31 @@ setBusyState(false);
 showBanner("초기화 오류: " + (e && e.message || e));
 }
 }
+
 function syncFromServer() {
 showBanner("시트 동기화 중…");
 fetchInitData(false);
 }
+
 function renderMacSidebarQueue() {
 const box = document.getElementById("macSidebarQueueList");
 if (!box) return;
 const items = getOrderedQueue();
 if (!items.length) {
-box.innerHTML = ⁠<div style="padding:8px 10px;font-size:12px;color:var(--nv-label-tertiary);">대기열 없음</div>⁠;
+box.innerHTML = `<div style="padding:8px 10px;font-size:12px;color:var(--nv-label-tertiary);">대기열 없음</div>`;
 return;
 }
-box.innerHTML = items.slice(0, 18).map((it, idx) => ⁠<button class="nv-mac-q-item ${idx === appState.reviewIndex ? "is-current" : ""}" onclick="switchTab('review'); jumpToReviewIndex(${idx});"> <div class="nv-mac-q-top"> <span class="nv-zh-simp">${esc(it.chars.join(" · "))}</span> <span class="nv-num" style="font-size:11px;color:${idx === appState.reviewIndex ? "var(--nv-accent)" : "var(--nv-label-tertiary)"};">${idx + 1}/${items.length}</span> </div> <div class="nv-mac-q-sub nv-zh-simp">${esc(it.isNoExample ? "(예문 없음)" : it.example)}</div> </button>⁠).join("");
+box.innerHTML = items.slice(0, 18).map((it, idx) => `
+<button class="nv-mac-q-item ${idx === appState.reviewIndex ? "is-current" : ""}" onclick="switchTab('review'); jumpToReviewIndex(${idx});">
+<div class="nv-mac-q-top">
+<span class="nv-zh-simp">${esc(it.chars.join(" · "))}</span>
+<span class="nv-num" style="font-size:11px;color:${idx === appState.reviewIndex ? "var(--nv-accent)" : "var(--nv-label-tertiary)"};">${idx + 1}/${items.length}</span>
+</div>
+<div class="nv-mac-q-sub nv-zh-simp">${esc(it.isNoExample ? "(예문 없음)" : it.example)}</div>
+</button>
+`).join("");
 }
+
 function ingestServerPayload(data) {
 if (data.groups) {
 appState.groups = data.groups;
@@ -4257,6 +4516,7 @@ appState.bookmarks = data.bookmarks;
 appState.bookmarkById = {};
 data.bookmarks.forEach(b => { if (b && b.id) appState.bookmarkById[b.id] = b; });
 }
+
 appState.staleTabs = { review: true, input: true, all: true };
 const qLen = String(appState.queue.length);
 document.getElementById("headerQueueCount") && (document.getElementById("headerQueueCount").textContent = qLen);
@@ -4264,11 +4524,14 @@ document.getElementById("sidebarQueuePill") && (document.getElementById("sidebar
 document.getElementById("sideReviewBadge") && (document.getElementById("sideReviewBadge").textContent = qLen);
 document.getElementById("sideAllBadge") && (document.getElementById("sideAllBadge").textContent = String(appState.groups.length));
 document.getElementById("sideBookmarkBadge") && (document.getElementById("sideBookmarkBadge").textContent = String(appState.bookmarks.length));
+
 const pendingCnt = appState.recent.filter(it => !it.isDone).length;
-document.getElementById("recentPendingCount") && (document.getElementById("recentPendingCount").textContent = ⁠미완료 ${pendingCnt}⁠);
+document.getElementById("recentPendingCount") && (document.getElementById("recentPendingCount").textContent = `미완료 ${pendingCnt}`);
 document.getElementById("sidePendingBadge") && (document.getElementById("sidePendingBadge").textContent = String(pendingCnt));
+
 renderMacSidebarQueue();
 }
+
 function renderCurrentPage(force) {
 if (appState.activeTab === "review" && (force || appState.staleTabs.review)) {
 appState.staleTabs.review = false;
@@ -4285,42 +4548,53 @@ if (appState.sheetTargetChars) renderSeriesSheet();
 refreshSeriesStrip();
 renderMacSidebarQueue();
 }
+
 function switchTab(tab) {
 if (!tab) return;
 stopSpeech();
 toggleQueuePopover(false);
 toggleOverflowMenu(false);
+
 const prevEl = document.getElementById("page-" + appState.activeTab);
 if (prevEl && prevEl.id !== "page-" + tab) pauseStrokeBoxes(prevEl);
+
 appState.activeTab = tab;
 localStorage.setItem("nv_active_tab", tab);
+
 document.querySelectorAll(".nv-page").forEach(pg => {
 pg.classList.toggle("is-active", pg.id === "page-" + tab);
 });
 document.querySelectorAll("[data-tab]").forEach(btn => {
 btn.classList.toggle("is-active", btn.getAttribute("data-tab") === tab);
 });
+
 const titleMap = { review: "복습", input: "입력", all: "전체표" };
 const inlineTitle = document.getElementById("headerCollapsedTitle");
 if (inlineTitle) inlineTitle.textContent = titleMap[tab] || "谐声系";
+
 const dock = document.getElementById("mobileReviewDock");
 if (dock) dock.classList.toggle("is-hidden", tab !== "review");
+
 document.body.classList.toggle("is-all-page", tab === "all");
 if (tab !== "all") {
 document.body.classList.remove("is-all-docked");
 document.getElementById("allSearchBar")?.classList.remove("is-docked");
 }
+
 const ws = document.getElementById("workspaceScroll");
 if (ws) ws.scrollTop = 0;
 if (isMobileScrollMode()) window.scrollTo(0, 0);
 syncScrollChrome();
+
 if (tab === "input") requestAnimationFrame(() => renderCurrentPage(false));
 else renderCurrentPage(false);
 }
+
 /* Review Logic */
 function getOrderedQueue() {
 return appState.reviewReverse ? appState.queue.slice().reverse() : appState.queue;
 }
+
 function toggleReviewOrder() {
 appState.reviewReverse = !appState.reviewReverse;
 appState.reviewIndex = 0;
@@ -4330,6 +4604,7 @@ if (btn) btn.textContent = appState.reviewReverse ? "최신순" : "오래된순"
 renderReviewPage();
 renderMacSidebarQueue();
 }
+
 function jumpToReviewIndex(idx) {
 const list = getOrderedQueue();
 if (!list.length) return;
@@ -4340,6 +4615,7 @@ appState.reviewSelectedChar = "";
 renderReviewPage(true);
 renderMacSidebarQueue();
 }
+
 function stepReviewItem(delta) {
 stopSpeech();
 const prev = appState.reviewIndex;
@@ -4353,14 +4629,16 @@ body.classList.add(delta > 0 ? "nv-slide-next" : "nv-slide-prev");
 }
 }
 }
+
 function renderReviewPage(keepNotesOpen) {
 const list = getOrderedQueue();
 const body = document.getElementById("reviewCardBody");
 const counter = document.getElementById("reviewProgressLabel");
+
 if (!list.length) {
 if (counter) counter.textContent = "대기열 0";
 if (body) {
-body.innerHTML = ⁠<div class="nv-empty"><div class="nv-empty-title">복습 마침</div><div class="nv-empty-sub">남은 복습 항목이 없습니다.</div></div>⁠;
+body.innerHTML = `<div class="nv-empty"><div class="nv-empty-title">복습 마침</div><div class="nv-empty-sub">남은 복습 항목이 없습니다.</div></div>`;
 }
 const seriesBox = document.getElementById("reviewSeriesContainer");
 cleanupStrokeBoxes(seriesBox);
@@ -4368,37 +4646,80 @@ if (seriesBox) seriesBox.innerHTML = "";
 refreshSeriesStrip();
 return;
 }
+
 if (appState.reviewIndex >= list.length) appState.reviewIndex = list.length - 1;
 if (appState.reviewIndex < 0) appState.reviewIndex = 0;
 const item = list[appState.reviewIndex];
 if (!keepNotesOpen) {
 appState.reviewShowNotes = !item.isNoExample && withinAutoExpand(item.transTime);
 }
-if (counter) counter.textContent = ⁠${appState.reviewIndex + 1} / ${list.length}⁠;
+
+if (counter) counter.textContent = `${appState.reviewIndex + 1} / ${list.length}`;
+
 const targetSet = new Set(item.chars);
 const sentenceHtml = item.isNoExample
-? ⁠<span style="color:var(--nv-label-tertiary);font-size:16px;">예문 없음</span>⁠
+? `<span style="color:var(--nv-label-tertiary);font-size:16px;">예문 없음</span>`
 : Array.from(item.example).map(ch => {
-if (!targetSet.has(ch)) return ⁠<span class="nv-zh-simp">${esc(ch)}</span>⁠;
+if (!targetSet.has(ch)) return `<span class="nv-zh-simp">${esc(ch)}</span>`;
 const picked = appState.reviewSelectedChar === ch || appState.reviewSelectedChar === "ALL";
-return ⁠<span class="nv-target-char-mark nv-zh-simp ${picked ? "is-picked" : ""}" data-schar="${esc(ch)}" onclick="pickReviewChar('${esc(ch).replace(/'/g, "")}')">${esc(ch)}</span>⁠;
+return `<span class="nv-target-char-mark nv-zh-simp ${picked ? "is-picked" : ""}" data-schar="${esc(ch)}" onclick="pickReviewChar('${esc(ch).replace(/'/g, "")}')">${esc(ch)}</span>`;
 }).join("");
+
 const pct = Math.round(((appState.reviewIndex + 1) / list.length) * 100);
 const bmActive = Boolean(appState.bookmarkById["ex_" + item.qRow]);
-const notesHtml = item.isNoExample ? "" : ⁠<div class="nv-reading-toolbar"> <button id="reviewNotesToggle" class="nv-btn-plain" onclick="toggleReviewNotes()"> ${appState.reviewShowNotes ? SVG_CHEV_UP : SVG_CHEV_DOWN} <span>${appState.reviewShowNotes ? "해설 숨기기" : "해설 보기"}</span> </button> <div class="nv-reading-actions-right"> <button class="nv-audio-btn" title="예문 발음 듣기" onclick="toggleSpeech(event, '${esc(item.example).replace(/'/g, "\\'")}', this)">${SVG_SPEAKER}</button> <button class="nv-icon-btn" title="재번역" onclick="retranslateSentence(${item.qRow})">${SVG_REFRESH}</button> <button class="nv-icon-btn ${bmActive ? "is-bookmarked" : ""}" data-bmid="ex_${item.qRow}" title="예문 즐겨찾기" onclick="toggleExampleBookmark(${item.qRow})">${SVG_BOOKMARK}</button> </div> </div> <div id="reviewNotesDisclosure" class="nv-disclosure ${appState.reviewShowNotes ? "is-open" : ""}"> <div class="nv-disclosure-inner"> <div class="nv-explanation-box"> <div class="nv-translation-line">${esc(item.translation || "(번역 없음)")}</div> <div class="nv-notes-line">${item.explanation ? formatNotesWithPinyin(item.explanation) : "(해설 없음)"}</div> </div> </div> </div>⁠;
-const keysHtml = item.chars.map(ch => ⁠<button class="nv-char-key nv-zh-simp ${appState.reviewSelectedChar === ch ? "is-selected" : ""}" data-rchar="${esc(ch)}" onclick="pickReviewChar('${ch}')">${esc(ch)}</button>⁠).join("") + (item.chars.length >= 2 ? ⁠<button class="nv-char-key is-all-key ${appState.reviewSelectedChar === "ALL" ? "is-selected" : ""}" data-rchar="ALL" onclick="pickReviewChar('ALL')">전체</button>⁠ : "");
-body.innerHTML = ⁠<div class="nv-progress-track"><div class="nv-progress-fill" style="width:${pct}%;"></div></div> <div class="nv-reading-content"> <div class="nv-sentence-row"> <div class="nv-sentence-text">${sentenceHtml}</div> </div> ${notesHtml} <div class="nv-char-selector">${keysHtml}</div> </div>⁠;
+
+const notesHtml = item.isNoExample ? "" : `
+<div class="nv-reading-toolbar">
+<button id="reviewNotesToggle" class="nv-btn-plain" onclick="toggleReviewNotes()">
+${appState.reviewShowNotes ? SVG_CHEV_UP : SVG_CHEV_DOWN}
+<span>${appState.reviewShowNotes ? "해설 숨기기" : "해설 보기"}</span>
+</button>
+<div class="nv-reading-actions-right">
+<button class="nv-audio-btn" title="예문 발음 듣기" onclick="toggleSpeech(event, '${esc(item.example).replace(/'/g, "\\'")}', this)">${SVG_SPEAKER}</button>
+<button class="nv-icon-btn" title="재번역" onclick="retranslateSentence(${item.qRow})">${SVG_REFRESH}</button>
+<button class="nv-icon-btn ${bmActive ? "is-bookmarked" : ""}" data-bmid="ex_${item.qRow}" title="예문 즐겨찾기" onclick="toggleExampleBookmark(${item.qRow})">${SVG_BOOKMARK}</button>
+</div>
+</div>
+<div id="reviewNotesDisclosure" class="nv-disclosure ${appState.reviewShowNotes ? "is-open" : ""}">
+<div class="nv-disclosure-inner">
+<div class="nv-explanation-box">
+<div class="nv-translation-line">${esc(item.translation || "(번역 없음)")}</div>
+<div class="nv-notes-line">${item.explanation ? formatNotesWithPinyin(item.explanation) : "(해설 없음)"}</div>
+</div>
+</div>
+</div>
+`;
+
+const keysHtml = item.chars.map(ch => `
+<button class="nv-char-key nv-zh-simp ${appState.reviewSelectedChar === ch ? "is-selected" : ""}" data-rchar="${esc(ch)}" onclick="pickReviewChar('${ch}')">${esc(ch)}</button>
+`).join("") + (item.chars.length >= 2 ? `
+<button class="nv-char-key is-all-key ${appState.reviewSelectedChar === "ALL" ? "is-selected" : ""}" data-rchar="ALL" onclick="pickReviewChar('ALL')">전체</button>
+` : "");
+
+body.innerHTML = `
+<div class="nv-progress-track"><div class="nv-progress-fill" style="width:${pct}%;"></div></div>
+<div class="nv-reading-content">
+<div class="nv-sentence-row">
+<div class="nv-sentence-text">${sentenceHtml}</div>
+</div>
+${notesHtml}
+<div class="nv-char-selector">${keysHtml}</div>
+</div>
+`;
+
 renderReviewSeries();
 }
+
 function toggleReviewNotes() {
 appState.reviewShowNotes = !appState.reviewShowNotes;
 const disc = document.getElementById("reviewNotesDisclosure");
 const btn = document.getElementById("reviewNotesToggle");
 if (disc) disc.classList.toggle("is-open", appState.reviewShowNotes);
 if (btn) {
-btn.innerHTML = ⁠${appState.reviewShowNotes ? SVG_CHEV_UP : SVG_CHEV_DOWN}<span>${appState.reviewShowNotes ? "해설 숨기기" : "해설 보기"}</span>⁠;
+btn.innerHTML = `${appState.reviewShowNotes ? SVG_CHEV_UP : SVG_CHEV_DOWN}<span>${appState.reviewShowNotes ? "해설 숨기기" : "해설 보기"}</span>`;
 }
 }
+
 function pickReviewChar(ch) {
 appState.reviewSelectedChar = appState.reviewSelectedChar === ch ? "" : ch;
 document.querySelectorAll("#reviewCardBody .nv-char-key[data-rchar]").forEach(btn => {
@@ -4411,6 +4732,7 @@ sp.classList.toggle("is-picked", isPicked);
 });
 renderReviewSeries();
 }
+
 function renderReviewSeries() {
 const box = document.getElementById("reviewSeriesContainer");
 cleanupStrokeBoxes(box);
@@ -4422,7 +4744,7 @@ return;
 }
 const item = list[appState.reviewIndex];
 if (!appState.reviewSelectedChar) {
-box.innerHTML = ⁠<div class="nv-grouped-list"><div class="nv-empty"><div class="nv-empty-sub">한자를 선택하면 해성계 그룹이 표시됩니다.</div></div></div>⁠;
+box.innerHTML = `<div class="nv-grouped-list"><div class="nv-empty"><div class="nv-empty-sub">한자를 선택하면 해성계 그룹이 표시됩니다.</div></div></div>`;
 refreshSeriesStrip();
 return;
 }
@@ -4432,12 +4754,14 @@ attachStrokeObserver(box);
 box.querySelectorAll(".nv-series-section").forEach(sec => syncSectionBulkLabel(sec));
 refreshSeriesStrip();
 }
+
 function completeReviewItem() {
 const list = getOrderedQueue();
 if (!list.length) return;
 const item = list[appState.reviewIndex];
 const qRow = item.qRow;
 const body = document.getElementById("reviewCardBody");
+
 const commit = () => {
 appState.queue = appState.queue.filter(it => it.qRow !== qRow);
 appState.recent.forEach(it => { if (it.qRow === qRow) it.isReviewed = true; });
@@ -4455,10 +4779,12 @@ void body.offsetWidth;
 body.classList.add("nv-slide-next");
 }
 showBanner("복습 완료됨");
+
 google.script.run
 .withFailureHandler(err => showBanner("저장 실패: " + err.message))
 .webAppMarkReviewed(appState.secretKey, qRow, true);
 };
+
 if (body && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
 body.classList.remove("nv-slide-next", "nv-slide-prev");
 body.classList.add("nv-slide-out");
@@ -4467,6 +4793,7 @@ setTimeout(commit, 160);
 commit();
 }
 }
+
 function retranslateSentence(qRow) {
 const item = appState.queue.find(it => it.qRow === qRow) || appState.recent.find(it => it.qRow === qRow);
 if (!item || !item.example) return;
@@ -4486,26 +4813,30 @@ showBanner("재번역 오류: " + err.message);
 })
 .webAppTranslateExample(appState.secretKey, item.example, qRow);
 }
+
 /* =========================================================================
 Phonetic Series & Character Row Rendering
 ========================================================================= */
 function formatRadicals(text) {
-return esc(text).replace(/[([^]]+)]/g, (_, rad) => {
+return esc(text).replace(/\[([^\]]+)\]/g, (_, rad) => {
 const clean = rad.trim();
-return ⁠<span class="nv-radical-tag nv-zh-simp" onclick="showRadicalToast(event, '${clean.replace(/'/g, "")}')">[${clean}]</span>⁠;
+return `<span class="nv-radical-tag nv-zh-simp" onclick="showRadicalToast(event, '${clean.replace(/'/g, "")}')">[${clean}]</span>`;
 });
 }
+
 function showRadicalToast(evt, rad) {
 if (evt) evt.stopPropagation();
 const desc = RADICAL_MEANINGS[rad] || "구성 부수";
-showBanner(⁠부수 [${rad}] · ${desc}⁠);
+showBanner(`부수 [${rad}] · ${desc}`);
 }
+
 function formatNotesWithPinyin(text) {
-return esc(text).replace(/([(\（])([a-zA-ZāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜüÜ0-9\s,，·/／-'.]+)([)\）])/g, (full, open, body, close) => {
+return esc(text).replace(/([(\（])([a-zA-ZāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜüÜ0-9\s,，·/／\-'\.]+)([)\）])/g, (full, open, body, close) => {
 if (!/[a-zāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü]/.test(body)) return full;
-return ⁠<span class="nv-pinyin">${open}${body}${close}</span>⁠;
+return `<span class="nv-pinyin">${open}${body}${close}</span>`;
 });
 }
+
 function parseWordEntries(rawWords, rawWordsPinyin) {
 const wordList = String(rawWords || "")
 .split(/[·,，/／\s]+/)
@@ -4515,23 +4846,25 @@ const glossSegments = String(rawWordsPinyin || "")
 .split(/[·;；\n]+/)
 .map(s => s.trim())
 .filter(Boolean);
+
 return wordList.map((zh, idx) => {
 let matched = glossSegments.find(seg => seg.startsWith(zh)) || glossSegments[idx] || "";
 let py = "";
 let ko = "";
 if (matched) {
 const rest = matched.replace(zh, "").trim();
-const paren = rest.match(/(([^)]+))\s*(.)/);
+const paren = rest.match(/\(([^)]+)\)\s*(.*)/);
 if (paren) {
 py = paren[1].trim();
-ko = (paren[2] || "").replace(/^[:-–]\s/, "").trim();
+ko = (paren[2] || "").replace(/^[:\-–]\s*/, "").trim();
 } else {
-ko = rest.replace(/^[:-–]\s*/, "").trim();
+ko = rest.replace(/^[:\-–]\s*/, "").trim();
 }
 }
 return { zh, py, ko };
 });
 }
+
 function buildSeriesSectionsHtml(targetChars, allHighlightChars) {
 const seen = new Set();
 const matched = [];
@@ -4553,21 +4886,37 @@ matched.push(appState.groupMap[root]);
 }
 }
 if (!matched.length) {
-return ⁠<div class="nv-grouped-list"><div class="nv-empty"><div class="nv-empty-sub">일치하는 해성계가 없습니다.</div></div></div>⁠;
+return `<div class="nv-grouped-list"><div class="nv-empty"><div class="nv-empty-sub">일치하는 해성계가 없습니다.</div></div></div>`;
 }
 const hlSet = new Set(allHighlightChars || targetChars);
 return matched.map(g => buildSeriesSectionHtml(g, hlSet)).join("");
 }
+
 function buildSeriesSectionHtml(g, hlSet) {
-const countTxt = g.passCount > 0 ? ⁠${g.nonPassCount}·${g.passCount}⁠ : ⁠${g.nonPassCount}⁠;
+const countTxt = g.passCount > 0 ? `${g.nonPassCount}·${g.passCount}` : `${g.nonPassCount}`;
 const fillAction = g.emptyCount > 0
-? ⁠<button class="nv-btn-plain" style="color:var(--nv-accent);" onclick="analyzeSeriesGroup('${esc(g.root)}', this)">${SVG_BOLT}<span>미분석 ${g.emptyCount}자</span></button>⁠
-: ⁠<span style="font-size:12px;color:var(--nv-label-tertiary);">${(!appState.showPass && g.passCount > 0) ? ⁠PASS ${g.passCount} 숨김⁠ : "완료"}</span>⁠;
-return ⁠<section class="nv-series-section" data-root="${esc(g.root)}"> <div class="nv-series-header"> <span class="nv-series-root nv-zh-simp">${esc(g.root)}</span> <span class="nv-series-count nv-num">${countTxt}자</span> <div class="nv-series-header-actions"> <button class="nv-btn-plain nv-sec-toggle-btn" onclick="toggleSectionRows(this)">${SVG_CHEV_DOWN}<span>펼치기</span></button> ${fillAction} </div> </div> <div>${buildCharacterRowsHtml(g, hlSet)}</div> </section>⁠;
+? `<button class="nv-btn-plain" style="color:var(--nv-accent);" onclick="analyzeSeriesGroup('${esc(g.root)}', this)">${SVG_BOLT}<span>미분석 ${g.emptyCount}자</span></button>`
+: `<span style="font-size:12px;color:var(--nv-label-tertiary);">${(!appState.showPass && g.passCount > 0) ? `PASS ${g.passCount} 숨김` : "완료"}</span>`;
+
+return `
+<section class="nv-series-section" data-root="${esc(g.root)}">
+<div class="nv-series-header">
+<span class="nv-series-root nv-zh-simp">${esc(g.root)}</span>
+<span class="nv-series-count nv-num">${countTxt}자</span>
+<div class="nv-series-header-actions">
+<button class="nv-btn-plain nv-sec-toggle-btn" onclick="toggleSectionRows(this)">${SVG_CHEV_DOWN}<span>펼치기</span></button>
+${fillAction}
+</div>
+</div>
+<div>${buildCharacterRowsHtml(g, hlSet)}</div>
+</section>
+`;
 }
+
 function escapeRegex(str) {
-return String(str || "").replace(/[.*+?^{}()|[\]\\]/g, "\\&");
+return String(str || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
+
 function markText(raw, q) {
 const s = String(raw || "");
 const query = String(q || "").trim();
@@ -4579,21 +4928,23 @@ let m;
 while ((m = re.exec(s)) !== null) {
 if (!m[0].length) { re.lastIndex++; continue; }
 out += esc(s.slice(last, m.index));
-out += ⁠<mark class="nv-search-mark">${esc(m[0])}</mark>⁠;
+out += `<mark class="nv-search-mark">${esc(m[0])}</mark>`;
 last = m.index + m[0].length;
 }
 out += esc(s.slice(last));
 return out;
 }
+
 function markHtml(htmlStr, q) {
 const query = String(q || "").trim();
 if (!query || !htmlStr) return htmlStr;
 const re = new RegExp(escapeRegex(query), "gi");
 return htmlStr.split(/(<[^>]+>)/g).map(part => {
 if (!part || part.startsWith("<")) return part;
-return part.replace(re, match => ⁠<mark class="nv-search-mark">${match}</mark>⁠);
+return part.replace(re, match => `<mark class="nv-search-mark">${match}</mark>`);
 }).join("");
 }
+
 function excerptMatch(text, q, maxLen) {
 const clean = String(text || "").replace(/\s+/g, " ").trim();
 const query = String(q || "").trim();
@@ -4606,6 +4957,7 @@ const start = Math.max(0, idx - half);
 const end = Math.min(clean.length, idx + query.length + half);
 return (start > 0 ? "…" : "") + clean.slice(start, end) + (end < clean.length ? "…" : "");
 }
+
 function matchCharacterRow(row, rawQ) {
 const ql = String(rawQ || "").trim().toLowerCase();
 if (!ql || !row) return null;
@@ -4637,19 +4989,22 @@ openPreview,
 openWord
 };
 }
+
 function extractRadicalsFromMeaning(rawMeaning) {
 const str = String(rawMeaning || "");
 const rads = [];
-const cleaned = str.replace(/[([^]]+)]/g, (_, r) => {
+const cleaned = str.replace(/\[([^\]]+)\]/g, (_, r) => {
 const c = r.trim();
 if (c) rads.push(c);
 return "";
-}).replace(/^\s*[,·:：-–]+\s*/, "").trim();
+}).replace(/^\s*[,·:：\-–]+\s*/, "").trim();
 return { rads, cleaned };
 }
+
 function formatWordsPinyinDisplay(raw) {
-return esc(raw).replace(/(([^)]+))/g, '<span class="nv-pinyin" style="color:var(--nv-label-primary);">$1</span>');
+return esc(raw).replace(/(\([^)]+\))/g, '<span class="nv-pinyin" style="color:var(--nv-label-primary);">$1</span>');
 }
+
 function buildCharacterRowsHtml(g, hlSet, searchQ) {
 const q = String(searchQ || "").trim();
 const rows = g.rows.filter(r => {
@@ -4657,71 +5012,109 @@ if (!r.isPass || appState.showPass) return true;
 return Boolean(q && matchCharacterRow(r, q));
 });
 if (!rows.length) {
-return ⁠<div style="padding:14px 16px;font-size:13px;color:var(--nv-label-tertiary);">표시할 한자가 없습니다.</div>⁠;
+return `<div style="padding:14px 16px;font-size:13px;color:var(--nv-label-tertiary);">표시할 한자가 없습니다.</div>`;
 }
+
 return rows.map(r => {
-const rowId = ⁠row_${r.rowNum}⁠;
+const rowId = `row_${r.rowNum}`;
 const hit = q ? matchCharacterRow(r, q) : null;
 const isTarget = hlSet && r.chars.some(c => hlSet.has(c));
 const isDetailOpen = appState.openRowDetailIds.has(rowId) || Boolean(hit && (hit.openPreview || hit.openWord));
 const isWordsOpen = appState.openWordRowIds.has(rowId) || Boolean(hit && hit.openWord);
 const isPreviewExpanded = appState.openPreviewIds.has(rowId) || Boolean(hit && hit.openPreview);
-const tradMatch = r.display.match(/(([^)]+))/);
-const tradText = tradMatch ? ⁠(${tradMatch[1]})⁠ : "";
+
+const tradMatch = r.display.match(/\(([^)]+)\)/);
+const tradText = tradMatch ? `(${tradMatch[1]})` : "";
+
 const rawFreq = String(r.usage || "").trim();
-const freqText = r.isPass ? "PASS" : (rawFreq ? ⁠빈도 ${rawFreq}⁠ : "-");
+const freqText = r.isPass ? "PASS" : (rawFreq ? `빈도 ${rawFreq}` : "-");
 const freqNum = parseFloat(rawFreq);
 const isHighFreq = !r.isPass && !isNaN(freqNum) && freqNum >= 7;
+
 const { rads, cleaned } = extractRadicalsFromMeaning(r.meaning && r.meaning !== "-" ? r.meaning : "");
 const radInlineHtml = rads.map(rad =>
-⁠<span class="nv-radical-inline" onclick="showRadicalToast(event, '${esc(rad).replace(/'/g, "")}')">[${esc(rad)}]</span>⁠
+`<span class="nv-radical-inline" onclick="showRadicalToast(event, '${esc(rad).replace(/'/g, "")}')">[${esc(rad)}]</span>`
 ).join("");
+
 const baseGloss = cleaned
 ? esc(cleaned)
 : esc(r.isAnalyzed ? "-" : "미분석");
 const glossHtml = q ? markHtml(baseGloss, q) : baseGloss;
+
 const hasWords = r.words && r.words !== "-";
 const hasWordsPy = r.wordsPinyin && r.wordsPinyin !== "-";
 const hasSent = r.sentence && r.sentence !== "-";
 const wordBmOn = Boolean(appState.bookmarkById["wd_" + r.rowNum]);
 const charBmOn = Boolean(appState.bookmarkById["ch_" + r.rowNum]);
+
 const wordsTextHtml = q ? markText(r.words, q) : esc(r.words);
 const wordsRevealHtml = hasWordsPy
 ? (q ? markHtml(formatWordsPinyinDisplay(r.wordsPinyin), q) : formatWordsPinyinDisplay(r.wordsPinyin))
-: ⁠<span style="color:var(--nv-label-tertiary);">(상세 뜻 정보 없음)</span>⁠;
-return ⁠<div class="nv-char-row has-swipe-action ${isTarget ? "is-target" : ""} ${r.isPass ? "is-pass" : ""}" data-rowid="${rowId}" data-rownum="${r.rowNum}" data-root="${esc(g.root)}" data-char="${esc(r.simp)}"> <div class="nv-char-swipe-actions" aria-hidden="true"> <button type="button" class="nv-char-swipe-btn" onclick="triggerCharacterSwipeReanalysis(event, this)"> ${SVG_REFRESH} <span>재분석</span> </button> </div> <div class="nv-char-swipe-track"> <div class="nv-char-row-top" onclick="toggleCharDetail('${rowId}', this)"> <div class="nv-hanzi-freq-cluster"> <div class="nv-stroke-box ${r.isStar ? "is-starred" : ""}" data-char="${esc(r.simp)}" onclick="tapStrokeBox(event, this)"> <span class="nv-stroke-glyph nv-zh-simp">${esc(r.simp)}</span> </div> ${tradText ?⁠<span class="nv-zh-trad">${q ? markText(tradText, q) : esc(tradText)}</span>` : ""}
-<span class="nv-freq-badge nv-num ￼{esc(freqText)}</span>
+: `<span style="color:var(--nv-label-tertiary);">(상세 뜻 정보 없음)</span>`;
+
+return `
+<div class="nv-char-row has-swipe-action ${isTarget ? "is-target" : ""} ${r.isPass ? "is-pass" : ""}" data-rowid="${rowId}" data-rownum="${r.rowNum}" data-root="${esc(g.root)}" data-char="${esc(r.simp)}">
+<div class="nv-char-swipe-actions" aria-hidden="true">
+<button type="button" class="nv-char-swipe-btn" onclick="triggerCharacterSwipeReanalysis(event, this)">
+${SVG_REFRESH}
+<span>재분석</span>
+</button>
+</div>
+<div class="nv-char-swipe-track">
+<div class="nv-char-row-top" onclick="toggleCharDetail('${rowId}', this)">
+<div class="nv-hanzi-freq-cluster">
+<div class="nv-stroke-box ${r.isStar ? "is-starred" : ""}" data-char="${esc(r.simp)}" onclick="tapStrokeBox(event, this)">
+<span class="nv-stroke-glyph nv-zh-simp">${esc(r.simp)}</span>
+</div>
+${tradText ? `<span class="nv-zh-trad">${q ? markText(tradText, q) : esc(tradText)}</span>` : ""}
+<span class="nv-freq-badge nv-num ${r.isPass ? "is-pass" : (!isHighFreq ? "is-low" : "")}">${esc(freqText)}</span>
 ${radInlineHtml}
 </div>
+
 <div class="nv-row-meta-right">
 <div class="nv-row-pinyin nv-pinyin">${q ? markText(r.pinyin || "-", q) : esc(r.pinyin || "-")}</div>
-${r.hunum && r.hunum !== "-" ? ⁠<div class="nv-row-hunum">${q ? markText(r.hunum, q) : esc(r.hunum)}</div>⁠ : ""}
-<button class="nv-icon-btn ￼{r.rowNum}" onclick="toggleCharacterBookmark(event, ￼{charBmOn ? SVG_BOOKMARK.replace("nv-ico-fill", "nv-ico-fill is-active") : SVG_BOOKMARK}</button>
+${r.hunum && r.hunum !== "-" ? `<div class="nv-row-hunum">${q ? markText(r.hunum, q) : esc(r.hunum)}</div>` : ""}
+<button class="nv-icon-btn ${charBmOn ? "is-bookmarked" : ""}" style="width:26px;height:26px;margin-top:3px;" data-bmid="ch_${r.rowNum}" onclick="toggleCharacterBookmark(event, ${r.rowNum})" title="한자 북마크" aria-label="한자 북마크">${charBmOn ? SVG_BOOKMARK.replace("nv-ico-fill", "nv-ico-fill is-active") : SVG_BOOKMARK}</button>
 </div>
 </div>
-<div class="nv-disclosure ￼{rowId}">
+
+<div class="nv-disclosure ${isDetailOpen ? "is-open" : ""}" id="charDetail_${rowId}">
 <div class="nv-disclosure-inner">
 <div class="nv-char-detail-wrap">
 <div class="nv-char-core-gloss">${glossHtml}</div>
-{(hasWords || hasSent) ? `
-￼
+
+${(hasWords || hasSent) ? `
+<div class="nv-words-panel">
 ${hasWords ? `
-￼
-￼{rowId}')">￼
-￼
-￼{esc(r.words).replace(/'/g, "\'")}', this)">￼
-￼
-￼
-￼
-￼
-￼{wordsRevealHtml}</div>
+<div class="nv-words-header">
+<button class="nv-words-trigger ${isWordsOpen ? "is-open" : ""}" id="wordsBtn_${rowId}" onclick="toggleAllWordsMeaning(event, '${rowId}')">${wordsTextHtml}</button>
+<div class="nv-words-tools">
+<button class="nv-icon-btn" style="width:26px;height:26px;" title="예시 단어 발음" onclick="toggleSpeech(event, '${esc(r.words).replace(/'/g, "\\'")}', this)">${SVG_SPEAKER}</button>
+<button class="nv-icon-btn ${wordBmOn ? "is-bookmarked" : ""}" style="width:26px;height:26px;" data-bmid="wd_${r.rowNum}" onclick="toggleWordBookmark(event, ${r.rowNum})" title="단어 즐겨찾기">${SVG_BOOKMARK}</button>
+</div>
+</div>
+<div class="nv-word-reveal ${isWordsOpen ? "is-open" : ""}" id="wordReveal_${rowId}">
+<div class="nv-word-reveal-ko" style="color:var(--nv-label-secondary);">${wordsRevealHtml}</div>
 </div>
 ` : ""}
-${hasSent ? ⁠<div class="nv-example-preview-row ${isPreviewExpanded ? "is-expanded" : ""}" id="exPrev_${rowId}" onclick="toggleCharExamplePreview(event, '${rowId}')"> <div class="nv-example-preview-text">${q ? markText(r.sentence, q) : esc(r.sentence)}</div> <button class="nv-audio-btn" style="width:24px;height:24px;" title="예문 발음 듣기" onclick="toggleSpeech(event, '${esc(r.sentence).replace(/'/g, "\\'")}', this)">${SVG_SPEAKER}</button> </div>⁠ : ""}
+
+${hasSent ? `
+<div class="nv-example-preview-row ${isPreviewExpanded ? "is-expanded" : ""}" id="exPrev_${rowId}" onclick="toggleCharExamplePreview(event, '${rowId}')">
+<div class="nv-example-preview-text">${q ? markText(r.sentence, q) : esc(r.sentence)}</div>
+<button class="nv-audio-btn" style="width:24px;height:24px;" title="예문 발음 듣기" onclick="toggleSpeech(event, '${esc(r.sentence).replace(/'/g, "\\'")}', this)">${SVG_SPEAKER}</button>
 </div>
-⁠: ""} </div> </div> </div> </div> </div>⁠;
+` : ""}
+</div>
+` : ""}
+</div>
+</div>
+</div>
+</div>
+</div>
+`;
 }).join("");
 }
+
 function resetCharRowSubStates(rowId) {
 if (!rowId) return;
 appState.openWordRowIds.delete(rowId);
@@ -4733,6 +5126,7 @@ if (wBtn) wBtn.classList.remove("is-open");
 if (wRev) wRev.classList.remove("is-open");
 if (exPrev) exPrev.classList.remove("is-expanded");
 }
+
 function toggleCharDetail(rowId, el) {
 if (Date.now() < suppressCharRowClickUntil) return;
 const openRow = document.querySelector(".nv-char-row.is-swipe-open");
@@ -4753,6 +5147,7 @@ disc.classList.add("is-open");
 syncSectionBulkLabel(el ? el.closest(".nv-series-section") : null);
 refreshSeriesStrip();
 }
+
 function toggleAllWordsMeaning(evt, rowId) {
 if (evt) evt.stopPropagation();
 const btn = document.getElementById("wordsBtn_" + rowId);
@@ -4768,6 +5163,7 @@ btn.classList.add("is-open");
 rev.classList.add("is-open");
 }
 }
+
 function toggleCharExamplePreview(evt, rowId) {
 if (evt) evt.stopPropagation();
 const prevEl = document.getElementById("exPrev_" + rowId);
@@ -4780,14 +5176,16 @@ appState.openPreviewIds.add(rowId);
 prevEl.classList.add("is-expanded");
 }
 }
+
 function syncSectionBulkLabel(secEl) {
 if (!secEl) return;
 const btn = secEl.querySelector(".nv-sec-toggle-btn");
 const details = secEl.querySelectorAll(".nv-char-row .nv-disclosure");
 if (!btn || !details.length) return;
 const allOpen = Array.from(details).every(d => d.classList.contains("is-open"));
-btn.innerHTML = ⁠${allOpen ? SVG_CHEV_UP : SVG_CHEV_DOWN}<span>${allOpen ? "접기" : "펼치기"}</span>⁠;
+btn.innerHTML = `${allOpen ? SVG_CHEV_UP : SVG_CHEV_DOWN}<span>${allOpen ? "접기" : "펼치기"}</span>`;
 }
+
 function applyBulkRowToggle(secEl) {
 if (!secEl) return;
 const rows = secEl.querySelectorAll(".nv-char-row");
@@ -4812,14 +5210,17 @@ if (disc) disc.classList.remove("is-open");
 syncSectionBulkLabel(secEl);
 refreshSeriesStrip();
 }
+
 function toggleSectionRows(btnEl) {
 applyBulkRowToggle(btnEl ? btnEl.closest(".nv-series-section") : null);
 }
+
 function getActiveSeriesSection() {
 const scope = appState.sheetTargetChars ? document.getElementById("seriesSheetBody") : document.getElementById("page-" + appState.activeTab);
 if (!scope) return null;
 return findDominantSection(scope, appState.sheetTargetChars ? "sheet" : "page").sec;
 }
+
 /* -------------------------------------------------------------------------
 화면 점유율이 가장 큰 해성계 섹션 찾기 (배너/접기 보정 공용)
 ------------------------------------------------------------------------- */
@@ -4833,6 +5234,7 @@ const hdr = document.getElementById("appHeader");
 const top = hdr ? hdr.getBoundingClientRect().bottom : 44;
 return { top, bottom: window.innerHeight };
 }
+
 function findDominantSection(scope, mode, selector) {
 const bounds = getViewportBounds(mode);
 const sel = selector || ".nv-series-section";
@@ -4847,22 +5249,26 @@ if (ov > bestOv) { bestOv = ov; best = sec; }
 });
 return { sec: best, overlap: bestOv, bounds };
 }
+
 function refreshSeriesStrip() {
 const strip = document.getElementById("seriesContextStrip");
 const scrollEl = document.getElementById("seriesContextScroll");
 const bulkBtn = document.getElementById("bulkExpandToggleBtn");
 if (!strip || !scrollEl) return;
+
 const hide = () => {
 strip.classList.remove("is-visible");
 strip.removeAttribute("data-root");
 document.body.classList.remove("has-series-strip");
 if (bulkBtn) bulkBtn.classList.remove("is-visible");
 };
+
 const inSheet = Boolean(appState.sheetTargetChars);
 const scope = inSheet
 ? document.getElementById("seriesSheetBody")
 : document.getElementById("page-" + appState.activeTab);
 if (!scope) return hide();
+
 // 배너가 붙을 기준선과 가로 범위
 let topAnchor, boxLeft, boxWidth;
 if (inSheet) {
@@ -4871,17 +5277,21 @@ topAnchor = r.top; boxLeft = r.left; boxWidth = r.width;
 } else {
 const hr = document.getElementById("appHeader").getBoundingClientRect();
 topAnchor = hr.bottom; boxLeft = hr.left; boxWidth = hr.width;
+
 // 큰 제목(복습/입력/전체표)이 아직 보이면 배너를 숨겨 제목을 가리지 않음
 const title = scope.querySelector(".nv-large-title");
 if (title && title.getBoundingClientRect().bottom > topAnchor) return hide();
 }
+
 // 화면에서 가장 많은 면적을 차지하는 해성계 그룹 선택
 const found = findDominantSection(scope, inSheet ? "sheet" : "page");
 const best = found.sec;
 if (!best) return hide();
+
 const root = best.getAttribute("data-root");
 const g = root ? appState.groupMap[root] : null;
 if (!g) return hide();
+
 // 항상 헤더(또는 시트 본문) 바로 아래, 같은 가로 폭에 고정 → 중앙에 뜨지 않음
 const sp = (k, v) => strip.style.setProperty(k, v, "important");
 sp("top", Math.round(topAnchor) + "px");
@@ -4889,16 +5299,18 @@ sp("left", Math.round(boxLeft) + "px");
 sp("width", Math.round(boxWidth) + "px");
 sp("right", "auto");
 sp("z-index", inSheet ? "400" : "115"); // 시트(300) 뒤에 숨지 않게
+
 if (strip.getAttribute("data-root") !== root) {
 strip.setAttribute("data-root", root);
 const chars = g.rows.filter(r => !r.isPass || appState.showPass).map(r =>
-r.isStar ? ⁠<span class="nv-series-star-char">${esc(r.simp)}</span>⁠ : esc(r.simp)
+r.isStar ? `<span class="nv-series-star-char">${esc(r.simp)}</span>` : esc(r.simp)
 ).join(" ");
-scrollEl.innerHTML = ⁠<span class="nv-series-root-label nv-zh-simp">${esc(g.root)}</span><span class="nv-series-chars-label nv-zh-simp">${chars}</span>⁠;
+scrollEl.innerHTML = `<span class="nv-series-root-label nv-zh-simp">${esc(g.root)}</span><span class="nv-series-chars-label nv-zh-simp">${chars}</span>`;
 scrollEl.scrollLeft = 0;
 }
 strip.classList.add("is-visible");
 document.body.classList.add("has-series-strip");
+
 if (bulkBtn) {
 const details = best.querySelectorAll(".nv-char-row .nv-disclosure");
 const allOpen = details.length > 0 && Array.from(details).every(d => d.classList.contains("is-open"));
@@ -4907,19 +5319,21 @@ bulkBtn.classList.toggle("is-expanded", allOpen);
 bulkBtn.innerHTML = allOpen ? SVG_CHEV_UP : SVG_CHEV_DOWN;
 }
 }
+
 function toggleVisibleSeriesRows() {
 applyBulkRowToggle(getActiveSeriesSection());
 }
+
 function analyzeSeriesGroup(rootChar, btnEl) {
 if (btnEl) { btnEl.disabled = true; btnEl.textContent = "분석 중…"; }
 setBusyState(true);
-showBanner(⁠[${rootChar}] 분석 중…⁠);
+showBanner(`[${rootChar}] 분석 중…`);
 google.script.run
 .withSuccessHandler(res => {
 setBusyState(false);
 ingestServerPayload(res);
 renderCurrentPage(true);
-showBanner(⁠[${rootChar}] 분석 완료⁠);
+showBanner(`[${rootChar}] 분석 완료`);
 })
 .withFailureHandler(err => {
 setBusyState(false);
@@ -4928,37 +5342,47 @@ showBanner("분석 오류: " + err.message);
 })
 .webAppFillGroup(appState.secretKey, rootChar);
 }
+
 /* Ambiguous Series Sheet */
 function resolveSeriesChoices(chars, cb) {
 const ambiguous = chars.filter(ch => (appState.charMatches[ch] || []).length >= 2);
 if (!ambiguous.length) { cb({}); return; }
 appState.choiceSelection = {};
 appState.choiceCallback = cb;
+
 const body = document.getElementById("seriesChoiceBody");
 body.innerHTML = ambiguous.map(ch => {
 const list = appState.charMatches[ch];
 appState.choiceSelection[ch] = list[0].rowNum;
-return ⁠<div class="nv-choice-group"> <div style="font-size:15px;font-weight:600;" class="nv-zh-simp">[${esc(ch)}] 한자가 ${list.length}개 해성계에 있습니다</div> ${list.map((m, idx) =>⁠
-<button class="nv-choice-opt ￼{esc(ch)}', ￼
-￼{esc(m.root)}</span>
+return `
+<div class="nv-choice-group">
+<div style="font-size:15px;font-weight:600;" class="nv-zh-simp">[${esc(ch)}] 한자가 ${list.length}개 해성계에 있습니다</div>
+${list.map((m, idx) => `
+<button class="nv-choice-opt ${idx === 0 ? "is-selected" : ""}" onclick="pickSeriesChoice('${esc(ch)}', ${m.rowNum}, this)">
+<span class="nv-zh-simp" style="font-size:20px;font-weight:700;width:28px;text-align:center;">${esc(m.root)}</span>
 <div style="flex:1;min-width:0;">
 <div style="font-size:14px;font-weight:600;">
-<span class="nv-zh-simp">￼
-￼{esc(m.pinyin || "-")}</span>
+<span class="nv-zh-simp">${esc(m.display)}</span>
+<span class="nv-pinyin" style="color:var(--nv-label-secondary);margin-left:6px;font-size:12.5px;">${esc(m.pinyin || "-")}</span>
 </div>
 <div style="font-size:12px;color:var(--nv-label-tertiary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(m.meaning || "미분석")}</div>
 </div>
 </button>
-⁠).join("")} </div> ⁠;
+`).join("")}
+</div>
+`;
 }).join("");
+
 document.getElementById("seriesChoiceSheet")?.classList.add("is-open");
 }
+
 function pickSeriesChoice(ch, rowNum, btnEl) {
 appState.choiceSelection[ch] = rowNum;
 const grp = btnEl ? btnEl.closest(".nv-choice-group") : null;
 if (grp) grp.querySelectorAll(".nv-choice-opt").forEach(o => o.classList.remove("is-selected"));
 if (btnEl) btnEl.classList.add("is-selected");
 }
+
 function finishSeriesChoice(confirmed) {
 const cb = appState.choiceCallback;
 const map = Object.assign({}, appState.choiceSelection);
@@ -4968,6 +5392,7 @@ closeSheetById("seriesChoiceSheet", () => {
 if (confirmed && cb) cb(map);
 });
 }
+
 /* Input Page Logic */
 function resizeInputSentenceArea() {
 const ta = document.getElementById("inputSentenceArea");
@@ -4975,9 +5400,10 @@ if (!ta) return;
 const maxHeight = Math.floor(window.innerHeight * 0.45);
 ta.style.height = "auto";
 const nextHeight = Math.min(ta.scrollHeight, maxHeight);
-ta.style.height = ⁠${Math.max(190, nextHeight)}px⁠;
+ta.style.height = `${Math.max(190, nextHeight)}px`;
 ta.style.overflowY = ta.scrollHeight > maxHeight ? "auto" : "hidden";
 }
+
 async function pasteFromClipboard() {
 const ta = document.getElementById("inputSentenceArea");
 try {
@@ -4996,6 +5422,7 @@ return;
 ta?.focus();
 showBanner("입력란을 길게 눌러 붙여넣어 주세요.");
 }
+
 function resetInputForm() {
 const ta = document.getElementById("inputSentenceArea");
 const man = document.getElementById("manualCharField");
@@ -5012,36 +5439,48 @@ appState.draftQRow = 0;
 appState.draftSelectedChars.clear();
 renderDraftTiles();
 }
+
 function toggleTileScale() {
 appState.tileCompact = !appState.tileCompact;
 localStorage.setItem("nv_tile_compact", appState.tileCompact ? "1" : "0");
 syncTileScaleBtn();
 }
+
 function syncTileScaleBtn() {
 const btn = document.getElementById("tileScaleBtn");
 const box = document.getElementById("inputTileContainer");
 if (btn) btn.textContent = appState.tileCompact ? "보통" : "크게";
 if (box) box.classList.toggle("is-compact", appState.tileCompact);
 }
+
 function renderDraftTiles() {
 const text = document.getElementById("inputSentenceArea")?.value || "";
 const chars = extractChars(text);
 appState.draftSelectedChars.forEach(c => { if (!chars.includes(c)) chars.push(c); });
+
 const countLbl = document.getElementById("selectedCharCountLabel");
-if (countLbl) countLbl.textContent = ⁠${appState.draftSelectedChars.size}자⁠;
+if (countLbl) countLbl.textContent = `${appState.draftSelectedChars.size}자`;
+
 const box = document.getElementById("inputTileContainer");
 if (!box) return;
 if (!chars.length) {
-box.innerHTML = ⁠<span class="nv-empty-sub" style="padding:8px;">예문을 입력하면 한자가 표시됩니다.</span>⁠;
+box.innerHTML = `<span class="nv-empty-sub" style="padding:8px;">예문을 입력하면 한자가 표시됩니다.</span>`;
 return;
 }
+
 box.innerHTML = chars.map(ch => {
 const isCommon = COMMON_HANZI.has(ch);
 const isStar = appState.starChars.has(ch);
 const isSel = appState.draftSelectedChars.has(ch);
-return ⁠<button class="nv-tile ${isCommon ? "is-basic" : ""} ${isSel ? "is-selected" : ""}" onclick="toggleDraftTile('${ch}', this)"> ${esc(ch)} ${isStar ?⁠<span class="nv-tile-star-dot"></span>⁠: ""} </button>⁠;
+return `
+<button class="nv-tile ${isCommon ? "is-basic" : ""} ${isSel ? "is-selected" : ""}" onclick="toggleDraftTile('${ch}', this)">
+${esc(ch)}
+${isStar ? `<span class="nv-tile-star-dot"></span>` : ""}
+</button>
+`;
 }).join("");
 }
+
 function toggleDraftTile(ch, btnEl) {
 if (appState.draftSelectedChars.has(ch)) {
 appState.draftSelectedChars.delete(ch);
@@ -5051,8 +5490,9 @@ appState.draftSelectedChars.add(ch);
 btnEl?.classList.add("is-selected");
 }
 const countLbl = document.getElementById("selectedCharCountLabel");
-if (countLbl) countLbl.textContent = ⁠${appState.draftSelectedChars.size}자⁠;
+if (countLbl) countLbl.textContent = `${appState.draftSelectedChars.size}자`;
 }
+
 function appendManualChars() {
 const inp = document.getElementById("manualCharField");
 const chars = extractChars(inp?.value || "");
@@ -5064,6 +5504,7 @@ chars.forEach(c => appState.draftSelectedChars.add(c));
 if (inp) inp.value = "";
 renderDraftTiles();
 }
+
 function translateInputSentence() {
 const ta = document.getElementById("inputSentenceArea");
 const text = (ta?.value || "").trim();
@@ -5074,29 +5515,36 @@ return;
 const btn = document.getElementById("translateActionBtn");
 if (btn) { btn.disabled = true; btn.textContent = "번역 중…"; }
 setBusyState(true);
+
 google.script.run
 .withSuccessHandler(res => {
 setBusyState(false);
-if (btn) { btn.disabled = false; btn.innerHTML = ⁠${SVG_SPARKLE}<span>번역 및 해설</span>⁠; }
+if (btn) { btn.disabled = false; btn.innerHTML = `${SVG_SPARKLE}<span>번역 및 해설</span>`; }
 appState.draftQRow = res.qRow;
 if (ta && res.example) ta.value = res.example;
 ingestServerPayload(res);
 renderDraftTiles();
 renderRecentHistory();
+
 const box = document.getElementById("inputTranslationBox");
 if (box) {
 box.style.display = "block";
-box.innerHTML = ⁠<div style="font-size:12px;color:var(--nv-label-tertiary);margin-bottom:4px;">저장됨</div> <div class="nv-translation-line">${esc(res.translation)}</div> <div class="nv-notes-line">${formatNotesWithPinyin(res.explanation)}</div>⁠;
+box.innerHTML = `
+<div style="font-size:12px;color:var(--nv-label-tertiary);margin-bottom:4px;">저장됨</div>
+<div class="nv-translation-line">${esc(res.translation)}</div>
+<div class="nv-notes-line">${formatNotesWithPinyin(res.explanation)}</div>
+`;
 }
 showBanner("번역 완료");
 })
 .withFailureHandler(err => {
 setBusyState(false);
-if (btn) { btn.disabled = false; btn.innerHTML = ⁠${SVG_SPARKLE}<span>번역 및 해설</span>⁠; }
+if (btn) { btn.disabled = false; btn.innerHTML = `${SVG_SPARKLE}<span>번역 및 해설</span>`; }
 showBanner("번역 오류: " + err.message);
 })
 .webAppTranslateExample(appState.secretKey, text, appState.draftQRow);
 }
+
 function registerSelectedChars() {
 const extra = extractChars(document.getElementById("manualCharField")?.value || "");
 extra.forEach(c => appState.draftSelectedChars.add(c));
@@ -5106,14 +5554,16 @@ showBanner("등록할 한자를 1개 이상 선택해 주세요.");
 return;
 }
 const example = (document.getElementById("inputSentenceArea")?.value || "").trim();
+
 resolveSeriesChoices(chars, choiceMap => {
 const btn = document.getElementById("registerCharsBtn");
-if (btn) { btn.disabled = true; btn.textContent = ⁠등록 중 (${chars.join("")})…⁠; }
+if (btn) { btn.disabled = true; btn.textContent = `등록 중 (${chars.join("")})…`; }
 setBusyState(true);
+
 google.script.run
 .withSuccessHandler(res => {
 setBusyState(false);
-if (btn) { btn.disabled = false; btn.innerHTML = ⁠${SVG_SEND}<span>한자 등록</span>⁠; }
+if (btn) { btn.disabled = false; btn.innerHTML = `${SVG_SEND}<span>한자 등록</span>`; }
 appState.draftQRow = res.qRow;
 const ta = document.getElementById("inputSentenceArea");
 if (ta && res.example) ta.value = res.example;
@@ -5122,66 +5572,125 @@ const man = document.getElementById("manualCharField");
 if (man) man.value = "";
 ingestServerPayload(res);
 renderCurrentPage(true);
+
 const fb = document.getElementById("registeredFeedbackBox");
 if (fb) {
 fb.style.display = "block";
-fb.innerHTML = ⁠<div class="nv-grouped-list" style="padding:12px 16px;"> <div style="font-size:13px;font-weight:700;color:var(--nv-system-green);margin-bottom:8px;">등록 완료</div> <div style="display:flex;flex-wrap:wrap;gap:8px;"> ${res.chars.map(c =>⁠<button class="nv-char-key nv-zh-simp" onclick="openSeriesSheet(['${c}'], ￼{esc(c)}</button>⁠).join("")} </div> </div> ⁠;
+fb.innerHTML = `
+<div class="nv-grouped-list" style="padding:12px 16px;">
+<div style="font-size:13px;font-weight:700;color:var(--nv-system-green);margin-bottom:8px;">등록 완료</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;">
+${res.chars.map(c => `<button class="nv-char-key nv-zh-simp" onclick="openSeriesSheet(['${c}'], ${JSON.stringify(res.chars).replace(/"/g, "'")})">${esc(c)}</button>`).join("")}
+</div>
+</div>
+`;
 }
 showBanner("한자 등록 완료");
 })
 .withFailureHandler(err => {
 setBusyState(false);
-if (btn) { btn.disabled = false; btn.innerHTML = ⁠${SVG_SEND}<span>한자 등록</span>⁠; }
+if (btn) { btn.disabled = false; btn.innerHTML = `${SVG_SEND}<span>한자 등록</span>`; }
 showBanner("등록 오류: " + err.message);
 })
 .webAppRegisterChars(appState.secretKey, chars, example, appState.draftQRow, choiceMap);
 });
 }
+
 function toggleRecentPendingFilter() {
 appState.recentPendingOnly = !appState.recentPendingOnly;
 document.getElementById("recentFilterToggleBtn")?.classList.toggle("is-on", appState.recentPendingOnly);
 renderRecentHistory();
 }
+
 function isRecentOpen(item) {
 if (appState.recentManualToggle[item.qRow] !== undefined) return appState.recentManualToggle[item.qRow];
 return withinAutoExpand(item.transTime);
 }
+
 function renderRecentHistory() {
 const box = document.getElementById("recentHistoryList");
 if (!box) return;
 const source = appState.recentPendingOnly ? appState.recent.filter(it => !it.isDone) : appState.recent;
 const list = appState.recentPendingOnly ? source : source.slice(0, 25);
+
 if (!list.length) {
-box.innerHTML = ⁠<div class="nv-empty"><div class="nv-empty-sub">표시할 기록이 없습니다.</div></div>⁠;
+box.innerHTML = `<div class="nv-empty"><div class="nv-empty-sub">표시할 기록이 없습니다.</div></div>`;
 return;
 }
+
 box.innerHTML = list.map(it => {
 const isOpen = isRecentOpen(it);
 const selSet = appState.recentSelectedChars[it.qRow] || new Set();
 const exChars = extractChars(it.example);
 const regSet = new Set(it.chars);
 const bmOn = Boolean(appState.bookmarkById["ex_" + it.qRow]);
+
 const statusHtml = it.isDone
-? ⁠<span class="nv-status-done">${esc(it.chars.join(""))}${it.isReviewed ? " · 완료" : ""}</span>⁠
-: ⁠<span class="nv-status-pending">번역완료 · 한자 미완료</span>⁠;
-const regButtons = it.chars.length ? ⁠<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;"> ${it.chars.map(c =>⁠<button class="nv-btn-plain nv-zh-simp" style="font-weight:700;font-size:15px;" onclick="openSeriesSheet(['${c}'], ￼{esc(c)}</button>⁠).join("")} </div> ⁠ : "";
-const tileArea = exChars.length ? ⁠<div style="font-size:12px;color:var(--nv-label-tertiary);margin-top:10px;">추가 등록</div> <div class="nv-tile-grid is-compact" style="max-height:170px;padding:8px 0;"> ${exChars.map(ch => { const isCommon = COMMON_HANZI.has(ch); const isStar = appState.starChars.has(ch) || regSet.has(ch); const isSel = selSet.has(ch); return⁠
-<button class="nv-tile ￼{ch}', this)">
+? `<span class="nv-status-done">${esc(it.chars.join(""))}${it.isReviewed ? " · 완료" : ""}</span>`
+: `<span class="nv-status-pending">번역완료 · 한자 미완료</span>`;
+
+const regButtons = it.chars.length ? `
+<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;">
+${it.chars.map(c => `<button class="nv-btn-plain nv-zh-simp" style="font-weight:700;font-size:15px;" onclick="openSeriesSheet(['${c}'], ${JSON.stringify(it.chars).replace(/"/g, "'")})">${esc(c)}</button>`).join("")}
+</div>
+` : "";
+
+const tileArea = exChars.length ? `
+<div style="font-size:12px;color:var(--nv-label-tertiary);margin-top:10px;">추가 등록</div>
+<div class="nv-tile-grid is-compact" style="max-height:170px;padding:8px 0;">
+${exChars.map(ch => {
+const isCommon = COMMON_HANZI.has(ch);
+const isStar = appState.starChars.has(ch) || regSet.has(ch);
+const isSel = selSet.has(ch);
+return `
+<button class="nv-tile ${isCommon ? "is-basic" : ""} ${isSel ? "is-selected" : ""}" onclick="toggleRecentCharTile(${it.qRow}, '${ch}', this)">
 ${esc(ch)}
-${isStar ? ⁠<span class="nv-tile-star-dot"></span>⁠ : ""}
+${isStar ? `<span class="nv-tile-star-dot"></span>` : ""}
 </button>
-⁠; }).join("")} </div> <div id="recentSaveWrap_${it.qRow}" style="display:${selSet.size > 0 ? "block" : "none"};margin-top:6px;"> <button class="nv-btn nv-btn-filled nv-btn-sm nv-btn-block" onclick="saveRecentChars(${it.qRow}, this)">선택한 ${selSet.size}자 등록 (${Array.from(selSet).join("")})</button> </div> ⁠ : "";
-return ⁠<div class="nv-history-row" id="recentRow_${it.qRow}"> <div class="nv-history-top"> <span>${it.isNoExample ? "단어" : "예문"}</span> <div style="display:inline-flex;align-items:center;gap:4px;"> ${!it.isNoExample ?⁠<button class="nv-icon-btn ￼{it.qRow}" onclick="toggleExampleBookmark(￼{SVG_BOOKMARK}</button>⁠: ""} ${statusHtml} </div> </div> <div class="nv-sentence-row" style="padding-bottom:0;"> <div class="nv-zh-simp" style="flex:1;font-size:var(--nv-example-size);font-weight:var(--nv-example-weight);line-height:1.55;cursor:pointer;" onclick="toggleRecentRow(${it.qRow})"> ${esc(it.isNoExample ? "예문 없음" : it.example)} </div> ${!it.isNoExample ?⁠<button class="nv-audio-btn" title="발음 듣기" onclick="toggleSpeech(event, '{esc(it.example).replace(/'/g, "\\'")}', this)">{SVG_SPEAKER}</button>⁠: ""} </div> ${regButtons} <div id="recentDisc_${it.qRow}" class="nv-disclosure ${isOpen ? "is-open" : ""}"> <div class="nv-disclosure-inner"> ${it.translation ?⁠
+`;
+}).join("")}
+</div>
+<div id="recentSaveWrap_${it.qRow}" style="display:${selSet.size > 0 ? "block" : "none"};margin-top:6px;">
+<button class="nv-btn nv-btn-filled nv-btn-sm nv-btn-block" onclick="saveRecentChars(${it.qRow}, this)">선택한 ${selSet.size}자 등록 (${Array.from(selSet).join("")})</button>
+</div>
+` : "";
+
+return `
+<div class="nv-history-row" id="recentRow_${it.qRow}">
+<div class="nv-history-top">
+<span>${it.isNoExample ? "단어" : "예문"}</span>
+<div style="display:inline-flex;align-items:center;gap:4px;">
+${!it.isNoExample ? `<button class="nv-icon-btn ${bmOn ? "is-bookmarked" : ""}" style="width:28px;height:28px;" data-bmid="ex_${it.qRow}" onclick="toggleExampleBookmark(${it.qRow})" title="북마크">${SVG_BOOKMARK}</button>` : ""}
+${statusHtml}
+</div>
+</div>
+<div class="nv-sentence-row" style="padding-bottom:0;">
+<div class="nv-zh-simp" style="flex:1;font-size:var(--nv-example-size);font-weight:var(--nv-example-weight);line-height:1.55;cursor:pointer;" onclick="toggleRecentRow(${it.qRow})">
+${esc(it.isNoExample ? "예문 없음" : it.example)}
+</div>
+${!it.isNoExample ? `<button class="nv-audio-btn" title="발음 듣기" onclick="toggleSpeech(event, '${esc(it.example).replace(/'/g, "\\'")}', this)">${SVG_SPEAKER}</button>` : ""}
+</div>
+${regButtons}
+<div id="recentDisc_${it.qRow}" class="nv-disclosure ${isOpen ? "is-open" : ""}">
+<div class="nv-disclosure-inner">
+${it.translation ? `
 <div class="nv-explanation-box" style="padding-top:10px;">
 <div class="nv-translation-line">${esc(it.translation)}</div>
-￼
-￼
+${it.explanation ? `<div class="nv-notes-line">${formatNotesWithPinyin(it.explanation)}</div>` : ""}
+</div>
 ` : ""}
-￼
-￼
-${!it.isNoExample ? `<button class="nv-btn-plain" onclick="retranslateSentence(${it.qRow})">{SVG_REFRESH}<span>재번역</span></button>⁠: ""} <button id="recentToggleBtn_${it.qRow}" class="nv-btn-plain" onclick="toggleRecentRow(${it.qRow})">${isOpen ? SVG_CHEV_UP : SVG_CHEV_DOWN}<span>${isOpen ? "접기" : "펼치기"}</span></button> </div> </div> </div> </div>⁠;
+${tileArea}
+<div style="display:flex;justify-content:flex-end;gap:6px;margin-top:8px;">
+${!it.isNoExample ? `<button class="nv-btn-plain" onclick="retranslateSentence(${it.qRow})">${SVG_REFRESH}<span>재번역</span></button>` : ""}
+<button id="recentToggleBtn_${it.qRow}" class="nv-btn-plain" onclick="toggleRecentRow(${it.qRow})">${isOpen ? SVG_CHEV_UP : SVG_CHEV_DOWN}<span>${isOpen ? "접기" : "펼치기"}</span></button>
+</div>
+</div>
+</div>
+</div>
+`;
 }).join("");
 }
+
 function toggleRecentRow(qRow) {
 const disc = document.getElementById("recentDisc_" + qRow);
 const btn = document.getElementById("recentToggleBtn_" + qRow);
@@ -5189,8 +5698,9 @@ if (!disc) return;
 const next = !disc.classList.contains("is-open");
 appState.recentManualToggle[qRow] = next;
 disc.classList.toggle("is-open", next);
-if (btn) btn.innerHTML = ⁠${next ? SVG_CHEV_UP : SVG_CHEV_DOWN}<span>${next ? "접기" : "펼치기"}</span>⁠;
+if (btn) btn.innerHTML = `${next ? SVG_CHEV_UP : SVG_CHEV_DOWN}<span>${next ? "접기" : "펼치기"}</span>`;
 }
+
 function toggleRecentCharTile(qRow, ch, btnEl) {
 if (!appState.recentSelectedChars[qRow]) appState.recentSelectedChars[qRow] = new Set();
 const set = appState.recentSelectedChars[qRow];
@@ -5201,16 +5711,17 @@ const wrap = document.getElementById("recentSaveWrap_" + qRow);
 if (wrap) {
 wrap.style.display = set.size > 0 ? "block" : "none";
 const actBtn = wrap.querySelector("button");
-if (actBtn) actBtn.textContent = ⁠선택한 ${set.size}자 등록 (${Array.from(set).join("")})⁠;
+if (actBtn) actBtn.textContent = `선택한 ${set.size}자 등록 (${Array.from(set).join("")})`;
 }
 }
+
 function saveRecentChars(qRow, btnEl) {
 const item = appState.recent.find(x => x.qRow === qRow);
 const set = appState.recentSelectedChars[qRow];
 if (!item || !set || !set.size) return;
 const chars = Array.from(set);
 resolveSeriesChoices(chars, choiceMap => {
-if (btnEl) { btnEl.disabled = true; btnEl.textContent = ⁠등록 중 (${chars.join("")})…⁠; }
+if (btnEl) { btnEl.disabled = true; btnEl.textContent = `등록 중 (${chars.join("")})…`; }
 setBusyState(true);
 google.script.run
 .withSuccessHandler(res => {
@@ -5218,7 +5729,7 @@ setBusyState(false);
 delete appState.recentSelectedChars[qRow];
 ingestServerPayload(res);
 renderCurrentPage(true);
-showBanner(⁠${qRow}행에 ${chars.join("")} 등록됨⁠);
+showBanner(`${qRow}행에 ${chars.join("")} 등록됨`);
 })
 .withFailureHandler(err => {
 setBusyState(false);
@@ -5228,15 +5739,17 @@ showBanner("등록 오류: " + err.message);
 .webAppRegisterChars(appState.secretKey, chars, item.example, qRow, choiceMap);
 });
 }
+
 /* Series Sheet */
 function openSeriesSheet(targetChars, allChars) {
 appState.sheetTargetChars = targetChars;
 appState.sheetAllChars = allChars || targetChars;
 const title = document.getElementById("seriesSheetTitle");
-if (title) title.textContent = ⁠해성계 (${targetChars.join(" · ")})⁠;
+if (title) title.textContent = `해성계 (${targetChars.join(" · ")})`;
 document.getElementById("seriesSheet")?.classList.add("is-open");
 renderSeriesSheet();
 }
+
 function renderSeriesSheet() {
 const body = document.getElementById("seriesSheetBody");
 cleanupStrokeBoxes(body);
@@ -5246,6 +5759,7 @@ attachStrokeObserver(body);
 body.querySelectorAll(".nv-series-section").forEach(sec => syncSectionBulkLabel(sec));
 refreshSeriesStrip();
 }
+
 function closeSeriesSheet() {
 closeSheetById("seriesSheet", () => {
 const body = document.getElementById("seriesSheetBody");
@@ -5255,6 +5769,7 @@ appState.sheetTargetChars = null;
 refreshSeriesStrip();
 });
 }
+
 function closeSheetById(id, afterFn) {
 const el = document.getElementById(id);
 if (!el || !el.classList.contains("is-open")) {
@@ -5267,12 +5782,14 @@ el.classList.remove("is-open", "is-closing");
 if (afterFn) afterFn();
 }, 190);
 }
+
 /* All Characters Search & Index */
 function syncSearchClearButton() {
 const inp = document.getElementById("allSearchInput");
 const btn = document.getElementById("allSearchClearBtn");
 if (inp && btn) btn.classList.toggle("is-visible", inp.value.length > 0);
 }
+
 function clearSearchQuery() {
 const inp = document.getElementById("allSearchInput");
 if (!inp) return;
@@ -5281,10 +5798,12 @@ syncSearchClearButton();
 renderAllSeries();
 inp.focus();
 }
+
 function readRecentQueries() {
 try { return JSON.parse(localStorage.getItem("nv_recent_queries") || "[]"); }
 catch (e) { return []; }
 }
+
 function saveRecentQuery(q) {
 const clean = String(q || "").trim();
 if (!clean) return;
@@ -5292,6 +5811,7 @@ const next = [clean].concat(readRecentQueries().filter(item => item !== clean)).
 localStorage.setItem("nv_recent_queries", JSON.stringify(next));
 renderQueryPills();
 }
+
 function renderQueryPills() {
 const strip = document.getElementById("recentQueryStrip");
 const inp = document.getElementById("allSearchInput");
@@ -5301,9 +5821,10 @@ if (inp.value.trim().length > 0 || !list.length) {
 strip.classList.remove("is-visible");
 return;
 }
-strip.innerHTML = list.map(q => ⁠<button class="nv-query-pill nv-zh-simp" onclick="applyQueryPill('${esc(q).replace(/'/g, "\\'")}')">${esc(q)}</button>⁠).join("");
+strip.innerHTML = list.map(q => `<button class="nv-query-pill nv-zh-simp" onclick="applyQueryPill('${esc(q).replace(/'/g, "\\'")}')">${esc(q)}</button>`).join("");
 strip.classList.add("is-visible");
 }
+
 function applyQueryPill(q) {
 const inp = document.getElementById("allSearchInput");
 if (!inp) return;
@@ -5312,12 +5833,14 @@ syncSearchClearButton();
 renderQueryPills();
 renderAllSeries();
 }
+
 function handleSearchInput() {
 syncSearchClearButton();
 renderQueryPills();
 clearTimeout(appState.searchDebounce);
 appState.searchDebounce = setTimeout(() => renderAllSeries(), 160);
 }
+
 function setStarredFilter(starredOnly) {
 const next = Boolean(starredOnly);
 if (appState.starredOnly === next) return;
@@ -5328,6 +5851,7 @@ const thumb = document.getElementById("allScopeThumb");
 if (thumb) thumb.style.transform = next ? "translateX(100%)" : "translateX(0)";
 renderAllSeries();
 }
+
 /* -------------------------------------------------------------------------
 접기 시 스크롤 보정
 - 접기 직전 화면을 가장 많이 점유하던 그룹을 기억
@@ -5335,6 +5859,7 @@ renderAllSeries();
 - (접은 그룹이 점유 그룹이 아니면 점유 그룹의 화면상 위치를 그대로 유지)
 ------------------------------------------------------------------------- */
 const COLLAPSE_ANCHOR_RATIO = 0.38;
+
 function scrollByAmount(delta) {
 if (!isFinite(delta) || Math.abs(delta) < 1) return;
 if (isMobileScrollMode()) {
@@ -5344,6 +5869,7 @@ const ws = document.getElementById("workspaceScroll");
 if (ws) ws.scrollTop = Math.max(0, ws.scrollTop + delta);
 }
 }
+
 function findIndexItemByRoot(root) {
 const box = document.getElementById("allSeriesContainer");
 if (!box || !root) return null;
@@ -5353,6 +5879,7 @@ if (it.getAttribute("data-root") === root) return it;
 }
 return null;
 }
+
 function getDominantIndexItem() {
 const box = document.getElementById("allSeriesContainer");
 if (!box) return null;
@@ -5366,7 +5893,8 @@ if (ov > bestOv) { bestOv = ov; best = item; }
 });
 return best;
 }
-/
+
+/**
 * mutator: 실제로 그룹을 접는 함수 (DOM을 즉시 최종 상태로 만들어야 함)
 * clickedRoot: 사용자가 직접 접은 그룹의 root (전체 접기면 undefined)
 */
@@ -5374,6 +5902,7 @@ function collapseWithAnchor(mutator, clickedRoot) {
 const dom = getDominantIndexItem();
 const domRoot = dom ? dom.getAttribute("data-root") : null;
 const beforeTop = dom ? dom.getBoundingClientRect().top : 0;
+
 document.body.classList.add("nv-no-anim");
 try {
 mutator();
@@ -5384,6 +5913,7 @@ requestAnimationFrame(() => requestAnimationFrame(() => {
 document.body.classList.remove("nv-no-anim");
 }));
 }
+
 if (domRoot) {
 const el = findIndexItemByRoot(domRoot);
 if (el) {
@@ -5398,16 +5928,18 @@ scrollByAmount(nowTop - desiredTop);
 }
 syncScrollChrome();
 }
+
 function resetGroupRowStates(root) {
 const grp = root ? appState.groupMap[root] : null;
 if (!grp || !Array.isArray(grp.rows)) return;
 grp.rows.forEach(r => {
-const rowId = ⁠row_${r.rowNum}⁠;
+const rowId = `row_${r.rowNum}`;
 appState.openRowDetailIds.delete(rowId);
 appState.openWordRowIds.delete(rowId);
 appState.openPreviewIds.delete(rowId);
 });
 }
+
 function closeIndexItemDom(item, root) {
 const disc = item.querySelector(".nv-disclosure");
 const chev = item.querySelector(".nv-chevron");
@@ -5422,6 +5954,7 @@ cleanupStrokeBoxes(slot);
 slot.innerHTML = "";
 }
 }
+
 function collapseAllSeries() {
 const box = document.getElementById("allSeriesContainer");
 if (!box) return;
@@ -5437,21 +5970,35 @@ closeIndexItemDom(item, root);
 }, undefined);
 refreshSeriesStrip();
 }
+
 function buildIndexDetailHtml(g, rawQ) {
 const statusText = g.emptyCount > 0
-? ⁠<span style="font-size:12px;font-weight:700;color:var(--nv-accent);">미분석 ${g.emptyCount}자</span>⁠
-: ⁠<span style="font-size:12px;color:var(--nv-label-tertiary);">${(!appState.showPass && g.passCount > 0) ? ⁠PASS ${g.passCount} 숨김⁠ : "전체 항목"}</span>⁠;
+? `<span style="font-size:12px;font-weight:700;color:var(--nv-accent);">미분석 ${g.emptyCount}자</span>`
+: `<span style="font-size:12px;color:var(--nv-label-tertiary);">${(!appState.showPass && g.passCount > 0) ? `PASS ${g.passCount} 숨김` : "전체 항목"}</span>`;
 const fillBtn = g.emptyCount > 0
-? ⁠<button class="nv-btn-plain" onclick="analyzeSeriesGroup('${esc(g.root)}', this)">${SVG_BOLT}<span>일괄 분석</span></button>⁠
+? `<button class="nv-btn-plain" onclick="analyzeSeriesGroup('${esc(g.root)}', this)">${SVG_BOLT}<span>일괄 분석</span></button>`
 : "";
-return ⁠<div style="border-top:0.5px solid var(--nv-separator);"> <div class="nv-series-subbar ${g.emptyCount > 0 ? "has-pending" : ""}"> ${statusText} <div style="display:inline-flex;align-items:center;gap:6px;"> <button class="nv-btn-plain nv-sec-toggle-btn" onclick="toggleSectionRows(this)">${SVG_CHEV_DOWN}<span>펼치기</span></button> ${fillBtn} </div> </div> ${buildCharacterRowsHtml(g, null, rawQ)} </div>⁠;
+return `
+<div style="border-top:0.5px solid var(--nv-separator);">
+<div class="nv-series-subbar ${g.emptyCount > 0 ? "has-pending" : ""}">
+${statusText}
+<div style="display:inline-flex;align-items:center;gap:6px;">
+<button class="nv-btn-plain nv-sec-toggle-btn" onclick="toggleSectionRows(this)">${SVG_CHEV_DOWN}<span>펼치기</span></button>
+${fillBtn}
+</div>
+</div>
+${buildCharacterRowsHtml(g, null, rawQ)}
+</div>
+`;
 }
+
 function toggleIndexItem(root, btnEl) {
 const item = btnEl ? btnEl.closest(".nv-series-index-item") : null;
 const disc = item ? item.querySelector(".nv-disclosure") : null;
 const chev = item ? item.querySelector(".nv-chevron") : null;
 const slot = item ? item.querySelector(".nv-index-slot") : null;
 if (!item || !disc || !slot) return;
+
 const isOpen = disc.classList.contains("is-open");
 if (isOpen) {
 // 접기: 즉시 최종 상태로 만들고 스크롤 위치 보정
@@ -5472,15 +6019,18 @@ refreshSeriesStrip();
 if (g) setTimeout(() => { if (disc.classList.contains("is-open")) attachStrokeObserver(slot); }, 220);
 }
 }
+
 function renderAllSeries() {
 const rawQ = (document.getElementById("allSearchInput")?.value || "").trim();
 const ql = rawQ.toLowerCase();
 const box = document.getElementById("allSeriesContainer");
 const summary = document.getElementById("allSummaryLabel");
 cleanupStrokeBoxes(box);
+
 const totalGroups = appState.groups.length;
 const matches = [];
 let totalChars = 0;
+
 for (const g of appState.groups) {
 if (appState.starredOnly && !g.rows.some(r => r.isStar)) continue;
 let rootHit = false;
@@ -5500,50 +6050,81 @@ if (!rootHit && !hitEntries.length) continue;
 matches.push({ g, rootHit, hitMap, hitEntries });
 totalChars += g.nonPassCount;
 }
+
 if (summary) {
-summary.textContent = ⁠${matches.length}개 해성계 · ${totalChars.toLocaleString()}자${appState.starChars.size ? " · 즐겨찾기 " + appState.starChars.size : ""}⁠;
+summary.textContent = `${matches.length}개 해성계 · ${totalChars.toLocaleString()}자${appState.starChars.size ? " · 즐겨찾기 " + appState.starChars.size : ""}`;
 }
+
 if (!box) return;
 if (!matches.length) {
-box.innerHTML = ⁠<div class="nv-grouped-list"><div class="nv-empty"><div class="nv-empty-title">검색 결과 없음</div><div class="nv-empty-sub">한자, 병음, 뜻, 단어나 예문을 검색해 보세요.</div></div></div>⁠;
+box.innerHTML = `<div class="nv-grouped-list"><div class="nv-empty"><div class="nv-empty-title">검색 결과 없음</div><div class="nv-empty-sub">한자, 병음, 뜻, 단어나 예문을 검색해 보세요.</div></div></div>`;
 refreshSeriesStrip();
 return;
 }
+
 const autoExpand = ql.length > 0 && matches.length <= 3;
-box.innerHTML = ⁠<div class="nv-series-index-list">⁠ + matches.map(({ g, rootHit, hitMap, hitEntries }) => {
+
+box.innerHTML = `<div class="nv-series-index-list">` + matches.map(({ g, rootHit, hitMap, hitEntries }) => {
 const isOpen = autoExpand || appState.openRoots.has(g.root);
-const countStr = g.passCount > 0 ? ⁠${g.nonPassCount}·${g.passCount}⁠ : ⁠${g.nonPassCount}⁠;
+const countStr = g.passCount > 0 ? `${g.nonPassCount}·${g.passCount}` : `${g.nonPassCount}`;
 const charLine = g.rows.filter(r => !r.isPass || (ql && hitMap.has(r.rowNum))).map(r => {
 const isHit = ql && hitMap.has(r.rowNum);
-const inner = r.isStar ? ⁠<span class="nv-index-star">${esc(r.display)}</span>⁠ : esc(r.display);
-return isHit ? ⁠<span class="nv-index-match">${inner}</span>⁠ : inner;
+const inner = r.isStar ? `<span class="nv-index-star">${esc(r.display)}</span>` : esc(r.display);
+return isHit ? `<span class="nv-index-match">${inner}</span>` : inner;
 }).join(" · ");
+
 let reasonHtml = "";
 if (ql) {
 const lines = [];
 if (rootHit && !hitEntries.length) {
-lines.push(⁠<div class="nv-match-reason-line"><span class="nv-match-tag">성부</span><span class="nv-match-snippet nv-zh-simp">${markText(g.root, rawQ)}</span></div>⁠);
+lines.push(`<div class="nv-match-reason-line"><span class="nv-match-tag">성부</span><span class="nv-match-snippet nv-zh-simp">${markText(g.root, rawQ)}</span></div>`);
 }
 hitEntries.slice(0, 3).forEach(ent => {
-lines.push(⁠<div class="nv-match-reason-line"><span class="nv-zh-simp" style="font-weight:700;">${esc(ent.row.simp)}</span><span class="nv-match-tag">${esc(ent.match.primaryLabel)}</span><span class="nv-match-snippet nv-zh-simp">${markText(ent.match.primarySnippet, rawQ)}</span></div>⁠);
+lines.push(`<div class="nv-match-reason-line"><span class="nv-zh-simp" style="font-weight:700;">${esc(ent.row.simp)}</span><span class="nv-match-tag">${esc(ent.match.primaryLabel)}</span><span class="nv-match-snippet nv-zh-simp">${markText(ent.match.primarySnippet, rawQ)}</span></div>`);
 });
 if (hitEntries.length > 3) {
-lines.push(⁠<div style="font-size:11px;color:var(--nv-label-tertiary);">외 ${hitEntries.length - 3}건 더 일치</div>⁠);
+lines.push(`<div style="font-size:11px;color:var(--nv-label-tertiary);">외 ${hitEntries.length - 3}건 더 일치</div>`);
 }
-if (lines.length) reasonHtml = ⁠<div class="nv-match-reasons">${lines.join("")}</div>⁠;
+if (lines.length) reasonHtml = `<div class="nv-match-reasons">${lines.join("")}</div>`;
 }
-return ⁠<div class="nv-series-index-item nv-series-section ${isOpen ? "is-open" : ""}" data-root="${esc(g.root)}"> <button class="nv-series-index-btn" onclick="toggleIndexItem('${esc(g.root)}', this)"> <div class="nv-index-top"> <div class="nv-index-title-group"> <span class="nv-index-root nv-zh-simp">${esc(g.root)}</span> <span class="nv-index-count nv-num">${countStr}자</span> </div> <div class="nv-index-right"> <span class="nv-index-pos nv-num">${g.origIdx || g.indexNum}/${totalGroups}</span> <span class="nv-chevron ${isOpen ? "is-open" : ""}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span> </div> </div> <div class="nv-index-chars nv-zh-simp">${charLine ||⁠<span style="color:var(--nv-label-tertiary);">PASS만 있음</span>⁠}</div> ${reasonHtml} </button> <div class="nv-disclosure ${isOpen ? "is-open" : ""}"> <div class="nv-disclosure-inner nv-index-slot"> ${isOpen ? buildIndexDetailHtml(g, rawQ) : ""} </div> </div> </div> ⁠;
-}).join("") + ⁠</div>⁠;
+
+return `
+<div class="nv-series-index-item nv-series-section ${isOpen ? "is-open" : ""}" data-root="${esc(g.root)}">
+<button class="nv-series-index-btn" onclick="toggleIndexItem('${esc(g.root)}', this)">
+<div class="nv-index-top">
+<div class="nv-index-title-group">
+<span class="nv-index-root nv-zh-simp">${esc(g.root)}</span>
+<span class="nv-index-count nv-num">${countStr}자</span>
+</div>
+<div class="nv-index-right">
+<span class="nv-index-pos nv-num">${g.origIdx || g.indexNum}/${totalGroups}</span>
+<span class="nv-chevron ${isOpen ? "is-open" : ""}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
+</div>
+</div>
+<div class="nv-index-chars nv-zh-simp">${charLine || `<span style="color:var(--nv-label-tertiary);">PASS만 있음</span>`}</div>
+${reasonHtml}
+</button>
+<div class="nv-disclosure ${isOpen ? "is-open" : ""}">
+<div class="nv-disclosure-inner nv-index-slot">
+${isOpen ? buildIndexDetailHtml(g, rawQ) : ""}
+</div>
+</div>
+</div>
+`;
+}).join("") + `</div>`;
+
 renderQueryPills();
 attachStrokeObserver(box);
 box.querySelectorAll(".nv-series-section").forEach(sec => syncSectionBulkLabel(sec));
 refreshSeriesStrip();
 }
+
 /* Bookmarks & Popovers & Sheets */
 document.addEventListener("pointerdown", evt => {
 const openRow = document.querySelector(".nv-char-row.is-swipe-open");
 if (openRow && !openRow.contains(evt.target)) closeCharSwipeRow(openRow);
 });
+
 function toggleOverflowMenu(forceOpen) {
 const pop = document.getElementById("overflowMenu");
 const btn = document.getElementById("overflowMenuBtn");
@@ -5553,6 +6134,7 @@ if (next) toggleQueuePopover(false);
 pop.classList.toggle("is-open", next);
 btn?.classList.toggle("is-active", next);
 }
+
 function toggleQueuePopover(forceOpen) {
 const pop = document.getElementById("queuePopover");
 const btn = document.getElementById("queuePeekTrigger");
@@ -5565,20 +6147,30 @@ renderQueuePopover();
 pop.classList.toggle("is-open", next);
 btn?.classList.toggle("is-on", next);
 }
+
 function renderQueuePopover() {
 const listEl = document.getElementById("queuePopoverList");
 const titleEl = document.getElementById("queuePopoverTitle");
 const items = getOrderedQueue();
-if (titleEl) titleEl.textContent = ⁠대기열 (${items.length})⁠;
+if (titleEl) titleEl.textContent = `대기열 (${items.length})`;
 if (!listEl) return;
 if (!items.length) {
-listEl.innerHTML = ⁠<div class="nv-empty" style="padding:20px;"><div class="nv-empty-sub">대기열이 비어 있습니다.</div></div>⁠;
+listEl.innerHTML = `<div class="nv-empty" style="padding:20px;"><div class="nv-empty-sub">대기열이 비어 있습니다.</div></div>`;
 return;
 }
-listEl.innerHTML = items.map((it, idx) => ⁠<button class="nv-queue-row ${idx === appState.reviewIndex ? "is-current" : ""}" onclick="jumpToReviewIndex(${idx}); toggleQueuePopover(false);"> <div class="nv-queue-row-head"> <strong class="nv-zh-simp">${esc(it.chars.join(""))}</strong> <span class="nv-num">${idx + 1}/${items.length}</span> </div> <div class="nv-queue-row-ex nv-zh-simp">${esc(it.isNoExample ? "(예문 없음)" : it.example)}</div> </button>⁠).join("");
+listEl.innerHTML = items.map((it, idx) => `
+<button class="nv-queue-row ${idx === appState.reviewIndex ? "is-current" : ""}" onclick="jumpToReviewIndex(${idx}); toggleQueuePopover(false);">
+<div class="nv-queue-row-head">
+<strong class="nv-zh-simp">${esc(it.chars.join(""))}</strong>
+<span class="nv-num">${idx + 1}/${items.length}</span>
+</div>
+<div class="nv-queue-row-ex nv-zh-simp">${esc(it.isNoExample ? "(예문 없음)" : it.example)}</div>
+</button>
+`).join("");
 }
+
 function syncBookmarkDom(id, active) {
-document.querySelectorAll(⁠[data-bmid="${id}"]⁠).forEach(btn => {
+document.querySelectorAll(`[data-bmid="${id}"]`).forEach(btn => {
 btn.classList.toggle("is-bookmarked", active);
 if (String(id).startsWith("ch_")) btn.querySelector(".nv-ico-fill")?.classList.toggle("is-active", active);
 });
@@ -5587,6 +6179,7 @@ document.getElementById("headerBookmarkBtn")?.classList.toggle("is-bookmarked", 
 const sideBm = document.getElementById("sideBookmarkBadge");
 if (sideBm) sideBm.textContent = String(appState.bookmarks.length);
 }
+
 function toggleBookmarkEntry(payload) {
 const id = payload.id;
 const next = !appState.bookmarkById[id];
@@ -5603,10 +6196,12 @@ if (document.getElementById("bookmarkSheet")?.classList.contains("is-open")) ren
 if (next && payload.type !== "character") {
 showBanner("즐겨찾기에 추가됨");
 }
+
 google.script.run
 .withFailureHandler(err => showBanner("북마크 동기화 오류: " + (err && err.message || err)))
 .webAppToggleBookmark(appState.secretKey, payload);
 }
+
 function toggleExampleBookmark(qRow) {
 const it = appState.queue.find(x => x.qRow === qRow) || appState.recent.find(x => x.qRow === qRow);
 if (!it || it.isNoExample) return;
@@ -5618,6 +6213,7 @@ title: it.example,
 sub: it.translation || (it.chars ? it.chars.join("") : "")
 });
 }
+
 function toggleWordBookmark(evt, rowNum) {
 if (evt) evt.stopPropagation();
 let found = null;
@@ -5631,10 +6227,11 @@ toggleBookmarkEntry({
 id: "wd_" + rowNum,
 type: "word",
 ref: root + ":" + found.display,
-title: ⁠${found.display} · ${found.words}⁠,
+title: `${found.display} · ${found.words}`,
 sub: found.wordsPinyin || found.meaning || ""
 });
 }
+
 function toggleCharacterBookmark(evt, rowNum) {
 if (evt) evt.stopPropagation();
 let found = null;
@@ -5652,17 +6249,20 @@ title: found.display,
 sub: [found.pinyin, found.hunum, found.meaning].filter(x => x && x !== "-").join(" · ")
 });
 }
+
 const CHAR_SWIPE_WIDTH = 84;
 let suppressCharRowClickUntil = 0;
 let activeCharAction = null;
 let charSwipeState = null;
+
 function setCharRowSwipeOffset(row, offsetPx) {
 if (!row) return;
 const track = row.querySelector(".nv-char-swipe-track");
 const actions = row.querySelector(".nv-char-swipe-actions");
-if (track) track.style.transform = offsetPx ? ⁠translate3d(${offsetPx}px, 0, 0)⁠ : "";
+if (track) track.style.transform = offsetPx ? `translate3d(${offsetPx}px, 0, 0)` : "";
 if (actions) actions.setAttribute("aria-hidden", offsetPx < 0 ? "false" : "true");
 }
+
 function openCharSwipeRow(row) {
 if (!row) return;
 document.querySelectorAll(".nv-char-row.is-swipe-open").forEach(other => {
@@ -5672,11 +6272,13 @@ row.classList.remove("is-swiping");
 row.classList.add("is-swipe-open");
 setCharRowSwipeOffset(row, -CHAR_SWIPE_WIDTH);
 }
+
 function closeCharSwipeRow(row) {
 if (!row) return;
 row.classList.remove("is-swiping", "is-swipe-open");
 setCharRowSwipeOffset(row, 0);
 }
+
 function wireCharacterSwipeActions() {
 document.addEventListener("touchstart", e => {
 if (e.touches.length !== 1) return;
@@ -5699,6 +6301,7 @@ curOffset: baseOffset,
 lockedDir: ""
 };
 }, { passive: true });
+
 document.addEventListener("touchmove", e => {
 if (!charSwipeState || e.touches.length !== 1) return;
 const t = e.touches[0];
@@ -5729,6 +6332,7 @@ charSwipeState.curOffset = next;
 setCharRowSwipeOffset(charSwipeState.row, next);
 }
 }, { passive: true });
+
 const finishCharSwipe = () => {
 if (!charSwipeState) return;
 const st = charSwipeState;
@@ -5742,9 +6346,11 @@ closeCharSwipeRow(st.row);
 }
 }
 };
+
 document.addEventListener("touchend", finishCharSwipe, { passive: true });
 document.addEventListener("touchcancel", finishCharSwipe, { passive: true });
 }
+
 function triggerCharacterSwipeReanalysis(evt, btnEl) {
 if (evt) evt.stopPropagation();
 const row = btnEl ? btnEl.closest(".nv-char-row") : null;
@@ -5757,30 +6363,42 @@ char: row.getAttribute("data-char") || ""
 closeCharSwipeRow(row);
 runCharacterReanalysis();
 }
+
 function runCharacterReanalysis() {
 const target = activeCharAction;
 if (!target || !target.rowNum || !target.root) return;
 const body = document.getElementById("reanalysisResultBody");
-if (body) body.innerHTML = ⁠<div class="nv-empty"><div class="nv-empty-title">${esc(target.char)} 분석 중…</div><div class="nv-empty-sub">현재 [${esc(target.root)}] 해성계와의 관계를 확인하고 있습니다.</div></div>⁠;
+if (body) body.innerHTML = `<div class="nv-empty"><div class="nv-empty-title">${esc(target.char)} 분석 중…</div><div class="nv-empty-sub">현재 [${esc(target.root)}] 해성계와의 관계를 확인하고 있습니다.</div></div>`;
 document.getElementById("reanalysisSheet")?.classList.add("is-open");
 google.script.run
 .withSuccessHandler(result => renderCharacterReanalysisResult(result, target))
 .withFailureHandler(err => {
-if (body) body.innerHTML = ⁠<div class="nv-empty"><div class="nv-empty-title">분석에 실패했습니다.</div><div class="nv-empty-sub">${esc(err && err.message || err || "알 수 없는 오류")}</div></div>⁠;
+if (body) body.innerHTML = `<div class="nv-empty"><div class="nv-empty-title">분석에 실패했습니다.</div><div class="nv-empty-sub">${esc(err && err.message || err || "알 수 없는 오류")}</div></div>`;
 })
 .webAppReanalyzeCharacter(appState.secretKey, target.root, target.rowNum);
 }
+
 function renderCharacterReanalysisResult(result, target) {
 const body = document.getElementById("reanalysisResultBody");
 if (!body) return;
 const belongs = result && result.belongsToCurrentGroup;
 const verdict = belongs === true ? "현재 해성계에 속하는 것이 타당합니다." : (belongs === false ? "현재 해성계 분류를 재검토할 필요가 있습니다." : "현재 해성계와의 관계가 명확하지 않습니다.");
 const candidates = Array.isArray(result?.suggestedGroups) ? result.suggestedGroups : [];
-body.innerHTML = ⁠<div class="nv-grouped-list" style="padding:14px;"> <div style="font-size:12px;color:var(--nv-label-tertiary);margin-bottom:6px;">${esc(target.char)} · 현재 그룹 ${esc(target.root)}</div> <div style="font-size:16px;font-weight:700;margin-bottom:10px;">${esc(verdict)}</div> <div style="font-size:13px;color:var(--nv-label-secondary);margin-bottom:12px;">신뢰도: ${esc(result?.confidence || "판단 보류")}</div> <div style="font-size:14px;line-height:1.6;white-space:pre-wrap;">${esc(result?.reason || "분석 근거가 반환되지 않았습니다.")}</div> ${result?.idsEvidence ?⁠<div style="margin-top:12px;padding-top:12px;border-top:0.5px solid var(--nv-separator);font-size:13px;color:var(--nv-label-secondary);"><strong>IDS 구조 근거</strong><div style="margin-top:5px;white-space:pre-wrap;">{esc(result.idsEvidence)}</div></div>` : ""}
-${candidates.length && belongs === false ? `<div style="margin-top:14px;padding-top:12px;border-top:0.5px solid var(--nv-separator);"><div style="font-size:13px;font-weight:700;margin-bottom:8px;">가능한 다른 해성계</div>{candidates.map((c, i) => ⁠<div style="padding:10px 0;border-bottom:0.5px solid var(--nv-separator);"><strong class="nv-zh-simp">${esc(c.root || "")}</strong><div style="font-size:13px;color:var(--nv-label-secondary);margin-top:3px;">${esc(c.reason || "")}</div><button class="nv-btn-primary" style="margin-top:8px;width:100%;" onclick="approveCharacterMove('${esc(target.root)}',${target.rowNum},'${esc(c.root || "")}')">이 해성계로 이동</button></div>⁠).join("")}</div>⁠: ""} ${belongs === false ?⁠<button class="nv-btn-plain" style="width:100%;margin-top:12px;" onclick="approveCharacterExclusion('${esc(target.root)}',${target.rowNum})">현재 해성계에서 제외</button>⁠ : ""} <div style="margin-top:14px;font-size:12px;color:var(--nv-label-tertiary);">실제 변경은 위 버튼을 누르고 확인한 경우에만 실행됩니다.</div> </div>⁠;
+body.innerHTML = `
+<div class="nv-grouped-list" style="padding:14px;">
+<div style="font-size:12px;color:var(--nv-label-tertiary);margin-bottom:6px;">${esc(target.char)} · 현재 그룹 ${esc(target.root)}</div>
+<div style="font-size:16px;font-weight:700;margin-bottom:10px;">${esc(verdict)}</div>
+<div style="font-size:13px;color:var(--nv-label-secondary);margin-bottom:12px;">신뢰도: ${esc(result?.confidence || "판단 보류")}</div>
+<div style="font-size:14px;line-height:1.6;white-space:pre-wrap;">${esc(result?.reason || "분석 근거가 반환되지 않았습니다.")}</div>
+${result?.idsEvidence ? `<div style="margin-top:12px;padding-top:12px;border-top:0.5px solid var(--nv-separator);font-size:13px;color:var(--nv-label-secondary);"><strong>IDS 구조 근거</strong><div style="margin-top:5px;white-space:pre-wrap;">${esc(result.idsEvidence)}</div></div>` : ""}
+${candidates.length && belongs === false ? `<div style="margin-top:14px;padding-top:12px;border-top:0.5px solid var(--nv-separator);"><div style="font-size:13px;font-weight:700;margin-bottom:8px;">가능한 다른 해성계</div>${candidates.map((c, i) => `<div style="padding:10px 0;border-bottom:0.5px solid var(--nv-separator);"><strong class="nv-zh-simp">${esc(c.root || "")}</strong><div style="font-size:13px;color:var(--nv-label-secondary);margin-top:3px;">${esc(c.reason || "")}</div><button class="nv-btn-primary" style="margin-top:8px;width:100%;" onclick="approveCharacterMove('${esc(target.root)}',${target.rowNum},'${esc(c.root || "")}')">이 해성계로 이동</button></div>`).join("")}</div>` : ""}
+${belongs === false ? `<button class="nv-btn-plain" style="width:100%;margin-top:12px;" onclick="approveCharacterExclusion('${esc(target.root)}',${target.rowNum})">현재 해성계에서 제외</button>` : ""}
+<div style="margin-top:14px;font-size:12px;color:var(--nv-label-tertiary);">실제 변경은 위 버튼을 누르고 확인한 경우에만 실행됩니다.</div>
+</div>`;
 }
+
 function approveCharacterMove(sourceRoot, rowNum, targetRoot) {
-if (!confirm(⁠${targetRoot} 해성계로 이 한자를 이동할까요?\n기존 학습 내용은 유지됩니다.⁠)) return;
+if (!confirm(`${targetRoot} 해성계로 이 한자를 이동할까요?\n기존 학습 내용은 유지됩니다.`)) return;
 google.script.run.withSuccessHandler(data => {
 if (data && data.groups) appState.groups = data.groups;
 if (data && data.bookmarks) {
@@ -5790,30 +6408,35 @@ data.bookmarks.forEach(b => { if (b && b.id) appState.bookmarkById[b.id] = b; })
 }
 closeReanalysisSheet();
 renderCurrentPage(true);
-showBanner(⁠${data.character}을(를) ${targetRoot} 해성계로 이동했습니다.⁠);
+showBanner(`${data.character}을(를) ${targetRoot} 해성계로 이동했습니다.`);
 }).withFailureHandler(err => showBanner("이동 실패: " + (err && err.message || err)))
 .webAppMoveCharacterGroup(appState.secretKey, sourceRoot, rowNum, targetRoot);
 }
+
 function approveCharacterExclusion(sourceRoot, rowNum) {
 if (!confirm("이 한자를 현재 해성계에서 제외할까요?\n학습 내용은 삭제되지 않고 보존됩니다.")) return;
 google.script.run.withSuccessHandler(data => {
 if (data && data.groups) appState.groups = data.groups;
 closeReanalysisSheet();
 renderCurrentPage(true);
-showBanner(⁠${data.character}을(를) 현재 해성계에서 제외했습니다.⁠);
+showBanner(`${data.character}을(를) 현재 해성계에서 제외했습니다.`);
 }).withFailureHandler(err => showBanner("제외 실패: " + (err && err.message || err)))
 .webAppExcludeCharacterGroup(appState.secretKey, sourceRoot, rowNum);
 }
+
 function closeReanalysisSheet() {
 closeSheetById("reanalysisSheet");
 }
+
 function openBookmarkSheet() {
 document.getElementById("bookmarkSheet")?.classList.add("is-open");
 renderBookmarkSheet();
 }
+
 function closeBookmarkSheet() {
 closeSheetById("bookmarkSheet");
 }
+
 function selectBookmarkFilter(filter) {
 appState.bookmarkFilter = filter;
 document.getElementById("bmTabAll")?.classList.toggle("is-active", filter === "all");
@@ -5823,26 +6446,37 @@ document.getElementById("bmTabCharacter")?.classList.toggle("is-active", filter 
 const thumb = document.getElementById("bmSegThumb");
 if (thumb) {
 const idx = filter === "example" ? 1 : (filter === "word" ? 2 : (filter === "character" ? 3 : 0));
-thumb.style.transform = ⁠translateX(calc(${idx} * 100%))⁠;
+thumb.style.transform = `translateX(calc(${idx} * 100%))`;
 }
 renderBookmarkSheet();
 }
+
 function renderBookmarkSheet() {
 const body = document.getElementById("bookmarkSheetBody");
 if (!body) return;
 const items = appState.bookmarks.filter(b => appState.bookmarkFilter === "all" || b.type === appState.bookmarkFilter);
 if (!items.length) {
-body.innerHTML = ⁠<div class="nv-empty"><div class="nv-empty-title">북마크 없음</div><div class="nv-empty-sub">저장한 예문, 단어와 한자가 여기에 표시됩니다.</div></div>⁠;
+body.innerHTML = `<div class="nv-empty"><div class="nv-empty-title">북마크 없음</div><div class="nv-empty-sub">저장한 예문, 단어와 한자가 여기에 표시됩니다.</div></div>`;
 return;
 }
 body.innerHTML = items.map(b => {
 const chars = extractChars(b.title);
 const jumpAttr = ((b.type === "word" || b.type === "character") && chars.length)
-? ⁠style="cursor:pointer;" onclick="closeBookmarkSheet(); openSeriesSheet(['${chars[0]}'], ${JSON.stringify(chars).replace(/"/g, "'")})"⁠
+? `style="cursor:pointer;" onclick="closeBookmarkSheet(); openSeriesSheet(['${chars[0]}'], ${JSON.stringify(chars).replace(/"/g, "'")})"`
 : "";
-return ⁠<div class="nv-bookmark-row"> <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;"> <span class="${b.type === "example" ? "nv-status-done" : "nv-status-pending"}">${b.type === "example" ? "예문" : (b.type === "character" ? "한자" : "단어")}</span> <button class="nv-btn-plain nv-btn-sm" style="color:var(--nv-system-red);" onclick="toggleBookmarkEntry({id:'${esc(b.id)}',type:'${esc(b.type)}',ref:'${esc(b.ref)}',title:'',sub:''})">해제</button> </div> <div class="nv-zh-simp" style="font-size:16px;font-weight:700;word-break:break-word;" ${jumpAttr}>${esc(b.title)}</div> ${b.sub ?⁠<div style="font-size:13px;color:var(--nv-label-secondary);word-break:break-word;">${esc(b.sub)}</div>⁠: ""} </div>⁠;
+return `
+<div class="nv-bookmark-row">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+<span class="${b.type === "example" ? "nv-status-done" : "nv-status-pending"}">${b.type === "example" ? "예문" : (b.type === "character" ? "한자" : "단어")}</span>
+<button class="nv-btn-plain nv-btn-sm" style="color:var(--nv-system-red);" onclick="toggleBookmarkEntry({id:'${esc(b.id)}',type:'${esc(b.type)}',ref:'${esc(b.ref)}',title:'',sub:''})">해제</button>
+</div>
+<div class="nv-zh-simp" style="font-size:16px;font-weight:700;word-break:break-word;" ${jumpAttr}>${esc(b.title)}</div>
+${b.sub ? `<div style="font-size:13px;color:var(--nv-label-secondary);word-break:break-word;">${esc(b.sub)}</div>` : ""}
+</div>
+`;
 }).join("");
 }
+
 function toggleSettingsSheet(open) {
 const sheet = document.getElementById("settingsSheet");
 if (!sheet) return;
@@ -5855,15 +6489,19 @@ sheet.classList.add("is-open");
 closeSheetById("settingsSheet");
 }
 }
+
 function openShortcutsSheet() {
 document.getElementById("shortcutsSheet")?.classList.add("is-open");
 }
+
 function closeShortcutsSheet() {
 closeSheetById("shortcutsSheet");
 }
+
 function isMobileScrollMode() {
 return window.innerWidth < 960;
 }
+
 function getCurrentScrollY() {
 if (isMobileScrollMode()) {
 return window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
@@ -5871,6 +6509,7 @@ return window.scrollY || document.documentElement.scrollTop || document.body.scr
 const ws = document.getElementById("workspaceScroll");
 return ws ? ws.scrollTop : 0;
 }
+
 function scrollCurrentPageTop() {
 if (isMobileScrollMode()) {
 window.scrollTo({ top: 0, behavior: "smooth" });
@@ -5878,11 +6517,14 @@ window.scrollTo({ top: 0, behavior: "smooth" });
 document.getElementById("workspaceScroll")?.scrollTo({ top: 0, behavior: "smooth" });
 }
 }
+
 function focusAllSearchFromHeader() {
 scrollCurrentPageTop();
 setTimeout(() => document.getElementById("allSearchInput")?.focus(), 260);
 }
+
 let _searchBarOutOfView = false;
+
 function initSearchBarObserver() {
 const sb = document.getElementById("allSearchBar");
 if (!sb || !("IntersectionObserver" in window)) return;
@@ -5894,6 +6536,7 @@ updateHeaderSearchBtn();
 }, { threshold: 0 });
 obs.observe(sb);
 }
+
 function updateHeaderSearchBtn() {
 const searchBtn = document.getElementById("headerSearchBtn");
 if (!searchBtn) return;
@@ -5907,15 +6550,20 @@ const sbRect = sb ? sb.getBoundingClientRect() : null;
 const scrolledPast = sbRect ? (sbRect.bottom < hdrBottom + 4) : (getCurrentScrollY() > 72);
 searchBtn.classList.toggle("is-visible", Boolean(_searchBarOutOfView || scrolledPast));
 }
+
 function syncScrollChrome() {
 const hdr = document.getElementById("appHeader");
 const y = getCurrentScrollY();
 if (hdr) hdr.classList.toggle("is-scrolled", y > 12);
+
 updateHeaderSearchBtn();
+
 document.getElementById("allSearchBar")?.classList.remove("is-docked");
 document.body.classList.remove("is-all-docked");
+
 refreshSeriesStrip();
 }
+
 /* Gestures & Keyboard Shortcuts */
 function wireSheetDragDismiss() {
 const sheets = [
@@ -5930,6 +6578,7 @@ const backdrop = document.getElementById(cfg.id);
 const sheet = backdrop?.querySelector(".nv-sheet");
 const head = backdrop?.querySelector(".nv-sheet-header");
 if (!sheet || !head) return;
+
 let startY = 0, dyNow = 0, dragging = false;
 head.addEventListener("touchstart", e => {
 if (e.target.closest("button, input, select")) return;
@@ -5938,14 +6587,16 @@ dyNow = 0;
 dragging = true;
 sheet.classList.add("is-dragging");
 }, { passive: true });
+
 head.addEventListener("touchmove", e => {
 if (!dragging) return;
 const dy = e.touches[0].clientY - startY;
 if (dy > 0) {
 dyNow = dy;
-sheet.style.transform = ⁠translateY(${dy < 120 ? dy : 120 + (dy - 120) * 0.4}px)⁠;
+sheet.style.transform = `translateY(${dy < 120 ? dy : 120 + (dy - 120) * 0.4}px)`;
 }
 }, { passive: true });
+
 const finish = () => {
 if (!dragging) return;
 dragging = false;
@@ -5957,6 +6608,7 @@ head.addEventListener("touchend", finish, { passive: true });
 head.addEventListener("touchcancel", finish, { passive: true });
 });
 }
+
 function wireReviewSwipe() {
 const card = document.getElementById("reviewCardBody");
 if (!card) return;
@@ -5968,27 +6620,30 @@ sy = e.touches[0].clientY;
 active = true;
 card.style.transition = "none";
 }, { passive: true });
+
 card.addEventListener("touchmove", e => {
 if (!active || !sx) return;
 const dx = e.touches[0].clientX - sx;
 const dy = e.touches[0].clientY - sy;
 if (Math.abs(dx) > Math.abs(dy) * 1.2 && Math.abs(dx) > 8) {
 const clamped = Math.max(-68, Math.min(68, dx * 0.42));
-card.style.transform = ⁠translateX(${clamped}px)⁠;
+card.style.transform = `translateX(${clamped}px)`;
 card.style.opacity = String(Math.max(0.68, 1 - Math.abs(clamped) / 220));
 }
 }, { passive: true });
+
 const endSwipe = (x, y) => {
 if (!sx) return;
 const dx = x - sx;
 const dy = y - sy;
 sx = 0;
 active = false;
-card.style.transition = ⁠transform var(--nv-dur-base) var(--nv-ease-spring), opacity var(--nv-dur-fast) var(--nv-ease-std)⁠;
+card.style.transition = `transform var(--nv-dur-base) var(--nv-ease-spring), opacity var(--nv-dur-fast) var(--nv-ease-std)`;
 card.style.transform = "";
 card.style.opacity = "";
 if (Math.abs(dx) > 56 && Math.abs(dx) > Math.abs(dy) * 1.5) stepReviewItem(dx < 0 ? 1 : -1);
 };
+
 card.addEventListener("touchend", e => {
 const t = e.changedTouches[0];
 endSwipe(t.clientX, t.clientY);
@@ -5998,6 +6653,7 @@ sx = 0; active = false;
 card.style.transform = ""; card.style.opacity = "";
 }, { passive: true });
 }
+
 function handleKeydown(e) {
 const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : "";
 if (tag === "textarea" || tag === "input" || tag === "select") {
@@ -6007,6 +6663,7 @@ translateInputSentence();
 }
 return;
 }
+
 if (e.key === "Escape") {
 toggleSettingsSheet(false);
 closeShortcutsSheet();
@@ -6023,6 +6680,7 @@ openShortcutsSheet();
 return;
 }
 if (appState.activeTab !== "review") return;
+
 if (e.key === "ArrowLeft") { e.preventDefault(); stepReviewItem(-1); }
 else if (e.key === "ArrowRight") { e.preventDefault(); stepReviewItem(1); }
 else if (e.key === " ") { e.preventDefault(); toggleReviewNotes(); }
@@ -6038,8 +6696,10 @@ const item = list[appState.reviewIndex];
 if (item && item.chars.length >= 2) pickReviewChar("ALL");
 }
 }
+
 window.addEventListener("DOMContentLoaded", () => {
 applyTheme(getStoredThemeMode());
+
 if (window.matchMedia) {
 const mq = window.matchMedia("(prefers-color-scheme: dark)");
 const onChange = () => {
@@ -6050,10 +6710,12 @@ resetAllStrokeWriters();
 };
 if (mq.addEventListener) mq.addEventListener("change", onChange);
 }
+
 refreshVoiceSelectors();
 if (window.speechSynthesis && window.speechSynthesis.addEventListener) {
 window.speechSynthesis.addEventListener("voiceschanged", refreshVoiceSelectors);
 }
+
 applyPrefsToDom();
 initStrokeObserver();
 syncStrokeControls();
@@ -6062,6 +6724,7 @@ wireSheetDragDismiss();
 wireReviewSwipe();
 wireCharacterSwipeActions();
 initSearchBarObserver();
+
 let scrollFrame = 0;
 const onScroll = () => {
 if (scrollFrame) return;
@@ -6074,6 +6737,7 @@ window.addEventListener("scroll", onScroll, { passive: true });
 window.addEventListener("resize", onScroll, { passive: true });
 document.getElementById("workspaceScroll")?.addEventListener("scroll", onScroll, { passive: true });
 document.getElementById("seriesSheetBody")?.addEventListener("scroll", onScroll, { passive: true });
+
 document.addEventListener("click", e => {
 const qPop = document.getElementById("queuePopover");
 const qBtn = document.getElementById("queuePeekTrigger");
@@ -6086,19 +6750,24 @@ if (mPop && mPop.classList.contains("is-open") && !mPop.contains(e.target) && (!
 toggleOverflowMenu(false);
 }
 });
+
 document.getElementById("inputSentenceArea")?.addEventListener("input", () => {
 resizeInputSentenceArea();
 appState.draftQRow = 0;
 renderDraftTiles();
 });
+
 window.addEventListener("resize", resizeInputSentenceArea, { passive: true });
 resizeInputSentenceArea();
+
 document.addEventListener("keydown", handleKeydown);
 document.getElementById("authKeyInput")?.addEventListener("keydown", e => {
 if (e.key === "Enter") submitAuthKey();
 });
+
 appState.secretKey = INITIAL_KEY || localStorage.getItem("nv_webapp_key") || "";
 if (INITIAL_KEY) localStorage.setItem("nv_webapp_key", INITIAL_KEY);
+
 if (!appState.secretKey) {
 openAuthGate("");
 } else {
