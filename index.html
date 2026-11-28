@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <meta name="theme-color" id="metaThemeColor" content="#F2F2F7" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" id="metaStatusBarStyle" content="black-translucent" />
+  <meta name="apple-mobile-web-app-status-bar-style" id="metaStatusBarStyle" content="default" />
   <meta name="apple-mobile-web-app-title" content="谐声系" />
   <title>谐声系</title>
   <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js" defer></script>
@@ -2760,9 +2760,12 @@
       border-bottom-color: rgba(255, 255, 255, 0.14) !important;
     }
     .nv-header-glass {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: calc(env(safe-area-inset-top, 0px) + var(--nv-header-h) + 2px);
+      z-index: 118;
       pointer-events: none;
       background-color: rgba(242, 242, 247, var(--nv-glass-header-alpha));
       -webkit-backdrop-filter: saturate(190%) blur(var(--nv-glass-header-blur));
@@ -2771,11 +2774,17 @@
     body.dark .nv-header-glass {
       background-color: rgba(18, 18, 20, var(--nv-glass-header-alpha));
     }
+    @media (min-width: 960px) {
+      .nv-header-glass {
+        display: none;
+      }
+    }
+    .nv-header {
+      z-index: 125 !important;
+    }
     .nv-header-inner {
       position: relative;
-      z-index: 2;
-      will-change: transform;
-      transform: translateZ(0);
+      z-index: 1;
     }
 
     :root { --nv-strip-h: 52px; }
@@ -2967,8 +2976,8 @@
     <!-- Main Column -->
     <div class="nv-main-column">
       <!-- Top Navigation Bar -->
+      <div id="headerGlassBackdrop" class="nv-header-glass" aria-hidden="true"></div>
       <header id="appHeader" class="nv-header">
-        <div class="nv-header-glass" aria-hidden="true"></div>
         <div class="nv-header-inner">
           <div class="nv-header-left">
             <button class="nv-brand-btn" onclick="scrollCurrentPageTop()" title="맨 위로 이동">
@@ -4069,7 +4078,7 @@
       const metaTheme = document.getElementById("metaThemeColor");
       if (metaTheme) metaTheme.setAttribute("content", barHex);
       const metaStatus = document.getElementById("metaStatusBarStyle");
-      if (metaStatus) metaStatus.setAttribute("content", "black-translucent");
+      if (metaStatus) metaStatus.setAttribute("content", isDark ? "black" : "default");
 
       const glyph = document.getElementById("menuThemeGlyph");
       const label = document.getElementById("menuThemeLabel");
@@ -6540,7 +6549,16 @@
       searchBtn.classList.toggle("is-visible", Boolean(_searchBarOutOfView || scrolledPast));
     }
 
+    function syncHeaderGlassHeight() {
+      const hdr = document.getElementById("appHeader");
+      const glass = document.getElementById("headerGlassBackdrop");
+      if (hdr && glass && hdr.offsetHeight > 0) {
+        glass.style.height = hdr.offsetHeight + "px";
+      }
+    }
+
     function syncScrollChrome() {
+      syncHeaderGlassHeight();
       const hdr = document.getElementById("appHeader");
       const y = getCurrentScrollY();
       if (hdr) hdr.classList.toggle("is-scrolled", y > 12);
@@ -6748,6 +6766,7 @@
 
       window.addEventListener("resize", resizeInputSentenceArea, { passive: true });
       resizeInputSentenceArea();
+      syncHeaderGlassHeight();
 
       document.addEventListener("keydown", handleKeydown);
       document.getElementById("authKeyInput")?.addEventListener("keydown", e => {
