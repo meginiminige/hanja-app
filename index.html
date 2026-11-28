@@ -2735,56 +2735,53 @@
     }
 
     /* =========================================================================
-       V5 PATCHES
-       1) 최상단 바: 완전 불투명 고정 (블러/반투명/전환 제거)
-       2) 해성계 집합 배너: 크기·글씨 확대
-       3) 접기 스크롤 보정 시 애니메이션 일시 정지용 클래스
+       V6 PATCHES
+       1) 최상단 바 블러 수정:
+          - 별도 .nv-header-glass 레이어를 제거 (iOS Safari에서 이 레이어가 바 위로
+            올라와 배지/아이콘이 흐리게 보이던 문제)
+          - 블러/반투명을 헤더 요소 자체에 적용 → 자식(배지·아이콘)은 블러 영향 없음
+       2) 해성계 집합 배너: 크기·글씨 확대 (유지)
+       3) 접기 스크롤 보정 시 애니메이션 일시 정지용 클래스 (유지)
        ========================================================================= */
     .nv-header,
     .nv-header.is-scrolled,
     body.has-series-strip .nv-header,
     body.is-all-docked .nv-header {
-      background-color: transparent !important;
+      background-color: rgba(242, 242, 247, var(--nv-glass-header-alpha)) !important;
       background-image: none !important;
-      -webkit-backdrop-filter: none !important;
-      backdrop-filter: none !important;
+      -webkit-backdrop-filter: saturate(190%) blur(var(--nv-glass-header-blur)) !important;
+      backdrop-filter: saturate(190%) blur(var(--nv-glass-header-blur)) !important;
+      border-bottom: 0.5px solid rgba(0, 0, 0, 0.08) !important;
       filter: none !important;
       opacity: 1 !important;
       transition: none !important;
+      z-index: 125 !important;
+      isolation: isolate;
     }
     body.dark .nv-header,
     body.dark .nv-header.is-scrolled,
     body.dark.has-series-strip .nv-header,
     body.dark.is-all-docked .nv-header {
-      background-color: transparent !important;
+      background-color: rgba(18, 18, 20, var(--nv-glass-header-alpha)) !important;
       border-bottom-color: rgba(255, 255, 255, 0.14) !important;
-    }
-    .nv-header-glass {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: calc(env(safe-area-inset-top, 0px) + var(--nv-header-h) + 2px);
-      z-index: 118;
-      pointer-events: none;
-      background-color: rgba(242, 242, 247, var(--nv-glass-header-alpha));
-      -webkit-backdrop-filter: saturate(190%) blur(var(--nv-glass-header-blur));
-      backdrop-filter: saturate(190%) blur(var(--nv-glass-header-blur));
-    }
-    body.dark .nv-header-glass {
-      background-color: rgba(18, 18, 20, var(--nv-glass-header-alpha));
-    }
-    @media (min-width: 960px) {
-      .nv-header-glass {
-        display: none;
-      }
-    }
-    .nv-header {
-      z-index: 125 !important;
     }
     .nv-header-inner {
       position: relative;
       z-index: 1;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      filter: none;
+    }
+    @media (min-width: 960px) {
+      .nv-header,
+      .nv-header.is-scrolled,
+      body.has-series-strip .nv-header,
+      body.is-all-docked .nv-header {
+        background-color: var(--nv-bg-secondary) !important;
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+        border-bottom: 0.5px solid var(--nv-separator) !important;
+      }
     }
 
     :root { --nv-strip-h: 52px; }
@@ -2975,8 +2972,7 @@
 
     <!-- Main Column -->
     <div class="nv-main-column">
-      <!-- Top Navigation Bar -->
-      <div id="headerGlassBackdrop" class="nv-header-glass" aria-hidden="true"></div>
+      <!-- Top Navigation Bar (블러는 헤더 요소 자체에 적용: 별도 글래스 레이어 없음) -->
       <header id="appHeader" class="nv-header">
         <div class="nv-header-inner">
           <div class="nv-header-left">
@@ -6549,16 +6545,7 @@
       searchBtn.classList.toggle("is-visible", Boolean(_searchBarOutOfView || scrolledPast));
     }
 
-    function syncHeaderGlassHeight() {
-      const hdr = document.getElementById("appHeader");
-      const glass = document.getElementById("headerGlassBackdrop");
-      if (hdr && glass && hdr.offsetHeight > 0) {
-        glass.style.height = hdr.offsetHeight + "px";
-      }
-    }
-
     function syncScrollChrome() {
-      syncHeaderGlassHeight();
       const hdr = document.getElementById("appHeader");
       const y = getCurrentScrollY();
       if (hdr) hdr.classList.toggle("is-scrolled", y > 12);
@@ -6766,7 +6753,6 @@
 
       window.addEventListener("resize", resizeInputSentenceArea, { passive: true });
       resizeInputSentenceArea();
-      syncHeaderGlassHeight();
 
       document.addEventListener("keydown", handleKeydown);
       document.getElementById("authKeyInput")?.addEventListener("keydown", e => {
@@ -6785,4 +6771,3 @@
   </script>
 </body>
 </html>
-Resolving mobile web status bar styling discrepancies
