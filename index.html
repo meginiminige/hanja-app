@@ -57,6 +57,16 @@
       --nv-tile-size: 46px;
       --nv-tile-gap: 8px;
 
+      /* Liquid Glass Controls (Opacity % & Blur px) */
+      --nv-glass-queue-alpha: 0.72;
+      --nv-glass-queue-blur: 28px;
+      --nv-glass-strip-alpha: 0.72;
+      --nv-glass-strip-blur: 24px;
+      --nv-glass-header-alpha: 0.78;
+      --nv-glass-header-blur: 24px;
+      --nv-glass-tabbar-alpha: 0.78;
+      --nv-glass-tabbar-blur: 26px;
+
       /* Palette Tokens (Light — Warm Amber/Gold #C88A00) */
       --nv-bg-primary: #F2F2F7;
       --nv-bg-secondary: #FFFFFF;
@@ -1859,6 +1869,18 @@
       pointer-events: auto;
       transform: translateY(0) scale(1);
     }
+    #queuePopover {
+      background: rgba(255, 255, 255, var(--nv-glass-queue-alpha));
+      -webkit-backdrop-filter: saturate(190%) blur(var(--nv-glass-queue-blur));
+      backdrop-filter: saturate(190%) blur(var(--nv-glass-queue-blur));
+      border: 0.5px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.75);
+    }
+    body.dark #queuePopover {
+      background: rgba(34, 34, 38, var(--nv-glass-queue-alpha));
+      border: 0.5px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    }
     .nv-popover-item {
       width: 100%;
       min-height: 44px;
@@ -2472,10 +2494,10 @@
       left: 0 !important;
       right: 0 !important;
       padding-top: calc(env(safe-area-inset-top, 0px) + 8px) !important;
-      background: var(--nv-bg-primary) !important;
-      -webkit-backdrop-filter: none !important;
-      backdrop-filter: none !important;
-      border-bottom: 0.5px solid transparent !important;
+      background: rgba(242, 242, 247, var(--nv-glass-header-alpha)) !important;
+      -webkit-backdrop-filter: saturate(190%) blur(var(--nv-glass-header-blur)) !important;
+      backdrop-filter: saturate(190%) blur(var(--nv-glass-header-blur)) !important;
+      border-bottom: 0.5px solid rgba(255, 255, 255, 0.45) !important;
       z-index: 120 !important;
     }
     .nv-header.is-scrolled,
@@ -2497,14 +2519,20 @@
       bottom: 0 !important;
       height: 64px !important;
       padding: 4px var(--nv-sp-2) 14px !important;
-      background: var(--nv-bg-secondary) !important;
-      -webkit-backdrop-filter: none !important;
-      backdrop-filter: none !important;
-      border-top: 0.5px solid var(--nv-separator) !important;
+      background: rgba(255, 255, 255, var(--nv-glass-tabbar-alpha)) !important;
+      -webkit-backdrop-filter: saturate(190%) blur(var(--nv-glass-tabbar-blur)) !important;
+      backdrop-filter: saturate(190%) blur(var(--nv-glass-tabbar-blur)) !important;
+      border-top: 0.5px solid rgba(255, 255, 255, 0.55) !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65) !important;
       display: grid !important;
       grid-template-columns: repeat(3, 1fr) !important;
       align-items: center !important;
       z-index: 130 !important;
+    }
+    body.dark .nv-tabbar {
+      background: rgba(28, 28, 30, var(--nv-glass-tabbar-alpha)) !important;
+      border-top: 0.5px solid rgba(255, 255, 255, 0.14) !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
     }
     .nv-tab-btn {
       height: 44px !important;
@@ -2716,17 +2744,22 @@
     .nv-header.is-scrolled,
     body.has-series-strip .nv-header,
     body.is-all-docked .nv-header {
-      background-color: var(--nv-bg-primary) !important;
+      background-color: rgba(242, 242, 247, var(--nv-glass-header-alpha)) !important;
       background-image: none !important;
-      -webkit-backdrop-filter: none !important;
-      backdrop-filter: none !important;
+      -webkit-backdrop-filter: saturate(190%) blur(var(--nv-glass-header-blur)) !important;
+      backdrop-filter: saturate(190%) blur(var(--nv-glass-header-blur)) !important;
       filter: none !important;
       opacity: 1 !important;
       transition: none !important;
-      /* 불필요한 합성 레이어를 만들지 않아 iOS 상단 상태바의 흐림 현상을 방지 */
       isolation: isolate;
     }
-    /* iOS 상태바/Safe Area 뒤쪽도 헤더와 동일한 불투명 배경으로 유지 */
+    body.dark .nv-header,
+    body.dark .nv-header.is-scrolled,
+    body.dark.has-series-strip .nv-header,
+    body.dark.is-all-docked .nv-header {
+      background-color: rgba(18, 18, 20, var(--nv-glass-header-alpha)) !important;
+      border-bottom-color: rgba(255, 255, 255, 0.14) !important;
+    }
     .nv-header::before {
       content: "";
       position: fixed;
@@ -2734,9 +2767,14 @@
       right: 0;
       top: 0;
       height: env(safe-area-inset-top, 0px);
-      background: var(--nv-bg-primary);
+      background: rgba(242, 242, 247, var(--nv-glass-header-alpha));
+      -webkit-backdrop-filter: saturate(190%) blur(var(--nv-glass-header-blur));
+      backdrop-filter: saturate(190%) blur(var(--nv-glass-header-blur));
       pointer-events: none;
       z-index: -1;
+    }
+    body.dark .nv-header::before {
+      background: rgba(18, 18, 20, var(--nv-glass-header-alpha));
     }
     @media (min-width: 960px) {
       .nv-header::before { display: none; }
@@ -2746,10 +2784,16 @@
     .nv-series-strip {
       height: var(--nv-strip-h) !important;
       padding: 0 var(--nv-sp-4) !important;
-      background-color: var(--nv-bg-secondary) !important;
-      -webkit-backdrop-filter: none !important;
-      backdrop-filter: none !important;
-      box-shadow: 0 1px 0 var(--nv-separator), 0 6px 14px rgba(0, 0, 0, 0.06);
+      background-color: rgba(255, 255, 255, var(--nv-glass-strip-alpha)) !important;
+      -webkit-backdrop-filter: saturate(190%) blur(var(--nv-glass-strip-blur)) !important;
+      backdrop-filter: saturate(190%) blur(var(--nv-glass-strip-blur)) !important;
+      border-bottom: 0.5px solid rgba(255, 255, 255, 0.55) !important;
+      box-shadow: 0 1px 0 var(--nv-separator-subtle), 0 8px 20px rgba(0, 0, 0, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.72);
+    }
+    body.dark .nv-series-strip {
+      background-color: rgba(28, 28, 30, var(--nv-glass-strip-alpha)) !important;
+      border-bottom: 0.5px solid rgba(255, 255, 255, 0.15) !important;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08), 0 10px 24px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12);
     }
     .nv-series-strip-scroll { gap: 12px !important; }
     .nv-series-root-label {
@@ -3276,7 +3320,7 @@
               </div>
 
               <div class="nv-dual-slider-row">
-                <div class="nv-dual-head"><span>훈음 (맑을 청)</span><span id="valGroupHunum" class="nv-dual-val nv-num">12px · 400</span></div>
+                <div class="nv-dual-head"><span>훈음</span><span id="valGroupHunum" class="nv-dual-val nv-num">12px · 400</span></div>
                 <div class="nv-dual-grid">
                   <div class="nv-mini-slider">
                     <div class="nv-mini-slider-lbl"><span>크기</span><span>10–18px</span></div>
@@ -3375,7 +3419,69 @@
             </div>
           </div>
 
-          <!-- 4. Data -->
+          <!-- 4. Liquid Glass Controls -->
+          <div class="nv-settings-block">
+            <div class="nv-settings-heading">리퀴드 글라스 (투명도 · 블러)</div>
+            <div class="nv-settings-card is-grid-2">
+              <div class="nv-dual-slider-row">
+                <div class="nv-dual-head"><span>복습 대기열 상자</span><span id="valGlassQueue" class="nv-dual-val nv-num">72% · 28px</span></div>
+                <div class="nv-dual-grid">
+                  <div class="nv-mini-slider">
+                    <div class="nv-mini-slider-lbl"><span>불투명도</span><span>15–100%</span></div>
+                    <input id="rngGlassQueueAlpha" type="range" min="15" max="100" step="1" oninput="applySettingsFromControls()" />
+                  </div>
+                  <div class="nv-mini-slider">
+                    <div class="nv-mini-slider-lbl"><span>블러</span><span>0–48px</span></div>
+                    <input id="rngGlassQueueBlur" type="range" min="0" max="48" step="1" oninput="applySettingsFromControls()" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="nv-dual-slider-row">
+                <div class="nv-dual-head"><span>해성계 집합 배너</span><span id="valGlassStrip" class="nv-dual-val nv-num">72% · 24px</span></div>
+                <div class="nv-dual-grid">
+                  <div class="nv-mini-slider">
+                    <div class="nv-mini-slider-lbl"><span>불투명도</span><span>15–100%</span></div>
+                    <input id="rngGlassStripAlpha" type="range" min="15" max="100" step="1" oninput="applySettingsFromControls()" />
+                  </div>
+                  <div class="nv-mini-slider">
+                    <div class="nv-mini-slider-lbl"><span>블러</span><span>0–48px</span></div>
+                    <input id="rngGlassStripBlur" type="range" min="0" max="48" step="1" oninput="applySettingsFromControls()" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="nv-dual-slider-row">
+                <div class="nv-dual-head"><span>최상단 바</span><span id="valGlassHeader" class="nv-dual-val nv-num">78% · 24px</span></div>
+                <div class="nv-dual-grid">
+                  <div class="nv-mini-slider">
+                    <div class="nv-mini-slider-lbl"><span>불투명도</span><span>15–100%</span></div>
+                    <input id="rngGlassHeaderAlpha" type="range" min="15" max="100" step="1" oninput="applySettingsFromControls()" />
+                  </div>
+                  <div class="nv-mini-slider">
+                    <div class="nv-mini-slider-lbl"><span>블러</span><span>0–48px</span></div>
+                    <input id="rngGlassHeaderBlur" type="range" min="0" max="48" step="1" oninput="applySettingsFromControls()" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="nv-dual-slider-row">
+                <div class="nv-dual-head"><span>최하단 바</span><span id="valGlassTabbar" class="nv-dual-val nv-num">78% · 26px</span></div>
+                <div class="nv-dual-grid">
+                  <div class="nv-mini-slider">
+                    <div class="nv-mini-slider-lbl"><span>불투명도</span><span>15–100%</span></div>
+                    <input id="rngGlassTabbarAlpha" type="range" min="15" max="100" step="1" oninput="applySettingsFromControls()" />
+                  </div>
+                  <div class="nv-mini-slider">
+                    <div class="nv-mini-slider-lbl"><span>블러</span><span>0–48px</span></div>
+                    <input id="rngGlassTabbarBlur" type="range" min="0" max="48" step="1" oninput="applySettingsFromControls()" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Data -->
           <div class="nv-settings-block">
             <div class="nv-settings-heading">데이터</div>
             <div class="nv-settings-card">
@@ -3559,6 +3665,14 @@
       tileSize: 46,
       tileGap: 8,
       autoExpandMin: DEFAULT_AUTO_EXPAND_MIN,
+      glassQueueAlpha: 72,
+      glassQueueBlur: 28,
+      glassStripAlpha: 72,
+      glassStripBlur: 24,
+      glassHeaderAlpha: 78,
+      glassHeaderBlur: 24,
+      glassTabbarAlpha: 78,
+      glassTabbarBlur: 26,
       fontSimp: '"PingFang SC", "Hiragino Sans GB", sans-serif',
       fontTrad: '"PingFang TC", "Hiragino Sans CNS", sans-serif',
       fontKo: '-apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "SF Pro Text", sans-serif',
@@ -3802,6 +3916,15 @@
       rootStyle.setProperty("--nv-tile-size", p.tileSize + "px");
       rootStyle.setProperty("--nv-tile-gap", p.tileGap + "px");
 
+      rootStyle.setProperty("--nv-glass-queue-alpha", (Number(p.glassQueueAlpha) / 100).toFixed(2));
+      rootStyle.setProperty("--nv-glass-queue-blur", p.glassQueueBlur + "px");
+      rootStyle.setProperty("--nv-glass-strip-alpha", (Number(p.glassStripAlpha) / 100).toFixed(2));
+      rootStyle.setProperty("--nv-glass-strip-blur", p.glassStripBlur + "px");
+      rootStyle.setProperty("--nv-glass-header-alpha", (Number(p.glassHeaderAlpha) / 100).toFixed(2));
+      rootStyle.setProperty("--nv-glass-header-blur", p.glassHeaderBlur + "px");
+      rootStyle.setProperty("--nv-glass-tabbar-alpha", (Number(p.glassTabbarAlpha) / 100).toFixed(2));
+      rootStyle.setProperty("--nv-glass-tabbar-blur", p.glassTabbarBlur + "px");
+
       rootStyle.setProperty("--nv-font-simp", p.fontSimp);
       rootStyle.setProperty("--nv-font-trad", p.fontTrad);
       rootStyle.setProperty("--nv-font-ko", p.fontKo);
@@ -3829,6 +3952,14 @@
       setVal("rngTileSize", p.tileSize);
       setVal("rngTileGap", p.tileGap);
       setVal("rngAutoExpand", p.autoExpandMin);
+      setVal("rngGlassQueueAlpha", p.glassQueueAlpha);
+      setVal("rngGlassQueueBlur", p.glassQueueBlur);
+      setVal("rngGlassStripAlpha", p.glassStripAlpha);
+      setVal("rngGlassStripBlur", p.glassStripBlur);
+      setVal("rngGlassHeaderAlpha", p.glassHeaderAlpha);
+      setVal("rngGlassHeaderBlur", p.glassHeaderBlur);
+      setVal("rngGlassTabbarAlpha", p.glassTabbarAlpha);
+      setVal("rngGlassTabbarBlur", p.glassTabbarBlur);
 
       setVal("fontSelectSimp", p.fontSimp);
       setVal("fontSelectTrad", p.fontTrad);
@@ -3845,6 +3976,10 @@
       setTxt("valGroupUi", `${p.fontScale}% · ${p.uiWeight}`);
       setTxt("valGroupTile", `${p.tileSize}px · ${p.tileGap}px`);
       setTxt("valAutoExpand", p.autoExpandMin + "분");
+      setTxt("valGlassQueue", `${p.glassQueueAlpha}% · ${p.glassQueueBlur}px`);
+      setTxt("valGlassStrip", `${p.glassStripAlpha}% · ${p.glassStripBlur}px`);
+      setTxt("valGlassHeader", `${p.glassHeaderAlpha}% · ${p.glassHeaderBlur}px`);
+      setTxt("valGlassTabbar", `${p.glassTabbarAlpha}% · ${p.glassTabbarBlur}px`);
     }
 
     function applySettingsFromControls() {
@@ -3867,7 +4002,15 @@
         previewWeight: Number(document.getElementById("rngPreviewWeight").value),
         tileSize: Number(document.getElementById("rngTileSize").value),
         tileGap: Number(document.getElementById("rngTileGap").value),
-        autoExpandMin: Number(document.getElementById("rngAutoExpand").value)
+        autoExpandMin: Number(document.getElementById("rngAutoExpand").value),
+        glassQueueAlpha: Number(document.getElementById("rngGlassQueueAlpha").value),
+        glassQueueBlur: Number(document.getElementById("rngGlassQueueBlur").value),
+        glassStripAlpha: Number(document.getElementById("rngGlassStripAlpha").value),
+        glassStripBlur: Number(document.getElementById("rngGlassStripBlur").value),
+        glassHeaderAlpha: Number(document.getElementById("rngGlassHeaderAlpha").value),
+        glassHeaderBlur: Number(document.getElementById("rngGlassHeaderBlur").value),
+        glassTabbarAlpha: Number(document.getElementById("rngGlassTabbarAlpha").value),
+        glassTabbarBlur: Number(document.getElementById("rngGlassTabbarBlur").value)
       });
       localStorage.setItem("nv_hanja_prefs_v3", JSON.stringify(appState.prefs));
       applyPrefsToDom();
@@ -4962,6 +5105,18 @@
       }).join("");
     }
 
+    function resetCharRowSubStates(rowId) {
+      if (!rowId) return;
+      appState.openWordRowIds.delete(rowId);
+      appState.openPreviewIds.delete(rowId);
+      const wBtn = document.getElementById("wordsBtn_" + rowId);
+      const wRev = document.getElementById("wordReveal_" + rowId);
+      const exPrev = document.getElementById("exPrev_" + rowId);
+      if (wBtn) wBtn.classList.remove("is-open");
+      if (wRev) wRev.classList.remove("is-open");
+      if (exPrev) exPrev.classList.remove("is-expanded");
+    }
+
     function toggleCharDetail(rowId, el) {
       if (Date.now() < suppressCharRowClickUntil) return;
       const openRow = document.querySelector(".nv-char-row.is-swipe-open");
@@ -4974,6 +5129,7 @@
       if (appState.openRowDetailIds.has(rowId)) {
         appState.openRowDetailIds.delete(rowId);
         disc.classList.remove("is-open");
+        resetCharRowSubStates(rowId);
       } else {
         appState.openRowDetailIds.add(rowId);
         disc.classList.add("is-open");
@@ -5014,7 +5170,7 @@
     function syncSectionBulkLabel(secEl) {
       if (!secEl) return;
       const btn = secEl.querySelector(".nv-sec-toggle-btn");
-      const details = secEl.querySelectorAll(".nv-char-row > .nv-disclosure");
+      const details = secEl.querySelectorAll(".nv-char-row .nv-disclosure");
       if (!btn || !details.length) return;
       const allOpen = Array.from(details).every(d => d.classList.contains("is-open"));
       btn.innerHTML = `${allOpen ? SVG_CHEV_UP : SVG_CHEV_DOWN}<span>${allOpen ? "접기" : "펼치기"}</span>`;
@@ -5024,17 +5180,20 @@
       if (!secEl) return;
       const rows = secEl.querySelectorAll(".nv-char-row");
       if (!rows.length) return;
-      const details = secEl.querySelectorAll(".nv-char-row > .nv-disclosure");
+      const details = secEl.querySelectorAll(".nv-char-row .nv-disclosure");
       const allOpen = details.length > 0 && Array.from(details).every(d => d.classList.contains("is-open"));
       const nextOpen = !allOpen;
       rows.forEach(r => {
         const rowId = r.getAttribute("data-rowid");
-        const disc = r.querySelector(".nv-char-row > .nv-disclosure");
+        const disc = r.querySelector(".nv-disclosure");
         if (nextOpen) {
           if (rowId) appState.openRowDetailIds.add(rowId);
           if (disc) disc.classList.add("is-open");
         } else {
-          if (rowId) appState.openRowDetailIds.delete(rowId);
+          if (rowId) {
+            appState.openRowDetailIds.delete(rowId);
+            resetCharRowSubStates(rowId);
+          }
           if (disc) disc.classList.remove("is-open");
         }
       });
@@ -5143,7 +5302,7 @@
       document.body.classList.add("has-series-strip");
 
       if (bulkBtn) {
-        const details = best.querySelectorAll(".nv-char-row > .nv-disclosure");
+        const details = best.querySelectorAll(".nv-char-row .nv-disclosure");
         const allOpen = details.length > 0 && Array.from(details).every(d => d.classList.contains("is-open"));
         bulkBtn.classList.add("is-visible");
         bulkBtn.classList.toggle("is-expanded", allOpen);
@@ -5760,11 +5919,23 @@
       syncScrollChrome();
     }
 
+    function resetGroupRowStates(root) {
+      const grp = root ? appState.groupMap[root] : null;
+      if (!grp || !Array.isArray(grp.rows)) return;
+      grp.rows.forEach(r => {
+        const rowId = `row_${r.rowNum}`;
+        appState.openRowDetailIds.delete(rowId);
+        appState.openWordRowIds.delete(rowId);
+        appState.openPreviewIds.delete(rowId);
+      });
+    }
+
     function closeIndexItemDom(item, root) {
       const disc = item.querySelector(".nv-disclosure");
       const chev = item.querySelector(".nv-chevron");
       const slot = item.querySelector(".nv-index-slot");
       appState.openRoots.delete(root);
+      resetGroupRowStates(root);
       item.classList.remove("is-open");
       disc?.classList.remove("is-open");
       chev?.classList.remove("is-open");
@@ -5779,6 +5950,9 @@
       if (!box) return;
       collapseWithAnchor(() => {
         appState.openRoots.clear();
+        appState.openRowDetailIds.clear();
+        appState.openWordRowIds.clear();
+        appState.openPreviewIds.clear();
         box.querySelectorAll(".nv-series-index-item").forEach(item => {
           const root = item.getAttribute("data-root");
           closeIndexItemDom(item, root);
