@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <meta name="theme-color" id="metaThemeColor" content="#F2F2F7" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" id="metaStatusBarStyle" content="default" />
+  <meta name="apple-mobile-web-app-status-bar-style" id="metaStatusBarStyle" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="谐声系" />
   <title>谐声系</title>
   <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js" defer></script>
@@ -2494,9 +2494,9 @@
       left: 0 !important;
       right: 0 !important;
       padding-top: calc(env(safe-area-inset-top, 0px) + 8px) !important;
-      background: rgba(242, 242, 247, var(--nv-glass-header-alpha)) !important;
-      -webkit-backdrop-filter: saturate(190%) blur(var(--nv-glass-header-blur)) !important;
-      backdrop-filter: saturate(190%) blur(var(--nv-glass-header-blur)) !important;
+      background: transparent !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
       border-bottom: 0.5px solid rgba(255, 255, 255, 0.45) !important;
       z-index: 120 !important;
     }
@@ -2744,40 +2744,37 @@
     .nv-header.is-scrolled,
     body.has-series-strip .nv-header,
     body.is-all-docked .nv-header {
-      background-color: rgba(242, 242, 247, var(--nv-glass-header-alpha)) !important;
+      background-color: transparent !important;
       background-image: none !important;
-      -webkit-backdrop-filter: saturate(190%) blur(var(--nv-glass-header-blur)) !important;
-      backdrop-filter: saturate(190%) blur(var(--nv-glass-header-blur)) !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
       filter: none !important;
       opacity: 1 !important;
       transition: none !important;
-      isolation: isolate;
     }
     body.dark .nv-header,
     body.dark .nv-header.is-scrolled,
     body.dark.has-series-strip .nv-header,
     body.dark.is-all-docked .nv-header {
-      background-color: rgba(18, 18, 20, var(--nv-glass-header-alpha)) !important;
+      background-color: transparent !important;
       border-bottom-color: rgba(255, 255, 255, 0.14) !important;
     }
-    .nv-header::before {
-      content: "";
-      position: fixed;
-      left: 0;
-      right: 0;
-      top: 0;
-      height: env(safe-area-inset-top, 0px);
-      background: rgba(242, 242, 247, var(--nv-glass-header-alpha));
+    .nv-header-glass {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-color: rgba(242, 242, 247, var(--nv-glass-header-alpha));
       -webkit-backdrop-filter: saturate(190%) blur(var(--nv-glass-header-blur));
       backdrop-filter: saturate(190%) blur(var(--nv-glass-header-blur));
-      pointer-events: none;
-      z-index: -1;
     }
-    body.dark .nv-header::before {
-      background: rgba(18, 18, 20, var(--nv-glass-header-alpha));
+    body.dark .nv-header-glass {
+      background-color: rgba(18, 18, 20, var(--nv-glass-header-alpha));
     }
-    @media (min-width: 960px) {
-      .nv-header::before { display: none; }
+    .nv-header-inner {
+      position: relative;
+      z-index: 1;
+      transform: translateZ(0);
     }
 
     :root { --nv-strip-h: 52px; }
@@ -2970,6 +2967,7 @@
     <div class="nv-main-column">
       <!-- Top Navigation Bar -->
       <header id="appHeader" class="nv-header">
+        <div class="nv-header-glass" aria-hidden="true"></div>
         <div class="nv-header-inner">
           <div class="nv-header-left">
             <button class="nv-brand-btn" onclick="scrollCurrentPageTop()" title="맨 위로 이동">
@@ -4070,7 +4068,7 @@
       const metaTheme = document.getElementById("metaThemeColor");
       if (metaTheme) metaTheme.setAttribute("content", barHex);
       const metaStatus = document.getElementById("metaStatusBarStyle");
-      if (metaStatus) metaStatus.setAttribute("content", isDark ? "black" : "default");
+      if (metaStatus) metaStatus.setAttribute("content", "black-translucent");
 
       const glyph = document.getElementById("menuThemeGlyph");
       const label = document.getElementById("menuThemeLabel");
